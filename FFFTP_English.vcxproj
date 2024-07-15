@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{EE7CC1BD-92A9-46D5-8270-386BD7BEEA55}</ProjectGuid>
+    <RootNamespace>FFFTP_English</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC70.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC70.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC70.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC70.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>17.0.35004.147</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\FFFTP_Eng_Debug\</OutDir>
+    <IntDir>.\FFFTP_Eng_Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>.\FFFTP_Eng_Debug_64\</OutDir>
+    <IntDir>.\FFFTP_Eng_Debug_64\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\FFFTP_Eng_Release\</OutDir>
+    <IntDir>.\FFFTP_Eng_Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>.\FFFTP_Eng_Release_64\</OutDir>
+    <IntDir>.\FFFTP_Eng_Release_64\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PreBuildEvent>
+      <Command>utf8msg.exe src\mesg-eng.h src\mesg-eng.h</Command>
+    </PreBuildEvent>
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\FFFTP_Eng_Debug\FFFTP_English.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>Resource_eng;contrib\openssl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;WINVER=0x0500;_WIN32_WINNT=0x0500;_WIN32_IE=0x0500;_CRT_SECURE_NO_WARNINGS;FFFTP_ENGLISH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>.\FFFTP_Eng_Debug\FFFTP_English.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\FFFTP_Eng_Debug\</AssemblerListingLocation>
+      <ObjectFileName>.\FFFTP_Eng_Debug\</ObjectFileName>
+      <ProgramDataBaseFileName>.\FFFTP_Eng_Debug\</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>comctl32.lib;crypt32.lib;htmlhelp.lib;imagehlp.lib;rasapi32.lib;sfc.lib;uuid.lib;winmm.lib;wintrust.lib;winhttp.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\FFFTP_Eng_Debug\FFFTP.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DelayLoadDLLs>advapi32.dll;comctl32.dll;crypt32.dll;comdlg32.dll;gdi32.dll;imagehlp.dll;ole32.dll;oleaut32.dll;sfc.dll;shell32.dll;user32.dll;winmm.dll;wintrust.dll;winhttp.dll;ws2_32.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\FFFTP_Eng_Debug\FFFTP.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PreBuildEvent>
+      <Command>utf8msg.exe src\mesg-eng.h src\mesg-eng.h</Command>
+    </PreBuildEvent>
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\FFFTP_Eng_Debug_64\FFFTP_English.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>Resource_eng;contrib\openssl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;WINVER=0x0500;_WIN32_WINNT=0x0500;_WIN32_IE=0x0500;_CRT_SECURE_NO_WARNINGS;FFFTP_ENGLISH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>.\FFFTP_Eng_Debug_64\FFFTP_English.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\FFFTP_Eng_Debug_64\</AssemblerListingLocation>
+      <ObjectFileName>.\FFFTP_Eng_Debug_64\</ObjectFileName>
+      <ProgramDataBaseFileName>.\FFFTP_Eng_Debug_64\</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>comctl32.lib;crypt32.lib;htmlhelp.lib;imagehlp.lib;rasapi32.lib;sfc.lib;uuid.lib;winmm.lib;wintrust.lib;winhttp.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\FFFTP_Eng_Debug_64\FFFTP.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DelayLoadDLLs>advapi32.dll;comctl32.dll;crypt32.dll;comdlg32.dll;gdi32.dll;imagehlp.dll;ole32.dll;oleaut32.dll;sfc.dll;shell32.dll;user32.dll;winmm.dll;wintrust.dll;winhttp.dll;ws2_32.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\FFFTP_Eng_Debug_64\FFFTP.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PreBuildEvent>
+      <Command>utf8msg.exe src\mesg-eng.h src\mesg-eng.h</Command>
+    </PreBuildEvent>
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\FFFTP_Eng_Release\FFFTP_English.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>Resource_eng;contrib\openssl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;WINVER=0x0500;_WIN32_WINNT=0x0500;_WIN32_IE=0x0500;_CRT_SECURE_NO_WARNINGS;FFFTP_ENGLISH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeaderOutputFile>.\FFFTP_Eng_Release\FFFTP_English.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\FFFTP_Eng_Release\</AssemblerListingLocation>
+      <ObjectFileName>.\FFFTP_Eng_Release\</ObjectFileName>
+      <ProgramDataBaseFileName>.\FFFTP_Eng_Release\</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>comctl32.lib;crypt32.lib;htmlhelp.lib;imagehlp.lib;rasapi32.lib;sfc.lib;uuid.lib;winmm.lib;wintrust.lib;winhttp.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\FFFTP_Eng_Release\FFFTP.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DelayLoadDLLs>advapi32.dll;comctl32.dll;crypt32.dll;comdlg32.dll;gdi32.dll;imagehlp.dll;ole32.dll;oleaut32.dll;sfc.dll;shell32.dll;user32.dll;winmm.dll;wintrust.dll;winhttp.dll;ws2_32.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <ProgramDatabaseFile>.\FFFTP_Eng_Release\FFFTP.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PreBuildEvent>
+      <Command>utf8msg.exe src\mesg-eng.h src\mesg-eng.h</Command>
+    </PreBuildEvent>
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\FFFTP_Eng_Release_64\FFFTP_English.tlb</TypeLibraryName>
+    </Midl>
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>Resource_eng;contrib\openssl\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;WINVER=0x0500;_WIN32_WINNT=0x0500;_WIN32_IE=0x0500;_CRT_SECURE_NO_WARNINGS;FFFTP_ENGLISH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeaderOutputFile>.\FFFTP_Eng_Release_64\FFFTP_English.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\FFFTP_Eng_Release_64\</AssemblerListingLocation>
+      <ObjectFileName>.\FFFTP_Eng_Release_64\</ObjectFileName>
+      <ProgramDataBaseFileName>.\FFFTP_Eng_Release_64\</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>comctl32.lib;crypt32.lib;htmlhelp.lib;imagehlp.lib;rasapi32.lib;sfc.lib;uuid.lib;winmm.lib;wintrust.lib;winhttp.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>.\FFFTP_Eng_Release_64\FFFTP.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DelayLoadDLLs>advapi32.dll;comctl32.dll;crypt32.dll;comdlg32.dll;gdi32.dll;imagehlp.dll;ole32.dll;oleaut32.dll;sfc.dll;shell32.dll;user32.dll;winmm.dll;wintrust.dll;winhttp.dll;ws2_32.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <ProgramDatabaseFile>.\FFFTP_Eng_Release_64\FFFTP.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\aescrypt.c" />
+    <ClCompile Include="src\aeskey.c" />
+    <ClCompile Include="src\aestab.c" />
+    <ClCompile Include="src\aes_modes.c" />
+    <ClCompile Include="src\apiemulator.c" />
+    <ClCompile Include="src\bookmark.c" />
+    <ClCompile Include="src\cache.c" />
+    <ClCompile Include="src\clipboard.c" />
+    <ClCompile Include="src\codecnv.c" />
+    <ClCompile Include="src\connect.c" />
+    <ClCompile Include="src\diskfree.c" />
+    <ClCompile Include="src\dlgsize.c" />
+    <ClCompile Include="src\filelist.c" />
+    <ClCompile Include="src\ftpproc.c" />
+    <ClCompile Include="src\getput.c" />
+    <ClCompile Include="src\history.c" />
+    <ClCompile Include="src\hostman.c" />
+    <ClCompile Include="src\local.c" />
+    <ClCompile Include="src\lvtips.c" />
+    <ClCompile Include="src\main.c" />
+    <ClCompile Include="src\mbswrapper.c" />
+    <ClCompile Include="src\md4.c" />
+    <ClCompile Include="src\md5.c" />
+    <ClCompile Include="src\misc.c" />
+    <ClCompile Include="src\OleDragDrop.c" />
+    <ClCompile Include="src\option.c" />
+    <ClCompile Include="src\protectprocess.c" />
+    <ClCompile Include="src\punycode.c" />
+    <ClCompile Include="src\ras.c" />
+    <ClCompile Include="src\regexp.c" />
+    <ClCompile Include="src\registry.c" />
+    <ClCompile Include="src\remote.c" />
+    <ClCompile Include="src\sha.c" />
+    <ClCompile Include="src\skey.c" />
+    <ClCompile Include="src\socket.c" />
+    <ClCompile Include="src\socketwrapper.c" />
+    <ClCompile Include="src\statuswin.c" />
+    <ClCompile Include="src\taskwin.c" />
+    <ClCompile Include="src\tool.c" />
+    <ClCompile Include="src\toolmenu.c" />
+    <ClCompile Include="src\updatebell.c" />
+    <ClCompile Include="src\updater.c" />
+    <ClCompile Include="src\wildcard.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource_eng\ffftp.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Resource_eng\resource.h" />
+    <ClInclude Include="src\apiemulator.h" />
+    <ClInclude Include="src\common.h" />
+    <ClInclude Include="src\mbswrapper.h" />
+    <ClInclude Include="src\protectprocess.h" />
+    <ClInclude Include="src\socketwrapper.h" />
+    <ClInclude Include="src\updater.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource_eng\bitmap1.bmp" />
+    <Image Include="Resource_eng\icon1.ico" />
+    <Image Include="Resource_eng\icon2.ico" />
+    <Image Include="Resource_eng\list_bmp.bmp" />
+    <Image Include="Resource_eng\main_too.bmp" />
+    <Image Include="Resource_eng\toolbar1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resource_eng\cursor1.cur" />
+    <None Include="Resource_eng\cursor2.cur" />
+    <None Include="Resource_eng\drag_csr.cur" />
+    <None Include="Resource_eng\nodrop_c.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Resource_eng\ffftp.exe.manifest">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </CustomBuild>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,8 +1,10 @@
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FFFTP", "FFFTP.vcproj", "{5D9496DB-45AF-4389-8FEE-27C9A2FA207A}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FFFTP", "FFFTP.vcxproj", "{5D9496DB-45AF-4389-8FEE-27C9A2FA207A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FFFTP_English", "FFFTP_English.vcproj", "{EE7CC1BD-92A9-46D5-8270-386BD7BEEA55}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FFFTP_English", "FFFTP_English.vcxproj", "{EE7CC1BD-92A9-46D5-8270-386BD7BEEA55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,5 +33,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {38381393-C6D3-4727-A8D8-0A00837AA6EA}
 	EndGlobalSection
 EndGlobal
