@@ -361,3 +361,14 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Exclude project-specific output directories
+FFFTP_Eng_Debug/
+FFFTP_Eng_Debug_64/
+FFFTP_Eng_Release/
+FFFTP_Eng_Release_64/
+Debug_64/
+Release_64/
+
+# Exclude custom build tool
+utf8msg.exe
