@@ -99,18 +99,18 @@ int DoCWD(char* Path, int Disp, int ForceGet, int ErrorBell)
 
 	if (strcmp(Path, "..") == 0)
 		// 同時接続対応
-//		Sts = CommandProcCmd(NULL, "CDUP");
-Sts = CommandProcCmd(NULL, &CancelFlg, "CDUP");
+		// Sts = CommandProcCmd(NULL, "CDUP");
+		Sts = CommandProcCmd(NULL, &CancelFlg, "CDUP");
 	else if (strcmp(Path, "") != 0)
 	{
 		if ((AskHostType() != HTYPE_VMS) || (strchr(Path, '[') != NULL))
 			// 同時接続対応
-//			Sts = CommandProcCmd(NULL, "CWD %s", Path);
-Sts = CommandProcCmd(NULL, &CancelFlg, "CWD %s", Path);
+			// Sts = CommandProcCmd(NULL, "CWD %s", Path);
+			Sts = CommandProcCmd(NULL, &CancelFlg, "CWD %s", Path);
 		else
 			// 同時接続対応
-//			Sts = CommandProcCmd(NULL, "CWD [.%s]", Path);	/* VMS用 */
-Sts = CommandProcCmd(NULL, &CancelFlg, "CWD [.%s]", Path);	/* VMS用 */
+			// Sts = CommandProcCmd(NULL, "CWD [.%s]", Path);	/* VMS用 */
+			Sts = CommandProcCmd(NULL, &CancelFlg, "CWD [.%s]", Path);	/* VMS用 */
 	}
 
 	if ((Sts / 100 >= FTP_CONTINUE) && (ErrorBell == YES))
@@ -236,8 +236,8 @@ static int DoPWD(char* Buf)
 	}
 	if (PwdCommandType == PWD_PWD)
 		// 同時接続対応
-//		Sts = CommandProcCmd(Tmp, "PWD");
-Sts = CommandProcCmd(Tmp, &CancelFlg, "PWD");
+		// Sts = CommandProcCmd(Tmp, "PWD");
+		Sts = CommandProcCmd(Tmp, &CancelFlg, "PWD");
 
 	if (Sts / 100 == FTP_COMPLETE)
 	{
@@ -390,8 +390,8 @@ int DoRENAME(char* Src, char* Dst)
 	Sts = CommandProcCmd(NULL, &CancelFlg, "RNFR %s", Src);
 	if (Sts == 350)
 		// 同時接続対応
-//		Sts = command(AskCmdCtrlSkt(), NULL, &CheckCancelFlg, "RNTO %s", Dst);
-Sts = command(AskCmdCtrlSkt(), NULL, &CancelFlg, "RNTO %s", Dst);
+		// Sts = command(AskCmdCtrlSkt(), NULL, &CheckCancelFlg, "RNTO %s", Dst);
+		Sts = command(AskCmdCtrlSkt(), NULL, &CancelFlg, "RNTO %s", Dst);
 
 	if (Sts / 100 >= FTP_CONTINUE)
 		SoundPlay(SND_ERROR);
@@ -608,8 +608,8 @@ int DoQUIT(SOCKET ctrl_skt, int* CancelCheckWork)
 	Ret = FTP_COMPLETE;
 	if (SendQuit == YES)
 		// 同時接続対応
-//		Ret = command(ctrl_skt, NULL, &CheckCancelFlg, "QUIT") / 100;
-Ret = command(ctrl_skt, NULL, CancelCheckWork, "QUIT") / 100;
+		// Ret = command(ctrl_skt, NULL, &CheckCancelFlg, "QUIT") / 100;
+		Ret = command(ctrl_skt, NULL, CancelCheckWork, "QUIT") / 100;
 
 	return(Ret);
 }

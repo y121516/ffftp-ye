@@ -1939,8 +1939,8 @@ static void AddListView(HWND hWnd, int Pos, char* Name, int Type, LONGLONG Size,
 		if (InfoExist & FINFO_ATTR)
 #endif
 			// ファイルの属性を数字で表示
-//			AttrValue2String(Attr, Tmp);
-AttrValue2String(Attr, Tmp, DispPermissionsNumber);
+			// AttrValue2String(Attr, Tmp);
+			AttrValue2String(Attr, Tmp, DispPermissionsNumber);
 		LvItem.mask = LVIF_TEXT;
 		LvItem.iItem = Pos;
 		LvItem.iSubItem = 4;

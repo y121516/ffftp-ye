@@ -1789,8 +1789,8 @@ int LoadSettingsFromFile(void)
 		}
 		else
 			// バグ修正
-//			MessageBox(NULL, MSGJPN293, "FFFTP", MB_OK);
-MessageBox(GetMainHwnd(), MSGJPN293, "FFFTP", MB_OK | MB_ICONERROR);
+			// MessageBox(NULL, MSGJPN293, "FFFTP", MB_OK);
+			MessageBox(GetMainHwnd(), MSGJPN293, "FFFTP", MB_OK | MB_ICONERROR);
 	}
 	return(Ret);
 }
@@ -2620,8 +2620,8 @@ static BOOL WriteOutRegToFile(REGDATATBL* Pos)
 	}
 	else
 		// バグ修正
-//		MessageBox(NULL, MSGJPN240, "FFFTP", MB_OK);
-MessageBox(GetMainHwnd(), MSGJPN240, "FFFTP", MB_OK | MB_ICONERROR);
+		// MessageBox(NULL, MSGJPN240, "FFFTP", MB_OK);
+		MessageBox(GetMainHwnd(), MSGJPN240, "FFFTP", MB_OK | MB_ICONERROR);
 
 	return(Ret);
 }
@@ -3006,8 +3006,8 @@ static int WriteIntValueToReg(void* Handle, char* Name, int Value)
 	}
 	if (TmpRegType == REGTYPE_REG)
 		// 全設定暗号化対応
-//		RegSetValueEx(Handle, Name, 0, REG_DWORD, (CONST BYTE *)&Value, sizeof(int));
-RegSetValueEx(((REGDATATBL_REG*)Handle)->hKey, Name, 0, REG_DWORD, (CONST BYTE*) & Value, sizeof(int));
+		// RegSetValueEx(Handle, Name, 0, REG_DWORD, (CONST BYTE *)&Value, sizeof(int));
+		RegSetValueEx(((REGDATATBL_REG*)Handle)->hKey, Name, 0, REG_DWORD, (CONST BYTE*) & Value, sizeof(int));
 	else
 	{
 		Pos = (REGDATATBL*)Handle;

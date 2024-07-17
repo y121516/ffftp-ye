@@ -874,8 +874,8 @@ int AskHostNameKana(void)
 
 	if (AskCurrentHost() != HOSTNUM_NOENTRY)
 		// 同時接続対応
-//		CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
-CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
+		// CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
+		CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
 
 	// 同時接続対応
 //	return(CurHost.NameKanaCnv);
@@ -904,8 +904,8 @@ int AskListCmdMode(void)
 	{
 		if (AskCurrentHost() != HOSTNUM_NOENTRY)
 			// 同時接続対応
-//			CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
-CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
+			// CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
+			CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
 		// 同時接続対応
 //		return(CurHost.ListCmdOnly);
 		return(TmpHost.ListCmdOnly);
@@ -930,8 +930,8 @@ int AskUseNLST_R(void)
 
 	if (AskCurrentHost() != HOSTNUM_NOENTRY)
 		// 同時接続対応
-//		CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
-CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
+		// CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
+		CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
 
 	// 同時接続対応
 //	return(CurHost.UseNLST_R);
@@ -956,8 +956,8 @@ char* AskHostChmodCmd(void)
 
 	if (AskCurrentHost() != HOSTNUM_NOENTRY)
 		// 同時接続対応
-//		CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
-CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
+		// CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
+		CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
 
 	// 同時接続対応
 //	return(CurHost.ChmodCmd);
@@ -982,8 +982,8 @@ int AskHostTimeZone(void)
 
 	if (AskCurrentHost() != HOSTNUM_NOENTRY)
 		// 同時接続対応
-//		CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
-CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
+		// CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
+		CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
 
 	// 同時接続対応
 //	return(CurHost.TimeZone);
@@ -1023,8 +1023,8 @@ char* AskHostLsName(void)
 
 	if (AskCurrentHost() != HOSTNUM_NOENTRY)
 		// 同時接続対応
-//		CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
-CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
+		// CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
+		CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
 
 	// 同時接続対応
 //	return(CurHost.LsName);
@@ -1049,8 +1049,8 @@ int AskHostType(void)
 
 	if (AskCurrentHost() != HOSTNUM_NOENTRY)
 		// 同時接続対応
-//		CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
-CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
+		// CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
+		CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
 
 #if defined(HAVE_TANDEM)
 	/* OSS ファイルシステムは UNIX ファイルシステムと同じでいいので AUTO を返す
@@ -1530,8 +1530,8 @@ int AskRealHostType(void)
 
 	if (AskCurrentHost() != HOSTNUM_NOENTRY)
 		// 同時接続対応
-//		CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
-CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
+		// CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
+		CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
 
 	// 同時接続対応
 //	return(CurHost.HostType);
@@ -1757,12 +1757,12 @@ static SOCKET DoConnectCrypt(int CryptMode, HOSTDATA* HostData, char* Host, char
 
 							if (HostPort == PORT_NOR)
 								// 同時接続対応
-//								Sts = command(ContSock, NULL, &CancelFlg, "%s %s", SiteTbl[Flg], Host) / 100;
-Sts = command(ContSock, NULL, CancelCheckWork, "%s %s", SiteTbl[Flg], Host) / 100;
+								// Sts = command(ContSock, NULL, &CancelFlg, "%s %s", SiteTbl[Flg], Host) / 100;
+								Sts = command(ContSock, NULL, CancelCheckWork, "%s %s", SiteTbl[Flg], Host) / 100;
 							else
 								// 同時接続対応
-//								Sts = command(ContSock, NULL, &CancelFlg, "%s %s %d", SiteTbl[Flg], Host, HostPort) / 100;
-Sts = command(ContSock, NULL, CancelCheckWork, "%s %s %d", SiteTbl[Flg], Host, HostPort) / 100;
+								// Sts = command(ContSock, NULL, &CancelFlg, "%s %s %d", SiteTbl[Flg], Host, HostPort) / 100;
+								Sts = command(ContSock, NULL, CancelCheckWork, "%s %s %d", SiteTbl[Flg], Host, HostPort) / 100;
 						}
 
 						if ((Sts != FTP_COMPLETE) && (Sts != FTP_CONTINUE))
@@ -2333,8 +2333,8 @@ SOCKET connectsockIPv4(char* host, int port, char* PreMsg, int* CancelCheckWork)
 	}
 	else
 		// IPv6対応
-//		SetTaskMsg(MSGJPN020, PreMsg, inet_ntoa(CurSockAddr.sin_addr), ntohs(CurSockAddr.sin_port));
-SetTaskMsg(MSGJPN020, PreMsg, inet_ntoa(CurSockAddr.sin_addr), ntohs(CurSockAddr.sin_port), MSGJPN333);
+		// SetTaskMsg(MSGJPN020, PreMsg, inet_ntoa(CurSockAddr.sin_addr), ntohs(CurSockAddr.sin_port));
+		SetTaskMsg(MSGJPN020, PreMsg, inet_ntoa(CurSockAddr.sin_addr), ntohs(CurSockAddr.sin_port), MSGJPN333);
 
 	if ((Fwall == FWALL_SOCKS4) || (Fwall == FWALL_SOCKS5_NOAUTH) || (Fwall == FWALL_SOCKS5_USER))
 	{
@@ -2439,8 +2439,8 @@ SetTaskMsg(MSGJPN020, PreMsg, inet_ntoa(CurSockAddr.sin_addr), ntohs(CurSockAddr
 
 			if (sSocket != INVALID_SOCKET)
 				// IPv6対応
-//				SetTaskMsg(MSGJPN025);
-SetTaskMsg(MSGJPN025, MSGJPN333);
+				// SetTaskMsg(MSGJPN025);
+				SetTaskMsg(MSGJPN025, MSGJPN333);
 		}
 		else
 		{
@@ -2454,8 +2454,8 @@ SetTaskMsg(MSGJPN025, MSGJPN333);
 	}
 	else
 		// IPv6対応
-//		SetTaskMsg(MSGJPN027);
-SetTaskMsg(MSGJPN027, MSGJPN333);
+		// SetTaskMsg(MSGJPN027);
+		SetTaskMsg(MSGJPN027, MSGJPN333);
 
 	return(sSocket);
 }
@@ -2806,8 +2806,8 @@ SOCKET GetFTPListenSocketIPv4(SOCKET ctrl_skt, int* CancelCheckWork)
 
 			if (listen_skt == INVALID_SOCKET)
 				// IPv6対応
-//				SetTaskMsg(MSGJPN030);
-SetTaskMsg(MSGJPN030, MSGJPN333);
+				// SetTaskMsg(MSGJPN030);
+				SetTaskMsg(MSGJPN030, MSGJPN333);
 		}
 	}
 	else
@@ -3200,8 +3200,8 @@ static int Socks5GetCmdReply(SOCKET Socket, SOCKS5REPLY* Packet, int* CancelChec
 
 		if (Ret == FFFTP_SUCCESS)
 			// 同時接続対応
-//			Ret = ReadNchar(Socket, (char *)Pos, Len, &CancelFlg);
-Ret = ReadNchar(Socket, (char*)Pos, Len, CancelCheckWork);
+			// Ret = ReadNchar(Socket, (char *)Pos, Len, &CancelFlg);
+			Ret = ReadNchar(Socket, (char*)Pos, Len, CancelCheckWork);
 	}
 
 	if (Ret != FFFTP_SUCCESS)

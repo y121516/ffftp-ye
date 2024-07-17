@@ -371,8 +371,8 @@ int MakeToolBarWindow(HWND hWnd, HINSTANCE hInst)
 			hWndDirLocalEdit = GetWindow(hWndDirLocal, GW_CHILD);
 			if (hWndDirLocalEdit != NULL)
 				// 64ビット対応
-//				HistEditBoxProcPtr = (WNDPROC)SetWindowLong(hWndDirLocalEdit, GWL_WNDPROC, (LONG)HistEditBoxWndProc);
-HistEditBoxProcPtr = (WNDPROC)SetWindowLongPtr(hWndDirLocalEdit, GWLP_WNDPROC, (LONG_PTR)HistEditBoxWndProc);
+				// HistEditBoxProcPtr = (WNDPROC)SetWindowLong(hWndDirLocalEdit, GWL_WNDPROC, (LONG)HistEditBoxWndProc);
+				HistEditBoxProcPtr = (WNDPROC)SetWindowLongPtr(hWndDirLocalEdit, GWLP_WNDPROC, (LONG_PTR)HistEditBoxWndProc);
 
 			SendMessage(hWndDirLocal, WM_SETFONT, (WPARAM)DlgFont, MAKELPARAM(TRUE, 0));
 			SendMessage(hWndDirLocal, CB_LIMITTEXT, FMAX_PATH, 0);
@@ -462,8 +462,8 @@ HistEditBoxProcPtr = (WNDPROC)SetWindowLongPtr(hWndDirLocalEdit, GWLP_WNDPROC, (
 			hWndDirRemoteEdit = GetWindow(hWndDirRemote, GW_CHILD);
 			if (hWndDirRemoteEdit != NULL)
 				// 64ビット対応
-//				HistEditBoxProcPtr = (WNDPROC)SetWindowLong(hWndDirRemoteEdit, GWL_WNDPROC, (LONG)HistEditBoxWndProc);
-HistEditBoxProcPtr = (WNDPROC)SetWindowLongPtr(hWndDirRemoteEdit, GWLP_WNDPROC, (LONG_PTR)HistEditBoxWndProc);
+				// HistEditBoxProcPtr = (WNDPROC)SetWindowLong(hWndDirRemoteEdit, GWL_WNDPROC, (LONG)HistEditBoxWndProc);
+				HistEditBoxProcPtr = (WNDPROC)SetWindowLongPtr(hWndDirRemoteEdit, GWLP_WNDPROC, (LONG_PTR)HistEditBoxWndProc);
 
 			SendMessage(hWndDirRemote, WM_SETFONT, (WPARAM)DlgFont, MAKELPARAM(TRUE, 0));
 			SendMessage(hWndDirRemote, CB_LIMITTEXT, FMAX_PATH, 0);

@@ -1298,8 +1298,8 @@ static LRESULT CALLBACK FtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
 		case MENU_DCLICK:
 			if (hWndCurFocus == GetLocalHwnd())
 				// ローカルフォルダを開く
-//						DoubleClickProc(WIN_LOCAL, YES, -1);
-DoubleClickProc(WIN_LOCAL, NO, -1);
+				// DoubleClickProc(WIN_LOCAL, YES, -1);
+				DoubleClickProc(WIN_LOCAL, NO, -1);
 			else
 			{
 				SuppressRefresh = 1;

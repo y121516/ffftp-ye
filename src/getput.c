@@ -607,8 +607,8 @@ static void EraseTransFileList(void)
 		{
 			if (NotDel != NULL)
 				// 同時接続対応
-//				free(NotDel);
-strcpy(NotDel->Cmd, "");
+				// free(NotDel);
+				strcpy(NotDel->Cmd, "");
 			NotDel = New;
 			New = New->Next;
 			// 同時接続対応
@@ -1810,8 +1810,8 @@ static int DownloadFile(TRANSPACKET* Pkt, SOCKET dSkt, int CreateMode, int* Canc
 		DWORD High = 0;
 		if (CreateMode == OPEN_ALWAYS)
 			// 4GB超対応（kaokunさん提供）
-//			SetFilePointer(iFileHandle, 0, 0, FILE_END);
-SetFilePointer(iFileHandle, 0, &High, FILE_END);
+			// SetFilePointer(iFileHandle, 0, 0, FILE_END);
+			SetFilePointer(iFileHandle, 0, &High, FILE_END);
 
 		if (Pkt->hWndTrans != NULL)
 		{
@@ -2158,8 +2158,8 @@ SetFilePointer(iFileHandle, 0, &High, FILE_END);
 			Pkt->ExistSize += iNumBytes;
 			if (Pkt->hWndTrans != NULL)
 				// 同時接続対応
-//				AllTransSizeNow += iNumBytes;
-AllTransSizeNow[Pkt->ThreadCount] += iNumBytes;
+				// AllTransSizeNow += iNumBytes;
+				AllTransSizeNow[Pkt->ThreadCount] += iNumBytes;
 			else
 			{
 				/* 転送ダイアログを出さない時の経過表示 */
@@ -2519,8 +2519,8 @@ static void DispDownloadFinishMsg(TRANSPACKET* Pkt, int iRetCode)
 			else if ((Pkt->hWndTrans != NULL) && (TimeStart[Pkt->ThreadCount] != 0))
 				// "0 B/S"と表示されるバグを修正
 				// 原因は%dにあたる部分に64ビット値が渡されているため
-//				SetTaskMsg(MSGJPN102, TimeStart[Pkt->ThreadCount], Pkt->ExistSize/TimeStart[Pkt->ThreadCount]);
-SetTaskMsg(MSGJPN102, (LONG)TimeStart[Pkt->ThreadCount], (LONG)(Pkt->ExistSize / TimeStart[Pkt->ThreadCount]));
+				// SetTaskMsg(MSGJPN102, TimeStart[Pkt->ThreadCount], Pkt->ExistSize/TimeStart[Pkt->ThreadCount]);
+				SetTaskMsg(MSGJPN102, (LONG)TimeStart[Pkt->ThreadCount], (LONG)(Pkt->ExistSize / TimeStart[Pkt->ThreadCount]));
 			else
 				SetTaskMsg(MSGJPN103, Pkt->ExistSize);
 		}
@@ -2766,8 +2766,8 @@ static int DoUpload(SOCKET cSkt, TRANSPACKET* Pkt)
 			/* 属性変更 */
 			if ((Pkt->Attr != -1) && ((iRetCode / 100) == FTP_COMPLETE))
 				// 同時接続対応
-//				command(Pkt->ctrl_skt, Reply, &Canceled, "%s %03X %s", AskHostChmodCmd(), Pkt->Attr, Pkt->RemoteFile);
-command(Pkt->ctrl_skt, Reply, &Canceled[Pkt->ThreadCount], "%s %03X %s", AskHostChmodCmd(), Pkt->Attr, Pkt->RemoteFile);
+				// command(Pkt->ctrl_skt, Reply, &Canceled, "%s %03X %s", AskHostChmodCmd(), Pkt->Attr, Pkt->RemoteFile);
+				command(Pkt->ctrl_skt, Reply, &Canceled[Pkt->ThreadCount], "%s %03X %s", AskHostChmodCmd(), Pkt->Attr, Pkt->RemoteFile);
 		}
 		else
 		{
@@ -3461,8 +3461,8 @@ static int UploadFile(TRANSPACKET* Pkt, SOCKET dSkt)
 			Pkt->ExistSize += iNumBytes;
 			if (Pkt->hWndTrans != NULL)
 				// 同時接続対応
-//				AllTransSizeNow += iNumBytes;
-AllTransSizeNow[Pkt->ThreadCount] += iNumBytes;
+				// AllTransSizeNow += iNumBytes;
+				AllTransSizeNow[Pkt->ThreadCount] += iNumBytes;
 
 			if (BackgrndMessageProc() == YES)
 				ForceAbort = YES;
@@ -3758,8 +3758,8 @@ static int TermCodeConvAndSend(TERMCODECONVINFO* tInfo, SOCKET Skt, char* Data, 
 	}
 	else
 		// 同時接続対応
-//		Ret = SendData(Skt, Data, Size, 0, &Canceled);
-Ret = SendData(Skt, Data, Size, 0, CancelCheckWork);
+		// Ret = SendData(Skt, Data, Size, 0, &Canceled);
+		Ret = SendData(Skt, Data, Size, 0, CancelCheckWork);
 
 	return(Ret);
 }
@@ -3825,8 +3825,8 @@ static void DispUploadFinishMsg(TRANSPACKET* Pkt, int iRetCode)
 			if ((Pkt->hWndTrans != NULL) && (TimeStart[Pkt->ThreadCount] != 0))
 				// "0 B/S"と表示されるバグを修正
 				// 原因は%dにあたる部分に64ビット値が渡されているため
-//				SetTaskMsg(MSGJPN115, TimeStart[Pkt->ThreadCount], Pkt->ExistSize/TimeStart[Pkt->ThreadCount]);
-SetTaskMsg(MSGJPN115, (LONG)TimeStart[Pkt->ThreadCount], (LONG)(Pkt->ExistSize / TimeStart[Pkt->ThreadCount]));
+				// SetTaskMsg(MSGJPN115, TimeStart[Pkt->ThreadCount], Pkt->ExistSize/TimeStart[Pkt->ThreadCount]);
+				SetTaskMsg(MSGJPN115, (LONG)TimeStart[Pkt->ThreadCount], (LONG)(Pkt->ExistSize / TimeStart[Pkt->ThreadCount]));
 			else
 				SetTaskMsg(MSGJPN116);
 		}
@@ -4001,8 +4001,8 @@ static void DispTransferStatus(HWND hWnd, int End, TRANSPACKET* Pkt)
 				Bps = 0;
 				if (TotalLap != 0)
 					// 同時接続対応
-//					Bps = AllTransSizeNow / TotalLap;
-Bps = AllTransSizeNow[Pkt->ThreadCount] / TotalLap;
+					// Bps = AllTransSizeNow / TotalLap;
+					Bps = AllTransSizeNow[Pkt->ThreadCount] / TotalLap;
 				Transed = Pkt->Size - Pkt->ExistSize;
 
 				if (Pkt->Size <= 0)
