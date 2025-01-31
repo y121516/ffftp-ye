@@ -299,10 +299,27 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource\resource.h" />
+    <ClInclude Include="src\aes.h" />
+    <ClInclude Include="src\aesopt.h" />
+    <ClInclude Include="src\aestab.h" />
     <ClInclude Include="src\apiemulator.h" />
+    <ClInclude Include="src\brg_endian.h" />
+    <ClInclude Include="src\brg_types.h" />
     <ClInclude Include="src\common.h" />
+    <ClInclude Include="src\config.h" />
+    <ClInclude Include="src\filehash.h" />
+    <ClInclude Include="src\helpid.h" />
+    <ClInclude Include="src\jreusr.h" />
     <ClInclude Include="src\mbswrapper.h" />
+    <ClInclude Include="src\md4.h" />
+    <ClInclude Include="src\md5.h" />
+    <ClInclude Include="src\mesg-eng.h" />
+    <ClInclude Include="src\mesg-jpn.h" />
+    <ClInclude Include="src\OleDragDrop.h" />
     <ClInclude Include="src\protectprocess.h" />
+    <ClInclude Include="src\punycode.h" />
+    <ClInclude Include="src\sample.h" />
+    <ClInclude Include="src\sha.h" />
     <ClInclude Include="src\socketwrapper.h" />
     <ClInclude Include="src\updater.h" />
   </ItemGroup>
@@ -310,6 +327,7 @@
     <Image Include="Resource\bitmap1.bmp" />
     <Image Include="Resource\icon1.ico" />
     <Image Include="Resource\icon2.ico" />
+    <Image Include="Resource\list_16.bmp" />
     <Image Include="Resource\list_bmp.bmp" />
     <Image Include="Resource\main_too.bmp" />
     <Image Include="Resource\toolbar1.bmp" />
