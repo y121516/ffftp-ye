@@ -53,8 +53,9 @@
 #include "sha.h"
 
 #include <htmlhelp.h>
+#pragma warning(disable:4828)
 #include "helpid.h"
-
+#pragma warning(default:4828)
 // ソフトウェア自動更新
 #include "updater.h"
 

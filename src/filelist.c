@@ -51,8 +51,9 @@
 #include "resource.h"
 
 #include <htmlhelp.h>
+#pragma warning(disable:4828)
 #include "helpid.h"
-
+#pragma warning(default:4828)
 #include <shlobj.h>
 #include "OleDragDrop.h"
 #include "common.h"
