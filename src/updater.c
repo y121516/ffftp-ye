@@ -1,4 +1,4 @@
-﻿// updater.c
+// updater.c
 // Copyright (C) 2014 Suguru Kawamoto
 // ソフトウェア自動更新
 // コードの再利用のため表記はwchar_t型だが実体はchar型でUTF-8

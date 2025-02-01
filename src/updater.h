@@ -1,4 +1,4 @@
-﻿// updater.h
+// updater.h
 // Copyright (C) 2014 Suguru Kawamoto
 // ソフトウェア自動更新
 

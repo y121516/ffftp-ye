@@ -1,4 +1,4 @@
-﻿// socketwrapper.h
+// socketwrapper.h
 // Copyright (C) 2011 Suguru Kawamoto
 // ソケットラッパー
 

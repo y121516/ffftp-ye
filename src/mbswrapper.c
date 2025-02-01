@@ -1,4 +1,4 @@
-﻿// mbswrapper.c
+// mbswrapper.c
 // Copyright (C) 2011 Suguru Kawamoto
 // マルチバイト文字ワイド文字APIラッパー
 // マルチバイト文字はUTF-8、ワイド文字はUTF-16であるものとする

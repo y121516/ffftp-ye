@@ -1,4 +1,4 @@
-﻿// protectprocess.c
+// protectprocess.c
 // Copyright (C) 2011 Suguru Kawamoto
 // プロセスの保護
 

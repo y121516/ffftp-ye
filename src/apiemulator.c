@@ -1,4 +1,4 @@
-﻿// apiemulator.c
+// apiemulator.c
 // Copyright (C) 2014 Suguru Kawamoto
 // APIエミュレータ
 

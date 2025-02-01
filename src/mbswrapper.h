@@ -1,4 +1,4 @@
-﻿// mbswrapper.h
+// mbswrapper.h
 // Copyright (C) 2011 Suguru Kawamoto
 // マルチバイト文字ワイド文字APIラッパー
 
