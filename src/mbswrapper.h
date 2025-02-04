@@ -250,11 +250,6 @@ FILE* fopenM(const char* _Filename, const char* _Mode);
 
 #endif
 
-#ifdef FORCE_SJIS_ON_ACTIVE_CODE_PAGE
-#undef CP_ACP
-#define CP_ACP 932
-#endif
-
 #ifdef EMULATE_UTF8_WCHAR_CONVERSION
 #define MultiByteToWideChar MultiByteToWideCharAlternative
 #define WideCharToMultiByte WideCharToMultiByteAlternative

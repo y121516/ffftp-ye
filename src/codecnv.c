@@ -1541,13 +1541,13 @@ int ConvUTF8NtoSJIS_TruncateToDelimiter(char* pUTF8, int UTF8Length, int* pNewUT
 		return -1;
 	// Shift_JISへ変換した時に文字数が増減する位置がUnicode結合文字の区切り
 	UTF16Length = MultiByteToWideChar(CP_UTF8, 0, pUTF8, UTF8Length, pUTF16, UTF16Length);
-	SJISLength = WideCharToMultiByte(CP_ACP, 0, pUTF16, UTF16Length, NULL, 0, NULL, NULL);
+	SJISLength = WideCharToMultiByte(932, 0, pUTF16, UTF16Length, NULL, 0, NULL, NULL);
 	NewSJISLength = SJISLength;
 	while (UTF8Length > 0 && NewSJISLength >= SJISLength)
 	{
 		UTF8Length--;
 		UTF16Length = MultiByteToWideChar(CP_UTF8, 0, pUTF8, UTF8Length, pUTF16, UTF16Length);
-		NewSJISLength = WideCharToMultiByte(CP_ACP, 0, pUTF16, UTF16Length, NULL, 0, NULL, NULL);
+		NewSJISLength = WideCharToMultiByte(932, 0, pUTF16, UTF16Length, NULL, 0, NULL, NULL);
 	}
 	free(pUTF16);
 	// UTF-16 LE変換した時に文字数が増減する位置がUTF-8の区切り
@@ -1674,7 +1674,7 @@ int ConvUTF8NtoSJIS(CODECONVINFO* cInfo)
 //		cInfo->BufSize,					// 格納先サイズ
 //		NULL,NULL
 //	);
-	cInfo->OutLen = WideCharToMultiByte(CP_ACP, 0, pUTF16, UTF16Length, cInfo->Buf, cInfo->BufSize, NULL, NULL);
+	cInfo->OutLen = WideCharToMultiByte(932, 0, pUTF16, UTF16Length, cInfo->Buf, cInfo->BufSize, NULL, NULL);
 	cInfo->Str += SrcLength - cInfo->EscUTF8Len;
 	cInfo->StrLen -= SrcLength - cInfo->EscUTF8Len;
 	cInfo->EscUTF8Len = 0;
@@ -1767,7 +1767,7 @@ int ConvSJIStoUTF8N(CODECONVINFO* cInfo)
 		}
 		SrcLength = Count;
 	}
-	UTF16Length = MultiByteToWideChar(CP_ACP, 0, pSrc, SrcLength, NULL, 0);
+	UTF16Length = MultiByteToWideChar(932, 0, pSrc, SrcLength, NULL, 0);
 
 	// サイズ0 or バッファサイズより大きい場合は、
 	// cInfo->Bufの最初に'\0'を入れて、
@@ -1795,7 +1795,7 @@ int ConvSJIStoUTF8N(CODECONVINFO* cInfo)
 //		(unsigned short *)temp_string,	// 変換した文字列の格納先
 //		1024							// 格納先サイズ
 //	);
-	MultiByteToWideChar(CP_ACP, 0, pSrc, SrcLength, pUTF16, UTF16Length);
+	MultiByteToWideChar(932, 0, pSrc, SrcLength, pUTF16, UTF16Length);
 
 	// 生成されるUTF-8コードのサイズを調べる
 //	string_length = WideCharToMultiByte(
@@ -1848,9 +1848,9 @@ int ConvSJIStoUTF8N(CODECONVINFO* cInfo)
 		cInfo->OutLen = WideCharToMultiByte(CP_UTF8, 0, pUTF16, UTF16Length, cInfo->Buf, cInfo->BufSize, NULL, NULL);
 	}
 	// 変換された元の文字列での文字数を取得
-	Count = WideCharToMultiByte(CP_ACP, 0, pUTF16, UTF16Length, NULL, 0, NULL, NULL);
+	Count = WideCharToMultiByte(932, 0, pUTF16, UTF16Length, NULL, 0, NULL, NULL);
 	// 変換可能な残りの文字数を取得
-	UTF16Length = MultiByteToWideChar(CP_ACP, 0, pSrc + Count, SrcLength - Count, NULL, 0);
+	UTF16Length = MultiByteToWideChar(932, 0, pSrc + Count, SrcLength - Count, NULL, 0);
 	cInfo->Str += Count - cInfo->EscUTF8Len;
 	cInfo->StrLen -= Count - cInfo->EscUTF8Len;
 	cInfo->EscUTF8Len = 0;

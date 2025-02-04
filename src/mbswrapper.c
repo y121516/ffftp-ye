@@ -44,8 +44,8 @@ int AtoW(LPWSTR pDst, int size, LPCSTR pSrc, int count)
 	if (pSrc < (LPCSTR)0x00010000 || pSrc == (LPCSTR)~0)
 		return 0;
 	if (pDst)
-		return MultiByteToWideChar(CP_ACP, 0, pSrc, count, pDst, size);
-	return MultiByteToWideChar(CP_ACP, 0, pSrc, count, NULL, 0);
+		return MultiByteToWideChar(932, 0, pSrc, count, pDst, size);
+	return MultiByteToWideChar(932, 0, pSrc, count, NULL, 0);
 }
 
 // ワイド文字列からShift_JIS文字列へ変換
@@ -54,8 +54,8 @@ int WtoA(LPSTR pDst, int size, LPCWSTR pSrc, int count)
 	if (pSrc < (LPCWSTR)0x00010000 || pSrc == (LPCWSTR)~0)
 		return 0;
 	if (pDst)
-		return WideCharToMultiByte(CP_ACP, 0, pSrc, count, pDst, size, NULL, NULL);
-	return WideCharToMultiByte(CP_ACP, 0, pSrc, count, NULL, 0, NULL, NULL);
+		return WideCharToMultiByte(932, 0, pSrc, count, pDst, size, NULL, NULL);
+	return WideCharToMultiByte(932, 0, pSrc, count, NULL, 0, NULL, NULL);
 }
 
 // マルチバイト文字列バッファ終端を強制的にNULLで置換
@@ -198,7 +198,7 @@ int AtoWMultiString(LPWSTR pDst, int size, LPCSTR pSrc)
 	i = 0;
 	while (*pSrc != '\0')
 	{
-		i += MultiByteToWideChar(CP_ACP, 0, pSrc, -1, pDst + i, size - i - 1);
+		i += MultiByteToWideChar(932, 0, pSrc, -1, pDst + i, size - i - 1);
 		pSrc += strlen(pSrc) + 1;
 	}
 	pDst[i] = L'\0';
@@ -216,7 +216,7 @@ int WtoAMultiString(LPSTR pDst, int size, LPCWSTR pSrc)
 	i = 0;
 	while (*pSrc != L'\0')
 	{
-		i += WideCharToMultiByte(CP_ACP, 0, pSrc, -1, pDst + i, size - i - 1, NULL, NULL);
+		i += WideCharToMultiByte(932, 0, pSrc, -1, pDst + i, size - i - 1, NULL, NULL);
 		pSrc += wcslen(pSrc) + 1;
 	}
 	pDst[i] = '\0';
