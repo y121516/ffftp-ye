@@ -13,7 +13,6 @@ typedef SOCKADDR_STORAGE* PSOCKADDR_STORAGE, FAR* LPSOCKADDR_STORAGE;
 
 #include "updater.h"
 #include "socketwrapper.h"
-#include "protectprocess.h"
 #include "mbswrapper.h"
 #include "apiemulator.h"
 

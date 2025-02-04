@@ -12,7 +12,6 @@
 #include <openssl/ssl.h>
 
 #include "socketwrapper.h"
-#include "protectprocess.h"
 #include "mbswrapper.h"
 #include "punycode.h"
 #include "filehash.h"
@@ -167,12 +166,6 @@ BOOL LoadOpenSSL()
 {
 	if (g_bOpenSSLLoaded)
 		return FALSE;
-#ifdef ENABLE_PROCESS_PROTECTION
-	// libssl-1_1.dll 1.1.0g
-	RegisterTrustedModuleSHA1Hash(FILEHASH_LIBCRYPTO_DLL_SHA1);
-	// libcrypto-1_1.dll 1.1.0g
-	RegisterTrustedModuleSHA1Hash(FILEHASH_LIBSSL_DLL_SHA1);
-#endif
 	// OpenSSL 1.1.0対応
 //	g_hOpenSSL = LoadLibrary("ssleay32.dll");
 #if defined(_M_IX86)

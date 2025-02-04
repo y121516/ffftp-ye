@@ -25,8 +25,6 @@
 #include "mbswrapper.h"
 // OpenSSL用ソケットラッパーを使用する
 #include "socketwrapper.h"
-// プロセスをDLL Injectionから保護する
-#include "protectprocess.h"
 // 一部のWin32 APIのエミュレーションを行う
 #include "apiemulator.h"
 

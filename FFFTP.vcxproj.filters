@@ -93,9 +93,6 @@
     <ClCompile Include="src\option.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\protectprocess.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\punycode.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -153,9 +150,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\mbswrapper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\protectprocess.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource\resource.h">

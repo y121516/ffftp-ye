@@ -124,7 +124,7 @@
       <AdditionalDependencies>comctl32.lib;crypt32.lib;htmlhelp.lib;imagehlp.lib;rasapi32.lib;sfc.lib;uuid.lib;winmm.lib;wintrust.lib;winhttp.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\Debug\FFFTP.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DelayLoadDLLs>advapi32.dll;comctl32.dll;crypt32.dll;comdlg32.dll;gdi32.dll;imagehlp.dll;ole32.dll;oleaut32.dll;sfc.dll;shell32.dll;user32.dll;winmm.dll;wintrust.dll;winhttp.dll;ws2_32.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>advapi32.dll;comctl32.dll;comdlg32.dll;gdi32.dll;ole32.dll;oleaut32.dll;shell32.dll;user32.dll;winmm.dll;winhttp.dll;ws2_32.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>.\Debug\FFFTP.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -164,7 +164,7 @@
       <AdditionalDependencies>comctl32.lib;crypt32.lib;htmlhelp.lib;imagehlp.lib;rasapi32.lib;sfc.lib;uuid.lib;winmm.lib;wintrust.lib;winhttp.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\Debug_64\FFFTP.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DelayLoadDLLs>advapi32.dll;comctl32.dll;crypt32.dll;comdlg32.dll;gdi32.dll;imagehlp.dll;ole32.dll;oleaut32.dll;sfc.dll;shell32.dll;user32.dll;winmm.dll;wintrust.dll;winhttp.dll;ws2_32.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>advapi32.dll;comctl32.dll;comdlg32.dll;gdi32.dll;ole32.dll;oleaut32.dll;shell32.dll;user32.dll;winmm.dll;winhttp.dll;ws2_32.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>.\Debug_64\FFFTP.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
@@ -206,7 +206,7 @@
       <AdditionalDependencies>comctl32.lib;crypt32.lib;htmlhelp.lib;imagehlp.lib;rasapi32.lib;sfc.lib;uuid.lib;winmm.lib;wintrust.lib;winhttp.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\Release\FFFTP.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DelayLoadDLLs>advapi32.dll;comctl32.dll;crypt32.dll;comdlg32.dll;gdi32.dll;imagehlp.dll;ole32.dll;oleaut32.dll;sfc.dll;shell32.dll;user32.dll;winmm.dll;wintrust.dll;winhttp.dll;ws2_32.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>advapi32.dll;comctl32.dll;comdlg32.dll;gdi32.dll;ole32.dll;oleaut32.dll;shell32.dll;user32.dll;winmm.dll;winhttp.dll;ws2_32.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <ProgramDatabaseFile>.\Release\FFFTP.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -247,7 +247,7 @@
       <AdditionalDependencies>comctl32.lib;crypt32.lib;htmlhelp.lib;imagehlp.lib;rasapi32.lib;sfc.lib;uuid.lib;winmm.lib;wintrust.lib;winhttp.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>.\Release_64\FFFTP.exe</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <DelayLoadDLLs>advapi32.dll;comctl32.dll;crypt32.dll;comdlg32.dll;gdi32.dll;imagehlp.dll;ole32.dll;oleaut32.dll;sfc.dll;shell32.dll;user32.dll;winmm.dll;wintrust.dll;winhttp.dll;ws2_32.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>advapi32.dll;comctl32.dll;comdlg32.dll;gdi32.dll;ole32.dll;oleaut32.dll;shell32.dll;user32.dll;winmm.dll;winhttp.dll;ws2_32.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <ProgramDatabaseFile>.\Release_64\FFFTP.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
@@ -280,7 +280,6 @@
     <ClCompile Include="src\misc.c" />
     <ClCompile Include="src\OleDragDrop.c" />
     <ClCompile Include="src\option.c" />
-    <ClCompile Include="src\protectprocess.c" />
     <ClCompile Include="src\punycode.c" />
     <ClCompile Include="src\ras.c" />
     <ClCompile Include="src\regexp.c" />
@@ -320,7 +319,6 @@
     <ClInclude Include="src\mesg-eng.h" />
     <ClInclude Include="src\mesg-jpn.h" />
     <ClInclude Include="src\OleDragDrop.h" />
-    <ClInclude Include="src\protectprocess.h" />
     <ClInclude Include="src\punycode.h" />
     <ClInclude Include="src\sample.h" />
     <ClInclude Include="src\sha.h" />
