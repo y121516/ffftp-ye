@@ -20,6 +20,3 @@
 #include "mbswrapper.h"
 // OpenSSL用ソケットラッパーを使用する
 #include "socketwrapper.h"
-// 一部のWin32 APIのエミュレーションを行う
-#include "apiemulator.h"
-

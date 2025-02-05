@@ -630,7 +630,7 @@ BOOL RestartUpdateProcessAsAdministrator(LPCTSTR CommandLine, LPCTSTR Keyword)
 				memset(&Info, 0, sizeof(SHELLEXECUTEINFO));
 				Info.cbSize = sizeof(SHELLEXECUTEINFO);
 				Info.fMask = SEE_MASK_NOCLOSEPROCESS;
-				if (IsUserAnAdmin())
+				if (IsUserAnAdminAlternative())
 					Info.lpVerb = _T("open");
 				else
 					Info.lpVerb = _T("runas");

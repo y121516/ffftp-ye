@@ -2,9 +2,6 @@
 // Copyright (C) 2014 Suguru Kawamoto
 // APIエミュレータ
 
-#include <windows.h>
-
-#define DO_NOT_REPLACE
 #include "apiemulator.h"
 
 BOOL IsUserAnAdminAlternative()

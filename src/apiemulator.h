@@ -7,12 +7,7 @@
 
 #include <windows.h>
 
-#ifndef DO_NOT_REPLACE
-
-#define IsUserAnAdmin IsUserAnAdminAlternative
-
-#endif
-
+/// IsUserAnAdmin のエミュレーションを行う
 BOOL IsUserAnAdminAlternative();
 
 #endif
