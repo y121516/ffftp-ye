@@ -1430,7 +1430,6 @@ void UploadDragProc(WPARAM wParam)
 				Pkt.KanaCnv = AskHostKanaCnv();
 #if defined(HAVE_TANDEM)
 				if (AskHostType() == HTYPE_TANDEM && AskOSS() == NO) {
-					int a = Pos->InfoExist && FINFO_SIZE;
 					CalcExtentSize(&Pkt, Pos->Size);
 				}
 #endif

@@ -974,7 +974,6 @@ int LoadRegistry(void)
 	if (i == FFFTP_SUCCESS)
 	{
 		//		char checkbuf[48];
-		int salt = 0;
 		Sts = YES;
 
 		ReadIntValueFromReg(hKey3, "Version", &Version);
