@@ -1536,17 +1536,17 @@ int ConvUTF8NtoSJIS_TruncateToDelimiter(char* pUTF8, int UTF8Length, int* pNewUT
 	// E3 81 82 E3 81 84   あい     -> 42 30 44 30   あい
 	// E3 81 82 E3 81      あ+E3 81 -> 42 30         あ
 	// E3 81 82 E3         あ+E3    -> 42 30         あ
-	UTF16Length = MultiByteToWideChar(CP_UTF8, 0, pUTF8, UTF8Length, NULL, 0);
+	UTF16Length = MultiByteToWideCharAlternative(CP_UTF8, 0, pUTF8, UTF8Length, NULL, 0);
 	if (!(pUTF16 = (wchar_t*)malloc(sizeof(wchar_t) * UTF16Length)))
 		return -1;
 	// Shift_JISへ変換した時に文字数が増減する位置がUnicode結合文字の区切り
-	UTF16Length = MultiByteToWideChar(CP_UTF8, 0, pUTF8, UTF8Length, pUTF16, UTF16Length);
+	UTF16Length = MultiByteToWideCharAlternative(CP_UTF8, 0, pUTF8, UTF8Length, pUTF16, UTF16Length);
 	SJISLength = WideCharToMultiByte(932, 0, pUTF16, UTF16Length, NULL, 0, NULL, NULL);
 	NewSJISLength = SJISLength;
 	while (UTF8Length > 0 && NewSJISLength >= SJISLength)
 	{
 		UTF8Length--;
-		UTF16Length = MultiByteToWideChar(CP_UTF8, 0, pUTF8, UTF8Length, pUTF16, UTF16Length);
+		UTF16Length = MultiByteToWideCharAlternative(CP_UTF8, 0, pUTF8, UTF8Length, pUTF16, UTF16Length);
 		NewSJISLength = WideCharToMultiByte(932, 0, pUTF16, UTF16Length, NULL, 0, NULL, NULL);
 	}
 	free(pUTF16);
@@ -1557,7 +1557,7 @@ int ConvUTF8NtoSJIS_TruncateToDelimiter(char* pUTF8, int UTF8Length, int* pNewUT
 		while (UTF8Length > 0 && NewUTF16Length >= UTF16Length)
 		{
 			UTF8Length--;
-			NewUTF16Length = MultiByteToWideChar(CP_UTF8, 0, pUTF8, UTF8Length, NULL, 0);
+			NewUTF16Length = MultiByteToWideCharAlternative(CP_UTF8, 0, pUTF8, UTF8Length, NULL, 0);
 		}
 		if (UTF16Length > 0)
 			UTF8Length++;
@@ -1610,7 +1610,7 @@ int ConvUTF8NtoSJIS(CODECONVINFO* cInfo)
 			SrcLength = SrcLength / 2;
 		}
 	}
-	UTF16Length = MultiByteToWideChar(CP_UTF8, 0, pSrc, SrcLength, NULL, 0);
+	UTF16Length = MultiByteToWideCharAlternative(CP_UTF8, 0, pSrc, SrcLength, NULL, 0);
 
 	// サイズ0 or バッファサイズより大きい場合は
 	// cInfo->Bufの最初に'\0'を入れて、
@@ -1638,7 +1638,7 @@ int ConvUTF8NtoSJIS(CODECONVINFO* cInfo)
 //		(unsigned short *)temp_string,	// 変換した文字列の格納先
 //		1024							// 格納先サイズ
 //	);
-	MultiByteToWideChar(CP_UTF8, 0, pSrc, SrcLength, pUTF16, UTF16Length);
+	MultiByteToWideCharAlternative(CP_UTF8, 0, pSrc, SrcLength, pUTF16, UTF16Length);
 
 	// 生成されるUTF-8コードのサイズを調べる
 //	string_length = WideCharToMultiByte(
@@ -1807,7 +1807,7 @@ int ConvSJIStoUTF8N(CODECONVINFO* cInfo)
 //						0,				// 格納先サイズ
 //						NULL,NULL
 //					);
-	string_length = WideCharToMultiByte(CP_UTF8, 0, pUTF16, UTF16Length, NULL, 0, NULL, NULL);
+	string_length = WideCharToMultiByteAlternative(CP_UTF8, 0, pUTF16, UTF16Length, NULL, 0, NULL, NULL);
 
 	// サイズ0 or 出力バッファサイズより大きい場合は、
 	// cInfo->Bufの最初に'\0'を入れて、
@@ -1840,12 +1840,12 @@ int ConvSJIStoUTF8N(CODECONVINFO* cInfo)
 //		cInfo->BufSize,					// 格納先サイズ
 //		NULL,NULL
 //	);
-	cInfo->OutLen = WideCharToMultiByte(CP_UTF8, 0, pUTF16, UTF16Length, cInfo->Buf, cInfo->BufSize, NULL, NULL);
+	cInfo->OutLen = WideCharToMultiByteAlternative(CP_UTF8, 0, pUTF16, UTF16Length, cInfo->Buf, cInfo->BufSize, NULL, NULL);
 	// バッファに収まらないため変換文字数を半減
 	while (cInfo->OutLen == 0 && UTF16Length > 0)
 	{
 		UTF16Length = UTF16Length / 2;
-		cInfo->OutLen = WideCharToMultiByte(CP_UTF8, 0, pUTF16, UTF16Length, cInfo->Buf, cInfo->BufSize, NULL, NULL);
+		cInfo->OutLen = WideCharToMultiByteAlternative(CP_UTF8, 0, pUTF16, UTF16Length, cInfo->Buf, cInfo->BufSize, NULL, NULL);
 	}
 	// 変換された元の文字列での文字数を取得
 	Count = WideCharToMultiByte(932, 0, pUTF16, UTF16Length, NULL, 0, NULL, NULL);
@@ -1939,9 +1939,9 @@ int ConvUTF8NtoUTF8HFSX(CODECONVINFO* cInfo)
 		else
 		{
 			// Normalization Form Dに変換
-			Count = MultiByteToWideChar(CP_UTF8, 0, pSrcCur, (int)(pSrcNext - pSrcCur), Temp1, 4);
+			Count = MultiByteToWideCharAlternative(CP_UTF8, 0, pSrcCur, (int)(pSrcNext - pSrcCur), Temp1, 4);
 			Count = p_NormalizeString(NormalizationD, Temp1, Count, Temp2, 4);
-			Count = WideCharToMultiByte(CP_UTF8, 0, Temp2, Count, Temp3, 16, NULL, NULL);
+			Count = WideCharToMultiByteAlternative(CP_UTF8, 0, Temp2, Count, Temp3, 16, NULL, NULL);
 			Temp3Cur = Temp3;
 			Temp3End = Temp3 + Count;
 			TempCount = 0;
@@ -1994,10 +1994,10 @@ int ConvUTF8HFSXtoUTF8N_TruncateToDelimiter(char* pUTF8, int UTF8Length, int* pN
 	int CodeCount;
 	int NewCodeCount;
 	int NewUTF16Length;
-	UTF16Length = MultiByteToWideChar(CP_UTF8, 0, pUTF8, UTF8Length, NULL, 0);
+	UTF16Length = MultiByteToWideCharAlternative(CP_UTF8, 0, pUTF8, UTF8Length, NULL, 0);
 	if (!(pUTF16 = (wchar_t*)malloc(sizeof(wchar_t) * UTF16Length)))
 		return -1;
-	UTF16Length = MultiByteToWideChar(CP_UTF8, 0, pUTF8, UTF8Length, pUTF16, UTF16Length);
+	UTF16Length = MultiByteToWideCharAlternative(CP_UTF8, 0, pUTF8, UTF8Length, pUTF16, UTF16Length);
 	UTF16HFSXLength = p_NormalizeString(NormalizationC, pUTF16, UTF16Length, NULL, 0);
 	if (!(pUTF16HFSX = (wchar_t*)malloc(sizeof(wchar_t) * UTF16HFSXLength)))
 	{
@@ -2011,7 +2011,7 @@ int ConvUTF8HFSXtoUTF8N_TruncateToDelimiter(char* pUTF8, int UTF8Length, int* pN
 	while (UTF8Length > 0 && NewCodeCount >= CodeCount)
 	{
 		UTF8Length--;
-		UTF16Length = MultiByteToWideChar(CP_UTF8, 0, pUTF8, UTF8Length, pUTF16, UTF16Length);
+		UTF16Length = MultiByteToWideCharAlternative(CP_UTF8, 0, pUTF8, UTF8Length, pUTF16, UTF16Length);
 		UTF16HFSXLength = p_NormalizeString(NormalizationC, pUTF16, UTF16Length, pUTF16HFSX, UTF16HFSXLength);
 		NewCodeCount = GetCodeCountW(pUTF16HFSX, UTF16HFSXLength);
 	}
@@ -2024,7 +2024,7 @@ int ConvUTF8HFSXtoUTF8N_TruncateToDelimiter(char* pUTF8, int UTF8Length, int* pN
 		while (UTF8Length > 0 && NewUTF16Length >= UTF16Length)
 		{
 			UTF8Length--;
-			NewUTF16Length = MultiByteToWideChar(CP_UTF8, 0, pUTF8, UTF8Length, NULL, 0);
+			NewUTF16Length = MultiByteToWideCharAlternative(CP_UTF8, 0, pUTF8, UTF8Length, NULL, 0);
 		}
 		if (UTF16Length > 0)
 			UTF8Length++;
@@ -2058,7 +2058,7 @@ int ConvUTF8HFSXtoUTF8N(CODECONVINFO* cInfo)
 	memcpy(pSrc, cInfo->EscUTF8, sizeof(char) * cInfo->EscUTF8Len);
 	memcpy(pSrc + cInfo->EscUTF8Len, cInfo->Str, sizeof(char) * cInfo->StrLen);
 	*(pSrc + SrcLength) = '\0';
-	UTF16Length = MultiByteToWideChar(CP_UTF8, 0, pSrc, SrcLength, NULL, 0);
+	UTF16Length = MultiByteToWideCharAlternative(CP_UTF8, 0, pSrc, SrcLength, NULL, 0);
 	if (!(pUTF16 = (wchar_t*)malloc(sizeof(wchar_t) * UTF16Length)))
 	{
 		free(pSrc);
@@ -2066,7 +2066,7 @@ int ConvUTF8HFSXtoUTF8N(CODECONVINFO* cInfo)
 		cInfo->BufSize = 0;
 		return Continue;
 	}
-	MultiByteToWideChar(CP_UTF8, 0, pSrc, SrcLength, pUTF16, UTF16Length);
+	MultiByteToWideCharAlternative(CP_UTF8, 0, pSrc, SrcLength, pUTF16, UTF16Length);
 	UTF16HFSXLength = p_NormalizeString(NormalizationC, pUTF16, UTF16Length, NULL, 0);
 	if (!(pUTF16HFSX = (wchar_t*)malloc(sizeof(wchar_t) * UTF16HFSXLength)))
 	{
@@ -2077,7 +2077,7 @@ int ConvUTF8HFSXtoUTF8N(CODECONVINFO* cInfo)
 		return Continue;
 	}
 	UTF16HFSXLength = p_NormalizeString(NormalizationC, pUTF16, UTF16Length, pUTF16HFSX, UTF16HFSXLength);
-	cInfo->OutLen = WideCharToMultiByte(CP_UTF8, 0, pUTF16HFSX, UTF16HFSXLength, cInfo->Buf, cInfo->BufSize, NULL, NULL);
+	cInfo->OutLen = WideCharToMultiByteAlternative(CP_UTF8, 0, pUTF16HFSX, UTF16HFSXLength, cInfo->Buf, cInfo->BufSize, NULL, NULL);
 	if (cInfo->OutLen == 0 && UTF16HFSXLength > 0)
 	{
 		// バッファに収まらないため変換文字数を半減

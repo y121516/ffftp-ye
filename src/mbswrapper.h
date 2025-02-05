@@ -250,11 +250,6 @@ FILE* fopenM(const char* _Filename, const char* _Mode);
 
 #endif
 
-#ifdef EMULATE_UTF8_WCHAR_CONVERSION
-#define MultiByteToWideChar MultiByteToWideCharAlternative
-#define WideCharToMultiByte WideCharToMultiByteAlternative
-#endif
-
 int MtoW(LPWSTR pDst, int size, LPCSTR pSrc, int count);
 int WtoM(LPSTR pDst, int size, LPCWSTR pSrc, int count);
 int AtoW(LPWSTR pDst, int size, LPCSTR pSrc, int count);
@@ -290,6 +285,7 @@ BOOL FixMultiStringM(LPSTR pDst, LPCSTR pSrc);
 BOOL CheckStringM(LPCSTR lpString);
 BOOL CheckMultiStringM(LPCSTR lpString);
 void FreeDuplicatedString(void* p);
+// UTF-8 UTF-16 LE間の変換処理でWindows XPのエミュレーションを行う
 int MultiByteToWideCharAlternative(UINT CodePage, DWORD dwFlags, LPCSTR lpMultiByteStr, int cbMultiByte, LPWSTR lpWideCharStr, int cchWideChar);
 int WideCharToMultiByteAlternative(UINT CodePage, DWORD dwFlags, LPCWSTR lpWideCharStr, int cchWideChar, LPSTR lpMultiByteStr, int cbMultiByte, LPCSTR lpDefaultChar, LPBOOL lpUsedDefaultChar);
 
