@@ -58,14 +58,11 @@
 #pragma warning(default:4828)
 // ソフトウェア自動更新
 #include "updater.h"
-
-// UTF-8対応
-#undef __MBSWRAPPER_H__
 #include "mbswrapper.h"
 
 // 暗号化通信対応
 #include "filehash.h"
-
+#include <direct.h>
 
 #define RESIZE_OFF		0		/* ウインドウの区切り位置変更していない */
 #define RESIZE_ON		1		/* ウインドウの区切り位置変更中 */

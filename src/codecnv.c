@@ -41,7 +41,7 @@
 
 #include "common.h"
 #include "resource.h"
-
+#include "mbswrapper.h"
 
 
 #define CONV_ASCII		0		/* ASCII文字処理中 */

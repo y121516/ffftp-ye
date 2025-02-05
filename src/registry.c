@@ -49,7 +49,8 @@
 #include "sample.h"
 #include "sha.h"
 #include "aes.h"
-
+#include "mbswrapper.h"
+#include <mbstring.h>
 
 /*===== プロトタイプ =====*/
 

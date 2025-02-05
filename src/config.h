@@ -15,8 +15,5 @@
 #define MAX_DATA_CONNECTION 4
 /* HP NonStop Server 用のコードを有効にする */
 #define HAVE_TANDEM
-
-// 内部をUTF-8として扱いマルチバイト文字ワイド文字APIラッパーを使用する
-#include "mbswrapper.h"
 // OpenSSL用ソケットラッパーを使用する
 #include "socketwrapper.h"

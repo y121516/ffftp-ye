@@ -1404,7 +1404,6 @@ typedef struct
 
 /*===== main.c =====*/
 
-int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmdLine, int cmdShow);
 void DispWindowTitle(void);
 HWND GetMainHwnd(void);
 HWND GetFocusHwnd(void);

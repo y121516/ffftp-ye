@@ -42,6 +42,7 @@
 
 #include "common.h"
 #include "resource.h"
+#include "mbswrapper.h"
 
 #define USE_THIS	1
 #define DBG_MSG		0

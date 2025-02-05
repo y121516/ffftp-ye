@@ -57,9 +57,6 @@
 #include <shlobj.h>
 #include "OleDragDrop.h"
 #include "common.h"
-
-// UTF-8対応
-#undef __MBSWRAPPER_H__
 #include "mbswrapper.h"
 
 #define BUF_SIZE		256

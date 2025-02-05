@@ -53,6 +53,7 @@
 
 #include "common.h"
 #include "resource.h"
+#include "mbswrapper.h"
 
 #define SET_BUFFER_SIZE
 

@@ -44,10 +44,6 @@
 #pragma warning(disable:4828)
 #include "helpid.h"
 #pragma warning(default:4828)
-// UTF-8対応
-#undef __MBSWRAPPER_H__
-#include "mbswrapper.h"
-
 
 /*===== プロトタイプ =====*/
 
