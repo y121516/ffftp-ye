@@ -114,7 +114,7 @@ static void DispUploadFinishMsg(TRANSPACKET* Pkt, int iRetCode);
 static int SetUploadResume(TRANSPACKET* Pkt, int ProcMode, LONGLONG Size, int* Mode);
 static LRESULT CALLBACK TransDlgProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam);
 static void DispTransferStatus(HWND hWnd, int End, TRANSPACKET* Pkt);
-static void DispTransFileInfo(TRANSPACKET* Pkt, char* Title, int SkipButton, int Info);
+static void DispTransFileInfo(TRANSPACKET* Pkt, const char* Title, int SkipButton, int Info);
 // IPv6対応
 //static int GetAdrsAndPort(char *Str, char *Adrs, int *Port, int Max);
 static int GetAdrsAndPort(SOCKET Skt, char* Str, char* Adrs, int* Port, int Max);
@@ -125,7 +125,7 @@ static int MirrorDelNotify(int Cur, int Notify, TRANSPACKET* Pkt);
 // 64ビット対応
 //static BOOL CALLBACK MirrorDeleteDialogCallBack(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lParam);
 static INT_PTR CALLBACK MirrorDeleteDialogCallBack(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lParam);
-static void SetErrorMsg(char* fmt, ...);
+static void SetErrorMsg(const char* fmt, ...);
 // 同時接続対応
 static char* GetErrMsg();
 
@@ -4061,7 +4061,7 @@ static void DispTransferStatus(HWND hWnd, int End, TRANSPACKET* Pkt)
 *		なし
 *----------------------------------------------------------------------------*/
 
-static void DispTransFileInfo(TRANSPACKET* Pkt, char* Title, int SkipButton, int Info)
+static void DispTransFileInfo(TRANSPACKET* Pkt, const char* Title, int SkipButton, int Info)
 {
 	char Tmp[40];
 
@@ -4433,7 +4433,7 @@ static INT_PTR CALLBACK MirrorDeleteDialogCallBack(HWND hDlg, UINT iMessage, WPA
 
 
 
-static void SetErrorMsg(char* fmt, ...)
+static void SetErrorMsg(const char* fmt, ...)
 {
 	va_list Args;
 

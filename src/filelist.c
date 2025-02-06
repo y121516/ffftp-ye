@@ -81,7 +81,7 @@ typedef struct {
 static LRESULT CALLBACK LocalWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 static LRESULT CALLBACK RemoteWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 static LRESULT FileListCommonWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-static void AddDispFileList(FLISTANCHOR* Anchor, char* Name, FILETIME* Time, LONGLONG Size, int Attr, int Type, int Link, char* Owner, int InfoExist, int Win);
+static void AddDispFileList(FLISTANCHOR* Anchor, char* Name, FILETIME* Time, LONGLONG Size, int Attr, int Type, int Link, const char* Owner, int InfoExist, int Win);
 static void EraseDispFileList(FLISTANCHOR* Anchor);
 static void DispFileList2View(HWND hWnd, FLISTANCHOR* Anchor);
 // ファイルアイコン表示対応
@@ -101,7 +101,7 @@ static void CopyTmpListToFileList(FILELIST** Base, FILELIST* List);
 // 文字化け対策
 //static int GetListOneLine(char *Buf, int Max, FILE *Fd);
 static int GetListOneLine(char* Buf, int Max, FILE* Fd, int Convert);
-static int MakeDirPath(char* Str, int ListType, char* Path, char* Dir);
+static int MakeDirPath(char* Str, int ListType, const char* Path, char* Dir);
 // ファイル一覧バグ修正
 //static void MakeLocalTree(char *Path, FILELIST **Base);
 static int MakeLocalTree(char* Path, FILELIST** Base);
@@ -1638,7 +1638,7 @@ void GetLocalDirForWnd(void)
 *		なし
 *----------------------------------------------------------------------------*/
 
-static void AddDispFileList(FLISTANCHOR* Anchor, char* Name, FILETIME* Time, LONGLONG Size, int Attr, int Type, int Link, char* Owner, int InfoExist, int Win)
+static void AddDispFileList(FLISTANCHOR* Anchor, char* Name, FILETIME* Time, LONGLONG Size, int Attr, int Type, int Link, const char* Owner, int InfoExist, int Win)
 {
 	int i;
 	FILELIST* Pos;
@@ -2200,7 +2200,7 @@ void FindFileInList(HWND hWnd, int Type)
 	static char RegExp[FMAX_PATH + 1] = { "" };
 	char Name[FMAX_PATH + 1];
 	LV_ITEM LvItem;
-	char* Title;
+	const char* Title;
 
 	// 変数が未初期化のバグ修正
 	memset(&LvItem, 0, sizeof(LV_ITEM));
@@ -3350,7 +3350,7 @@ static void CopyTmpListToFileList(FILELIST** Base, FILELIST* List)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void AddRemoteTreeToFileList(int Num, char* Path, int IncDir, FILELIST** Base)
+void AddRemoteTreeToFileList(int Num, const char* Path, int IncDir, FILELIST** Base)
 {
 	char Str[FMAX_PATH + 1];
 	char Dir[FMAX_PATH + 1];
@@ -3506,7 +3506,7 @@ static int GetListOneLine(char* Buf, int Max, FILE* Fd, int Convert)
 *			FFFTP_SUCCESS/FFFTP_FAIL=ディレクトリ情報でない
 *----------------------------------------------------------------------------*/
 
-static int MakeDirPath(char* Str, int ListType, char* Path, char* Dir)
+static int MakeDirPath(char* Str, int ListType, const char* Path, char* Dir)
 {
 	int Sts;
 
@@ -5923,7 +5923,7 @@ static int FindField2(char* Str, char* Buf, char Separator, int Num, int ToLast)
 static void GetMonth(char* Str, WORD* Month, WORD* Day)
 {
 	static const char DateStr[] = { "JanFebMarAprMayJunJulAugSepOctNovDec" };
-	char* Pos;
+	const char* Pos;
 
 	*Month = 0;
 	*Day = 0;

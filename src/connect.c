@@ -2029,7 +2029,7 @@ static SOCKET DoConnect(HOSTDATA* HostData, char* Host, char* User, char* Pass, 
 static int CheckOneTimePassword(char* Pass, char* Reply, int Type)
 {
 	int Sts;
-	char* Pos;
+	const char* Pos;
 	int Seq;
 	char Seed[MAX_SEED_LEN + 1];
 	int i;
@@ -2136,7 +2136,7 @@ static int CheckOneTimePassword(char* Pass, char* Reply, int Type)
 *----------------------------------------------------------------------------*/
 
 // IPv6対応
-typedef SOCKET(__cdecl* LPCONNECTSOCK)(char*, int, char*, int*);
+typedef SOCKET(__cdecl* LPCONNECTSOCK)(char*, int, const char*, int*);
 
 typedef struct
 {
@@ -2144,7 +2144,7 @@ typedef struct
 	DWORD ExitCode;
 	char* host;
 	int port;
-	char* PreMsg;
+	const char* PreMsg;
 	int CancelCheckWork;
 	LPCONNECTSOCK f;
 	SOCKET s;
@@ -2159,7 +2159,7 @@ DWORD WINAPI connectsockThreadProc(LPVOID lpParameter)
 }
 
 // IPv6対応
-SOCKET connectsock(char* host, int port, char* PreMsg, int* CancelCheckWork)
+SOCKET connectsock(char* host, int port, const char* PreMsg, int* CancelCheckWork)
 {
 	SOCKET Result;
 	CONNECTSOCKDATA DataIPv4;
@@ -2255,7 +2255,7 @@ SOCKET connectsock(char* host, int port, char* PreMsg, int* CancelCheckWork)
 
 // IPv6対応
 //SOCKET connectsock(char *host, int port, char *PreMsg, int *CancelCheckWork)
-SOCKET connectsockIPv4(char* host, int port, char* PreMsg, int* CancelCheckWork)
+SOCKET connectsockIPv4(char* host, int port, const char* PreMsg, int* CancelCheckWork)
 {
 	// IPv6対応
 	struct sockaddr_in SocksSockAddr;	/* SOCKSサーバのアドレス情報 */
@@ -2462,7 +2462,7 @@ SOCKET connectsockIPv4(char* host, int port, char* PreMsg, int* CancelCheckWork)
 }
 
 
-SOCKET connectsockIPv6(char* host, int port, char* PreMsg, int* CancelCheckWork)
+SOCKET connectsockIPv6(char* host, int port, const char* PreMsg, int* CancelCheckWork)
 {
 	struct sockaddr_in6 SocksSockAddr;	/* SOCKSサーバのアドレス情報 */
 	struct sockaddr_in6 CurSockAddr;		/* 接続先ホストのアドレス情報 */

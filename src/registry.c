@@ -56,15 +56,15 @@
 // バグ修正
 //static void SaveStr(HKEY hKey, char *Key, char *Str, char *DefaultStr);
 //static void SaveIntNum(HKEY hKey, char *Key, int Num, int DefaultNum);
-static void SaveStr(void* Handle, char* Key, char* Str, char* DefaultStr);
-static void SaveIntNum(void* Handle, char* Key, int Num, int DefaultNum);
+static void SaveStr(void* Handle, const char* Key, char* Str, char* DefaultStr);
+static void SaveIntNum(void* Handle, const char* Key, int Num, int DefaultNum);
 static void MakeFontData(LOGFONT Font, HFONT hFont, char* Buf);
 static int RestoreFontData(char* Str, LOGFONT* Font);
 
-static void EncodePassword(char* Str, char* Buf);
+static void EncodePassword(const char* Str, char* Buf);
 static void EncodePasswordOriginal(char* Str, char* Buf);
 static void EncodePassword2(char* Str, char* Buf, const char* Key);
-static void EncodePassword3(char* Str, char* Buf, const char* Key);
+static void EncodePassword3(const char* Str, char* Buf, const char* Key);
 
 static void DecodePassword(char* Str, char* Buf);
 static void DecodePasswordOriginal(char* Str, char* Buf);
@@ -73,22 +73,22 @@ static void DecodePassword3(char* Str, char* Buf, const char* Key);
 static int CreateAesKey(unsigned char* AesKey, const char* Key);
 
 static void SetRegType(int Type);
-static int OpenReg(char* Name, void** Handle);
-static int CreateReg(char* Name, void** Handle);
+static int OpenReg(const char* Name, void** Handle);
+static int CreateReg(const char* Name, void** Handle);
 static int CloseReg(void* Handle);
-static int OpenSubKey(void* Parent, char* Name, void** Handle);
-static int CreateSubKey(void* Parent, char* Name, void** Handle);
+static int OpenSubKey(void* Parent, const char* Name, void** Handle);
+static int CreateSubKey(void* Parent, const char* Name, void** Handle);
 static int CloseSubKey(void* Handle);
-static int DeleteSubKey(void* Handle, char* Name);
-static int DeleteValue(void* Handle, char* Name);
-static int ReadIntValueFromReg(void* Handle, char* Name, int* Value);
-static int WriteIntValueToReg(void* Handle, char* Name, int Value);
-static int ReadStringFromReg(void* Handle, char* Name, char* Str, DWORD Size);
-static int WriteStringToReg(void* Handle, char* Name, char* Str);
-static int ReadMultiStringFromReg(void* Handle, char* Name, char* Str, DWORD Size);
-static int WriteMultiStringToReg(void* Handle, char* Name, char* Str);
-static int ReadBinaryFromReg(void* Handle, char* Name, void* Bin, DWORD Size);
-static int WriteBinaryToReg(void* Handle, char* Name, void* Bin, int Len);
+static int DeleteSubKey(void* Handle, const char* Name);
+static int DeleteValue(void* Handle, const char* Name);
+static int ReadIntValueFromReg(void* Handle, const char* Name, int* Value);
+static int WriteIntValueToReg(void* Handle, const char* Name, int Value);
+static int ReadStringFromReg(void* Handle, const char* Name, char* Str, DWORD Size);
+static int WriteStringToReg(void* Handle, const char* Name, char* Str);
+static int ReadMultiStringFromReg(void* Handle, const char* Name, char* Str, DWORD Size);
+static int WriteMultiStringToReg(void* Handle, const char* Name, char* Str);
+static int ReadBinaryFromReg(void* Handle, const char* Name, void* Bin, DWORD Size);
+static int WriteBinaryToReg(void* Handle, const char* Name, void* Bin, int Len);
 // 暗号化通信対応
 static int StrCatOut(char* Src, int Len, char* Dst);
 static int StrReadIn(char* Src, int Max, char* Dst);
@@ -950,8 +950,8 @@ int LoadRegistry(void)
 	char Buf[FMAX_PATH + 1];
 	// 全設定暗号化対応
 	char Buf2[FMAX_PATH + 1];
-	char* Pos;
-	char* Pos2;
+	const char* Pos;
+	const char* Pos2;
 	HOSTDATA Host;
 	HISTORYDATA Hist;
 	int Sts;
@@ -1814,7 +1814,7 @@ int LoadSettingsFromFile(void)
 
 // バグ修正
 //static void SaveStr(HKEY hKey, char *Key, char *Str, char *DefaultStr)
-static void SaveStr(void* Handle, char* Key, char* Str, char* DefaultStr)
+static void SaveStr(void* Handle, const char* Key, char* Str, char* DefaultStr)
 {
 	if ((DefaultStr != NULL) && (strcmp(Str, DefaultStr) == 0))
 		//		DeleteValue(hKey, Key);
@@ -1844,7 +1844,7 @@ static void SaveStr(void* Handle, char* Key, char* Str, char* DefaultStr)
 
 // バグ修正
 //static void SaveIntNum(HKEY hKey, char *Key, int Num, int DefaultNum)
-static void SaveIntNum(void* Handle, char* Key, int Num, int DefaultNum)
+static void SaveIntNum(void* Handle, const char* Key, int Num, int DefaultNum)
 {
 	if (Num == DefaultNum)
 		//		DeleteValue(hKey, Key);
@@ -1933,7 +1933,7 @@ static int RestoreFontData(char* Str, LOGFONT* Font)
 *	Return Value
 *		なし
 *----------------------------------------------------------------------------*/
-static void EncodePassword(char* Str, char* Buf)
+static void EncodePassword(const char* Str, char* Buf)
 {
 	EncodePassword3(Str, Buf, SecretKey);
 }
@@ -2052,7 +2052,7 @@ static void EncodePassword2(char* Str, char* Buf, const char* Key)
 *		なし
 *----------------------------------------------------------------------------*/
 
-static void EncodePassword3(char* Str, char* Buf, const char* Key)
+static void EncodePassword3(const char* Str, char* Buf, const char* Key)
 {
 	unsigned char* Put;
 	unsigned char* AesEncBuf;
@@ -2403,11 +2403,11 @@ typedef struct regdatatbl_reg {
 /*===== プロトタイプ =====*/
 
 static BOOL WriteOutRegToFile(REGDATATBL* Pos);
-static int ReadInReg(char* Name, REGDATATBL** Handle);
+static int ReadInReg(const char* Name, REGDATATBL** Handle);
 // 暗号化通信対応
 //static int StrCatOut(char *Src, int Len, char *Dst);
 //static int StrReadIn(char *Src, int Max, char *Dst);
-static char* ScanValue(void* Handle, char* Name);
+static char* ScanValue(void* Handle, const char* Name);
 
 
 /*===== ローカルなワーク =====*/
@@ -2444,7 +2444,7 @@ static void SetRegType(int Type)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-static int OpenReg(char* Name, void** Handle)
+static int OpenReg(const char* Name, void** Handle)
 {
 	int Sts;
 	char Tmp[FMAX_PATH + 1];
@@ -2488,7 +2488,7 @@ static int OpenReg(char* Name, void** Handle)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-static int CreateReg(char* Name, void** Handle)
+static int CreateReg(const char* Name, void** Handle)
 {
 	int Sts;
 	char Tmp[FMAX_PATH + 1];
@@ -2637,7 +2637,7 @@ static BOOL WriteOutRegToFile(REGDATATBL* Pos)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-static int ReadInReg(char* Name, REGDATATBL** Handle)
+static int ReadInReg(const char* Name, REGDATATBL** Handle)
 {
 	FILE* Strm;
 	char* Buf;
@@ -2726,7 +2726,7 @@ static int ReadInReg(char* Name, REGDATATBL** Handle)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-static int OpenSubKey(void* Parent, char* Name, void** Handle)
+static int OpenSubKey(void* Parent, const char* Name, void** Handle)
 {
 	int Sts;
 	char Key[80];
@@ -2782,7 +2782,7 @@ static int OpenSubKey(void* Parent, char* Name, void** Handle)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-static int CreateSubKey(void* Parent, char* Name, void** Handle)
+static int CreateSubKey(void* Parent, const char* Name, void** Handle)
 {
 	int Sts;
 	DWORD Dispos;
@@ -2865,7 +2865,7 @@ static int CloseSubKey(void* Handle)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-static int DeleteSubKey(void* Handle, char* Name)
+static int DeleteSubKey(void* Handle, const char* Name)
 {
 	int Sts;
 
@@ -2896,7 +2896,7 @@ static int DeleteSubKey(void* Handle, char* Name)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-static int DeleteValue(void* Handle, char* Name)
+static int DeleteValue(void* Handle, const char* Name)
 {
 	int Sts;
 
@@ -2928,7 +2928,7 @@ static int DeleteValue(void* Handle, char* Name)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-static int ReadIntValueFromReg(void* Handle, char* Name, int* Value)
+static int ReadIntValueFromReg(void* Handle, const char* Name, int* Value)
 {
 	int Sts;
 	DWORD Size;
@@ -2984,7 +2984,7 @@ static int ReadIntValueFromReg(void* Handle, char* Name, int* Value)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-static int WriteIntValueToReg(void* Handle, char* Name, int Value)
+static int WriteIntValueToReg(void* Handle, const char* Name, int Value)
 {
 	REGDATATBL* Pos;
 	char* Data;
@@ -3040,7 +3040,7 @@ static int WriteIntValueToReg(void* Handle, char* Name, int Value)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-static int ReadStringFromReg(void* Handle, char* Name, char* Str, DWORD Size)
+static int ReadStringFromReg(void* Handle, const char* Name, char* Str, DWORD Size)
 {
 	int Sts;
 	char* Pos;
@@ -3131,7 +3131,7 @@ static int ReadStringFromReg(void* Handle, char* Name, char* Str, DWORD Size)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-static int WriteStringToReg(void* Handle, char* Name, char* Str)
+static int WriteStringToReg(void* Handle, const char* Name, char* Str)
 {
 	REGDATATBL* Pos;
 	char* Data;
@@ -3186,7 +3186,7 @@ static int WriteStringToReg(void* Handle, char* Name, char* Str)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-static int ReadMultiStringFromReg(void* Handle, char* Name, char* Str, DWORD Size)
+static int ReadMultiStringFromReg(void* Handle, const char* Name, char* Str, DWORD Size)
 {
 	int Sts;
 	char* Pos;
@@ -3280,7 +3280,7 @@ static int ReadMultiStringFromReg(void* Handle, char* Name, char* Str, DWORD Siz
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-static int WriteMultiStringToReg(void* Handle, char* Name, char* Str)
+static int WriteMultiStringToReg(void* Handle, const char* Name, char* Str)
 {
 	REGDATATBL* Pos;
 	char* Data;
@@ -3335,7 +3335,7 @@ static int WriteMultiStringToReg(void* Handle, char* Name, char* Str)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-static int ReadBinaryFromReg(void* Handle, char* Name, void* Bin, DWORD Size)
+static int ReadBinaryFromReg(void* Handle, const char* Name, void* Bin, DWORD Size)
 {
 	int Sts;
 	char* Pos;
@@ -3391,7 +3391,7 @@ static int ReadBinaryFromReg(void* Handle, char* Name, void* Bin, DWORD Size)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-static int WriteBinaryToReg(void* Handle, char* Name, void* Bin, int Len)
+static int WriteBinaryToReg(void* Handle, const char* Name, void* Bin, int Len)
 {
 	REGDATATBL* Pos;
 	char* Data;
@@ -3532,7 +3532,7 @@ static int StrReadIn(char* Src, int Max, char* Dst)
 *			NULL=指定の名前の値が見つからない
 *----------------------------------------------------------------------------*/
 
-static char* ScanValue(void* Handle, char* Name)
+static char* ScanValue(void* Handle, const char* Name)
 {
 	REGDATATBL* Cur;
 	char* Pos;

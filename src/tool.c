@@ -94,7 +94,7 @@ void OtpCalcTool(void)
 static INT_PTR CALLBACK OtpCalcWinProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	char Tmp[41];
-	char* Pos;
+	const char* Pos;
 	int Seq;
 	int Type;
 	char Seed[MAX_SEED_LEN + 1];

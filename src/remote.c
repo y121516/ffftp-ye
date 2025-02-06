@@ -52,7 +52,7 @@
 
 static int DoPWD(char* Buf);
 static int ReadOneLine(SOCKET cSkt, char* Buf, int Max, int* CancelCheckWork);
-static int DoDirList(HWND hWnd, SOCKET cSkt, char* AddOpt, char* Path, int Num, int* CancelCheckWork);
+static int DoDirList(HWND hWnd, SOCKET cSkt, const char* AddOpt, const char* Path, int Num, int* CancelCheckWork);
 static void ChangeSepaLocal2Remote(char* Fname);
 static void ChangeSepaRemote2Local(char* Fname);
 
@@ -547,7 +547,7 @@ int DoMFMT(SOCKET cSkt, char* Path, FILETIME* Time, int* CancelCheckWork)
 
 // 同時接続対応
 //int DoQUOTE(char *CmdStr)
-int DoQUOTE(SOCKET cSkt, char* CmdStr, int* CancelCheckWork)
+int DoQUOTE(SOCKET cSkt, const char* CmdStr, int* CancelCheckWork)
 {
 	int Sts;
 
@@ -626,7 +626,7 @@ int DoQUIT(SOCKET ctrl_skt, int* CancelCheckWork)
 *		int 応答コードの１桁目
 *----------------------------------------------------------------------------*/
 
-int DoDirListCmdSkt(char* AddOpt, char* Path, int Num, int* CancelCheckWork)
+int DoDirListCmdSkt(const char* AddOpt, const char* Path, int Num, int* CancelCheckWork)
 {
 	int Sts;
 
@@ -658,7 +658,7 @@ int DoDirListCmdSkt(char* AddOpt, char* Path, int Num, int* CancelCheckWork)
 *		int 応答コード
 *----------------------------------------------------------------------------*/
 
-static int DoDirList(HWND hWnd, SOCKET cSkt, char* AddOpt, char* Path, int Num, int* CancelCheckWork)
+static int DoDirList(HWND hWnd, SOCKET cSkt, const char* AddOpt, const char* Path, int Num, int* CancelCheckWork)
 {
 	char Tmp[FMAX_PATH];
 	int Sts;
@@ -742,7 +742,7 @@ static int DoDirList(HWND hWnd, SOCKET cSkt, char* AddOpt, char* Path, int Num, 
 
 // 同時接続対応
 //int CommandProcCmd(char *Reply, char *fmt, ...)
-int CommandProcCmd(char* Reply, int* CancelCheckWork, char* fmt, ...)
+int CommandProcCmd(char* Reply, int* CancelCheckWork, const char* fmt, ...)
 {
 	va_list Args;
 	char Cmd[1024];
@@ -823,7 +823,7 @@ void SwitchOSSProc(void)
 
 // 同時接続対応
 //int CommandProcTrn(char *Reply, char *fmt, ...)
-int CommandProcTrn(SOCKET cSkt, char* Reply, int* CancelCheckWork, char* fmt, ...)
+int CommandProcTrn(SOCKET cSkt, char* Reply, int* CancelCheckWork, const char* fmt, ...)
 {
 	va_list Args;
 	char Cmd[1024];
@@ -864,7 +864,7 @@ int CommandProcTrn(SOCKET cSkt, char* Reply, int* CancelCheckWork, char* fmt, ..
 //#pragma aaa
 //static int cntcnt = 0;
 
-int command(SOCKET cSkt, char* Reply, int* CancelCheckWork, char* fmt, ...)
+int command(SOCKET cSkt, char* Reply, int* CancelCheckWork, const char* fmt, ...)
 {
 	va_list Args;
 	char Cmd[FMAX_PATH * 2];
@@ -934,7 +934,7 @@ int command(SOCKET cSkt, char* Reply, int* CancelCheckWork, char* fmt, ...)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-int SendData(SOCKET Skt, char* Data, int Size, int Mode, int* CancelCheckWork)
+int SendData(SOCKET Skt, const char* Data, int Size, int Mode, int* CancelCheckWork)
 {
 	int Sts;
 	int Tmp;
@@ -1282,10 +1282,10 @@ int ReadNchar(SOCKET cSkt, char* Buf, int Size, int* CancelCheckWork)
 *		char *エラー文字列
 *----------------------------------------------------------------------------*/
 
-char* ReturnWSError(UINT Error)
+const char* ReturnWSError(UINT Error)
 {
 	static char Msg[128];
-	char* Str;
+	const char* Str;
 
 	switch (Error)
 	{
@@ -1425,7 +1425,7 @@ char* ReturnWSError(UINT Error)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void ReportWSError(char* Msg, UINT Error)
+void ReportWSError(const char* Msg, UINT Error)
 {
 	if (Msg != NULL)
 		DoPrintf("[[%s : %s]]", Msg, ReturnWSError(Error));

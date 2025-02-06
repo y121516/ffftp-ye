@@ -1482,7 +1482,7 @@ double GetSelectedTotalSize(int Win);
 int MakeSelectedFileList(int Win, int Expand, int All, FILELIST** Base, int* CancelCheckWork);
 void MakeDroppedFileList(WPARAM wParam, char* Cur, FILELIST** Base);
 void MakeDroppedDir(WPARAM wParam, char* Cur);
-void AddRemoteTreeToFileList(int Num, char* Path, int IncDir, FILELIST** Base);
+void AddRemoteTreeToFileList(int Num, const char* Path, int IncDir, FILELIST** Base);
 void DeleteFileList(FILELIST** Base);
 FILELIST* SearchFileList(char* Fname, FILELIST* Base, int Caps);
 int Assume1900or2000(int Year);
@@ -1565,10 +1565,10 @@ void DispDownloadSize(LONGLONG Size);
 int MakeTaskWindow(HWND hWnd, HINSTANCE hInst);
 void DeleteTaskWindow(void);
 HWND GetTaskWnd(void);
-void SetTaskMsg(char* szFormat, ...);
+void SetTaskMsg(const char* szFormat, ...);
 int SaveTaskMsg(char* Fname);
 void DispTaskMsg(void);
-void DoPrintf(char* szFormat, ...);
+void DoPrintf(const char* szFormat, ...);
 void DoPrintf2(char* szFormat, ...);
 
 /*===== hostman.c =====*/
@@ -1632,10 +1632,10 @@ int AskRealHostType(void);
 int SetOSS(int wkOss);
 int AskOSS(void);
 #endif
-SOCKET connectsock(char* host, int port, char* PreMsg, int* CancelCheckWork);
+SOCKET connectsock(char* host, int port, const char* PreMsg, int* CancelCheckWork);
 // IPv6対応
-SOCKET connectsockIPv4(char* host, int port, char* PreMsg, int* CancelCheckWork);
-SOCKET connectsockIPv6(char* host, int port, char* PreMsg, int* CancelCheckWork);
+SOCKET connectsockIPv4(char* host, int port, const char* PreMsg, int* CancelCheckWork);
+SOCKET connectsockIPv6(char* host, int port, const char* PreMsg, int* CancelCheckWork);
 SOCKET GetFTPListenSocket(SOCKET ctrl_skt, int* CancelCheckWork);
 // IPv6対応
 SOCKET GetFTPListenSocketIPv4(SOCKET ctrl_skt, int* CancelCheckWork);
@@ -1757,27 +1757,27 @@ int DoMDTM(SOCKET cSkt, char* Path, FILETIME* Time, int* CancelCheckWork);
 int DoMFMT(SOCKET cSkt, char* Path, FILETIME* Time, int* CancelCheckWork);
 // 同時接続対応
 //int DoQUOTE(char *CmdStr);
-int DoQUOTE(SOCKET cSkt, char* CmdStr, int* CancelCheckWork);
+int DoQUOTE(SOCKET cSkt, const char* CmdStr, int* CancelCheckWork);
 SOCKET DoClose(SOCKET Sock);
 // 同時接続対応
 //int DoQUIT(SOCKET ctrl_skt);
 int DoQUIT(SOCKET ctrl_skt, int* CancelCheckWork);
-int DoDirListCmdSkt(char* AddOpt, char* Path, int Num, int* CancelCheckWork);
+int DoDirListCmdSkt(const char* AddOpt, const char* Path, int Num, int* CancelCheckWork);
 #if defined(HAVE_TANDEM)
 void SwitchOSSProc(void);
 #endif
 // 同時接続対応
 //int CommandProcCmd(char *Reply, char *fmt, ...);
-int CommandProcCmd(char* Reply, int* CancelCheckWork, char* fmt, ...);
+int CommandProcCmd(char* Reply, int* CancelCheckWork, const char* fmt, ...);
 // 同時接続対応
 //int CommandProcTrn(char *Reply, char *fmt, ...);
-int CommandProcTrn(SOCKET cSkt, char* Reply, int* CancelCheckWork, char* fmt, ...);
-int command(SOCKET cSkt, char* Reply, int* CancelCheckWork, char* fmt, ...);
-int SendData(SOCKET Skt, char* Data, int Size, int Mode, int* CancelCheckWork);
+int CommandProcTrn(SOCKET cSkt, char* Reply, int* CancelCheckWork, const char* fmt, ...);
+int command(SOCKET cSkt, char* Reply, int* CancelCheckWork, const char* fmt, ...);
+int SendData(SOCKET Skt, const char* Data, int Size, int Mode, int* CancelCheckWork);
 int ReadReplyMessage(SOCKET cSkt, char* Buf, int Max, int* CancelCheckWork, char* Tmp);
 int ReadNchar(SOCKET cSkt, char* Buf, int Size, int* CancelCheckWork);
-char* ReturnWSError(UINT Error);
-void ReportWSError(char* Msg, UINT Error);
+const char* ReturnWSError(UINT Error);
+void ReportWSError(const char* Msg, UINT Error);
 int ChangeFnameRemote2Local(char* Fname, int Max);
 int ChangeFnameLocal2Remote(char* Fname, int Max);
 
@@ -1919,7 +1919,7 @@ int ConnectRas(int Dialup, int UseThis, int Notify, char* Name);
 
 /*===== misc.c =====*/
 
-int InputDialogBox(int Res, HWND hWnd, char* Title, char* Buf, int Max, int* Flg, int Help);
+int InputDialogBox(int Res, HWND hWnd, const char* Title, char* Buf, int Max, int* Flg, int Help);
 // 64ビット対応
 //BOOL CALLBACK ExeEscDialogProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 INT_PTR CALLBACK ExeEscDialogProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -1936,12 +1936,12 @@ void ReplaceAll(char* Str, char Src, char Dst);
 int IsDigitSym(int Ch, int Sym);
 int StrAllSameChar(char* Str, char Ch);
 void RemoveTailingSpaces(char* Str);
-char* stristr(char* s1, char* s2);
-char* GetNextField(char* Str);
-int GetOneField(char* Str, char* Buf, int Max);
+const char* stristr(const char* s1, const char* s2);
+const char* GetNextField(const char* Str);
+int GetOneField(const char* Str, char* Buf, int Max);
 void RemoveComma(char* Str);
 char* GetFileName(char* Path);
-char* GetFileExt(char* Path);
+const char* GetFileExt(const char* Path);
 char* GetToolName(char* Path);
 void RemoveFileName(char* Path, char* Buf);
 void GetUpperDir(char* Path);
@@ -1963,7 +1963,7 @@ int AttrString2Value(char* Str);
 //void AttrValue2String(int Attr, char *Buf);
 void AttrValue2String(int Attr, char* Buf, int ShowNumber);
 void FormatIniString(char* Str);
-int SelectFile(HWND hWnd, char* Fname, char* Title, char* Filters, char* Ext, int Flags, int Save);
+int SelectFile(HWND hWnd, char* Fname, const char* Title, const char* Filters, const char* Ext, int Flags, int Save);
 int SelectDir(HWND hWnd, char* Buf, int MaxLen);
 void SetRadioButtonByValue(HWND hDlg, int Value, const RADIOBUTTON* Buttons, int Num);
 int AskRadioButtonValue(HWND hDlg, const RADIOBUTTON* Buttons, int Num);
@@ -1993,7 +1993,7 @@ HBITMAP ResizeBitmap(HBITMAP hBitmap, int UnitSizeX, int UnitSizeY, int ScaleNum
 // ソフトウェア自動更新
 void DecodeLineFeed(char* Str);
 // 暗号化通信対応
-int ReplaceAllStrings(char* Out, char* In, char* From, char* To);
+int ReplaceAllStrings(char* Out, char* In, const char* From, const char* To);
 
 /*===== dlgsize.c =====*/
 

@@ -101,7 +101,7 @@ static int DisplayDPIY;
 *		ダイアログは１個のEditBoxと１個のButtonを持つものを使う
 *----------------------------------------------------------------------------*/
 
-int InputDialogBox(int Res, HWND hWnd, char* Title, char* Buf, int Max, int* Flg, int Help)
+int InputDialogBox(int Res, HWND hWnd, const char* Title, char* Buf, int Max, int* Flg, int Help)
 {
 	int Ret;
 	DIALOGDATA dData;
@@ -504,9 +504,9 @@ void RemoveTailingSpaces(char* Str)
 *			NULL=見つからなかった
 *----------------------------------------------------------------------------*/
 
-char* stristr(char* s1, char* s2)
+const char* stristr(const char* s1, const char* s2)
 {
-	char* Ret;
+	const char* Ret;
 
 	Ret = NULL;
 	while (*s1 != NUL)
@@ -533,7 +533,7 @@ char* stristr(char* s1, char* s2)
 *			NULL=見つからなかった
 *----------------------------------------------------------------------------*/
 
-char* GetNextField(char* Str)
+const char* GetNextField(const char* Str)
 {
 	if ((Str = strchr(Str, ' ')) != NULL)
 	{
@@ -563,10 +563,10 @@ char* GetNextField(char* Str)
 *			FFFTP_SUCCESS/FFFTP_FAIL=長さが長すぎる
 *----------------------------------------------------------------------------*/
 
-int GetOneField(char* Str, char* Buf, int Max)
+int GetOneField(const char* Str, char* Buf, int Max)
 {
 	int Sts;
-	char* Pos;
+	const char* Pos;
 
 	Sts = FFFTP_FAIL;
 	if ((Pos = strchr(Str, ' ')) == NULL)
@@ -684,9 +684,9 @@ char* GetToolName(char* Path)
 *		char *拡張子の先頭
 *----------------------------------------------------------------------------*/
 
-char* GetFileExt(char* Path)
+const char* GetFileExt(const char* Path)
 {
-	char* Ret;
+	const char* Ret;
 
 	Ret = (char*)_mbschr((const unsigned char*)Path, NUL);
 	if ((_mbscmp((const unsigned char*)Path, (const unsigned char*)".") != 0) &&
@@ -1479,7 +1479,7 @@ void FormatIniString(char* Str)
 *			TRUE/FALSE=取消
 *----------------------------------------------------------------------------*/
 
-int SelectFile(HWND hWnd, char* Fname, char* Title, char* Filters, char* Ext, int Flags, int Save)
+int SelectFile(HWND hWnd, char* Fname, const char* Title, const char* Filters, const char* Ext, int Flags, int Save)
 {
 	OPENFILENAME OpenFile;
 	char Tmp[FMAX_PATH + 1];
@@ -2081,7 +2081,7 @@ void DecodeLineFeed(char* Str)
 }
 
 // 暗号化通信対応
-int ReplaceAllStrings(char* Out, char* In, char* From, char* To)
+int ReplaceAllStrings(char* Out, char* In, const char* From, const char* To)
 {
 	int InLen;
 	int FromLen;
