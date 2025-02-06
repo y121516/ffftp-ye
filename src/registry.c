@@ -1606,11 +1606,11 @@ void ClearRegistry(void)
 	char Str[20];
 	int i;
 
-	if (RegCreateKeyEx(HKEY_CURRENT_USER, "Software\\Sota", 0, "", REG_OPTION_NON_VOLATILE, KEY_CREATE_SUB_KEY, NULL, &hKey2, &Dispos) == ERROR_SUCCESS)
+	if (RegCreateKeyEx(HKEY_CURRENT_USER, "Software\\Sota", 0, NULL, REG_OPTION_NON_VOLATILE, KEY_CREATE_SUB_KEY, NULL, &hKey2, &Dispos) == ERROR_SUCCESS)
 	{
-		if (RegCreateKeyEx(hKey2, "FFFTP", 0, "", REG_OPTION_NON_VOLATILE, KEY_WRITE, NULL, &hKey3, &Dispos) == ERROR_SUCCESS)
+		if (RegCreateKeyEx(hKey2, "FFFTP", 0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE, NULL, &hKey3, &Dispos) == ERROR_SUCCESS)
 		{
-			if (RegCreateKeyEx(hKey3, "Options", 0, "", REG_OPTION_NON_VOLATILE, KEY_WRITE, NULL, &hKey4, &Dispos) == ERROR_SUCCESS)
+			if (RegCreateKeyEx(hKey3, "Options", 0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE, NULL, &hKey4, &Dispos) == ERROR_SUCCESS)
 			{
 				for (i = 0; ; i++)
 				{
@@ -1628,7 +1628,7 @@ void ClearRegistry(void)
 			}
 			RegDeleteKey(hKey3, "Options");
 			// 全設定暗号化対応
-			if (RegCreateKeyEx(hKey3, "EncryptedOptions", 0, "", REG_OPTION_NON_VOLATILE, KEY_WRITE, NULL, &hKey4, &Dispos) == ERROR_SUCCESS)
+			if (RegCreateKeyEx(hKey3, "EncryptedOptions", 0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE, NULL, &hKey4, &Dispos) == ERROR_SUCCESS)
 			{
 				for (i = 0; ; i++)
 				{
@@ -2507,7 +2507,7 @@ static int CreateReg(const char* Name, void** Handle)
 			strcpy(((REGDATATBL_REG*)(*Handle))->KeyName, Name);
 			strcpy(Tmp, "Software\\Sota\\");
 			strcat(Tmp, Name);
-			if (RegCreateKeyEx(HKEY_CURRENT_USER, Tmp, 0, "", REG_OPTION_NON_VOLATILE, KEY_CREATE_SUB_KEY | KEY_SET_VALUE, NULL, &(((REGDATATBL_REG*)(*Handle))->hKey), &Dispos) == ERROR_SUCCESS)
+			if (RegCreateKeyEx(HKEY_CURRENT_USER, Tmp, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_CREATE_SUB_KEY | KEY_SET_VALUE, NULL, &(((REGDATATBL_REG*)(*Handle))->hKey), &Dispos) == ERROR_SUCCESS)
 				Sts = FFFTP_SUCCESS;
 			if (Sts != FFFTP_SUCCESS)
 				free(*Handle);
@@ -2799,7 +2799,7 @@ static int CreateSubKey(void* Parent, const char* Name, void** Handle)
 			strcpy(((REGDATATBL_REG*)(*Handle))->KeyName, ((REGDATATBL_REG*)Parent)->KeyName);
 			strcat(((REGDATATBL_REG*)(*Handle))->KeyName, "\\");
 			strcat(((REGDATATBL_REG*)(*Handle))->KeyName, Name);
-			if (RegCreateKeyEx(((REGDATATBL_REG*)Parent)->hKey, Name, 0, "", REG_OPTION_NON_VOLATILE, KEY_SET_VALUE, NULL, &(((REGDATATBL_REG*)(*Handle))->hKey), &Dispos) == ERROR_SUCCESS)
+			if (RegCreateKeyEx(((REGDATATBL_REG*)Parent)->hKey, Name, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_SET_VALUE, NULL, &(((REGDATATBL_REG*)(*Handle))->hKey), &Dispos) == ERROR_SUCCESS)
 				Sts = FFFTP_SUCCESS;
 			if (Sts != FFFTP_SUCCESS)
 				free(*Handle);
