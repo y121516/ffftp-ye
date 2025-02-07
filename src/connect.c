@@ -959,10 +959,9 @@ char* AskHostChmodCmd(void)
 		// 同時接続対応
 		// CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
 		CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
-
-	// 同時接続対応
-//	return(CurHost.ChmodCmd);
-	return(TmpHost.ChmodCmd);
+	static char chmodCmd[CHMOD_CMD_LEN + 1] = "";
+	strcpy(chmodCmd, TmpHost.ChmodCmd);
+	return chmodCmd;
 }
 
 
@@ -1026,10 +1025,9 @@ char* AskHostLsName(void)
 		// 同時接続対応
 		// CopyHostFromListInConnect(AskCurrentHost(), &CurHost);
 		CopyHostFromListInConnect(AskCurrentHost(), &TmpHost);
-
-	// 同時接続対応
-//	return(CurHost.LsName);
-	return(TmpHost.LsName);
+	static char lsName[NLST_NAME_LEN + 1];
+	strcpy(lsName, TmpHost.LsName);
+	return lsName;
 }
 
 
