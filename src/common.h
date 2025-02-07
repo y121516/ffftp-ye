@@ -1204,6 +1204,7 @@ typedef struct filelist {
 
 /*===== コード変換情報パケット =====*/
 
+struct codeconvinfo;
 typedef char* (*funcptr)(struct codeconvinfo*, char, char*);
 // UTF-8対応
 typedef int (*convptr)(struct codeconvinfo*);
