@@ -177,7 +177,7 @@ void SetTaskMsg(char* szFormat, ...)
 
 	if (hWndTask != NULL)
 	{
-		if ((szBuf = malloc(10 * 1024 + 3)) != NULL)
+		if ((szBuf = (char*)malloc(10 * 1024 + 3)) != NULL)
 		{
 			va_start(vaArgs, szFormat);
 			if (wvsprintf(szBuf, szFormat, vaArgs) != EOF)
@@ -249,7 +249,7 @@ int SaveTaskMsg(char* Fname)
 
 	Sts = FFFTP_FAIL;
 	Size = SendMessage(GetTaskWnd(), WM_GETTEXTLENGTH, 0, 0);
-	if ((Buf = malloc(Size)) != NULL)
+	if ((Buf = (char*)malloc(Size)) != NULL)
 	{
 		if ((Strm = fopen(Fname, "wb")) != NULL)
 		{
@@ -316,7 +316,7 @@ void DoPrintf(char* szFormat, ...)
 
 	if (DebugConsole == YES)
 	{
-		if ((szBuf = malloc(10 * 1024)) != NULL)
+		if ((szBuf = (char*)malloc(10 * 1024)) != NULL)
 		{
 			va_start(vaArgs, szFormat);
 			if (wvsprintf(szBuf, szFormat, vaArgs) != EOF)
@@ -361,7 +361,7 @@ void DoPrintf2(char* szFormat, ...)
 		BackgrndMessageProc();
 	//WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), "22222222\n", 9, &Tmp, NULL);
 
-	if ((szBuf = malloc(10 * 1024)) != NULL)
+	if ((szBuf = (char*)malloc(10 * 1024)) != NULL)
 	{
 		va_start(vaArgs, szFormat);
 		if (wvsprintf(szBuf, szFormat, vaArgs) != EOF)

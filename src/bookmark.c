@@ -235,7 +235,7 @@ static int GetBothPath(char* Str, char** Path1, char** Path2)
 	Ret = 1;
 	*Path1 = Str + BMARK_MARK_LEN;
 
-	Pos = _mbsstr(Str, BMARK_SEP);
+	Pos = (char*)_mbsstr((unsigned char*)Str, (const unsigned char*)BMARK_SEP);
 	if (Pos != NULL)
 	{
 		Ret = 2;
@@ -271,7 +271,7 @@ void SaveBookMark(void)
 	{
 		if ((CurHost = AskCurrentHost()) != HOSTNUM_NOENTRY)
 		{
-			if ((Buf = malloc(BOOKMARK_SIZE)) != NULL)
+			if ((Buf = (char*)malloc(BOOKMARK_SIZE)) != NULL)
 			{
 				hMenu = GetSubMenu(GetMenu(GetMainHwnd()), BMARK_SUB_MENU);
 

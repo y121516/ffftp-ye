@@ -329,7 +329,7 @@ static int keycrunch(char* result, char* seed, char* passwd, int Type)
 	unsigned int buflen;
 
 	buflen = strlen(seed) + strlen(passwd);
-	if ((buf = malloc(buflen + 1)) == NULL)
+	if ((buf = (char*)malloc(buflen + 1)) == NULL)
 		return(FFFTP_FAIL);
 	strcpy(buf, seed);
 	strcat(buf, passwd);
@@ -353,7 +353,7 @@ static int keycrunch(char* result, char* seed, char* passwd, int Type)
 	}
 	else
 	{
-		sha_memory((uchar*)buf, buflen, results);
+		sha_memory(buf, buflen, (uint32*)results);
 		results[0] ^= results[2];
 		results[1] ^= results[3];
 		results[0] ^= results[4];
@@ -392,7 +392,7 @@ static void secure_hash(char* x, int Type)
 	}
 	else
 	{
-		sha_memory((uchar*)x, 8, results);
+		sha_memory(x, 8, (uint32*)results);
 		results[0] ^= results[2];
 		results[1] ^= results[3];
 		results[0] ^= results[4];

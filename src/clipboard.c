@@ -65,7 +65,7 @@ int CopyStrToClipBoard(char* Str)
 			{
 				if ((gBuf = GlobalLock(hGlobal)) != NULL)
 				{
-					strcpy(gBuf, Str);
+					strcpy((char*)gBuf, Str);
 
 					GlobalUnlock(hGlobal);
 					SetClipboardData(CF_TEXT, hGlobal);

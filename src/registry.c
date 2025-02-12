@@ -2004,7 +2004,7 @@ static void EncodePassword2(char* Str, char* Buf, const char* Key)
 
 	/* 2010.01.31 genta Key */
 	unsigned char* KeyHead = (unsigned char*)Key;
-	unsigned char* KeyEnd = KeyHead + strlen(KeyHead);
+	unsigned char* KeyEnd = KeyHead + strlen((const char*)KeyHead);
 	unsigned char* KeyCurrent = KeyHead;
 
 	srand((unsigned)time(NULL));
@@ -2078,14 +2078,14 @@ static void EncodePassword3(char* Str, char* Buf, const char* Key)
 //	StrPadLen = min1(StrPadLen, AES_BLOCK_SIZE * 2);
 	StrPadLen = max1(StrPadLen, AES_BLOCK_SIZE * 2);
 
-	if ((StrPadBuf = malloc(StrPadLen)) != NULL)
+	if ((StrPadBuf = (unsigned char*)malloc(StrPadLen)) != NULL)
 	{
-		if ((AesEncBuf = malloc(StrPadLen)) != NULL)
+		if ((AesEncBuf = (unsigned char*)malloc(StrPadLen)) != NULL)
 		{
 			BOOL PutState;
 
 			PutState = FALSE;
-			strncpy(StrPadBuf, Str, StrPadLen);
+			strncpy((char*)StrPadBuf, Str, StrPadLen);
 
 			/* PAD部分を乱数で埋める StrPad[StrLen](が有効な場合) は NUL */
 			for (StrPadIndex = StrLen + 1; StrPadIndex < StrPadLen;)
@@ -2119,7 +2119,7 @@ static void EncodePassword3(char* Str, char* Buf, const char* Key)
 			Put += 2;
 			for (IvIndex = 0; IvIndex < AES_BLOCK_SIZE; IvIndex++)
 			{
-				sprintf(Put, "%02x", AesCbcIv[IvIndex]);
+				sprintf((char*)Put, "%02x", AesCbcIv[IvIndex]);
 				Put += 2;
 			}
 			*Put++ = ':';
@@ -2132,7 +2132,7 @@ static void EncodePassword3(char* Str, char* Buf, const char* Key)
 				{
 					for (EncBufIndex = 0; EncBufIndex < StrPadLen; EncBufIndex++)
 					{
-						sprintf(Put, "%02x", AesEncBuf[EncBufIndex]);
+						sprintf((char*)Put, "%02x", AesEncBuf[EncBufIndex]);
 						Put += 2;
 					}
 					*Put = NUL;
@@ -2176,13 +2176,13 @@ static void DecodePassword(char* Str, char* Buf)
 		/* Original algorithm */
 		DecodePasswordOriginal(Str, Buf);
 	}
-	else if (strncmp(Get, "0A", 2) == 0) {
+	else if (strncmp((const char*)Get, "0A", 2) == 0) {
 		DecodePasswordOriginal(Str + 2, Buf);
 	}
-	else if (strncmp(Get, "0B", 2) == 0) {
+	else if (strncmp((const char*)Get, "0B", 2) == 0) {
 		DecodePassword2(Str + 2, Buf, SecretKey);
 	}
-	else if (strncmp(Get, "0C", 2) == 0) {
+	else if (strncmp((const char*)Get, "0C", 2) == 0) {
 		DecodePassword3(Str + 2, Buf, SecretKey);
 	}
 	else {
@@ -2246,7 +2246,7 @@ static void DecodePassword2(char* Str, char* Buf, const char* Key)
 
 	/* 2010.01.31 genta Key */
 	unsigned char* KeyHead = (unsigned char*)Key;
-	unsigned char* KeyEnd = KeyHead + strlen(KeyHead);
+	unsigned char* KeyEnd = KeyHead + strlen((const char*)KeyHead);
 	unsigned char* KeyCurrent = KeyHead;
 
 	while (*Get != NUL)
@@ -2302,7 +2302,7 @@ static void DecodePassword3(char* Str, char* Buf, const char* Key)
 	{
 
 		EncBufLen = (StrLen - 1) / 2 - AES_BLOCK_SIZE;
-		if ((EncBuf = malloc(EncBufLen)) != NULL)
+		if ((EncBuf = (unsigned char*)malloc(EncBufLen)) != NULL)
 		{
 			for (IvIndex = 0; IvIndex < AES_BLOCK_SIZE; IvIndex++)
 			{
@@ -2321,7 +2321,7 @@ static void DecodePassword3(char* Str, char* Buf, const char* Key)
 						EncBuf[EncBufIndex] = hex2bin(*Get++) << 4;
 						EncBuf[EncBufIndex] |= hex2bin(*Get++);
 					}
-					if (aes_cbc_decrypt(EncBuf, Buf, EncBufLen, AesCbcIv, &Ctx) == EXIT_SUCCESS)
+					if (aes_cbc_decrypt(EncBuf, (unsigned char*)Buf, EncBufLen, AesCbcIv, &Ctx) == EXIT_SUCCESS)
 					{
 						Buf[EncBufLen] = NUL;
 					}
@@ -2355,17 +2355,17 @@ static int CreateAesKey(unsigned char* AesKey, const char* Key)
 	int ResIndex;
 
 	HashKeyLen = strlen(Key) + 16;
-	if ((HashKey = malloc(HashKeyLen + 1)) == NULL) {
+	if ((HashKey = (char*)malloc(HashKeyLen + 1)) == NULL) {
 		return (FFFTP_FAIL);
 	}
 
 	strcpy(HashKey, Key);
 	strcat(HashKey, ">g^r=@N7=//z<[`:");
-	sha_memory((uchar*)HashKey, HashKeyLen, results);
+	sha_memory(HashKey, HashKeyLen, results);
 
 	strcpy(HashKey, Key);
 	strcat(HashKey, "VG77dO1#EyC]$|C@");
-	sha_memory((uchar*)HashKey, HashKeyLen, results + 5);
+	sha_memory(HashKey, HashKeyLen, results + 5);
 
 	KeyIndex = 0;
 	ResIndex = 0;
@@ -2564,14 +2564,14 @@ static int CloseReg(void* Handle)
 	{
 		if (((REGDATATBL*)Handle)->Mode == 1)
 		{
-			if (WriteOutRegToFile(Handle) == TRUE)
+			if (WriteOutRegToFile((REGDATATBL*)Handle) == TRUE)
 			{
 				//				/* レジストリをクリア */
 				//				ClearRegistry();
 			}
 		}
 		/* テーブルを削除 */
-		Pos = Handle;
+		Pos = (REGDATATBL*)Handle;
 		while (Pos != NULL)
 		{
 			Next = Pos->Next;
@@ -2654,7 +2654,7 @@ static int ReadInReg(char* Name, REGDATATBL** Handle)
 
 	if ((Strm = fopen(AskIniFilePath(), "rt")) != NULL)
 	{
-		if ((Buf = malloc(REG_SECT_MAX)) != NULL)
+		if ((Buf = (char*)malloc(REG_SECT_MAX)) != NULL)
 		{
 			while (fgets(Buf, REG_SECT_MAX, Strm) != NULL)
 			{
@@ -2665,7 +2665,7 @@ static int ReadInReg(char* Name, REGDATATBL** Handle)
 
 					if (*Buf == '[')
 					{
-						if ((New = malloc(sizeof(REGDATATBL))) != NULL)
+						if ((New = (REGDATATBL*)malloc(sizeof(REGDATATBL))) != NULL)
 						{
 							if ((Tmp = strchr(Buf, ']')) != NULL)
 								*Tmp = NUL;
@@ -2754,7 +2754,7 @@ static int OpenSubKey(void* Parent, char* Name, void** Handle)
 		strcpy(Key, ((REGDATATBL*)Parent)->KeyName);
 		strcat(Key, "\\");
 		strcat(Key, Name);
-		Pos = Parent;
+		Pos = (REGDATATBL*)Parent;
 		while (Pos != NULL)
 		{
 			if (strcmp(Pos->KeyName, Key) == 0)
@@ -2819,7 +2819,7 @@ static int CreateSubKey(void* Parent, char* Name, void** Handle)
 			Pos = (REGDATATBL*)Parent;
 			while (Pos->Next != NULL)
 				Pos = Pos->Next;
-			Pos->Next = *Handle;
+			Pos->Next = (REGDATATBL*)*Handle;
 			Sts = FFFTP_SUCCESS;
 		}
 	}
@@ -3355,7 +3355,7 @@ static int ReadBinaryFromReg(void* Handle, char* Name, void* Bin, DWORD Size)
 		if ((Pos = ScanValue(Handle, Name)) != NULL)
 		{
 			Size = min1(Size, strlen(Pos));
-			Size = StrReadIn(Pos, Size, Bin);
+			Size = StrReadIn(Pos, Size, (char*)Bin);
 			Sts = FFFTP_SUCCESS;
 		}
 	}
@@ -3421,7 +3421,7 @@ static int WriteBinaryToReg(void* Handle, char* Name, void* Bin, int Len)
 		strcat(Data, "=");
 		Pos->ValLen += strlen(Data);
 		Data = Pos->ValTbl + Pos->ValLen;
-		Pos->ValLen += StrCatOut(Bin, Len, Data) + 1;
+		Pos->ValLen += StrCatOut((char*)Bin, Len, Data) + 1;
 	}
 	// 全設定暗号化対応
 	if (EncryptSettings == YES)
@@ -3539,7 +3539,7 @@ static char* ScanValue(void* Handle, char* Name)
 	char* Ret;
 
 	Ret = NULL;
-	Cur = Handle;
+	Cur = (REGDATATBL*)Handle;
 	Pos = Cur->ValTbl;
 	while (Pos < (Cur->ValTbl + Cur->ValLen))
 	{
@@ -3598,12 +3598,12 @@ int CheckPasswordValidity(char* Password, int length, const char* HashStr, int S
 	}
 
 	/* Password をハッシュする */
-	sha_memory(Password, length, hash2);
+	sha_memory(Password, length, (uint32*)hash2);
 	for (i = 0; i < StretchCount; i++)
 	{
 		memcpy(&Buf[0], &hash2, 20);
 		memcpy(&Buf[20], Password, length);
-		sha_memory(Buf, 20 + length, hash2);
+		sha_memory(Buf, 20 + length, (uint32*)hash2);
 	}
 
 	if (memcmp((char*)hash1, (char*)hash2, sizeof(hash1)) == 0) {
@@ -3630,12 +3630,12 @@ void CreatePasswordHash(char* Password, int length, char* HashStr, int StretchCo
 	int i, j;
 	unsigned char* p = (unsigned char*)HashStr;
 
-	sha_memory(Password, length, hash);
+	sha_memory(Password, length, (uint32*)hash);
 	for (i = 0; i < StretchCount; i++)
 	{
 		memcpy(&Buf[0], &hash, 20);
 		memcpy(&Buf[20], Password, length);
-		sha_memory(Buf, 20 + length, hash);
+		sha_memory(Buf, 20 + length, (uint32*)hash);
 	}
 
 	for (i = 0; i < 5; i++) {
@@ -3742,7 +3742,7 @@ DWORD GetRandamDWORDValue(void)
 			RndSource[8] = (ulong)rand();
 		}
 
-		sha_memory((char*)RndSource, sizeof(RndSource), shaValue);
+		sha_memory((char*)RndSource, sizeof(RndSource), (uint32*)shaValue);
 		rndValue = shaValue[0] ^ shaValue[1] ^ shaValue[2] ^ shaValue[3] ^ shaValue[4];
 #endif
 	}
@@ -3764,7 +3764,7 @@ void GetMaskWithHMACSHA1(DWORD Nonce, const char* Salt, int SaltLength, void* pH
 	}
 	memcpy(&Key[64], Salt, SaltLength);
 	memcpy(&Key[64 + SaltLength], SecretKey, SecretKeyLength);
-	sha_memory((char*)&Key, 64 + SaltLength + SecretKeyLength, Hash);
+	sha_memory((char*)&Key, 64 + SaltLength + SecretKeyLength, (uint32*)Hash);
 	// sha.cはビッグエンディアンのため
 	for (i = 0; i < 5; i++)
 		Hash[i] = _byteswap_ulong(Hash[i]);
@@ -3772,14 +3772,14 @@ void GetMaskWithHMACSHA1(DWORD Nonce, const char* Salt, int SaltLength, void* pH
 	memset(&Key[20], 0, 44);
 	for (i = 0; i < 64; i++)
 		Key[i] ^= 0x36;
-	sha_memory((char*)&Key, 64, Hash);
+	sha_memory((char*)&Key, 64, (uint32*)Hash);
 	// sha.cはビッグエンディアンのため
 	for (i = 0; i < 5; i++)
 		Hash[i] = _byteswap_ulong(Hash[i]);
 	memcpy(&Key[64], &Hash, 20);
 	for (i = 0; i < 64; i++)
 		Key[i] ^= 0x6a;
-	sha_memory((char*)&Key, 84, Hash);
+	sha_memory((char*)&Key, 84, (uint32*)Hash);
 	// sha.cはビッグエンディアンのため
 	for (i = 0; i < 5; i++)
 		Hash[i] = _byteswap_ulong(Hash[i]);
@@ -3811,7 +3811,7 @@ void CalculateSettingsDataChecksum(void* Data, DWORD Size)
 	ulong Hash[5];
 	DWORD i;
 	BYTE Mask[20];
-	sha_memory((char*)Data, Size, Hash);
+	sha_memory((char*)Data, Size, (uint32*)Hash);
 	// sha.cはビッグエンディアンのため
 	for (i = 0; i < 5; i++)
 		Hash[i] = _byteswap_ulong(Hash[i]);
@@ -3996,7 +3996,7 @@ void SaveSettingsToFileZillaXml()
 							else
 								p2 = strchr(p1, '\0');
 							if (*p1 != '\0')
-								fprintf(f, " %d %s", _mbslen(p1), p1);
+								fprintf(f, " %d %s", _mbslen((const unsigned char*)p1), p1);
 							p1 = p2;
 						}
 						fputs("</RemoteDir>\n", f);
@@ -4021,7 +4021,7 @@ void SaveSettingsToFileZillaXml()
 							else
 								p2 = strchr(p1, '\0');
 							if (*p1 != '\0')
-								fprintf(f, " %d %s", _mbslen(p1), p1);
+								fprintf(f, " %d %s", _mbslen((const unsigned char*)p1), p1);
 							p1 = p2;
 						}
 						fputs("</RemoteDir>\n", f);

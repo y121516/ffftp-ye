@@ -256,7 +256,7 @@ int MakeToolBarWindow(HWND hWnd, HINSTANCE hInst)
 //				16,16,
 //				16,16,
 //				sizeof(TBBUTTON));
-	hOriginal = LoadImage(hInst, MAKEINTRESOURCE(main_toolbar_bmp), IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE | LR_LOADMAP3DCOLORS);
+	hOriginal = (HBITMAP)LoadImage(hInst, MAKEINTRESOURCE(main_toolbar_bmp), IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE | LR_LOADMAP3DCOLORS);
 	if (hOriginal != NULL)
 	{
 		hResized = ResizeBitmap(hOriginal, 64, 64, 16, 64);
@@ -307,7 +307,7 @@ int MakeToolBarWindow(HWND hWnd, HINSTANCE hInst)
 //				16,16,
 //				16,16,
 //				sizeof(TBBUTTON));
-	hOriginal = LoadImage(hInst, MAKEINTRESOURCE(remote_toolbar_bmp), IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE | LR_LOADMAP3DCOLORS);
+	hOriginal = (HBITMAP)LoadImage(hInst, MAKEINTRESOURCE(remote_toolbar_bmp), IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE | LR_LOADMAP3DCOLORS);
 	if (hOriginal != NULL)
 	{
 		hResized = ResizeBitmap(hOriginal, 64, 64, 16, 64);
@@ -407,7 +407,7 @@ int MakeToolBarWindow(HWND hWnd, HINSTANCE hInst)
 //				16,16,
 //				16,16,
 //				sizeof(TBBUTTON));
-	hOriginal = LoadImage(hInst, MAKEINTRESOURCE(remote_toolbar_bmp), IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE | LR_LOADMAP3DCOLORS);
+	hOriginal = (HBITMAP)LoadImage(hInst, MAKEINTRESOURCE(remote_toolbar_bmp), IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE | LR_LOADMAP3DCOLORS);
 	if (hOriginal != NULL)
 	{
 		hResized = ResizeBitmap(hOriginal, 64, 64, 16, 64);

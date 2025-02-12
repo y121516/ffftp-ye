@@ -3087,7 +3087,7 @@ static int Socks5MakeCmdPacket(SOCKS5REQUEST* Packet, char Cmd, int ValidIP, ulo
 		Packet->Type = SOCKS5_ADRS_NAME;
 		Len = strlen(Host);
 		*Pos++ = Len;
-		strcpy(Pos, Host);
+		strcpy((char*)Pos, Host);
 		Pos += Len;
 		TotalLen += Len + 1;
 	}
@@ -3125,7 +3125,7 @@ static int Socks5MakeCmdPacketIPv6(SOCKS5REQUEST* Packet, char Cmd, int ValidIP,
 		Packet->Type = SOCKS5_ADRS_NAME;
 		Len = strlen(Host);
 		*Pos++ = Len;
-		strcpy(Pos, Host);
+		strcpy((char*)Pos, Host);
 		Pos += Len;
 		TotalLen += Len + 1;
 	}

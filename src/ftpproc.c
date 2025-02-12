@@ -166,9 +166,9 @@ int MakeDirFromLocalPath(char* LocalFile, char* Old)
 		{
 			Cat = Pkt.LocalFile + (pDelimiter - LocalFile);
 			if (FnameCnv == FNAME_LOWER)
-				_mbslwr(Cat);
+				_mbslwr((unsigned char*)Cat);
 			else if (FnameCnv == FNAME_UPPER)
-				_mbsupr(Cat);
+				_mbsupr((unsigned char*)Cat);
 			ReplaceAll(Pkt.LocalFile, '/', '\\');
 
 			strcpy(Pkt.Cmd, "MKD ");
@@ -226,9 +226,9 @@ void DownloadProc(int ChName, int ForceFile, int All)
 			if ((ChName == NO) || ((ForceFile == NO) && (Pos->Node == NODE_DIR)))
 			{
 				if (FnameCnv == FNAME_LOWER)
-					_mbslwr(TmpString);
+					_mbslwr((unsigned char*)TmpString);
 				else if (FnameCnv == FNAME_UPPER)
-					_mbsupr(TmpString);
+					_mbsupr((unsigned char*)TmpString);
 				RemoveAfterSemicolon(TmpString);
 				if (RenameUnuseableName(TmpString) == FFFTP_FAIL)
 					break;
@@ -382,9 +382,9 @@ void DirectDownloadProc(char* Fname)
 			SetYenTail(Pkt.LocalFile);
 			strcpy(TmpString, Fname);
 			if (FnameCnv == FNAME_LOWER)
-				_mbslwr(TmpString);
+				_mbslwr((unsigned char*)TmpString);
 			else if (FnameCnv == FNAME_UPPER)
-				_mbsupr(TmpString);
+				_mbsupr((unsigned char*)TmpString);
 			RemoveAfterSemicolon(TmpString);
 
 			if (RenameUnuseableName(TmpString) == FFFTP_SUCCESS)
@@ -671,7 +671,7 @@ void MirrorDownloadProc(int Notify)
 					strcat(Pkt.LocalFile, RemotePos->File);
 
 					if (MirrorFnameCnv == YES)
-						_mbslwr(Cat);
+						_mbslwr((unsigned char*)Cat);
 
 					RemoveAfterSemicolon(Cat);
 					ReplaceAll(Pkt.LocalFile, '/', '\\');
@@ -1050,9 +1050,9 @@ int MakeDirFromRemotePath(char* RemoteFile, char* Old, int FirstAdd)
 		{
 			Cat = Pkt.RemoteFile + (pDelimiter - RemoteFile);
 			if (FnameCnv == FNAME_LOWER)
-				_mbslwr(Cat);
+				_mbslwr((unsigned char*)Cat);
 			else if (FnameCnv == FNAME_UPPER)
-				_mbsupr(Cat);
+				_mbsupr((unsigned char*)Cat);
 #if defined(HAVE_TANDEM)
 			Pkt.FileCode = 0;
 			Pkt.PriExt = DEF_PRIEXT;
@@ -1138,9 +1138,9 @@ void UploadListProc(int ChName, int All)
 			{
 				strcat(Pkt.RemoteFile, Pos->File);
 				if (FnameCnv == FNAME_LOWER)
-					_mbslwr(Cat);
+					_mbslwr((unsigned char*)Cat);
 				else if (FnameCnv == FNAME_UPPER)
-					_mbsupr(Cat);
+					_mbsupr((unsigned char*)Cat);
 #if defined(HAVE_TANDEM)
 				Pkt.FileCode = 0;
 				Pkt.PriExt = DEF_PRIEXT;
@@ -1355,9 +1355,9 @@ void UploadDragProc(WPARAM wParam)
 
 			strcat(Pkt.RemoteFile, Pos->File);
 			if (FnameCnv == FNAME_LOWER)
-				_mbslwr(Cat);
+				_mbslwr((unsigned char*)Cat);
 			else if (FnameCnv == FNAME_UPPER)
-				_mbsupr(Cat);
+				_mbsupr((unsigned char*)Cat);
 			ReplaceAll(Pkt.RemoteFile, '\\', '/');
 #if defined(HAVE_TANDEM)
 			Pkt.FileCode = 0;
@@ -1717,7 +1717,7 @@ void MirrorUploadProc(int Notify)
 					strcat(Pkt.RemoteFile, LocalPos->File);
 
 					if (MirrorFnameCnv == YES)
-						_mbslwr(Cat);
+						_mbslwr((unsigned char*)Cat);
 
 					ReplaceAll(Pkt.RemoteFile, '\\', '/');
 
@@ -1980,7 +1980,7 @@ static INT_PTR CALLBACK MirrorDispListCallBack(HWND hDlg, UINT iMessage, WPARAM 
 
 		case MIRROR_DEL:
 			Num = SendDlgItemMessage(hDlg, MIRROR_LIST, LB_GETSELCOUNT, 0, 0);
-			if ((List = malloc(Num * sizeof(int))) != NULL)
+			if ((List = (int*)malloc(Num * sizeof(int))) != NULL)
 			{
 				Num = SendDlgItemMessage(hDlg, MIRROR_LIST, LB_GETSELITEMS, Num, (LPARAM)List);
 				for (Num--; Num >= 0; Num--)
@@ -3222,14 +3222,14 @@ void ChmodProc(void)
 		MakeSelectedFileList(WIN_LOCAL, NO, NO, &FileListBase, &CancelFlg);
 		if (FileListBase != NULL)
 		{
-			if ((Buf = malloc(1)) != NULL)
+			if ((Buf = (char*)malloc(1)) != NULL)
 			{
 				*Buf = NUL;
 				BufLen = 0;
 				Pos = FileListBase;
 				while (Pos != NULL)
 				{
-					if ((BufTmp = realloc(Buf, BufLen + strlen(Pos->File) + 2)) != NULL)
+					if ((BufTmp = (char*)realloc(Buf, BufLen + strlen(Pos->File) + 2)) != NULL)
 					{
 						Buf = BufTmp;
 						strcpy(Buf + BufLen, Pos->File);
@@ -3643,7 +3643,7 @@ void CopyURLtoClipBoard(void)
 				if (AskHostType() == HTYPE_VMS)
 					Total++;
 
-				if ((Buf = realloc(Buf, Total + 1)) == NULL)
+				if ((Buf = (char*)realloc(Buf, Total + 1)) == NULL)
 					break;
 
 				if (AskHostType() != HTYPE_VMS)
@@ -3846,14 +3846,14 @@ static int RenameUnuseableName(char* Fname)
 	Ret = FFFTP_SUCCESS;
 	while (1)
 	{
-		if ((_mbschr(Fname, ':') != NULL) ||
-			(_mbschr(Fname, '*') != NULL) ||
-			(_mbschr(Fname, '?') != NULL) ||
-			(_mbschr(Fname, '<') != NULL) ||
-			(_mbschr(Fname, '>') != NULL) ||
-			(_mbschr(Fname, '|') != NULL) ||
-			(_mbschr(Fname, '\x22') != NULL) ||
-			(_mbschr(Fname, '\\') != NULL))
+		if ((_mbschr((const unsigned char*)Fname, ':') != NULL) ||
+			(_mbschr((const unsigned char*)Fname, '*') != NULL) ||
+			(_mbschr((const unsigned char*)Fname, '?') != NULL) ||
+			(_mbschr((const unsigned char*)Fname, '<') != NULL) ||
+			(_mbschr((const unsigned char*)Fname, '>') != NULL) ||
+			(_mbschr((const unsigned char*)Fname, '|') != NULL) ||
+			(_mbschr((const unsigned char*)Fname, '\x22') != NULL) ||
+			(_mbschr((const unsigned char*)Fname, '\\') != NULL))
 		{
 			if (InputDialogBox(forcerename_dlg, GetMainHwnd(), NULL, Fname, FMAX_PATH + 1, &Tmp, IDH_HELP_TOPIC_0000001) == NO)
 			{

@@ -322,7 +322,7 @@ int AddTmpTransFileList(TRANSPACKET* Pkt, TRANSPACKET** Base)
 	int Sts;
 
 	Sts = FFFTP_FAIL;
-	if ((Pos = malloc(sizeof(TRANSPACKET))) != NULL)
+	if ((Pos = (TRANSPACKET*)malloc(sizeof(TRANSPACKET))) != NULL)
 	{
 		memcpy(Pos, Pkt, sizeof(TRANSPACKET));
 		Pos->Next = NULL;
@@ -3167,7 +3167,7 @@ static int UploadFile(TRANSPACKET* Pkt, SOCKET dSkt)
 			EofPos = NULL;
 			if ((RmEOF == YES) && (Pkt->Type == TYPE_A))
 			{
-				if ((EofPos = memchr(Buf, 0x1A, iNumBytes)) != NULL)
+				if ((EofPos = (char*)memchr(Buf, 0x1A, iNumBytes)) != NULL)
 					iNumBytes = EofPos - Buf;
 			}
 
@@ -4473,7 +4473,7 @@ int CheckPathViolation(TRANSPACKET* packet)
 		(strstr(packet->RemoteFile, "\\..\\") != NULL) ||
 		(strstr(packet->RemoteFile, "/../") != NULL))
 	{
-		msg = malloc(strlen(MSGJPN297) + strlen(packet->RemoteFile) + 1);
+		msg = (char*)malloc(strlen(MSGJPN297) + strlen(packet->RemoteFile) + 1);
 		if (msg)
 		{
 			sprintf(msg, MSGJPN297, packet->RemoteFile);

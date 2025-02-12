@@ -3275,9 +3275,9 @@ void AddTempFileList(char* Fname)
 {
 	TEMPFILELIST* New;
 
-	if ((New = malloc(sizeof(TEMPFILELIST))) != NULL)
+	if ((New = (TEMPFILELIST*)malloc(sizeof(TEMPFILELIST))) != NULL)
 	{
-		if ((New->Fname = malloc(strlen(Fname) + 1)) != NULL)
+		if ((New->Fname = (char*)malloc(strlen(Fname) + 1)) != NULL)
 		{
 			strcpy(New->Fname, Fname);
 			if (TempFiles == NULL)
@@ -3799,7 +3799,7 @@ void UpdateSoftware(int Async, int NoError, int NoConfirm)
 	char Tmp[2048];
 	if (Async == YES)
 	{
-		if (pData = malloc(sizeof(UPDATESOFTWAREDATA)))
+		if (pData = (UPDATESOFTWAREDATA*)malloc(sizeof(UPDATESOFTWAREDATA)))
 		{
 			pData->NoError = NoError;
 			pData->NoConfirm = NoConfirm;

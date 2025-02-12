@@ -840,7 +840,7 @@ int AddHostToList(HOSTDATA* Set, int Pos, int Level)
 			Pos = Hosts;
 		Level &= SET_LEVEL_MASK;
 
-		if ((New = malloc(sizeof(HOSTLISTDATA))) != NULL)
+		if ((New = (HOSTLISTDATA*)malloc(sizeof(HOSTLISTDATA))) != NULL)
 		{
 			memcpy(&New->Set, Set, sizeof(HOSTDATA));
 			New->Next = NULL;
