@@ -54,7 +54,7 @@ static ulong extract(char* s, int start, int length);
 /*===== ローカルなワーク =====*/
 
 /* Dictionary for integer-word translations */
-static const char Wp[2048][4] = {
+static const char Wp[2048][5] = {
 	"A",    "ABE",  "ACE",  "ACT",  "AD",   "ADA",  "ADD",  "AGO",  "AID",
 	"AIM",  "AIR",  "ALL",  "ALP",  "AM",   "AMY",  "AN",   "ANA",  "AND",
 	"ANN",  "ANT",  "ANY",  "APE",  "APS",  "APT",  "ARC",  "ARE",  "ARK",
