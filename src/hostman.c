@@ -1482,7 +1482,7 @@ static void SendAllHostNames(HWND hWnd, int Cur)
 
 	SendMessage(hWnd, TVM_DELETEITEM, 0, (LPARAM)TVI_ROOT);		/* 全てを削除 */
 
-	if ((Level = malloc(sizeof(HTREEITEM*) * Hosts + 1)) != NULL)
+	if ((Level = (HTREEITEM*)malloc((Hosts + 1) * sizeof(*Level))) != NULL)
 	{
 		Pos = HostListTop;
 		for (i = 0; i < Hosts; i++)
