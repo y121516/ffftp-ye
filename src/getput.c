@@ -85,7 +85,7 @@ typedef struct {
 
 static void DispTransPacket(TRANSPACKET* Pkt);
 static void EraseTransFileList(void);
-static ULONG WINAPI TransferThread(void* Dummy);
+static unsigned __stdcall TransferThread(void* Dummy);
 static int MakeNonFullPath(TRANSPACKET* Pkt, char* CurDir, char* Tmp);
 // ミラーリング設定追加
 static int SetDownloadedFileTime(TRANSPACKET* Pkt);
@@ -213,7 +213,7 @@ extern int MarkAsInternet;
 
 int MakeTransferThread(void)
 {
-	DWORD dwID;
+	unsigned int dwID;
 	int i;
 
 	hListAccMutex = CreateMutex(NULL, FALSE, NULL);
@@ -733,7 +733,7 @@ void InitTransCurDir(void)
 *		なし
 *----------------------------------------------------------------------------*/
 
-static ULONG WINAPI TransferThread(void* Dummy)
+static unsigned __stdcall TransferThread(void* Dummy)
 {
 	TRANSPACKET* Pos;
 	HWND hWndTrans;
