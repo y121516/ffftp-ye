@@ -4,25 +4,25 @@
 ===============================================================================
 / Copyright (C) 1997-2007 Sota. All rights reserved.
 /
-/ Redistribution and use in source and binary forms, with or without 
-/ modification, are permitted provided that the following conditions 
+/ Redistribution and use in source and binary forms, with or without
+/ modification, are permitted provided that the following conditions
 / are met:
 /
-/  1. Redistributions of source code must retain the above copyright 
+/  1. Redistributions of source code must retain the above copyright
 /     notice, this list of conditions and the following disclaimer.
-/  2. Redistributions in binary form must reproduce the above copyright 
-/     notice, this list of conditions and the following disclaimer in the 
+/  2. Redistributions in binary form must reproduce the above copyright
+/     notice, this list of conditions and the following disclaimer in the
 /     documentation and/or other materials provided with the distribution.
 /
-/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR 
-/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
-/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, 
-/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF 
-/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON 
-/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
+/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 / THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /============================================================================*/
 
@@ -458,8 +458,8 @@
 
 	0          1   2        3        4        5
 	-------------------------------------------------------
-	-rwxrwxrwx SEQ 36203776 01/07/07 12:38:28 ADRS001                         
-	-rwxrwxrwx SEQ 70172160 01/07/07 13:59:58 ADRS002                         
+	-rwxrwxrwx SEQ 36203776 01/07/07 12:38:28 ADRS001
+	-rwxrwxrwx SEQ 70172160 01/07/07 13:59:58 ADRS002
 
 *LIST_UNIX_54
 	0              1            2    3    4   5         6
@@ -588,7 +588,7 @@ LIST_UNIX_70
 *LIST_DOS_3
 	0             1      2         3       4
 	-------------------------------------------------------
-	Linux         <DIR>  10-14-97  03:34    
+	Linux         <DIR>  10-14-97  03:34
 	test.txt         12  10-14-97  14:34   A
 	test.txt         12  10-14-100 14:34   A
 
@@ -615,11 +615,11 @@ LIST_UNIX_70
 *LIST_M1800
 	0     1     2       3       4     5         6 (ファイル名の後ろにスペースあり）
 	-------------------------------------------------------
-	drwx  F        400     400  PO    93.10.27  COMMON.PDL.EXCEL/       
-	-rw-  F      10000   10000  DA    97.03.04  DTSLOG1.FNA             
-	-rw-  F      10000  ******  DA    97.03.04  DTSBRB.FNA              
-	drwx  U     ******    6144  PO    96.12.15  IS01.TISPLOAD/          
-	-rw-  ****  ******  ******  VSAM  **.**.**  HICS.CMDSEQ             
+	drwx  F        400     400  PO    93.10.27  COMMON.PDL.EXCEL/
+	-rw-  F      10000   10000  DA    97.03.04  DTSLOG1.FNA
+	-rw-  F      10000  ******  DA    97.03.04  DTSBRB.FNA
+	drwx  U     ******    6144  PO    96.12.15  IS01.TISPLOAD/
+	-rw-  ****  ******  ******  VSAM  **.**.**  HICS.CMDSEQ
 
 *LIST_CHAMELEON
 	0            1        2    3 4    5     6
@@ -637,8 +637,8 @@ LIST_UNIX_70
 	   0        1          2          3      4
 	-------------------------------------------------------
 	   345      A          12-02-98   10:59  VirtualDevice.java
-	     0           DIR   12-09-98   09:43  ディレクトリ
-	     0           DIR   12-09-100  09:43  ディレクトリ
+		 0           DIR   12-09-98   09:43  ディレクトリ
+		 0           DIR   12-09-100  09:43  ディレクトリ
 
 *LIST_MELCOM
 	0 1           2   3          4  5    6  7    8
@@ -684,7 +684,7 @@ LIST_UNIX_70
 *LIST_ALLIED
 	 0             1        2   3   4  5        6
 	---------------------------------------------------------------
-	     41622     IO.SYS   Tue Dec 20 06:20:00 1994
+		 41622     IO.SYS   Tue Dec 20 06:20:00 1994
 	<dir>             DOS   Wed Nov 24 09:35:48 1999
 
 *LIST_OS9
@@ -709,7 +709,7 @@ LIST_UNIX_70
 	 0        1            2          3                 4
 	---------------------------------------------------------------
 	   512    Jan-30-2002  14:52:04   DIRNAME           <DIR>
-	 61191    Aug-30-2002  17:30:38   FILENAME.C        
+	 61191    Aug-30-2002  17:30:38   FILENAME.C
 
 
 // linux-ftpd
@@ -1012,19 +1012,19 @@ LIST_UNIX_70
 
 typedef struct {
 	int Level;							/* 設定のレベル */
-										/* 通常はグループのフラグのみが有効 */
-										/* レベル数は設定の登録／呼出時のみで使用 */
-	char HostName[HOST_NAME_LEN+1];		/* 設定名 */
-	char HostAdrs[HOST_ADRS_LEN+1];		/* ホスト名 */
-	char UserName[USER_NAME_LEN+1];		/* ユーザ名 */
-	char PassWord[PASSWORD_LEN+1];		/* パスワード */
-	char Account[ACCOUNT_LEN+1];		/* アカウント */
-	char LocalInitDir[INIT_DIR_LEN+1];	/* ローカルの開始ディレクトリ */
-	char RemoteInitDir[INIT_DIR_LEN+1];	/* ホストの開始ディレクトリ */
+	/* 通常はグループのフラグのみが有効 */
+	/* レベル数は設定の登録／呼出時のみで使用 */
+	char HostName[HOST_NAME_LEN + 1];		/* 設定名 */
+	char HostAdrs[HOST_ADRS_LEN + 1];		/* ホスト名 */
+	char UserName[USER_NAME_LEN + 1];		/* ユーザ名 */
+	char PassWord[PASSWORD_LEN + 1];		/* パスワード */
+	char Account[ACCOUNT_LEN + 1];		/* アカウント */
+	char LocalInitDir[INIT_DIR_LEN + 1];	/* ローカルの開始ディレクトリ */
+	char RemoteInitDir[INIT_DIR_LEN + 1];	/* ホストの開始ディレクトリ */
 	char BookMark[BOOKMARK_SIZE];		/* ブックマーク */
-	char ChmodCmd[CHMOD_CMD_LEN+1];		/* 属性変更コマンド */
-	char LsName[NLST_NAME_LEN+1];		/* NLSTに付けるファイル名/オプション*/
-	char InitCmd[INITCMD_LEN+1];		/* ホストの初期化コマンド */
+	char ChmodCmd[CHMOD_CMD_LEN + 1];		/* 属性変更コマンド */
+	char LsName[NLST_NAME_LEN + 1];		/* NLSTに付けるファイル名/オプション*/
+	char InitCmd[INITCMD_LEN + 1];		/* ホストの初期化コマンド */
 	int Port;							/* ポート番号 */
 	int Anonymous;						/* Anonymousフラグ */
 	int KanjiCode;						/* ホストの漢字コード (KANJI_xxx) */
@@ -1047,14 +1047,14 @@ typedef struct {
 	int Dialup;							/* ダイアルアップ接続するかどうか (YES/NO) */
 	int DialupAlways;					/* 常にこのエントリへ接続するかどうか (YES/NO) */
 	int DialupNotify;					/* 再接続の際に確認する (YES/NO) */
-	char DialEntry[RAS_NAME_LEN+1];		/* ダイアルアップエントリ */
+	char DialEntry[RAS_NAME_LEN + 1];		/* ダイアルアップエントリ */
 	// 暗号化通信対応
 	int CryptMode;						/* 暗号化通信モード (CRYPT_xxx) */
 	int UseNoEncryption;				/* 暗号化なしで接続する (YES/NO) */
 	int UseFTPES;						/* FTPESで接続する (YES/NO) */
 	int UseFTPIS;						/* FTPISで接続する (YES/NO) */
 	int UseSFTP;						/* SFTPで接続する (YES/NO) */
-	char PrivateKey[PRIVATE_KEY_LEN+1];	/* テキスト形式の秘密鍵 */
+	char PrivateKey[PRIVATE_KEY_LEN + 1];	/* テキスト形式の秘密鍵 */
 	int NoWeakEncryption;				/* 弱い暗号を拒否 (YES/NO) */
 	// 同時接続対応
 	int MaxThreadCount;					/* 同時接続数 */
@@ -1083,25 +1083,25 @@ typedef struct {
 
 typedef struct hostlistdata {
 	HOSTDATA Set;					/* ホスト設定データ */
-	struct hostlistdata *Next;
-	struct hostlistdata *Prev;
-	struct hostlistdata *Child;
-	struct hostlistdata *Parent;
+	struct hostlistdata* Next;
+	struct hostlistdata* Prev;
+	struct hostlistdata* Child;
+	struct hostlistdata* Parent;
 } HOSTLISTDATA;
 
 
 /*===== 接続ヒストリリスト =====*/
 
 typedef struct historydata {
-	char HostAdrs[HOST_ADRS_LEN+1];		/* ホスト名 */
-	char UserName[USER_NAME_LEN+1];		/* ユーザ名 */
-	char PassWord[PASSWORD_LEN+1];		/* パスワード */
-	char Account[ACCOUNT_LEN+1];		/* アカウント */
-	char LocalInitDir[INIT_DIR_LEN+1];	/* ディレクトリ */
-	char RemoteInitDir[INIT_DIR_LEN+1];	/* ディレクトリ */
-	char ChmodCmd[CHMOD_CMD_LEN+1];		/* 属性変更コマンド */
-	char LsName[NLST_NAME_LEN+1];		/* NLSTに付けるファイル名/オプション*/
-	char InitCmd[INITCMD_LEN+1];		/* ホストの初期化コマンド */
+	char HostAdrs[HOST_ADRS_LEN + 1];		/* ホスト名 */
+	char UserName[USER_NAME_LEN + 1];		/* ユーザ名 */
+	char PassWord[PASSWORD_LEN + 1];		/* パスワード */
+	char Account[ACCOUNT_LEN + 1];		/* アカウント */
+	char LocalInitDir[INIT_DIR_LEN + 1];	/* ディレクトリ */
+	char RemoteInitDir[INIT_DIR_LEN + 1];	/* ディレクトリ */
+	char ChmodCmd[CHMOD_CMD_LEN + 1];		/* 属性変更コマンド */
+	char LsName[NLST_NAME_LEN + 1];		/* NLSTに付けるファイル名/オプション*/
+	char InitCmd[INITCMD_LEN + 1];		/* ホストの初期化コマンド */
 	int Port;							/* ポート番号 */
 	int KanjiCode;						/* ホストの漢字コード (KANJI_xxx) */
 	int KanaCnv;						/* 半角カナを全角に変換(YES/NO) */
@@ -1121,13 +1121,13 @@ typedef struct historydata {
 	int Dialup;							/* ダイアルアップ接続するかどうか (YES/NO) */
 	int DialupAlways;					/* 常にこのエントリへ接続するかどうか (YES/NO) */
 	int DialupNotify;					/* 再接続の際に確認する (YES/NO) */
-	char DialEntry[RAS_NAME_LEN+1];		/* ダイアルアップエントリ */
+	char DialEntry[RAS_NAME_LEN + 1];		/* ダイアルアップエントリ */
 	// 暗号化通信対応
 	int UseNoEncryption;				/* 暗号化なしで接続する (YES/NO) */
 	int UseFTPES;						/* FTPESで接続する (YES/NO) */
 	int UseFTPIS;						/* FTPISで接続する (YES/NO) */
 	int UseSFTP;						/* SFTPで接続する (YES/NO) */
-	char PrivateKey[PRIVATE_KEY_LEN+1];	/* テキスト形式の秘密鍵 */
+	char PrivateKey[PRIVATE_KEY_LEN + 1];	/* テキスト形式の秘密鍵 */
 	int NoWeakEncryption;				/* 弱い暗号を拒否 (YES/NO) */
 	// 同時接続対応
 	int MaxThreadCount;					/* 同時接続数 */
@@ -1145,7 +1145,7 @@ typedef struct historydata {
 	int TransferErrorReconnect;			/* 転送エラー時に再接続する (YES/NO) */
 	// ホスト側の設定ミス対策
 	int NoPasvAdrs;						/* PASVで返されるアドレスを無視する (YES/NO) */
-	struct historydata *Next;
+	struct historydata* Next;
 } HISTORYDATA;
 
 
@@ -1154,14 +1154,14 @@ typedef struct historydata {
 typedef struct transpacket {
 	SOCKET ctrl_skt;				/* Socket */
 	char Cmd[40];					/* STOR/RETR/MKD */
-	char RemoteFile[FMAX_PATH+1];	/* ホスト側のファイル名（フルパス） */
-									/* VMSの時は ddd[xxx.yyy]/yyy/zzz のように */
-									/* なってるので注意 */
-	char LocalFile[FMAX_PATH+1];	/* ローカル側のファイル名（フルパス） */
+	char RemoteFile[FMAX_PATH + 1];	/* ホスト側のファイル名（フルパス） */
+	/* VMSの時は ddd[xxx.yyy]/yyy/zzz のように */
+	/* なってるので注意 */
+	char LocalFile[FMAX_PATH + 1];	/* ローカル側のファイル名（フルパス） */
 	int Type;						/* 転送方法 (TYPE_xx) */
 	LONGLONG Size;					/* ファイルのサイズ */
 	LONGLONG ExistSize;				/* すでに存在するファイルのサイズ */
-									/* 転送中は、転送したファイルのサイズを格納する */
+	/* 転送中は、転送したファイルのサイズを格納する */
 	FILETIME Time;					/* ファイルの時間(UTC) */
 	int Attr;						/* ファイルの属性 */
 	int KanjiCode;					/* 漢字コード (KANJI_xxx) */
@@ -1181,38 +1181,38 @@ typedef struct transpacket {
 	int NoTransfer;
 	// 同時接続対応
 	int ThreadCount;
-	struct transpacket *Next;
+	struct transpacket* Next;
 } TRANSPACKET;
 
 
 /*===== ファイルリスト =====*/
 
 typedef struct filelist {
-	char File[FMAX_PATH+1];			/* ファイル名 */
+	char File[FMAX_PATH + 1];			/* ファイル名 */
 	char Node;						/* 種類 (NODE_xxx) */
 	char Link;						/* リンクファイルかどうか (YES/NO) */
 	LONGLONG Size;					/* ファイルサイズ */
 	int Attr;						/* 属性 */
 	FILETIME Time;					/* 時間(UTC) */
-	char Owner[OWNER_NAME_LEN+1];	/* オーナ名 */
+	char Owner[OWNER_NAME_LEN + 1];	/* オーナ名 */
 	char InfoExist;					/* ファイル一覧に存在した情報のフラグ (FINFO_xxx) */
 	// ファイルアイコン表示対応
 	int ImageId;					/* アイコン画像番号 */
-	struct filelist *Next;
+	struct filelist* Next;
 } FILELIST;
 
 
 /*===== コード変換情報パケット =====*/
 
-typedef char * (*funcptr)(struct codeconvinfo *, char , char *);
+typedef char* (*funcptr)(struct codeconvinfo*, char, char*);
 // UTF-8対応
-typedef int (*convptr)(struct codeconvinfo *);
+typedef int (*convptr)(struct codeconvinfo*);
 
 typedef struct codeconvinfo {
-	char *Str;			/* 文字列 */
+	char* Str;			/* 文字列 */
 	int StrLen;			/* 文字列の長さ */
 	int KanaCnv;		/* 半角カタカナを全角に変換するかどうか (YES/NO) */
-	char *Buf;			/* 変換後の文字列を格納するバッファ */
+	char* Buf;			/* 変換後の文字列を格納するバッファ */
 	int BufSize;		/* 変換後の文字列を格納するバッファのサイズ */
 	int OutLen;			/* 変換後の文字列のサイズ */
 	int KanjiMode;		/* 漢字モードフラグ(YES/NO) (内部処理用ワーク) */
@@ -1232,9 +1232,9 @@ typedef struct codeconvinfo {
 /*===== 改行コード変換情報パケット =====*/
 
 typedef struct termcodeconvinfo {
-	char *Str;			/* 文字列 */
+	char* Str;			/* 文字列 */
 	int StrLen;			/* 文字列の長さ */
-	char *Buf;			/* 変換後の文字列を格納するバッファ */
+	char* Buf;			/* 変換後の文字列を格納するバッファ */
 	int BufSize;		/* 変換後の文字列を格納するバッファのサイズ */
 	int OutLen;			/* 変換後の文字列のサイズ */
 	char Term;			/* 改行コード１バイト目保存用 (内部処理用ワーク) */
@@ -1244,8 +1244,8 @@ typedef struct termcodeconvinfo {
 /*===== テンポラリファイルリスト =====*/
 
 typedef struct tempfilelist {
-	char *Fname;				/* ファイル名 */
-	struct tempfilelist *Next;
+	char* Fname;				/* ファイル名 */
+	struct tempfilelist* Next;
 } TEMPFILELIST;
 
 
@@ -1253,7 +1253,7 @@ typedef struct tempfilelist {
 
 typedef struct {
 	int On;						/* ON/OFFスイッチ */
-	char Fname[FMAX_PATH+1];		/* ファイル名 */
+	char Fname[FMAX_PATH + 1];		/* ファイル名 */
 } SOUNDFILE;
 
 
@@ -1273,7 +1273,7 @@ typedef struct {
 	char Cmd;						/* コマンド (SOCKS4_CMD_xxx) */
 	ushort Port;					/* ポート */
 	ulong AdrsInt;					/* アドレス */
-	char UserID[USER_NAME_LEN+1];	/* ユーザID */
+	char UserID[USER_NAME_LEN + 1];	/* ユーザID */
 } SOCKS4CMD;
 
 
@@ -1315,8 +1315,8 @@ typedef struct {
 	char Cmd;				/* コマンド (SOCKS5_CMD_xxx) */
 	char Rsv;				/* （予約） */
 	char Type;				/* アドレスのタイプ */
-							/* 以後（可変長部分） */
-	char _dummy[255+1+2];	/* アドレス、ポート */
+	/* 以後（可変長部分） */
+	char _dummy[255 + 1 + 2];	/* アドレス、ポート */
 } SOCKS5REQUEST;
 
 #define SOCKS5REQUEST_SIZE 4	/* 最初の固定部分のサイズ */
@@ -1328,12 +1328,12 @@ typedef struct {
 	char Result;			/* リザルトコード (SOCKS4_RES_xxx) */
 	char Rsv;				/* （予約） */
 	char Type;				/* アドレスのタイプ */
-							/* 以後（可変長部分） */
-	// IPv6対応
+	/* 以後（可変長部分） */
+// IPv6対応
 //	ulong AdrsInt;			/* アドレス */
 //	ushort Port;			/* ポート */
 //	char _dummy[2];			/* dummy */
-	char _dummy[255+1+2];	/* dummy */
+	char _dummy[255 + 1 + 2];	/* dummy */
 } SOCKS5REPLY;
 
 #define SOCKS5REPLY_SIZE 4	/* 最初の固定部分のサイズ */
@@ -1410,13 +1410,13 @@ HWND GetFocusHwnd(void);
 void SetFocusHwnd(HWND hWnd);
 HINSTANCE GetFtpInst(void);
 void DoubleClickProc(int Win, int Mode, int App);
-void ExecViewer(char *Fname, int App);
-void ExecViewer2(char *Fname1, char *Fname2, int App);
-void AddTempFileList(char *Fname);
+void ExecViewer(char* Fname, int App);
+void ExecViewer2(char* Fname1, char* Fname2, int App);
+void AddTempFileList(char* Fname);
 void SoundPlay(int Num);
-char *AskHelpFilePath(void);
-char *AskTmpFilePath(void);
-char *AskIniFilePath(void);
+char* AskHelpFilePath(void);
+char* AskTmpFilePath(void);
+char* AskIniFilePath(void);
 int AskForceIni(void);
 int BackgrndMessageProc(void);
 void ResetAutoExitFlg(void);
@@ -1451,12 +1451,12 @@ HWND GetLocalHwnd(void);
 HWND GetRemoteHwnd(void);
 void GetListTabWidth(void);
 void SetListViewType(void);
-void GetRemoteDirForWnd(int Mode, int *CancelCheckWork);
+void GetRemoteDirForWnd(int Mode, int* CancelCheckWork);
 void GetLocalDirForWnd(void);
-void ReSortDispList(int Win, int *CancelCheckWork);
+void ReSortDispList(int Win, int* CancelCheckWork);
 // ローカル側自動更新
 //void SelectFileInList(HWND hWnd, int Type);
-void SelectFileInList(HWND hWnd, int Type, FILELIST *Base);
+void SelectFileInList(HWND hWnd, int Type, FILELIST* Base);
 void FindFileInList(HWND hWnd, int Type);
 // void WildCard2RegExp(char *Str);
 int GetCurrentItem(int Win);
@@ -1465,27 +1465,27 @@ int GetSelectedCount(int Win);
 int GetFirstSelected(int Win, int All);
 int GetNextSelected(int Win, int Pos, int All);
 // ローカル側自動更新
-int GetHotSelected(int Win, char *Fname);
-int SetHotSelected(int Win, char *Fname);
-int FindNameNode(int Win, char *Name);
-void GetNodeName(int Win, int Pos, char *Buf, int Max);
-int GetNodeTime(int Win, int Pos, FILETIME *Buf);
-int GetNodeSize(int Win, int Pos, LONGLONG *Buf);
-int GetNodeAttr(int Win, int Pos, int *Buf);
+int GetHotSelected(int Win, char* Fname);
+int SetHotSelected(int Win, char* Fname);
+int FindNameNode(int Win, char* Name);
+void GetNodeName(int Win, int Pos, char* Buf, int Max);
+int GetNodeTime(int Win, int Pos, FILETIME* Buf);
+int GetNodeSize(int Win, int Pos, LONGLONG* Buf);
+int GetNodeAttr(int Win, int Pos, int* Buf);
 int GetNodeType(int Win, int Pos);
-void GetNodeOwner(int Win, int Pos, char *Buf, int Max);
+void GetNodeOwner(int Win, int Pos, char* Buf, int Max);
 void EraseRemoteDirForWnd(void);
 double GetSelectedTotalSize(int Win);
 // ファイル一覧バグ修正
 //void MakeSelectedFileList(int Win, int Expand, int All, FILELIST **Base, int *CancelCheckWork);
-int MakeSelectedFileList(int Win, int Expand, int All, FILELIST **Base, int *CancelCheckWork);
-void MakeDroppedFileList(WPARAM wParam, char *Cur, FILELIST **Base);
-void MakeDroppedDir(WPARAM wParam, char *Cur);
-void AddRemoteTreeToFileList(int Num, char *Path, int IncDir, FILELIST **Base);
-void DeleteFileList(FILELIST **Base);
-FILELIST *SearchFileList(char *Fname, FILELIST *Base, int Caps);
+int MakeSelectedFileList(int Win, int Expand, int All, FILELIST** Base, int* CancelCheckWork);
+void MakeDroppedFileList(WPARAM wParam, char* Cur, FILELIST** Base);
+void MakeDroppedDir(WPARAM wParam, char* Cur);
+void AddRemoteTreeToFileList(int Num, char* Path, int IncDir, FILELIST** Base);
+void DeleteFileList(FILELIST** Base);
+FILELIST* SearchFileList(char* Fname, FILELIST* Base, int Caps);
 int Assume1900or2000(int Year);
-void SetFilter(int *CancelCheckWork);
+void SetFilter(int* CancelCheckWork);
 void doDeleteRemoteFile(void);
 // UTF-8対応
 int AnalyzeNameKanjiCode(int Num);
@@ -1511,7 +1511,7 @@ void SetTransferTypeImm(int Mode);
 void SetTransferType(int Type);
 void DispTransferType(void);
 int AskTransferType(void);
-int AskTransferTypeAssoc(char *Fname, int Type);
+int AskTransferTypeAssoc(char* Fname, int Type);
 void SaveTransferType(void);
 void SetHostKanjiCodeImm(int Mode);
 void SetHostKanjiCode(int Type);
@@ -1539,10 +1539,10 @@ void SetSyncMoveMode(int Mode);
 void ToggleSyncMoveMode(void);
 void DispSyncMoveMode(void);
 int AskSyncMoveMode(void);
-void SetRemoteDirHist(char *Path);
-void SetLocalDirHist(char *Path);
-void AskLocalCurDir(char *Buf, int Max);
-void AskRemoteCurDir(char *Buf, int Max);
+void SetRemoteDirHist(char* Path);
+void SetLocalDirHist(char* Path);
+void AskLocalCurDir(char* Buf, int Max);
+void AskRemoteCurDir(char* Buf, int Max);
 void SetCurrentDirAsDirHist(void);
 void DispDotFileMode(void);
 void LocalRbuttonMenu(int Pos);
@@ -1555,7 +1555,7 @@ void DeleteStatusBarWindow(void);
 HWND GetSbarWnd(void);
 void DispCurrentWindow(int Win);
 void DispSelectedSpace(void);
-void DispLocalFreeSpace(char *Path);
+void DispLocalFreeSpace(char* Path);
 void DispTransferFiles(void);
 void DispDownloadSize(LONGLONG Size);
 
@@ -1564,32 +1564,32 @@ void DispDownloadSize(LONGLONG Size);
 int MakeTaskWindow(HWND hWnd, HINSTANCE hInst);
 void DeleteTaskWindow(void);
 HWND GetTaskWnd(void);
-void SetTaskMsg(char *szFormat, ...);
-int SaveTaskMsg(char *Fname);
+void SetTaskMsg(char* szFormat, ...);
+int SaveTaskMsg(char* Fname);
 void DispTaskMsg(void);
-void DoPrintf(char *szFormat, ...);
-void DoPrintf2(char *szFormat, ...);
+void DoPrintf(char* szFormat, ...);
+void DoPrintf2(char* szFormat, ...);
 
 /*===== hostman.c =====*/
 
 int SelectHost(int Type);
-int AddHostToList(HOSTDATA *Set, int Pos, int Level);
-int CopyHostFromList(int Num, HOSTDATA *Set);
-int CopyHostFromListInConnect(int Num, HOSTDATA *Set);
-int SetHostBookMark(int Num, char *Bmask, int Len);
-char *AskHostBookMark(int Num);
-int SetHostDir(int Num, char *LocDir, char *HostDir);
-int SetHostPassword(int Num, char *Pass);
+int AddHostToList(HOSTDATA* Set, int Pos, int Level);
+int CopyHostFromList(int Num, HOSTDATA* Set);
+int CopyHostFromListInConnect(int Num, HOSTDATA* Set);
+int SetHostBookMark(int Num, char* Bmask, int Len);
+char* AskHostBookMark(int Num);
+int SetHostDir(int Num, char* LocDir, char* HostDir);
+int SetHostPassword(int Num, char* Pass);
 int SetHostSort(int Num, int LFSort, int LDSort, int RFSort, int RDSort);
-void DecomposeSortType(ulong Sort, int *LFSort, int *LDSort, int *RFSort, int *RDSort);
+void DecomposeSortType(ulong Sort, int* LFSort, int* LDSort, int* RFSort, int* RDSort);
 int AskCurrentHost(void);
 void SetCurrentHost(int Num);
-void CopyDefaultHost(HOSTDATA *Set);
+void CopyDefaultHost(HOSTDATA* Set);
 // ホスト共通設定機能
 void ResetDefaultHost(void);
-void SetDefaultHost(HOSTDATA *Set);
-void CopyDefaultDefaultHost(HOSTDATA *Set);
-int SearchHostName(char *Name);
+void SetDefaultHost(HOSTDATA* Set);
+void CopyDefaultDefaultHost(HOSTDATA* Set);
+int SearchHostName(char* Name);
 void ImportFromWSFTP(void);
 // 暗号化通信対応
 int SetHostEncryption(int Num, int UseNoEncryption, int UseFTPES, int UseFTPIS, int UseSFTP);
@@ -1598,27 +1598,27 @@ int SetHostEncryption(int Num, int UseNoEncryption, int UseFTPES, int UseFTPIS, 
 
 void ConnectProc(int Type, int Num);
 void QuickConnectProc(void);
-void DirectConnectProc(char *unc, int Kanji, int Kana, int Fkanji, int TrMode);
+void DirectConnectProc(char* unc, int Kanji, int Kana, int Fkanji, int TrMode);
 void HistoryConnectProc(int MenuCmd);
-char *AskHostAdrs(void);
+char* AskHostAdrs(void);
 int AskHostPort(void);
 int AskHostNameKanji(void);
 int AskHostNameKana(void);
 int AskListCmdMode(void);
 int AskUseNLST_R(void);
-char *AskHostChmodCmd(void);
+char* AskHostChmodCmd(void);
 int AskHostTimeZone(void);
 int AskPasvMode(void);
-char *AskHostLsName(void);
+char* AskHostLsName(void);
 int AskHostType(void);
 int AskHostFireWall(void);
 int AskNoFullPathMode(void);
-char *AskHostUserName(void);
+char* AskHostUserName(void);
 void SaveCurrentSetToHost(void);
 int ReConnectCmdSkt(void);
 // int ReConnectTrnSkt(void);
 // 同時接続対応
-int ReConnectTrnSkt(SOCKET *Skt, int *CancelCheckWork);
+int ReConnectTrnSkt(SOCKET* Skt, int* CancelCheckWork);
 SOCKET AskCmdCtrlSkt(void);
 SOCKET AskTrnCtrlSkt(void);
 void SktShareProh(void);
@@ -1631,25 +1631,25 @@ int AskRealHostType(void);
 int SetOSS(int wkOss);
 int AskOSS(void);
 #endif
-SOCKET connectsock(char *host, int port, char *PreMsg, int *CancelCheckWork);
+SOCKET connectsock(char* host, int port, char* PreMsg, int* CancelCheckWork);
 // IPv6対応
-SOCKET connectsockIPv4(char *host, int port, char *PreMsg, int *CancelCheckWork);
-SOCKET connectsockIPv6(char *host, int port, char *PreMsg, int *CancelCheckWork);
-SOCKET GetFTPListenSocket(SOCKET ctrl_skt, int *CancelCheckWork);
+SOCKET connectsockIPv4(char* host, int port, char* PreMsg, int* CancelCheckWork);
+SOCKET connectsockIPv6(char* host, int port, char* PreMsg, int* CancelCheckWork);
+SOCKET GetFTPListenSocket(SOCKET ctrl_skt, int* CancelCheckWork);
 // IPv6対応
-SOCKET GetFTPListenSocketIPv4(SOCKET ctrl_skt, int *CancelCheckWork);
-SOCKET GetFTPListenSocketIPv6(SOCKET ctrl_skt, int *CancelCheckWork);
+SOCKET GetFTPListenSocketIPv4(SOCKET ctrl_skt, int* CancelCheckWork);
+SOCKET GetFTPListenSocketIPv6(SOCKET ctrl_skt, int* CancelCheckWork);
 int AskTryingConnect(void);
 // 同時接続対応
 //int SocksGet2ndBindReply(SOCKET Socket, SOCKET *Data);
-int SocksGet2ndBindReply(SOCKET Socket, SOCKET *Data, int *CancelCheckWork);
+int SocksGet2ndBindReply(SOCKET Socket, SOCKET* Data, int* CancelCheckWork);
 // 暗号化通信対応
 int AskCryptMode(void);
 int AskUseNoEncryption(void);
 int AskUseFTPES(void);
 int AskUseFTPIS(void);
 int AskUseSFTP(void);
-char *AskPrivateKey(void);
+char* AskPrivateKey(void);
 // 同時接続対応
 int AskMaxThreadCount(void);
 int AskReuseCmdSkt(void);
@@ -1673,22 +1673,22 @@ int AskNoPasvAdrs(void);
 
 int MakeCacheBuf(int Num);
 void DeleteCacheBuf(void);
-int AskCached(char *Path);
+int AskCached(char* Path);
 int AskFreeCache(void);
-void SetCache(int Num, char *Path);
+void SetCache(int Num, char* Path);
 void ClearCache(int Num);
 int AskCurrentFileListNum(void);
 void SetCurrentFileListNum(int Num);
 void SaveCache(void);
 void LoadCache(void);
 void DeleteCache(void);
-void MakeCacheFileName(int Num, char *Buf);
+void MakeCacheFileName(int Num, char* Buf);
 void CountPrevFfftpWindows(void);
 
 /*===== ftpproc.c =====*/
 
 void DownloadProc(int ChName, int ForceFile, int All);
-void DirectDownloadProc(char *Fname);
+void DirectDownloadProc(char* Fname);
 void InputDownloadProc(void);
 void MirrorDownloadProc(int Notify);
 void UploadListProc(int ChName, int All);
@@ -1712,11 +1712,11 @@ void DispCWDerror(HWND hWnd);
 void CopyURLtoClipBoard(void);
 // 同時接続対応
 //int ProcForNonFullpath(char *Path, char *CurDir, HWND hWnd, int Type);
-int ProcForNonFullpath(SOCKET cSkt, char *Path, char *CurDir, HWND hWnd, int *CancelCheckWork);
-void ReformToVMSstyleDirName(char *Path);
-void ReformToVMSstylePathName(char *Path);
+int ProcForNonFullpath(SOCKET cSkt, char* Path, char* CurDir, HWND hWnd, int* CancelCheckWork);
+void ReformToVMSstyleDirName(char* Path);
+void ReformToVMSstylePathName(char* Path);
 #if defined(HAVE_OPENVMS)
-void ReformVMSDirName(char *DirName, int Flg);
+void ReformVMSDirName(char* DirName, int Flg);
 #endif
 // 自動切断対策
 void NoopProc(int Force);
@@ -1726,59 +1726,59 @@ void ReconnectProc(void);
 
 /*===== local.c =====*/
 
-int DoLocalCWD(char *Path);
-void DoLocalMKD(char *Path);
-void DoLocalPWD(char *Buf);
-void DoLocalRMD(char *Path);
-void DoLocalDELE(char *Path);
-void DoLocalRENAME(char *Src, char *Dst);
-void DispFileProperty(char *Fname);
-HANDLE FindFirstFileAttr(char *Fname, WIN32_FIND_DATA *FindData, int IgnHide);
-BOOL FindNextFileAttr(HANDLE hFind, WIN32_FIND_DATA *FindData, int IgnHide);
+int DoLocalCWD(char* Path);
+void DoLocalMKD(char* Path);
+void DoLocalPWD(char* Buf);
+void DoLocalRMD(char* Path);
+void DoLocalDELE(char* Path);
+void DoLocalRENAME(char* Src, char* Dst);
+void DispFileProperty(char* Fname);
+HANDLE FindFirstFileAttr(char* Fname, WIN32_FIND_DATA* FindData, int IgnHide);
+BOOL FindNextFileAttr(HANDLE hFind, WIN32_FIND_DATA* FindData, int IgnHide);
 
 /*===== remote.c =====*/
 
-int DoCWD(char *Path, int Disp, int ForceGet, int ErrorBell);
-int DoCWDStepByStep(char *Path, char *Cur);
-int DoMKD(char *Path);
+int DoCWD(char* Path, int Disp, int ForceGet, int ErrorBell);
+int DoCWDStepByStep(char* Path, char* Cur);
+int DoMKD(char* Path);
 void InitPWDcommand();
-int DoRMD(char *Path);
-int DoDELE(char *Path);
-int DoRENAME(char *Src, char *Dst);
-int DoCHMOD(char *Path, char *Mode);
+int DoRMD(char* Path);
+int DoDELE(char* Path);
+int DoRENAME(char* Src, char* Dst);
+int DoCHMOD(char* Path, char* Mode);
 // 同時接続対応
 //int DoSIZE(char *Path, LONGLONG *Size);
-int DoSIZE(SOCKET cSkt, char *Path, LONGLONG *Size, int *CancelCheckWork);
+int DoSIZE(SOCKET cSkt, char* Path, LONGLONG* Size, int* CancelCheckWork);
 // 同時接続対応
 //int DoMDTM(char *Path, FILETIME *Time);
-int DoMDTM(SOCKET cSkt, char *Path, FILETIME *Time, int *CancelCheckWork);
+int DoMDTM(SOCKET cSkt, char* Path, FILETIME* Time, int* CancelCheckWork);
 // ホスト側の日時設定
-int DoMFMT(SOCKET cSkt, char *Path, FILETIME *Time, int *CancelCheckWork);
+int DoMFMT(SOCKET cSkt, char* Path, FILETIME* Time, int* CancelCheckWork);
 // 同時接続対応
 //int DoQUOTE(char *CmdStr);
-int DoQUOTE(SOCKET cSkt, char *CmdStr, int *CancelCheckWork);
+int DoQUOTE(SOCKET cSkt, char* CmdStr, int* CancelCheckWork);
 SOCKET DoClose(SOCKET Sock);
 // 同時接続対応
 //int DoQUIT(SOCKET ctrl_skt);
-int DoQUIT(SOCKET ctrl_skt, int *CancelCheckWork);
-int DoDirListCmdSkt(char *AddOpt, char *Path, int Num, int *CancelCheckWork);
+int DoQUIT(SOCKET ctrl_skt, int* CancelCheckWork);
+int DoDirListCmdSkt(char* AddOpt, char* Path, int Num, int* CancelCheckWork);
 #if defined(HAVE_TANDEM)
 void SwitchOSSProc(void);
 #endif
 // 同時接続対応
 //int CommandProcCmd(char *Reply, char *fmt, ...);
-int CommandProcCmd(char *Reply, int* CancelCheckWork, char *fmt, ...);
+int CommandProcCmd(char* Reply, int* CancelCheckWork, char* fmt, ...);
 // 同時接続対応
 //int CommandProcTrn(char *Reply, char *fmt, ...);
-int CommandProcTrn(SOCKET cSkt, char *Reply, int* CancelCheckWork, char *fmt, ...);
-int command(SOCKET cSkt, char *Reply, int *CancelCheckWork, char *fmt, ...);
-int SendData(SOCKET Skt, char *Data, int Size, int Mode, int *CancelCheckWork);
-int ReadReplyMessage(SOCKET cSkt, char *Buf, int Max, int *CancelCheckWork, char *Tmp);
-int ReadNchar(SOCKET cSkt, char *Buf, int Size, int *CancelCheckWork);
-char *ReturnWSError(UINT Error);
-void ReportWSError(char *Msg, UINT Error);
-int ChangeFnameRemote2Local(char *Fname, int Max);
-int ChangeFnameLocal2Remote(char *Fname, int Max);
+int CommandProcTrn(SOCKET cSkt, char* Reply, int* CancelCheckWork, char* fmt, ...);
+int command(SOCKET cSkt, char* Reply, int* CancelCheckWork, char* fmt, ...);
+int SendData(SOCKET Skt, char* Data, int Size, int Mode, int* CancelCheckWork);
+int ReadReplyMessage(SOCKET cSkt, char* Buf, int Max, int* CancelCheckWork, char* Tmp);
+int ReadNchar(SOCKET cSkt, char* Buf, int Size, int* CancelCheckWork);
+char* ReturnWSError(UINT Error);
+void ReportWSError(char* Msg, UINT Error);
+int ChangeFnameRemote2Local(char* Fname, int Max);
+int ChangeFnameLocal2Remote(char* Fname, int Max);
 
 /*===== getput.c =====*/
 
@@ -1786,21 +1786,21 @@ int MakeTransferThread(void);
 void CloseTransferThread(void);
 // 同時接続対応
 void AbortAllTransfer();
-int AddTmpTransFileList(TRANSPACKET *Pkt, TRANSPACKET **Base);
-void EraseTmpTransFileList(TRANSPACKET **Base);
-int RemoveTmpTransFileListItem(TRANSPACKET **Base, int Num);
+int AddTmpTransFileList(TRANSPACKET* Pkt, TRANSPACKET** Base);
+void EraseTmpTransFileList(TRANSPACKET** Base);
+int RemoveTmpTransFileListItem(TRANSPACKET** Base, int Num);
 
-void AddTransFileList(TRANSPACKET *Pkt);
+void AddTransFileList(TRANSPACKET* Pkt);
 // バグ対策
 void AddNullTransFileList();
-void AppendTransFileList(TRANSPACKET *Pkt);
+void AppendTransFileList(TRANSPACKET* Pkt);
 void KeepTransferDialog(int Sw);
 int AskTransferNow(void);
 int AskTransferFileNum(void);
 void GoForwardTransWindow(void);
 void InitTransCurDir(void);
-int DoDownload(SOCKET cSkt, TRANSPACKET *Pkt, int DirList, int *CancelCheckWork);
-int CheckPathViolation(TRANSPACKET *packet);
+int DoDownload(SOCKET cSkt, TRANSPACKET* Pkt, int DirList, int* CancelCheckWork);
+int CheckPathViolation(TRANSPACKET* packet);
 // タスクバー進捗表示
 LONGLONG AskTransferSizeLeft(void);
 LONGLONG AskTransferSizeTotal(void);
@@ -1813,28 +1813,28 @@ int MarkFileAsDownloadedFromInternet(char* Fname);
 
 /*===== codecnv.c =====*/
 
-void InitTermCodeConvInfo(TERMCODECONVINFO *cInfo);
-int FlushRestTermCodeConvData(TERMCODECONVINFO *cInfo);
-int ConvTermCodeToCRLF(TERMCODECONVINFO *cInfo);
+void InitTermCodeConvInfo(TERMCODECONVINFO* cInfo);
+int FlushRestTermCodeConvData(TERMCODECONVINFO* cInfo);
+int ConvTermCodeToCRLF(TERMCODECONVINFO* cInfo);
 
-void InitCodeConvInfo(CODECONVINFO *cInfo);
-int FlushRestData(CODECONVINFO *cInfo);
+void InitCodeConvInfo(CODECONVINFO* cInfo);
+int FlushRestData(CODECONVINFO* cInfo);
 // UTF-8対応
-int ConvNoConv(CODECONVINFO *cInfo);
-int ConvEUCtoSJIS(CODECONVINFO *cInfo);
-int ConvJIStoSJIS(CODECONVINFO *cInfo);
-int ConvSMBtoSJIS(CODECONVINFO *cInfo);
-int ConvUTF8NtoSJIS(CODECONVINFO *cInfo); // UTF-8対応
-int ConvSJIStoEUC(CODECONVINFO *cInfo);
-int ConvSJIStoJIS(CODECONVINFO *cInfo);
-int ConvSJIStoSMB_HEX(CODECONVINFO *cInfo);
-int ConvSJIStoSMB_CAP(CODECONVINFO *cInfo);
-int ConvSJIStoUTF8N(CODECONVINFO *cInfo); // UTF-8対応
+int ConvNoConv(CODECONVINFO* cInfo);
+int ConvEUCtoSJIS(CODECONVINFO* cInfo);
+int ConvJIStoSJIS(CODECONVINFO* cInfo);
+int ConvSMBtoSJIS(CODECONVINFO* cInfo);
+int ConvUTF8NtoSJIS(CODECONVINFO* cInfo); // UTF-8対応
+int ConvSJIStoEUC(CODECONVINFO* cInfo);
+int ConvSJIStoJIS(CODECONVINFO* cInfo);
+int ConvSJIStoSMB_HEX(CODECONVINFO* cInfo);
+int ConvSJIStoSMB_CAP(CODECONVINFO* cInfo);
+int ConvSJIStoUTF8N(CODECONVINFO* cInfo); // UTF-8対応
 // UTF-8 HFS+対応
-int ConvUTF8NtoUTF8HFSX(CODECONVINFO *cInfo);
-int ConvUTF8HFSXtoUTF8N(CODECONVINFO *cInfo);
-void ConvAutoToSJIS(char *Text, int Pref);
-int CheckKanjiCode(char *Text, int Size, int Pref);
+int ConvUTF8NtoUTF8HFSX(CODECONVINFO* cInfo);
+int ConvUTF8HFSXtoUTF8N(CODECONVINFO* cInfo);
+void ConvAutoToSJIS(char* Text, int Pref);
+int CheckKanjiCode(char* Text, int Size, int Pref);
 // UTF-8対応
 int LoadUnicodeNormalizationDll();
 void FreeUnicodeNormalizationDll();
@@ -1847,16 +1847,16 @@ int SortSetting(void);
 // hostman.cで使用
 int GetDecimalText(HWND hDlg, int Ctrl);
 void SetDecimalText(HWND hDlg, int Ctrl, int Num);
-void CheckRange2(int *Cur, int Max, int Min);
-void AddTextToListBox(HWND hDlg, char *Str, int CtrlList, int BufSize);
-void SetMultiTextToList(HWND hDlg, int CtrlList, char *Text);
-void GetMultiTextFromList(HWND hDlg, int CtrlList, char *Buf, int BufSize);
+void CheckRange2(int* Cur, int Max, int Min);
+void AddTextToListBox(HWND hDlg, char* Str, int CtrlList, int BufSize);
+void SetMultiTextToList(HWND hDlg, int CtrlList, char* Text);
+void GetMultiTextFromList(HWND hDlg, int CtrlList, char* Buf, int BufSize);
 
 /*===== bookmark.c =====*/
 
 void ClearBookMark(void);
 void AddCurDirToBookMark(int Win);
-int AskBookMarkText(int MarkID, char *Local, char *Remote, int Max);
+int AskBookMarkText(int MarkID, char* Local, char* Remote, int Max);
 void SaveBookMark(void);
 void LoadBookMark(void);
 int EditBookMark(void);
@@ -1868,12 +1868,12 @@ void ReleaseJre(void);
 int AskRasUsable(void);
 int AskJreUsable(void);
 int GetJreVersion(void);
-int JreCompileStr(char *Str);
-char *JreGetStrMatchInfo(char *Str, UINT nStart);
+int JreCompileStr(char* Str);
+char* JreGetStrMatchInfo(char* Str, UINT nStart);
 
 /*===== wildcard.c =====*/
 
-int CheckFname(char *str, char *regexp);
+int CheckFname(char* str, char* regexp);
 
 /*===== registry.c =====*/
 
@@ -1882,7 +1882,7 @@ int LoadRegistry(void);
 void ClearRegistry(void);
 // ポータブル版判定
 void ClearIni(void);
-void SetMasterPassword( const char* );
+void SetMasterPassword(const char*);
 // セキュリティ強化
 void GetMasterPassword(char*);
 int GetMasterPasswordStatus(void);
@@ -1913,12 +1913,12 @@ void CheckTipsDisplay(HWND hWnd, LPARAM lParam);
 void LoadRasLib(void);
 void ReleaseRasLib(void);
 void DisconnectRas(int Notify);
-int SetRasEntryToComboBox(HWND hDlg, int Item, char *CurName);
-int ConnectRas(int Dialup, int UseThis, int Notify, char *Name);
+int SetRasEntryToComboBox(HWND hDlg, int Item, char* CurName);
+int ConnectRas(int Dialup, int UseThis, int Notify, char* Name);
 
 /*===== misc.c =====*/
 
-int InputDialogBox(int Res, HWND hWnd, char *Title, char *Buf, int Max, int *Flg, int Help);
+int InputDialogBox(int Res, HWND hWnd, char* Title, char* Buf, int Max, int* Flg, int Help);
 // 64ビット対応
 //BOOL CALLBACK ExeEscDialogProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 INT_PTR CALLBACK ExeEscDialogProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
@@ -1927,62 +1927,62 @@ INT_PTR CALLBACK ExeEscDialogProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 INT_PTR CALLBACK ExeEscTextDialogProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 // 全設定暗号化対応
 INT_PTR CALLBACK AnyButtonDialogProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-void SetYenTail(char *Str);
-void RemoveYenTail(char *Str);
-void SetSlashTail(char *Str);
-void RemoveReturnCode(char *Str);
-void ReplaceAll(char *Str, char Src, char Dst);
+void SetYenTail(char* Str);
+void RemoveYenTail(char* Str);
+void SetSlashTail(char* Str);
+void RemoveReturnCode(char* Str);
+void ReplaceAll(char* Str, char Src, char Dst);
 int IsDigitSym(int Ch, int Sym);
-int StrAllSameChar(char *Str, char Ch);
-void RemoveTailingSpaces(char *Str);
-char *stristr(char *s1, char *s2);
-char *GetNextField(char *Str);
-int GetOneField(char *Str, char *Buf, int Max);
-void RemoveComma(char *Str);
-char *GetFileName(char *Path);
-char *GetFileExt(char *Path);
-char *GetToolName(char *Path);
-void RemoveFileName(char *Path, char *Buf);
-void GetUpperDir(char *Path);
-void GetUpperDirEraseTopSlash(char *Path);
-int AskDirLevel(char *Path);
-void MakeSizeString(double Size, char *Buf);
-void DispStaticText(HWND hWnd, char *Str);
-int StrMultiLen(char *Str);
-void RectClientToScreen(HWND hWnd, RECT *Rect);
+int StrAllSameChar(char* Str, char Ch);
+void RemoveTailingSpaces(char* Str);
+char* stristr(char* s1, char* s2);
+char* GetNextField(char* Str);
+int GetOneField(char* Str, char* Buf, int Max);
+void RemoveComma(char* Str);
+char* GetFileName(char* Path);
+char* GetFileExt(char* Path);
+char* GetToolName(char* Path);
+void RemoveFileName(char* Path, char* Buf);
+void GetUpperDir(char* Path);
+void GetUpperDirEraseTopSlash(char* Path);
+int AskDirLevel(char* Path);
+void MakeSizeString(double Size, char* Buf);
+void DispStaticText(HWND hWnd, char* Str);
+int StrMultiLen(char* Str);
+void RectClientToScreen(HWND hWnd, RECT* Rect);
 int hex2bin(char Ch);
-int SplitUNCpath(char *unc, char *Host, char *Path, char *File, char *User, char *Pass, int *Port);
-int TimeString2FileTime(char *Time, FILETIME *Buf);
+int SplitUNCpath(char* unc, char* Host, char* Path, char* File, char* User, char* Pass, int* Port);
+int TimeString2FileTime(char* Time, FILETIME* Buf);
 // タイムスタンプのバグ修正
 //void FileTime2TimeString(FILETIME *Time, char *Buf, int Mode, int InfoExist);
-void FileTime2TimeString(FILETIME *Time, char *Buf, int Mode, int InfoExist, int ShowSeconds);
-void SpecificLocalFileTime2FileTime(FILETIME *Time, int TimeZone);
-int AttrString2Value(char *Str);
+void FileTime2TimeString(FILETIME* Time, char* Buf, int Mode, int InfoExist, int ShowSeconds);
+void SpecificLocalFileTime2FileTime(FILETIME* Time, int TimeZone);
+int AttrString2Value(char* Str);
 // ファイルの属性を数字で表示
 //void AttrValue2String(int Attr, char *Buf);
-void AttrValue2String(int Attr, char *Buf, int ShowNumber);
-void FormatIniString(char *Str);
-int SelectFile(HWND hWnd, char *Fname, char *Title, char *Filters, char *Ext, int Flags, int Save);
-int SelectDir(HWND hWnd, char *Buf, int MaxLen);
-void SetRadioButtonByValue(HWND hDlg, int Value, const RADIOBUTTON *Buttons, int Num);
-int AskRadioButtonValue(HWND hDlg, const RADIOBUTTON *Buttons, int Num);
-int xtoi(char *Str);
-int CheckFileReadable(char *Fname);
+void AttrValue2String(int Attr, char* Buf, int ShowNumber);
+void FormatIniString(char* Str);
+int SelectFile(HWND hWnd, char* Fname, char* Title, char* Filters, char* Ext, int Flags, int Save);
+int SelectDir(HWND hWnd, char* Buf, int MaxLen);
+void SetRadioButtonByValue(HWND hDlg, int Value, const RADIOBUTTON* Buttons, int Num);
+int AskRadioButtonValue(HWND hDlg, const RADIOBUTTON* Buttons, int Num);
+int xtoi(char* Str);
+int CheckFileReadable(char* Fname);
 int max1(int n, int m);
 int min1(int n, int m);
-void ExcEndianDWORD(DWORD *x);
-void SwapInt(int *Num1, int *Num2);
-int IsFolderExist(char *Path);
-int ConvertNum(int x, int Dir, const INTCONVTBL *Tbl, int Num);
-int MoveFileToTrashCan(char *Path);
+void ExcEndianDWORD(DWORD* x);
+void SwapInt(int* Num1, int* Num2);
+int IsFolderExist(char* Path);
+int ConvertNum(int x, int Dir, const INTCONVTBL* Tbl, int Num);
+int MoveFileToTrashCan(char* Path);
 LONGLONG MakeLongLong(DWORD High, DWORD Low);
-char *MakeNumString(LONGLONG Num, char *Buf, BOOL Comma);
+char* MakeNumString(LONGLONG Num, char* Buf, BOOL Comma);
 // 異なるファイルが表示されるバグ修正
 char* MakeDistinguishableFileName(char* Out, char* In);
 // 環境依存の不具合対策
 char* GetAppTempPath(char* Buf);
 #if defined(HAVE_TANDEM)
-void CalcExtentSize(TRANSPACKET *Pkt, LONGLONG Size);
+void CalcExtentSize(TRANSPACKET* Pkt, LONGLONG Size);
 #endif
 // 高DPI対応
 void QueryDisplayDPI();
@@ -1996,13 +1996,13 @@ int ReplaceAllStrings(char* Out, char* In, char* From, char* To);
 
 /*===== dlgsize.c =====*/
 
-void DlgSizeInit(HWND hDlg, DIALOGSIZE *Dt, SIZE *Size);
-void AskDlgSize(HWND hDlg, DIALOGSIZE *Dt, SIZE *Size);
-void DlgSizeChange(HWND hDlg, DIALOGSIZE *Dt, RECT *New, int Flg);
+void DlgSizeInit(HWND hDlg, DIALOGSIZE* Dt, SIZE* Size);
+void AskDlgSize(HWND hDlg, DIALOGSIZE* Dt, SIZE* Size);
+void DlgSizeChange(HWND hDlg, DIALOGSIZE* Dt, RECT* New, int Flg);
 
 /*===== opie.c =====*/
 
-int Make6WordPass(int seq, char *seed, char *pass, int type, char *buf);
+int Make6WordPass(int seq, char* seed, char* pass, int type, char* buf);
 
 /*===== tool.c =====*/
 
@@ -2012,25 +2012,25 @@ void TurnStatefulFTPFilter();
 
 /*===== history.c =====*/
 
-void AddHostToHistory(HOSTDATA *Host, int TrMode);
-void AddHistoryToHistory(HISTORYDATA *Hist);
+void AddHostToHistory(HOSTDATA* Host, int TrMode);
+void AddHistoryToHistory(HISTORYDATA* Hist);
 int AskHistoryNum(void);
 void CheckHistoryNum(int Space);
-void CopyHistoryToHost(HISTORYDATA *Hist, HOSTDATA *Host);
-void CopyDefaultHistory(HISTORYDATA *Set);
+void CopyHistoryToHost(HISTORYDATA* Hist, HOSTDATA* Host);
+void CopyDefaultHistory(HISTORYDATA* Set);
 void SetAllHistoryToMenu(void);
-int GetHistoryByCmd(int MenuCmd, HISTORYDATA *Buf);
-int GetHistoryByNum(int Num, HISTORYDATA *Buf);
+int GetHistoryByCmd(int MenuCmd, HISTORYDATA* Buf);
+int GetHistoryByNum(int Num, HISTORYDATA* Buf);
 
 /*===== clipboard.c =====*/
 
-int CopyStrToClipBoard(char *Str);
+int CopyStrToClipBoard(char* Str);
 
 /*===== diskfree.c =====*/
 
 void LoadKernelLib(void);
 void ReleaseKernelLib(void);
-char *AskLocalFreeSpace(char *Path);
+char* AskLocalFreeSpace(char* Path);
 
 /*===== socket.c =====*/
 
@@ -2045,15 +2045,15 @@ int GetAsyncTableDataIPv6(SOCKET s, struct sockaddr_in6* Host, struct sockaddr_i
 int GetAsyncTableDataMapPort(SOCKET s, int* Port);
 // IPv6対応
 //struct hostent *do_gethostbyname(const char *Name, char *Buf, int Len, int *CancelCheckWork);
-struct hostent *do_gethostbynameIPv4(const char *Name, char *Buf, int Len, int *CancelCheckWork);
-struct hostent *do_gethostbynameIPv6(const char *Name, char *Buf, int Len, int *CancelCheckWork);
+struct hostent* do_gethostbynameIPv4(const char* Name, char* Buf, int Len, int* CancelCheckWork);
+struct hostent* do_gethostbynameIPv6(const char* Name, char* Buf, int Len, int* CancelCheckWork);
 SOCKET do_socket(int af, int type, int protocol);
-int do_connect(SOCKET s, const struct sockaddr *name, int namelen, int *CancelCheckWork);
+int do_connect(SOCKET s, const struct sockaddr* name, int namelen, int* CancelCheckWork);
 int do_closesocket(SOCKET s);
-int do_listen(SOCKET s,	int backlog);
-SOCKET do_accept(SOCKET s, struct sockaddr *addr, int *addrlen);
-int do_recv(SOCKET s, char *buf, int len, int flags, int *TimeOut, int *CancelCheckWork);
-int do_send(SOCKET s, const char *buf, int len, int flags, int *TimeOutErr, int *CancelCheckWork);
+int do_listen(SOCKET s, int backlog);
+SOCKET do_accept(SOCKET s, struct sockaddr* addr, int* addrlen);
+int do_recv(SOCKET s, char* buf, int len, int flags, int* TimeOut, int* CancelCheckWork);
+int do_send(SOCKET s, const char* buf, int len, int flags, int* TimeOutErr, int* CancelCheckWork);
 // 同時接続対応
 void RemoveReceivedData(SOCKET s);
 // UPnP対応
@@ -2064,7 +2064,7 @@ int AddPortMapping(char* Adrs, int Port, char* ExtAdrs);
 int RemovePortMapping(int Port);
 int CheckClosedAndReconnect(void);
 // 同時接続対応
-int CheckClosedAndReconnectTrnSkt(SOCKET *Skt, int *CancelCheckWork);
+int CheckClosedAndReconnectTrnSkt(SOCKET* Skt, int* CancelCheckWork);
 
 /*===== updatebell.c =====*/
 

@@ -37,7 +37,7 @@ HANDLE FindFirstChangeNotificationM(LPCSTR lpPathName, BOOL bWatchSubtree, DWORD
 DWORD GetLogicalDriveStringsM(DWORD nBufferLength, LPSTR lpBuffer);
 #undef RegisterClassEx
 #define RegisterClassEx RegisterClassExM
-ATOM RegisterClassExM(CONST WNDCLASSEXA * v0);
+ATOM RegisterClassExM(CONST WNDCLASSEXA* v0);
 #undef CreateWindowEx
 #define CreateWindowEx CreateWindowExM
 HWND CreateWindowExM(DWORD dwExStyle, LPCSTR lpClassName, LPCSTR lpWindowName, DWORD dwStyle, int X, int Y, int nWidth, int nHeight, HWND hWndParent, HMENU hMenu, HINSTANCE hInstance, LPVOID lpParam);
@@ -148,7 +148,7 @@ BOOL SHGetPathFromIDListM(PCIDLIST_ABSOLUTE pidl, LPSTR pszPath);
 int SHFileOperationM(LPSHFILEOPSTRUCTA lpFileOp);
 #undef SHGetFileInfo
 #define SHGetFileInfo SHGetFileInfoM
-DWORD_PTR SHGetFileInfoM(LPCSTR pszPath, DWORD dwFileAttributes, SHFILEINFOA *psfi, UINT cbFileInfo, UINT uFlags);
+DWORD_PTR SHGetFileInfoM(LPCSTR pszPath, DWORD dwFileAttributes, SHFILEINFOA* psfi, UINT cbFileInfo, UINT uFlags);
 #undef AppendMenu
 #define AppendMenu AppendMenuM
 BOOL AppendMenuM(HMENU hMenu, UINT uFlags, UINT_PTR uIDNewItem, LPCSTR lpNewItem);
@@ -157,7 +157,7 @@ BOOL AppendMenuM(HMENU hMenu, UINT uFlags, UINT_PTR uIDNewItem, LPCSTR lpNewItem
 BOOL GetMenuItemInfoM(HMENU hmenu, UINT item, BOOL fByPosition, LPMENUITEMINFOA lpmii);
 #undef CreateFontIndirect
 #define CreateFontIndirect CreateFontIndirectM
-HFONT CreateFontIndirectM(CONST LOGFONTA *lplf);
+HFONT CreateFontIndirectM(CONST LOGFONTA* lplf);
 #undef ChooseFont
 #define ChooseFont ChooseFontM
 BOOL ChooseFontM(LPCHOOSEFONTA v0);
@@ -190,58 +190,58 @@ BOOL CreateDirectoryM(LPCSTR lpPathName, LPSECURITY_ATTRIBUTES lpSecurityAttribu
 BOOL RemoveDirectoryM(LPCSTR lpPathName);
 #undef mkdir
 #define mkdir _mkdirM
-int mkdirM(const char * _Path);
+int mkdirM(const char* _Path);
 #undef _mkdir
 #define _mkdir _mkdirM
-int _mkdirM(const char * _Path);
+int _mkdirM(const char* _Path);
 #undef rmdir
 #define rmdir rmdirM
-int rmdirM(const char * _Path);
+int rmdirM(const char* _Path);
 #undef _rmdir
 #define _rmdir _rmdirM
-int _rmdirM(const char * _Path);
+int _rmdirM(const char* _Path);
 #undef remove
 #define remove removeM
-int removeM(const char * _Filename);
+int removeM(const char* _Filename);
 #undef _remove
 #define _remove _removeM
-int _removeM(const char * _Filename);
+int _removeM(const char* _Filename);
 #undef _unlink
 #define _unlink _unlinkM
-int _unlinkM(const char * _Filename);
+int _unlinkM(const char* _Filename);
 #undef _mbslen
 #define _mbslen _mbslenM
-size_t _mbslenM(const unsigned char * _Str);
+size_t _mbslenM(const unsigned char* _Str);
 #undef _mbschr
 #define _mbschr _mbschrM
-unsigned char * _mbschrM(const unsigned char * _Str, unsigned int _Ch);
+unsigned char* _mbschrM(const unsigned char* _Str, unsigned int _Ch);
 #undef _mbsrchr
 #define _mbsrchr _mbsrchrM
-unsigned char * _mbsrchrM(const unsigned char * _Str, unsigned int _Ch);
+unsigned char* _mbsrchrM(const unsigned char* _Str, unsigned int _Ch);
 #undef _mbsstr
 #define _mbsstr _mbsstrM
-unsigned char * _mbsstrM(const unsigned char * _Str, const unsigned char * _Substr);
+unsigned char* _mbsstrM(const unsigned char* _Str, const unsigned char* _Substr);
 #undef _mbscmp
 #define _mbscmp _mbscmpM
-int _mbscmpM(const unsigned char * _Str1, const unsigned char * _Str2);
+int _mbscmpM(const unsigned char* _Str1, const unsigned char* _Str2);
 #undef _mbsicmp
 #define _mbsicmp _mbsicmpM
-int _mbsicmpM(const unsigned char * _Str1, const unsigned char * _Str2);
+int _mbsicmpM(const unsigned char* _Str1, const unsigned char* _Str2);
 #undef _mbsncmp
 #define _mbsncmp _mbsncmpM
-int _mbsncmpM(const unsigned char * _Str1, const unsigned char * _Str2, size_t _MaxCount);
+int _mbsncmpM(const unsigned char* _Str1, const unsigned char* _Str2, size_t _MaxCount);
 #undef _mbslwr
 #define _mbslwr _mbslwrM
-unsigned char * _mbslwrM(unsigned char * _String);
+unsigned char* _mbslwrM(unsigned char* _String);
 #undef _mbsupr
 #define _mbsupr _mbsuprM
-unsigned char * _mbsuprM(unsigned char * _String);
+unsigned char* _mbsuprM(unsigned char* _String);
 #undef _mbsninc
 #define _mbsninc _mbsnincM
-unsigned char * _mbsnincM(const unsigned char * _Str, size_t _Count);
+unsigned char* _mbsnincM(const unsigned char* _Str, size_t _Count);
 #undef fopen
 #define fopen fopenM
-FILE * fopenM(const char * _Filename, const char * _Mode);
+FILE* fopenM(const char* _Filename, const char* _Mode);
 
 #undef CreateWindow
 #define CreateWindow(lpClassName, lpWindowName, dwStyle, x, y, nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam) CreateWindowEx(0L, lpClassName, lpWindowName, dwStyle, x, y, nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam)

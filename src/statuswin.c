@@ -5,25 +5,25 @@
 ===============================================================================
 / Copyright (C) 1997-2007 Sota. All rights reserved.
 /
-/ Redistribution and use in source and binary forms, with or without 
-/ modification, are permitted provided that the following conditions 
+/ Redistribution and use in source and binary forms, with or without
+/ modification, are permitted provided that the following conditions
 / are met:
 /
-/  1. Redistributions of source code must retain the above copyright 
+/  1. Redistributions of source code must retain the above copyright
 /     notice, this list of conditions and the following disclaimer.
-/  2. Redistributions in binary form must reproduce the above copyright 
-/     notice, this list of conditions and the following disclaimer in the 
+/  2. Redistributions in binary form must reproduce the above copyright
+/     notice, this list of conditions and the following disclaimer in the
 /     documentation and/or other materials provided with the distribution.
 /
-/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR 
-/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
-/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, 
-/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF 
-/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON 
-/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
+/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 / THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /============================================================================*/
 
@@ -72,17 +72,17 @@ int MakeStatusBarWindow(HWND hWnd, HINSTANCE hInst)
 
 	Sts = FFFTP_FAIL;
 	hWndSbar = CreateWindowEx(0,
-			STATUSCLASSNAME, NULL,
-			WS_CHILD | SBS_SIZEGRIP | WS_CLIPSIBLINGS | SBT_NOBORDERS,
-			0, 0, 0, 0,
-			hWnd, (HMENU)1500, hInst, NULL);
+		STATUSCLASSNAME, NULL,
+		WS_CHILD | SBS_SIZEGRIP | WS_CLIPSIBLINGS | SBT_NOBORDERS,
+		0, 0, 0, 0,
+		hWnd, (HMENU)1500, hInst, NULL);
 
-	if(hWndSbar != NULL)
+	if (hWndSbar != NULL)
 	{
 		// 高DPI対応
-		for(i = 0; i < sizeof(SbarColWidth) / sizeof(int) - 1; i++)
+		for (i = 0; i < sizeof(SbarColWidth) / sizeof(int) - 1; i++)
 			SbarColWidth[i] = CalcPixelX(SbarColWidth[i]);
-		SendMessage(hWndSbar, SB_SETPARTS, sizeof(SbarColWidth)/sizeof(int), (LPARAM)SbarColWidth);
+		SendMessage(hWndSbar, SB_SETPARTS, sizeof(SbarColWidth) / sizeof(int), (LPARAM)SbarColWidth);
 		ShowWindow(hWndSbar, SW_SHOW);
 		Sts = FFFTP_SUCCESS;
 	}
@@ -101,7 +101,7 @@ int MakeStatusBarWindow(HWND hWnd, HINSTANCE hInst)
 
 void DeleteStatusBarWindow(void)
 {
-	if(hWndSbar != NULL)
+	if (hWndSbar != NULL)
 		DestroyWindow(hWndSbar);
 	return;
 }
@@ -133,9 +133,9 @@ HWND GetSbarWnd(void)
 
 void DispCurrentWindow(int Win)
 {
-	if(Win == WIN_LOCAL)
+	if (Win == WIN_LOCAL)
 		SendMessage(GetSbarWnd(), SB_SETTEXT, 0 | 0, (LPARAM)MSGJPN245);
-	else if(Win == WIN_REMOTE)
+	else if (Win == WIN_REMOTE)
 		SendMessage(GetSbarWnd(), SB_SETTEXT, 0 | 0, (LPARAM)MSGJPN246);
 	else
 		SendMessage(GetSbarWnd(), SB_SETTEXT, 0 | 0, (LPARAM)"");
@@ -159,7 +159,7 @@ void DispSelectedSpace(void)
 	int Win;
 
 	Win = WIN_LOCAL;
-	if(GetFocus() == GetRemoteHwnd())
+	if (GetFocus() == GetRemoteHwnd())
 		Win = WIN_REMOTE;
 
 	MakeSizeString(GetSelectedTotalSize(Win), Buf1);
@@ -178,7 +178,7 @@ void DispSelectedSpace(void)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void DispLocalFreeSpace(char *Path)
+void DispLocalFreeSpace(char* Path)
 {
 	char Buf[40];
 
@@ -222,7 +222,7 @@ void DispDownloadSize(LONGLONG Size)
 	char Tmp[50];
 
 	strcpy(Buf, "");
-	if(Size >= 0)
+	if (Size >= 0)
 	{
 		MakeSizeString((double)Size, Tmp);
 		sprintf(Buf, MSGJPN250, Tmp);

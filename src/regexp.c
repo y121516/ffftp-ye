@@ -5,25 +5,25 @@
 ===============================================================================
 / Copyright (C) 1997-2007 Sota. All rights reserved.
 /
-/ Redistribution and use in source and binary forms, with or without 
-/ modification, are permitted provided that the following conditions 
+/ Redistribution and use in source and binary forms, with or without
+/ modification, are permitted provided that the following conditions
 / are met:
 /
-/  1. Redistributions of source code must retain the above copyright 
+/  1. Redistributions of source code must retain the above copyright
 /     notice, this list of conditions and the following disclaimer.
-/  2. Redistributions in binary form must reproduce the above copyright 
-/     notice, this list of conditions and the following disclaimer in the 
+/  2. Redistributions in binary form must reproduce the above copyright
+/     notice, this list of conditions and the following disclaimer in the
 /     documentation and/or other materials provided with the distribution.
 /
-/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR 
-/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
-/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, 
-/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF 
-/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON 
-/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
+/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 / THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /============================================================================*/
 
@@ -72,7 +72,7 @@ int LoadJre(void)
 	return FALSE;
 #endif
 	Sts = FALSE;
-	if((m_hDll = LoadLibrary("jre32.dll")) != NULL)
+	if ((m_hDll = LoadLibrary("jre32.dll")) != NULL)
 	{
 		m_lpJre2Open = (LPJRE2OPEN)GetProcAddress(m_hDll, "Jre2Open");
 		m_lpJre2Compile = (LPJRE2COMPILE)GetProcAddress(m_hDll, "Jre2Compile");
@@ -81,18 +81,18 @@ int LoadJre(void)
 		m_lpJreGetVersion = (LPJREGETVERSION)GetProcAddress(m_hDll, "JreGetVersion");
 		m_lpGetJreMessage = (LPGETJREMESSAGE)GetProcAddress(m_hDll, "GetJreMessage");
 
-		if((m_lpJre2Open != NULL) &&
-		   (m_lpJre2Compile != NULL) &&
-		   (m_lpJre2MatchInfo != NULL) &&
-		   (m_lpJre2Close != NULL) &&
-		   (m_lpJreGetVersion != NULL) &&
-		   (m_lpJreGetVersion != NULL))
+		if ((m_lpJre2Open != NULL) &&
+			(m_lpJre2Compile != NULL) &&
+			(m_lpJre2MatchInfo != NULL) &&
+			(m_lpJre2Close != NULL) &&
+			(m_lpJreGetVersion != NULL) &&
+			(m_lpJreGetVersion != NULL))
 		{
 			memset(&m_jreData, 0, sizeof(JRE2));
 			m_jreData.dwSize = sizeof(JRE2);
 			m_jreData.wTranslate = 1;
 
-			if((*m_lpJre2Open)(&m_jreData) == TRUE)
+			if ((*m_lpJre2Open)(&m_jreData) == TRUE)
 				Sts = TRUE;
 			else
 				ReleaseJre();
@@ -114,7 +114,7 @@ int LoadJre(void)
 
 void ReleaseJre(void)
 {
-	if(m_hDll != NULL)
+	if (m_hDll != NULL)
 		FreeLibrary(m_hDll);
 	m_hDll = NULL;
 
@@ -137,7 +137,7 @@ int AskJreUsable(void)
 	int Sts;
 
 	Sts = FALSE;
-	if(m_hDll != NULL)
+	if (m_hDll != NULL)
 		Sts = TRUE;
 
 	return(Sts);
@@ -158,7 +158,7 @@ int GetJreVersion(void)
 	int Ver;
 
 	Ver = -1;
-	if(m_hDll != NULL)
+	if (m_hDll != NULL)
 		Ver = (*m_lpJreGetVersion)();
 
 	return(Ver);
@@ -175,12 +175,12 @@ int GetJreVersion(void)
 *			TRUE/FALSE
 *----------------------------------------------------------------------------*/
 
-int JreCompileStr(char *Str)
+int JreCompileStr(char* Str)
 {
 	int Sts;
 
 	Sts = FALSE;
-	if(m_hDll != NULL)
+	if (m_hDll != NULL)
 		Sts = (*m_lpJre2Compile)(&m_jreData, Str);
 
 	return(Sts);
@@ -198,16 +198,16 @@ int JreCompileStr(char *Str)
 *			NULL=見つからなかった
 *----------------------------------------------------------------------------*/
 
-char *JreGetStrMatchInfo(char *Str, UINT nStart)
+char* JreGetStrMatchInfo(char* Str, UINT nStart)
 {
-	char *Ret;
+	char* Ret;
 
 	Ret = NULL;
-	if(m_hDll != NULL)
+	if (m_hDll != NULL)
 	{
 		m_jreData.nStart = nStart;
-		if((*m_lpJre2MatchInfo)(&m_jreData, Str) == TRUE)
-			 Ret = Str + m_jreData.nPosition;
+		if ((*m_lpJre2MatchInfo)(&m_jreData, Str) == TRUE)
+			Ret = Str + m_jreData.nPosition;
 	}
 	return(Ret);
 }

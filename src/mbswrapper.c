@@ -21,9 +21,9 @@
 // マルチバイト文字列からワイド文字列へ変換
 int MtoW(LPWSTR pDst, int size, LPCSTR pSrc, int count)
 {
-	if(pSrc < (LPCSTR)0x00010000 || pSrc == (LPCSTR)~0)
+	if (pSrc < (LPCSTR)0x00010000 || pSrc == (LPCSTR)~0)
 		return 0;
-	if(pDst)
+	if (pDst)
 		return MultiByteToWideChar(CP_UTF8, 0, pSrc, count, pDst, size);
 	return MultiByteToWideChar(CP_UTF8, 0, pSrc, count, NULL, 0);
 }
@@ -31,9 +31,9 @@ int MtoW(LPWSTR pDst, int size, LPCSTR pSrc, int count)
 // ワイド文字列からマルチバイト文字列へ変換
 int WtoM(LPSTR pDst, int size, LPCWSTR pSrc, int count)
 {
-	if(pSrc < (LPCWSTR)0x00010000 || pSrc == (LPCWSTR)~0)
+	if (pSrc < (LPCWSTR)0x00010000 || pSrc == (LPCWSTR)~0)
 		return 0;
-	if(pDst)
+	if (pDst)
 		return WideCharToMultiByte(CP_UTF8, 0, pSrc, count, pDst, size, NULL, NULL);
 	return WideCharToMultiByte(CP_UTF8, 0, pSrc, count, NULL, 0, NULL, NULL);
 }
@@ -41,9 +41,9 @@ int WtoM(LPSTR pDst, int size, LPCWSTR pSrc, int count)
 // Shift_JIS文字列からワイド文字列へ変換
 int AtoW(LPWSTR pDst, int size, LPCSTR pSrc, int count)
 {
-	if(pSrc < (LPCSTR)0x00010000 || pSrc == (LPCSTR)~0)
+	if (pSrc < (LPCSTR)0x00010000 || pSrc == (LPCSTR)~0)
 		return 0;
-	if(pDst)
+	if (pDst)
 		return MultiByteToWideChar(CP_ACP, 0, pSrc, count, pDst, size);
 	return MultiByteToWideChar(CP_ACP, 0, pSrc, count, NULL, 0);
 }
@@ -51,9 +51,9 @@ int AtoW(LPWSTR pDst, int size, LPCSTR pSrc, int count)
 // ワイド文字列からShift_JIS文字列へ変換
 int WtoA(LPSTR pDst, int size, LPCWSTR pSrc, int count)
 {
-	if(pSrc < (LPCWSTR)0x00010000 || pSrc == (LPCWSTR)~0)
+	if (pSrc < (LPCWSTR)0x00010000 || pSrc == (LPCWSTR)~0)
 		return 0;
-	if(pDst)
+	if (pDst)
 		return WideCharToMultiByte(CP_ACP, 0, pSrc, count, pDst, size, NULL, NULL);
 	return WideCharToMultiByte(CP_ACP, 0, pSrc, count, NULL, 0, NULL, NULL);
 }
@@ -62,11 +62,11 @@ int WtoA(LPSTR pDst, int size, LPCWSTR pSrc, int count)
 int TerminateStringM(LPSTR lpString, int size)
 {
 	int i;
-	if(lpString < (LPSTR)0x00010000 || lpString == (LPSTR)~0)
+	if (lpString < (LPSTR)0x00010000 || lpString == (LPSTR)~0)
 		return 0;
-	for(i = 0; i < size; i++)
+	for (i = 0; i < size; i++)
 	{
-		if(lpString[i] == '\0')
+		if (lpString[i] == '\0')
 			return i;
 	}
 	i--;
@@ -78,11 +78,11 @@ int TerminateStringM(LPSTR lpString, int size)
 int TerminateStringW(LPWSTR lpString, int size)
 {
 	int i;
-	if(lpString < (LPWSTR)0x00010000 || lpString == (LPWSTR)~0)
+	if (lpString < (LPWSTR)0x00010000 || lpString == (LPWSTR)~0)
 		return 0;
-	for(i = 0; i < size; i++)
+	for (i = 0; i < size; i++)
 	{
-		if(lpString[i] == L'\0')
+		if (lpString[i] == L'\0')
 			return i;
 	}
 	i--;
@@ -94,11 +94,11 @@ int TerminateStringW(LPWSTR lpString, int size)
 int TerminateStringA(LPSTR lpString, int size)
 {
 	int i;
-	if(lpString < (LPSTR)0x00010000 || lpString == (LPSTR)~0)
+	if (lpString < (LPSTR)0x00010000 || lpString == (LPSTR)~0)
 		return 0;
-	for(i = 0; i < size; i++)
+	for (i = 0; i < size; i++)
 	{
-		if(lpString[i] == '\0')
+		if (lpString[i] == '\0')
 			return i;
 	}
 	i--;
@@ -110,10 +110,10 @@ int TerminateStringA(LPSTR lpString, int size)
 size_t GetMultiStringLengthM(LPCSTR lpString)
 {
 	size_t i;
-	if(lpString < (LPCSTR)0x00010000 || lpString == (LPCSTR)~0)
+	if (lpString < (LPCSTR)0x00010000 || lpString == (LPCSTR)~0)
 		return 0;
 	i = 0;
-	while(lpString[i] != '\0' || lpString[i + 1] != '\0')
+	while (lpString[i] != '\0' || lpString[i + 1] != '\0')
 	{
 		i++;
 	}
@@ -125,10 +125,10 @@ size_t GetMultiStringLengthM(LPCSTR lpString)
 size_t GetMultiStringLengthW(LPCWSTR lpString)
 {
 	size_t i;
-	if(lpString < (LPCWSTR)0x00010000 || lpString == (LPCWSTR)~0)
+	if (lpString < (LPCWSTR)0x00010000 || lpString == (LPCWSTR)~0)
 		return 0;
 	i = 0;
-	while(lpString[i] != L'\0' || lpString[i + 1] != L'\0')
+	while (lpString[i] != L'\0' || lpString[i + 1] != L'\0')
 	{
 		i++;
 	}
@@ -140,10 +140,10 @@ size_t GetMultiStringLengthW(LPCWSTR lpString)
 size_t GetMultiStringLengthA(LPCSTR lpString)
 {
 	size_t i;
-	if(lpString < (LPCSTR)0x00010000 || lpString == (LPCSTR)~0)
+	if (lpString < (LPCSTR)0x00010000 || lpString == (LPCSTR)~0)
 		return 0;
 	i = 0;
-	while(lpString[i] != '\0' || lpString[i + 1] != '\0')
+	while (lpString[i] != '\0' || lpString[i + 1] != '\0')
 	{
 		i++;
 	}
@@ -155,12 +155,12 @@ size_t GetMultiStringLengthA(LPCSTR lpString)
 int MtoWMultiString(LPWSTR pDst, int size, LPCSTR pSrc)
 {
 	int i;
-	if(pSrc < (LPCSTR)0x00010000 || pSrc == (LPCSTR)~0)
+	if (pSrc < (LPCSTR)0x00010000 || pSrc == (LPCSTR)~0)
 		return 0;
-	if(!pDst)
+	if (!pDst)
 		return GetMultiStringLengthM(pSrc);
 	i = 0;
-	while(*pSrc != '\0')
+	while (*pSrc != '\0')
 	{
 		i += MultiByteToWideChar(CP_UTF8, 0, pSrc, -1, pDst + i, size - i - 1);
 		pSrc += strlen(pSrc) + 1;
@@ -173,12 +173,12 @@ int MtoWMultiString(LPWSTR pDst, int size, LPCSTR pSrc)
 int WtoMMultiString(LPSTR pDst, int size, LPCWSTR pSrc)
 {
 	int i;
-	if(pSrc < (LPCWSTR)0x00010000 || pSrc == (LPCWSTR)~0)
+	if (pSrc < (LPCWSTR)0x00010000 || pSrc == (LPCWSTR)~0)
 		return 0;
-	if(!pDst)
+	if (!pDst)
 		return GetMultiStringLengthW(pSrc);
 	i = 0;
-	while(*pSrc != L'\0')
+	while (*pSrc != L'\0')
 	{
 		i += WideCharToMultiByte(CP_UTF8, 0, pSrc, -1, pDst + i, size - i - 1, NULL, NULL);
 		pSrc += wcslen(pSrc) + 1;
@@ -191,12 +191,12 @@ int WtoMMultiString(LPSTR pDst, int size, LPCWSTR pSrc)
 int AtoWMultiString(LPWSTR pDst, int size, LPCSTR pSrc)
 {
 	int i;
-	if(pSrc < (LPCSTR)0x00010000 || pSrc == (LPCSTR)~0)
+	if (pSrc < (LPCSTR)0x00010000 || pSrc == (LPCSTR)~0)
 		return 0;
-	if(!pDst)
+	if (!pDst)
 		return GetMultiStringLengthA(pSrc);
 	i = 0;
-	while(*pSrc != '\0')
+	while (*pSrc != '\0')
 	{
 		i += MultiByteToWideChar(CP_ACP, 0, pSrc, -1, pDst + i, size - i - 1);
 		pSrc += strlen(pSrc) + 1;
@@ -209,12 +209,12 @@ int AtoWMultiString(LPWSTR pDst, int size, LPCSTR pSrc)
 int WtoAMultiString(LPSTR pDst, int size, LPCWSTR pSrc)
 {
 	int i;
-	if(pSrc < (LPCWSTR)0x00010000 || pSrc == (LPCWSTR)~0)
+	if (pSrc < (LPCWSTR)0x00010000 || pSrc == (LPCWSTR)~0)
 		return 0;
-	if(!pDst)
+	if (!pDst)
 		return GetMultiStringLengthW(pSrc);
 	i = 0;
-	while(*pSrc != L'\0')
+	while (*pSrc != L'\0')
 	{
 		i += WideCharToMultiByte(CP_ACP, 0, pSrc, -1, pDst + i, size - i - 1, NULL, NULL);
 		pSrc += wcslen(pSrc) + 1;
@@ -230,7 +230,7 @@ char* AllocateStringM(int size)
 	// 0が指定される場合があるため1文字分追加
 	p = (char*)malloc(sizeof(char) * (size + 1));
 	// 念のため先頭にNULL文字を代入
-	if(p)
+	if (p)
 		*p = '\0';
 	return p;
 }
@@ -242,7 +242,7 @@ wchar_t* AllocateStringW(int size)
 	// 0が指定される場合があるため1文字分追加
 	p = (wchar_t*)malloc(sizeof(wchar_t) * (size + 1));
 	// 念のため先頭にNULL文字を代入
-	if(p)
+	if (p)
 		*p = L'\0';
 	return p;
 }
@@ -254,7 +254,7 @@ char* AllocateStringA(int size)
 	// 0が指定される場合があるため1文字分追加
 	p = (char*)malloc(sizeof(char) * (size + 1));
 	// 念のため先頭にNULL文字を代入
-	if(p)
+	if (p)
 		*p = '\0';
 	return p;
 }
@@ -265,12 +265,12 @@ wchar_t* DuplicateMtoW(LPCSTR lpString, int c)
 {
 	wchar_t* p;
 	int i;
-	if(lpString < (LPCSTR)0x00010000 || lpString == (LPCSTR)~0)
+	if (lpString < (LPCSTR)0x00010000 || lpString == (LPCSTR)~0)
 		return (wchar_t*)lpString;
-	if(c < 0)
+	if (c < 0)
 		c = strlen(lpString);
 	p = AllocateStringW(MtoW(NULL, 0, lpString, c) + 1);
-	if(p)
+	if (p)
 	{
 		i = MtoW(p, 65535, lpString, c);
 		p[i] = L'\0';
@@ -284,12 +284,12 @@ wchar_t* DuplicateMtoWBuffer(LPCSTR lpString, int c, int size)
 {
 	wchar_t* p;
 	int i;
-	if(lpString < (LPCSTR)0x00010000 || lpString == (LPCSTR)~0)
+	if (lpString < (LPCSTR)0x00010000 || lpString == (LPCSTR)~0)
 		return (wchar_t*)lpString;
-	if(c < 0)
+	if (c < 0)
 		c = strlen(lpString);
 	p = AllocateStringW(size);
-	if(p)
+	if (p)
 	{
 		i = MtoW(p, size, lpString, c);
 		p[i] = L'\0';
@@ -303,11 +303,11 @@ wchar_t* DuplicateMtoWMultiString(LPCSTR lpString)
 {
 	int count;
 	wchar_t* p;
-	if(lpString < (LPCSTR)0x00010000 || lpString == (LPCSTR)~0)
+	if (lpString < (LPCSTR)0x00010000 || lpString == (LPCSTR)~0)
 		return (wchar_t*)lpString;
 	count = GetMultiStringLengthM(lpString) + 1;
 	p = AllocateStringW(count);
-	if(p)
+	if (p)
 		MtoW(p, count, lpString, count);
 	return p;
 }
@@ -318,11 +318,11 @@ wchar_t* DuplicateMtoWMultiStringBuffer(LPCSTR lpString, int size)
 {
 	int count;
 	wchar_t* p;
-	if(lpString < (LPCSTR)0x00010000 || lpString == (LPCSTR)~0)
+	if (lpString < (LPCSTR)0x00010000 || lpString == (LPCSTR)~0)
 		return (wchar_t*)lpString;
 	count = GetMultiStringLengthM(lpString) + 1;
 	p = AllocateStringW(size);
-	if(p)
+	if (p)
 	{
 		MtoW(p, size, lpString, count);
 		p[size - 2] = L'\0';
@@ -337,12 +337,12 @@ char* DuplicateWtoM(LPCWSTR lpString, int c)
 {
 	char* p;
 	int i;
-	if(lpString < (LPCWSTR)0x00010000 || lpString == (LPCWSTR)~0)
+	if (lpString < (LPCWSTR)0x00010000 || lpString == (LPCWSTR)~0)
 		return (char*)lpString;
-	if(c < 0)
+	if (c < 0)
 		c = wcslen(lpString);
 	p = AllocateStringM(WtoM(NULL, 0, lpString, c) + 1);
-	if(p)
+	if (p)
 	{
 		i = WtoM(p, 65535, lpString, c);
 		p[i] = L'\0';
@@ -356,12 +356,12 @@ wchar_t* DuplicateAtoW(LPCSTR lpString, int c)
 {
 	wchar_t* p;
 	int i;
-	if(lpString < (LPCSTR)0x00010000 || lpString == (LPCSTR)~0)
+	if (lpString < (LPCSTR)0x00010000 || lpString == (LPCSTR)~0)
 		return (wchar_t*)lpString;
-	if(c < 0)
+	if (c < 0)
 		c = strlen(lpString);
 	p = AllocateStringW(AtoW(NULL, 0, lpString, c) + 1);
-	if(p)
+	if (p)
 	{
 		i = AtoW(p, 65535, lpString, c);
 		p[i] = L'\0';
@@ -375,12 +375,12 @@ char* DuplicateWtoA(LPCWSTR lpString, int c)
 {
 	char* p;
 	int i;
-	if(lpString < (LPCWSTR)0x00010000 || lpString == (LPCWSTR)~0)
+	if (lpString < (LPCWSTR)0x00010000 || lpString == (LPCWSTR)~0)
 		return (char*)lpString;
-	if(c < 0)
+	if (c < 0)
 		c = wcslen(lpString);
 	p = AllocateStringA(WtoA(NULL, 0, lpString, c) + 1);
-	if(p)
+	if (p)
 	{
 		i = WtoA(p, 65535, lpString, c);
 		p[i] = L'\0';
@@ -396,42 +396,42 @@ DWORD GetNextCharM(LPCSTR lpString, LPCSTR pLimit, LPCSTR* ppNext)
 	int i;
 	Code = 0;
 	i = -1;
-	if(!pLimit)
+	if (!pLimit)
 		pLimit = (LPCSTR)(~0);
-	if(lpString < pLimit)
+	if (lpString < pLimit)
 	{
-		if((*lpString & 0xfe) == 0xfc)
+		if ((*lpString & 0xfe) == 0xfc)
 		{
 			i = 5;
 			Code |= (DWORD)*lpString & 0x01;
 		}
-		else if((*lpString & 0xfc) == 0xf8)
+		else if ((*lpString & 0xfc) == 0xf8)
 		{
 			i = 4;
 			Code |= (DWORD)*lpString & 0x03;
 		}
-		else if((*lpString & 0xf8) == 0xf0)
+		else if ((*lpString & 0xf8) == 0xf0)
 		{
 			i = 3;
 			Code |= (DWORD)*lpString & 0x07;
 		}
-		else if((*lpString & 0xf0) == 0xe0)
+		else if ((*lpString & 0xf0) == 0xe0)
 		{
 			i = 2;
 			Code |= (DWORD)*lpString & 0x0f;
 		}
-		else if((*lpString & 0xe0) == 0xc0)
+		else if ((*lpString & 0xe0) == 0xc0)
 		{
 			i = 1;
 			Code |= (DWORD)*lpString & 0x1f;
 		}
-		else if((*lpString & 0x80) == 0x00)
+		else if ((*lpString & 0x80) == 0x00)
 		{
 			i = 0;
 			Code |= (DWORD)*lpString & 0x7f;
 		}
 		lpString++;
-		while(lpString < pLimit && i > 0 && (*lpString & 0xc0) == 0x80)
+		while (lpString < pLimit && i > 0 && (*lpString & 0xc0) == 0x80)
 		{
 			i--;
 			Code = Code << 6;
@@ -439,9 +439,9 @@ DWORD GetNextCharM(LPCSTR lpString, LPCSTR pLimit, LPCSTR* ppNext)
 			lpString++;
 		}
 	}
-	if(i != 0)
+	if (i != 0)
 		Code = 0x80000000;
-	if(ppNext)
+	if (ppNext)
 		*ppNext = lpString;
 	return Code;
 }
@@ -454,31 +454,31 @@ int PutNextCharM(LPSTR lpString, LPSTR pLimit, LPSTR* ppNext, DWORD Code)
 	int i;
 	Count = 0;
 	i = -1;
-	if(!pLimit)
+	if (!pLimit)
 		pLimit = (LPSTR)(~0);
-	if(lpString < pLimit)
+	if (lpString < pLimit)
 	{
-		if(Code & 0x7c000000)
+		if (Code & 0x7c000000)
 		{
 			i = 5;
 			*lpString = 0xfc | ((CHAR)(Code >> 30) & 0x01);
 		}
-		else if(Code & 0x03e00000)
+		else if (Code & 0x03e00000)
 		{
 			i = 4;
 			*lpString = 0xf8 | ((CHAR)(Code >> 24) & 0x03);
 		}
-		else if(Code & 0x001f0000)
+		else if (Code & 0x001f0000)
 		{
 			i = 3;
 			*lpString = 0xf0 | ((CHAR)(Code >> 18) & 0x07);
 		}
-		else if(Code & 0x0000f800)
+		else if (Code & 0x0000f800)
 		{
 			i = 2;
 			*lpString = 0xe0 | ((CHAR)(Code >> 12) & 0x0f);
 		}
-		else if(Code & 0x00000780)
+		else if (Code & 0x00000780)
 		{
 			i = 1;
 			*lpString = 0xc0 | ((CHAR)(Code >> 6) & 0x1f);
@@ -490,16 +490,16 @@ int PutNextCharM(LPSTR lpString, LPSTR pLimit, LPSTR* ppNext, DWORD Code)
 		}
 		Count = i + 1;
 		lpString++;
-		while(lpString < pLimit && i > 0)
+		while (lpString < pLimit && i > 0)
 		{
 			i--;
 			*lpString = 0x80 | ((CHAR)(Code >> (i * 6)) & 0x3f);
 			lpString++;
 		}
 	}
-	if(i != 0)
+	if (i != 0)
 		Count = 0;
-	if(ppNext)
+	if (ppNext)
 		*ppNext = lpString;
 	return Count;
 }
@@ -510,19 +510,19 @@ DWORD GetNextCharW(LPCWSTR lpString, LPCWSTR pLimit, LPCWSTR* ppNext)
 {
 	DWORD Code;
 	Code = 0x80000000;
-	if(!pLimit)
+	if (!pLimit)
 		pLimit = (LPCWSTR)(~0);
-	if(lpString < pLimit)
+	if (lpString < pLimit)
 	{
-		if((*lpString & 0xf800) == 0xd800)
+		if ((*lpString & 0xf800) == 0xd800)
 		{
-			if((*lpString & 0x0400) == 0x0400)
+			if ((*lpString & 0x0400) == 0x0400)
 			{
 				Code = (DWORD)*lpString & 0x03ff;
 				lpString++;
-				if(lpString < pLimit)
+				if (lpString < pLimit)
 				{
-					if((*lpString & 0x0400) == 0x0000)
+					if ((*lpString & 0x0400) == 0x0000)
 					{
 						Code |= ((DWORD)*lpString & 0x03ff) << 10;
 						lpString++;
@@ -540,7 +540,7 @@ DWORD GetNextCharW(LPCWSTR lpString, LPCWSTR pLimit, LPCWSTR* ppNext)
 			lpString++;
 		}
 	}
-	if(ppNext)
+	if (ppNext)
 		*ppNext = lpString;
 	return Code;
 }
@@ -551,15 +551,15 @@ int PutNextCharW(LPWSTR lpString, LPWSTR pLimit, LPWSTR* ppNext, DWORD Code)
 {
 	int Count;
 	Count = 0;
-	if(!pLimit)
+	if (!pLimit)
 		pLimit = (LPWSTR)(~0);
-	if(lpString < pLimit)
+	if (lpString < pLimit)
 	{
-		if((Code & 0x7fff0000) || (Code & 0x0000f800) == 0x0000d800)
+		if ((Code & 0x7fff0000) || (Code & 0x0000f800) == 0x0000d800)
 		{
 			*lpString = 0xdc00 | ((WCHAR)Code & 0x03ff);
 			lpString++;
-			if(lpString < pLimit)
+			if (lpString < pLimit)
 			{
 				*lpString = 0xd800 | ((WCHAR)(Code >> 10) & 0x03ff);
 				lpString++;
@@ -573,7 +573,7 @@ int PutNextCharW(LPWSTR lpString, LPWSTR pLimit, LPWSTR* ppNext, DWORD Code)
 			Count = 1;
 		}
 	}
-	if(ppNext)
+	if (ppNext)
 		*ppNext = lpString;
 	return Count;
 }
@@ -585,14 +585,14 @@ int GetCodeCountM(LPCSTR lpString, int CharCount)
 	LPCSTR pLimit;
 	DWORD Code;
 	Count = 0;
-	if(CharCount == -1)
+	if (CharCount == -1)
 		pLimit = lpString + strlen(lpString);
 	else
 		pLimit = lpString + CharCount;
-	while(lpString < pLimit)
+	while (lpString < pLimit)
 	{
 		Code = GetNextCharM(lpString, pLimit, &lpString);
-		if(Code == 0x80000000)
+		if (Code == 0x80000000)
 			continue;
 		Count++;
 	}
@@ -606,14 +606,14 @@ int GetCodeCountW(LPCWSTR lpString, int CharCount)
 	LPCWSTR pLimit;
 	DWORD Code;
 	Count = 0;
-	if(CharCount == -1)
+	if (CharCount == -1)
 		pLimit = lpString + wcslen(lpString);
 	else
 		pLimit = lpString + CharCount;
-	while(lpString < pLimit)
+	while (lpString < pLimit)
 	{
 		Code = GetNextCharW(lpString, pLimit, &lpString);
-		if(Code == 0x80000000)
+		if (Code == 0x80000000)
 			continue;
 		Count++;
 	}
@@ -632,32 +632,32 @@ BOOL FixStringM(LPSTR pDst, LPCSTR pSrc)
 	char c;
 	bResult = FALSE;
 	p = (char*)pSrc;
-	while(*pSrc != '\0')
+	while (*pSrc != '\0')
 	{
 		Code = GetNextCharM(pSrc, NULL, &pSrc);
-		if(Code & 0x80000000)
+		if (Code & 0x80000000)
 			continue;
-		else if(Code & 0x7c000000)
+		else if (Code & 0x7c000000)
 		{
 			i = 5;
 			c = (char)(0xfc | (Code >> (6 * i)));
 		}
-		else if(Code & 0x03e00000)
+		else if (Code & 0x03e00000)
 		{
 			i = 4;
 			c = (char)(0xf8 | (Code >> (6 * i)));
 		}
-		else if(Code & 0x001f0000)
+		else if (Code & 0x001f0000)
 		{
 			i = 3;
 			c = (char)(0xf0 | (Code >> (6 * i)));
 		}
-		else if(Code & 0x0000f800)
+		else if (Code & 0x0000f800)
 		{
 			i = 2;
 			c = (char)(0xe0 | (Code >> (6 * i)));
 		}
-		else if(Code & 0x00000780)
+		else if (Code & 0x00000780)
 		{
 			i = 1;
 			c = (char)(0xc0 | (Code >> (6 * i)));
@@ -667,23 +667,23 @@ BOOL FixStringM(LPSTR pDst, LPCSTR pSrc)
 			i = 0;
 			c = (char)Code;
 		}
-		if(c != *p)
+		if (c != *p)
 			bResult = TRUE;
 		p++;
 		*pDst = c;
 		pDst++;
-		while(i > 0)
+		while (i > 0)
 		{
 			i--;
 			c = (char)(0x80 | ((Code >> (6 * i)) & 0x3f));
-			if(c != *p)
+			if (c != *p)
 				bResult = TRUE;
 			p++;
 			*pDst = c;
 			pDst++;
 		}
 	}
-	if(*p != '\0')
+	if (*p != '\0')
 		bResult = TRUE;
 	*pDst = '\0';
 	return bResult;
@@ -697,7 +697,7 @@ BOOL FixMultiStringM(LPSTR pDst, LPCSTR pSrc)
 	BOOL bResult;
 	int Length;
 	bResult = FALSE;
-	while(*pSrc != '\0')
+	while (*pSrc != '\0')
 	{
 		Length = strlen(pSrc) + 1;
 		bResult = bResult | FixStringM(pDst, pSrc);
@@ -716,7 +716,7 @@ BOOL CheckStringM(LPCSTR lpString)
 	char* p;
 	bResult = FALSE;
 	p = AllocateStringM(strlen(lpString) + 1);
-	if(p)
+	if (p)
 	{
 		bResult = FixStringM(p, lpString);
 		FreeDuplicatedString(p);
@@ -732,7 +732,7 @@ BOOL CheckMultiStringM(LPCSTR lpString)
 	char* p;
 	bResult = FALSE;
 	p = AllocateStringM(GetMultiStringLengthM(lpString) + 1);
-	if(p)
+	if (p)
 	{
 		bResult = FixMultiStringM(p, lpString);
 		FreeDuplicatedString(p);
@@ -744,7 +744,7 @@ BOOL CheckMultiStringM(LPCSTR lpString)
 // リソースIDならば何もしない
 void FreeDuplicatedString(void* p)
 {
-	if(p < (void*)0x00010000 || p == (void*)~0)
+	if (p < (void*)0x00010000 || p == (void*)~0)
 		return;
 	free(p);
 }
@@ -759,24 +759,24 @@ int MultiByteToWideCharAlternative(UINT CodePage, DWORD dwFlags, LPCSTR lpMultiB
 	DWORD Code;
 	int TempCount;
 	WCHAR Temp[8];
-	if(CodePage != CP_UTF8 || dwFlags != 0)
+	if (CodePage != CP_UTF8 || dwFlags != 0)
 		return MultiByteToWideChar(CodePage, dwFlags, lpMultiByteStr, cbMultiByte, lpWideCharStr, cchWideChar);
 	WideCount = 0;
-	if(cbMultiByte == -1)
+	if (cbMultiByte == -1)
 		pMultiLimit = lpMultiByteStr + strlen(lpMultiByteStr) + 1;
 	else
 		pMultiLimit = lpMultiByteStr + cbMultiByte;
 	pWideLimit = lpWideCharStr + cchWideChar;
-	while(lpMultiByteStr < pMultiLimit)
+	while (lpMultiByteStr < pMultiLimit)
 	{
 		Code = GetNextCharM(lpMultiByteStr, pMultiLimit, &lpMultiByteStr);
-		if(Code == 0x80000000)
+		if (Code == 0x80000000)
 			continue;
-		if(lpWideCharStr)
+		if (lpWideCharStr)
 		{
 			TempCount = PutNextCharW(lpWideCharStr, pWideLimit, &lpWideCharStr, Code);
 			WideCount += TempCount;
-			if(TempCount == 0 && lpWideCharStr >= pWideLimit)
+			if (TempCount == 0 && lpWideCharStr >= pWideLimit)
 			{
 				WideCount = 0;
 				break;
@@ -798,24 +798,24 @@ int WideCharToMultiByteAlternative(UINT CodePage, DWORD dwFlags, LPCWSTR lpWideC
 	DWORD Code;
 	int TempCount;
 	CHAR Temp[8];
-	if(CodePage != CP_UTF8 || dwFlags != 0)
+	if (CodePage != CP_UTF8 || dwFlags != 0)
 		return WideCharToMultiByte(CodePage, dwFlags, lpWideCharStr, cchWideChar, lpMultiByteStr, cbMultiByte, lpDefaultChar, lpUsedDefaultChar);
 	MultiCount = 0;
-	if(cchWideChar == -1)
+	if (cchWideChar == -1)
 		pWideLimit = lpWideCharStr + wcslen(lpWideCharStr) + 1;
 	else
 		pWideLimit = lpWideCharStr + cchWideChar;
 	pMultiLimit = lpMultiByteStr + cbMultiByte;
-	while(lpWideCharStr < pWideLimit)
+	while (lpWideCharStr < pWideLimit)
 	{
 		Code = GetNextCharW(lpWideCharStr, pWideLimit, &lpWideCharStr);
-		if(Code == 0x80000000)
+		if (Code == 0x80000000)
 			continue;
-		if(lpMultiByteStr)
+		if (lpMultiByteStr)
 		{
 			TempCount = PutNextCharM(lpMultiByteStr, pMultiLimit, &lpMultiByteStr, Code);
 			MultiCount += TempCount;
-			if(TempCount == 0 && lpMultiByteStr >= pMultiLimit)
+			if (TempCount == 0 && lpMultiByteStr >= pMultiLimit)
 			{
 				MultiCount = 0;
 				break;
@@ -824,7 +824,7 @@ int WideCharToMultiByteAlternative(UINT CodePage, DWORD dwFlags, LPCWSTR lpWideC
 		else
 			MultiCount += PutNextCharM(Temp, NULL, NULL, Code);
 	}
-	if(lpUsedDefaultChar)
+	if (lpUsedDefaultChar)
 		*lpUsedDefaultChar = FALSE;
 	return MultiCount;
 }
@@ -844,11 +844,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 {
 	int r = 0;
 	char* pm0 = NULL;
-START_ROUTINE
-	pm0 = DuplicateWtoM(lpCmdLine, -1);
+	START_ROUTINE
+		pm0 = DuplicateWtoM(lpCmdLine, -1);
 	r = WinMainM(hInstance, hPrevInstance, pm0, nCmdShow);
-END_ROUTINE
-	FreeDuplicatedString(pm0);
+	END_ROUTINE
+		FreeDuplicatedString(pm0);
 	return r;
 }
 
@@ -856,11 +856,11 @@ HMODULE LoadLibraryM(LPCSTR lpLibFileName)
 {
 	HMODULE r = NULL;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpLibFileName, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpLibFileName, -1);
 	r = LoadLibraryW(pw0);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -868,11 +868,11 @@ HANDLE CreateFileM(LPCSTR lpFileName, DWORD dwDesiredAccess, DWORD dwShareMode, 
 {
 	HANDLE r = INVALID_HANDLE_VALUE;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpFileName, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpFileName, -1);
 	r = CreateFileW(pw0, dwDesiredAccess, dwShareMode, lpSecurityAttributes, dwCreationDisposition, dwFlagsAndAttributes, hTemplateFile);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -881,12 +881,12 @@ int MessageBoxM(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType)
 	int r = IDOK;
 	wchar_t* pw0 = NULL;
 	wchar_t* pw1 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpText, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpText, -1);
 	pw1 = DuplicateMtoW(lpCaption, -1);
 	r = MessageBoxW(hWnd, pw0, pw1, uType);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	return r;
 }
@@ -896,10 +896,10 @@ HANDLE FindFirstFileM(LPCSTR lpFileName, LPWIN32_FIND_DATAA lpFindFileData)
 	HANDLE r = INVALID_HANDLE_VALUE;
 	wchar_t* pw0 = NULL;
 	WIN32_FIND_DATAW a0;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpFileName, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpFileName, -1);
 	r = FindFirstFileW(pw0, &a0);
-	if(r != INVALID_HANDLE_VALUE)
+	if (r != INVALID_HANDLE_VALUE)
 	{
 		lpFindFileData->dwFileAttributes = a0.dwFileAttributes;
 		lpFindFileData->ftCreationTime = a0.ftCreationTime;
@@ -912,8 +912,8 @@ START_ROUTINE
 		WtoM(lpFindFileData->cFileName, sizeof(lpFindFileData->cFileName), a0.cFileName, -1);
 		WtoM(lpFindFileData->cAlternateFileName, sizeof(lpFindFileData->cAlternateFileName), a0.cAlternateFileName, -1);
 	}
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -921,9 +921,9 @@ BOOL FindNextFileM(HANDLE hFindFile, LPWIN32_FIND_DATAA lpFindFileData)
 {
 	BOOL r = FALSE;
 	WIN32_FIND_DATAW a0;
-START_ROUTINE
-	r = FindNextFileW(hFindFile, &a0);
-	if(r)
+	START_ROUTINE
+		r = FindNextFileW(hFindFile, &a0);
+	if (r)
 	{
 		lpFindFileData->dwFileAttributes = a0.dwFileAttributes;
 		lpFindFileData->ftCreationTime = a0.ftCreationTime;
@@ -936,19 +936,19 @@ START_ROUTINE
 		WtoM(lpFindFileData->cFileName, sizeof(lpFindFileData->cFileName), a0.cFileName, -1);
 		WtoM(lpFindFileData->cAlternateFileName, sizeof(lpFindFileData->cAlternateFileName), a0.cAlternateFileName, -1);
 	}
-END_ROUTINE
-	return r;
+	END_ROUTINE
+		return r;
 }
 
 HANDLE FindFirstChangeNotificationM(LPCSTR lpPathName, BOOL bWatchSubtree, DWORD dwNotifyFilter)
 {
 	HANDLE r = INVALID_HANDLE_VALUE;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpPathName, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpPathName, -1);
 	r = FindFirstChangeNotificationW(pw0, bWatchSubtree, dwNotifyFilter);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -956,24 +956,24 @@ DWORD GetLogicalDriveStringsM(DWORD nBufferLength, LPSTR lpBuffer)
 {
 	DWORD r = 0;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = AllocateStringW(nBufferLength * 4);
+	START_ROUTINE
+		pw0 = AllocateStringW(nBufferLength * 4);
 	GetLogicalDriveStringsW(nBufferLength * 4, pw0);
 	WtoMMultiString(lpBuffer, nBufferLength, pw0);
 	r = TerminateStringM(lpBuffer, nBufferLength);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
-ATOM RegisterClassExM(CONST WNDCLASSEXA * v0)
+ATOM RegisterClassExM(CONST WNDCLASSEXA* v0)
 {
 	ATOM r = 0;
 	wchar_t* pw0 = NULL;
 	wchar_t* pw1 = NULL;
 	WNDCLASSEXW a0;
-START_ROUTINE
-	a0.cbSize = sizeof(WNDCLASSEXW);
+	START_ROUTINE
+		a0.cbSize = sizeof(WNDCLASSEXW);
 	a0.style = v0->style;
 	a0.lpfnWndProc = v0->lpfnWndProc;
 	a0.cbClsExtra = v0->cbClsExtra;
@@ -988,8 +988,8 @@ START_ROUTINE
 	a0.lpszClassName = pw1;
 	a0.hIconSm = v0->hIconSm;
 	r = RegisterClassExW(&a0);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	return r;
 }
@@ -999,12 +999,12 @@ HWND CreateWindowExM(DWORD dwExStyle, LPCSTR lpClassName, LPCSTR lpWindowName, D
 	HWND r = NULL;
 	wchar_t* pw0 = NULL;
 	wchar_t* pw1 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpClassName, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpClassName, -1);
 	pw1 = DuplicateMtoW(lpWindowName, -1);
 	r = CreateWindowExW(dwExStyle, pw0, pw1, dwStyle, X, Y, nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	return r;
 }
@@ -1012,73 +1012,73 @@ END_ROUTINE
 LONG GetWindowLongM(HWND hWnd, int nIndex)
 {
 	LONG r = 0;
-START_ROUTINE
-	if(IsWindowUnicode(hWnd))
-		r = GetWindowLongW(hWnd, nIndex);
-	else
-		r = GetWindowLongA(hWnd, nIndex);
-END_ROUTINE
-	return r;
+	START_ROUTINE
+		if (IsWindowUnicode(hWnd))
+			r = GetWindowLongW(hWnd, nIndex);
+		else
+			r = GetWindowLongA(hWnd, nIndex);
+	END_ROUTINE
+		return r;
 }
 
 LONG SetWindowLongM(HWND hWnd, int nIndex, LONG dwNewLong)
 {
 	LONG r = 0;
-START_ROUTINE
-	if(IsWindowUnicode(hWnd))
-		r = SetWindowLongW(hWnd, nIndex, dwNewLong);
-	else
-		r = SetWindowLongA(hWnd, nIndex, dwNewLong);
-END_ROUTINE
-	return r;
+	START_ROUTINE
+		if (IsWindowUnicode(hWnd))
+			r = SetWindowLongW(hWnd, nIndex, dwNewLong);
+		else
+			r = SetWindowLongA(hWnd, nIndex, dwNewLong);
+	END_ROUTINE
+		return r;
 }
 
 LONG_PTR GetWindowLongPtrM(HWND hWnd, int nIndex)
 {
 	LONG_PTR r = 0;
-START_ROUTINE
-	if(IsWindowUnicode(hWnd))
-		r = GetWindowLongPtrW(hWnd, nIndex);
-	else
-		r = GetWindowLongPtrA(hWnd, nIndex);
-END_ROUTINE
-	return r;
+	START_ROUTINE
+		if (IsWindowUnicode(hWnd))
+			r = GetWindowLongPtrW(hWnd, nIndex);
+		else
+			r = GetWindowLongPtrA(hWnd, nIndex);
+	END_ROUTINE
+		return r;
 }
 
 LONG_PTR SetWindowLongPtrM(HWND hWnd, int nIndex, LONG_PTR dwNewLong)
 {
 	LONG_PTR r = 0;
-START_ROUTINE
-	if(IsWindowUnicode(hWnd))
-		r = SetWindowLongPtrW(hWnd, nIndex, dwNewLong);
-	else
-		r = SetWindowLongPtrA(hWnd, nIndex, dwNewLong);
-END_ROUTINE
-	return r;
+	START_ROUTINE
+		if (IsWindowUnicode(hWnd))
+			r = SetWindowLongPtrW(hWnd, nIndex, dwNewLong);
+		else
+			r = SetWindowLongPtrA(hWnd, nIndex, dwNewLong);
+	END_ROUTINE
+		return r;
 }
 
 LRESULT DefWindowProcM(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	LRESULT r = 0;
-START_ROUTINE
-	if(IsWindowUnicode(hWnd))
-		r = DefWindowProcW(hWnd, Msg, wParam, lParam);
-	else
-		r = DefWindowProcA(hWnd, Msg, wParam, lParam);
-END_ROUTINE
-	return r;
+	START_ROUTINE
+		if (IsWindowUnicode(hWnd))
+			r = DefWindowProcW(hWnd, Msg, wParam, lParam);
+		else
+			r = DefWindowProcA(hWnd, Msg, wParam, lParam);
+	END_ROUTINE
+		return r;
 }
 
 LRESULT CallWindowProcM(WNDPROC lpPrevWndFunc, HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	LRESULT r = 0;
-START_ROUTINE
-	if(IsWindowUnicode(hWnd))
-		r = CallWindowProcW(lpPrevWndFunc, hWnd, Msg, wParam, lParam);
-	else
-		r = CallWindowProcA(lpPrevWndFunc, hWnd, Msg, wParam, lParam);
-END_ROUTINE
-	return r;
+	START_ROUTINE
+		if (IsWindowUnicode(hWnd))
+			r = CallWindowProcW(lpPrevWndFunc, hWnd, Msg, wParam, lParam);
+		else
+			r = CallWindowProcA(lpPrevWndFunc, hWnd, Msg, wParam, lParam);
+	END_ROUTINE
+		return r;
 }
 
 LRESULT SendMessageM(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
@@ -1098,365 +1098,365 @@ LRESULT SendMessageM(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 	TVINSERTSTRUCTA* pmTVInsert;
 	TVINSERTSTRUCTW wTVInsert;
 	wchar_t ClassName[MAX_PATH];
-START_ROUTINE
-	switch(Msg)
-	{
-	case WM_SETTEXT:
-		pw0 = DuplicateMtoW((LPCSTR)lParam, -1);
-		r = SendMessageW(hWnd, WM_SETTEXT, wParam, (LPARAM)pw0);
-		break;
-	case WM_GETTEXT:
-		pw0 = AllocateStringW(wParam * 4);
-		SendMessageW(hWnd, WM_GETTEXT, wParam * 4, (LPARAM)pw0);
-		WtoM((LPSTR)lParam, wParam, pw0, -1);
-		r = TerminateStringM((LPSTR)lParam, wParam);
-		break;
-	case WM_GETTEXTLENGTH:
-		Size = SendMessageW(hWnd, WM_GETTEXTLENGTH, wParam, lParam) + 1;
-		pw0 = AllocateStringW(Size);
-		SendMessageW(hWnd, WM_GETTEXT, (WPARAM)Size, (LPARAM)pw0);
-		r = WtoM(NULL, 0, pw0, -1) - 1;
-		break;
-	default:
-		GetClassNameW(hWnd, ClassName, sizeof(ClassName) / sizeof(wchar_t));
-		if(_wcsicmp(ClassName, WC_EDITW) == 0)
+	START_ROUTINE
+		switch (Msg)
 		{
-			switch(Msg)
+		case WM_SETTEXT:
+			pw0 = DuplicateMtoW((LPCSTR)lParam, -1);
+			r = SendMessageW(hWnd, WM_SETTEXT, wParam, (LPARAM)pw0);
+			break;
+		case WM_GETTEXT:
+			pw0 = AllocateStringW(wParam * 4);
+			SendMessageW(hWnd, WM_GETTEXT, wParam * 4, (LPARAM)pw0);
+			WtoM((LPSTR)lParam, wParam, pw0, -1);
+			r = TerminateStringM((LPSTR)lParam, wParam);
+			break;
+		case WM_GETTEXTLENGTH:
+			Size = SendMessageW(hWnd, WM_GETTEXTLENGTH, wParam, lParam) + 1;
+			pw0 = AllocateStringW(Size);
+			SendMessageW(hWnd, WM_GETTEXT, (WPARAM)Size, (LPARAM)pw0);
+			r = WtoM(NULL, 0, pw0, -1) - 1;
+			break;
+		default:
+			GetClassNameW(hWnd, ClassName, sizeof(ClassName) / sizeof(wchar_t));
+			if (_wcsicmp(ClassName, WC_EDITW) == 0)
 			{
-			case EM_REPLACESEL:
-				pw0 = DuplicateMtoW((LPCSTR)lParam, -1);
-				r = SendMessageW(hWnd, EM_REPLACESEL, wParam, (LPARAM)pw0);
-				break;
-			default:
-				r = SendMessageW(hWnd, Msg, wParam, lParam);
-				break;
-			}
-		}
-		else if(_wcsicmp(ClassName, WC_COMBOBOXW) == 0)
-		{
-			switch(Msg)
-			{
-			case CB_ADDSTRING:
-				pw0 = DuplicateMtoW((LPCSTR)lParam, -1);
-				r = SendMessageW(hWnd, CB_ADDSTRING, wParam, (LPARAM)pw0);
-				break;
-			case CB_GETLBTEXT:
-				Size = SendMessageW(hWnd, CB_GETLBTEXTLEN, wParam, 0) + 1;
-				pw0 = AllocateStringW(Size);
-				SendMessageW(hWnd, CB_GETLBTEXT, wParam, (LPARAM)pw0);
-				// バッファ長不明のためオーバーランの可能性あり
-				WtoM((LPSTR)lParam, Size * 4, pw0, -1);
-				r = TerminateStringM((LPSTR)lParam, Size * 4);
-				break;
-			case CB_GETLBTEXTLEN:
-				Size = SendMessageW(hWnd, CB_GETLBTEXTLEN, wParam, 0) + 1;
-				pw0 = AllocateStringW(Size);
-				SendMessageW(hWnd, WM_GETTEXT, wParam, (LPARAM)pw0);
-				r = WtoM(NULL, 0, pw0, -1) - 1;
-				break;
-			case CB_INSERTSTRING:
-				pw0 = DuplicateMtoW((LPCSTR)lParam, -1);
-				r = SendMessageW(hWnd, CB_INSERTSTRING, wParam, (LPARAM)pw0);
-				break;
-			case CB_FINDSTRINGEXACT:
-				pw0 = DuplicateMtoW((LPCSTR)lParam, -1);
-				r = SendMessageW(hWnd, CB_FINDSTRINGEXACT, wParam, (LPARAM)pw0);
-				break;
-			default:
-				r = SendMessageW(hWnd, Msg, wParam, lParam);
-				break;
-			}
-		}
-		else if(_wcsicmp(ClassName, WC_LISTBOXW) == 0)
-		{
-			switch(Msg)
-			{
-			case LB_ADDSTRING:
-				pw0 = DuplicateMtoW((LPCSTR)lParam, -1);
-				r = SendMessageW(hWnd, LB_ADDSTRING, wParam, (LPARAM)pw0);
-				break;
-			case LB_INSERTSTRING:
-				pw0 = DuplicateMtoW((LPCSTR)lParam, -1);
-				r = SendMessageW(hWnd, LB_INSERTSTRING, wParam, (LPARAM)pw0);
-				break;
-			case LB_GETTEXT:
-				Size = SendMessageW(hWnd, LB_GETTEXTLEN, wParam, 0) + 1;
-				pw0 = AllocateStringW(Size);
-				SendMessageW(hWnd, LB_GETTEXT, wParam, (LPARAM)pw0);
-				// バッファ長不明のためオーバーランの可能性あり
-				WtoM((LPSTR)lParam, Size * 4, pw0, -1);
-				r = TerminateStringM((LPSTR)lParam, Size * 4);
-				break;
-			case LB_GETTEXTLEN:
-				Size = SendMessageW(hWnd, LB_GETTEXTLEN, wParam, 0) + 1;
-				pw0 = AllocateStringW(Size);
-				SendMessageW(hWnd, WM_GETTEXT, wParam, (LPARAM)pw0);
-				r = WtoM(NULL, 0, pw0, -1) - 1;
-				break;
-			default:
-				r = SendMessageW(hWnd, Msg, wParam, lParam);
-				break;
-			}
-		}
-		else if(_wcsicmp(ClassName, WC_LISTVIEWW) == 0)
-		{
-			switch(Msg)
-			{
-			case LVM_GETITEMA:
-				pmLVItem = (LVITEMA*)lParam;
-				wLVItem.mask = pmLVItem->mask;
-				wLVItem.iItem = pmLVItem->iItem;
-				wLVItem.iSubItem = pmLVItem->iSubItem;
-				wLVItem.state = pmLVItem->state;
-				wLVItem.stateMask = pmLVItem->stateMask;
-				if(pmLVItem->mask & LVIF_TEXT)
+				switch (Msg)
 				{
+				case EM_REPLACESEL:
+					pw0 = DuplicateMtoW((LPCSTR)lParam, -1);
+					r = SendMessageW(hWnd, EM_REPLACESEL, wParam, (LPARAM)pw0);
+					break;
+				default:
+					r = SendMessageW(hWnd, Msg, wParam, lParam);
+					break;
+				}
+			}
+			else if (_wcsicmp(ClassName, WC_COMBOBOXW) == 0)
+			{
+				switch (Msg)
+				{
+				case CB_ADDSTRING:
+					pw0 = DuplicateMtoW((LPCSTR)lParam, -1);
+					r = SendMessageW(hWnd, CB_ADDSTRING, wParam, (LPARAM)pw0);
+					break;
+				case CB_GETLBTEXT:
+					Size = SendMessageW(hWnd, CB_GETLBTEXTLEN, wParam, 0) + 1;
+					pw0 = AllocateStringW(Size);
+					SendMessageW(hWnd, CB_GETLBTEXT, wParam, (LPARAM)pw0);
+					// バッファ長不明のためオーバーランの可能性あり
+					WtoM((LPSTR)lParam, Size * 4, pw0, -1);
+					r = TerminateStringM((LPSTR)lParam, Size * 4);
+					break;
+				case CB_GETLBTEXTLEN:
+					Size = SendMessageW(hWnd, CB_GETLBTEXTLEN, wParam, 0) + 1;
+					pw0 = AllocateStringW(Size);
+					SendMessageW(hWnd, WM_GETTEXT, wParam, (LPARAM)pw0);
+					r = WtoM(NULL, 0, pw0, -1) - 1;
+					break;
+				case CB_INSERTSTRING:
+					pw0 = DuplicateMtoW((LPCSTR)lParam, -1);
+					r = SendMessageW(hWnd, CB_INSERTSTRING, wParam, (LPARAM)pw0);
+					break;
+				case CB_FINDSTRINGEXACT:
+					pw0 = DuplicateMtoW((LPCSTR)lParam, -1);
+					r = SendMessageW(hWnd, CB_FINDSTRINGEXACT, wParam, (LPARAM)pw0);
+					break;
+				default:
+					r = SendMessageW(hWnd, Msg, wParam, lParam);
+					break;
+				}
+			}
+			else if (_wcsicmp(ClassName, WC_LISTBOXW) == 0)
+			{
+				switch (Msg)
+				{
+				case LB_ADDSTRING:
+					pw0 = DuplicateMtoW((LPCSTR)lParam, -1);
+					r = SendMessageW(hWnd, LB_ADDSTRING, wParam, (LPARAM)pw0);
+					break;
+				case LB_INSERTSTRING:
+					pw0 = DuplicateMtoW((LPCSTR)lParam, -1);
+					r = SendMessageW(hWnd, LB_INSERTSTRING, wParam, (LPARAM)pw0);
+					break;
+				case LB_GETTEXT:
+					Size = SendMessageW(hWnd, LB_GETTEXTLEN, wParam, 0) + 1;
+					pw0 = AllocateStringW(Size);
+					SendMessageW(hWnd, LB_GETTEXT, wParam, (LPARAM)pw0);
+					// バッファ長不明のためオーバーランの可能性あり
+					WtoM((LPSTR)lParam, Size * 4, pw0, -1);
+					r = TerminateStringM((LPSTR)lParam, Size * 4);
+					break;
+				case LB_GETTEXTLEN:
+					Size = SendMessageW(hWnd, LB_GETTEXTLEN, wParam, 0) + 1;
+					pw0 = AllocateStringW(Size);
+					SendMessageW(hWnd, WM_GETTEXT, wParam, (LPARAM)pw0);
+					r = WtoM(NULL, 0, pw0, -1) - 1;
+					break;
+				default:
+					r = SendMessageW(hWnd, Msg, wParam, lParam);
+					break;
+				}
+			}
+			else if (_wcsicmp(ClassName, WC_LISTVIEWW) == 0)
+			{
+				switch (Msg)
+				{
+				case LVM_GETITEMA:
+					pmLVItem = (LVITEMA*)lParam;
+					wLVItem.mask = pmLVItem->mask;
+					wLVItem.iItem = pmLVItem->iItem;
+					wLVItem.iSubItem = pmLVItem->iSubItem;
+					wLVItem.state = pmLVItem->state;
+					wLVItem.stateMask = pmLVItem->stateMask;
+					if (pmLVItem->mask & LVIF_TEXT)
+					{
+						Size = pmLVItem->cchTextMax * 4;
+						pw0 = AllocateStringW(Size);
+						wLVItem.pszText = pw0;
+						wLVItem.cchTextMax = Size;
+					}
+					wLVItem.iImage = pmLVItem->iImage;
+					wLVItem.lParam = pmLVItem->lParam;
+					wLVItem.iIndent = pmLVItem->iIndent;
+					r = SendMessageW(hWnd, LVM_GETITEMW, wParam, (LPARAM)&wLVItem);
+					pmLVItem->mask = wLVItem.mask;
+					pmLVItem->iItem = wLVItem.iItem;
+					pmLVItem->iSubItem = wLVItem.iSubItem;
+					pmLVItem->state = wLVItem.state;
+					pmLVItem->stateMask = wLVItem.stateMask;
+					if (pmLVItem->mask & LVIF_TEXT)
+					{
+						WtoM(pmLVItem->pszText, pmLVItem->cchTextMax, wLVItem.pszText, -1);
+						TerminateStringM(pmLVItem->pszText, pmLVItem->cchTextMax);
+					}
+					pmLVItem->iImage = wLVItem.iImage;
+					pmLVItem->lParam = wLVItem.lParam;
+					pmLVItem->iIndent = wLVItem.iIndent;
+					break;
+				case LVM_SETITEMA:
+					pmLVItem = (LVITEMA*)lParam;
+					wLVItem.mask = pmLVItem->mask;
+					wLVItem.iItem = pmLVItem->iItem;
+					wLVItem.iSubItem = pmLVItem->iSubItem;
+					wLVItem.state = pmLVItem->state;
+					wLVItem.stateMask = pmLVItem->stateMask;
+					if (pmLVItem->mask & LVIF_TEXT)
+					{
+						pw0 = DuplicateMtoW(pmLVItem->pszText, -1);
+						wLVItem.pszText = pw0;
+						// TODO: cchTextMaxの確認
+						wLVItem.cchTextMax = pmLVItem->cchTextMax;
+					}
+					wLVItem.iImage = pmLVItem->iImage;
+					wLVItem.lParam = pmLVItem->lParam;
+					wLVItem.iIndent = pmLVItem->iIndent;
+					r = SendMessageW(hWnd, LVM_SETITEMW, wParam, (LPARAM)&wLVItem);
+					break;
+				case LVM_INSERTITEMA:
+					pmLVItem = (LVITEMA*)lParam;
+					wLVItem.mask = pmLVItem->mask;
+					wLVItem.iItem = pmLVItem->iItem;
+					wLVItem.iSubItem = pmLVItem->iSubItem;
+					wLVItem.state = pmLVItem->state;
+					wLVItem.stateMask = pmLVItem->stateMask;
+					if (pmLVItem->mask & LVIF_TEXT)
+					{
+						pw0 = DuplicateMtoW(pmLVItem->pszText, -1);
+						wLVItem.pszText = pw0;
+						// TODO: cchTextMaxの確認
+						wLVItem.cchTextMax = pmLVItem->cchTextMax;
+					}
+					wLVItem.iImage = pmLVItem->iImage;
+					wLVItem.lParam = pmLVItem->lParam;
+					wLVItem.iIndent = pmLVItem->iIndent;
+					r = SendMessageW(hWnd, LVM_INSERTITEMW, wParam, (LPARAM)&wLVItem);
+					break;
+				case LVM_FINDITEMA:
+					pmLVFindInfo = (LVFINDINFOA*)lParam;
+					wLVFindInfo.flags = pmLVFindInfo->flags;
+					if (pmLVFindInfo->flags & (LVFI_STRING | LVFI_PARTIAL))
+					{
+						pw0 = DuplicateMtoW(pmLVFindInfo->psz, -1);
+						wLVFindInfo.psz = pw0;
+					}
+					wLVFindInfo.lParam = pmLVFindInfo->lParam;
+					wLVFindInfo.pt = pmLVFindInfo->pt;
+					wLVFindInfo.vkDirection = pmLVFindInfo->vkDirection;
+					r = SendMessageW(hWnd, LVM_FINDITEMW, wParam, (LPARAM)&wLVFindInfo);
+					break;
+				case LVM_GETCOLUMNA:
+					pmLVColumn = (LVCOLUMNA*)lParam;
+					wLVColumn.mask = pmLVColumn->mask;
+					wLVColumn.fmt = pmLVColumn->fmt;
+					wLVColumn.cx = pmLVColumn->cx;
+					Size = pmLVColumn->cchTextMax * 4;
+					if (pmLVColumn->mask & LVCF_TEXT)
+					{
+						pw0 = AllocateStringW(Size);
+						wLVColumn.pszText = pw0;
+						wLVColumn.cchTextMax = Size;
+					}
+					wLVColumn.iSubItem = pmLVColumn->iSubItem;
+					wLVColumn.iImage = pmLVColumn->iImage;
+					wLVColumn.iOrder = pmLVColumn->iOrder;
+					r = SendMessageW(hWnd, LVM_GETCOLUMNW, wParam, (LPARAM)&wLVColumn);
+					pmLVColumn->mask = wLVColumn.mask;
+					pmLVColumn->fmt = wLVColumn.fmt;
+					pmLVColumn->cx = wLVColumn.cx;
+					if (pmLVColumn->mask & LVCF_TEXT)
+					{
+						WtoM(pmLVColumn->pszText, pmLVColumn->cchTextMax, wLVColumn.pszText, -1);
+						TerminateStringM(pmLVColumn->pszText, pmLVColumn->cchTextMax);
+					}
+					pmLVColumn->iSubItem = wLVColumn.iSubItem;
+					pmLVColumn->iImage = wLVColumn.iImage;
+					pmLVColumn->iOrder = wLVColumn.iOrder;
+					break;
+				case LVM_INSERTCOLUMNA:
+					pmLVColumn = (LVCOLUMNA*)lParam;
+					wLVColumn.mask = pmLVColumn->mask;
+					wLVColumn.fmt = pmLVColumn->fmt;
+					wLVColumn.cx = pmLVColumn->cx;
+					if (pmLVColumn->mask & LVCF_TEXT)
+					{
+						pw0 = DuplicateMtoW(pmLVColumn->pszText, -1);
+						wLVColumn.pszText = pw0;
+						// TODO: cchTextMaxの確認
+						wLVColumn.cchTextMax = pmLVColumn->cchTextMax;
+					}
+					wLVColumn.iSubItem = pmLVColumn->iSubItem;
+					wLVColumn.iImage = pmLVColumn->iImage;
+					wLVColumn.iOrder = pmLVColumn->iOrder;
+					r = SendMessageW(hWnd, LVM_INSERTCOLUMNW, wParam, (LPARAM)&wLVColumn);
+					break;
+				case LVM_GETITEMTEXTA:
+					pmLVItem = (LVITEMA*)lParam;
+					wLVItem.mask = pmLVItem->mask;
+					wLVItem.iItem = pmLVItem->iItem;
+					wLVItem.iSubItem = pmLVItem->iSubItem;
+					wLVItem.state = pmLVItem->state;
+					wLVItem.stateMask = pmLVItem->stateMask;
 					Size = pmLVItem->cchTextMax * 4;
 					pw0 = AllocateStringW(Size);
 					wLVItem.pszText = pw0;
 					wLVItem.cchTextMax = Size;
-				}
-				wLVItem.iImage = pmLVItem->iImage;
-				wLVItem.lParam = pmLVItem->lParam;
-				wLVItem.iIndent = pmLVItem->iIndent;
-				r = SendMessageW(hWnd, LVM_GETITEMW, wParam, (LPARAM)&wLVItem);
-				pmLVItem->mask = wLVItem.mask;
-				pmLVItem->iItem = wLVItem.iItem;
-				pmLVItem->iSubItem = wLVItem.iSubItem;
-				pmLVItem->state = wLVItem.state;
-				pmLVItem->stateMask = wLVItem.stateMask;
-				if(pmLVItem->mask & LVIF_TEXT)
-				{
+					wLVItem.iImage = pmLVItem->iImage;
+					wLVItem.lParam = pmLVItem->lParam;
+					wLVItem.iIndent = pmLVItem->iIndent;
+					r = SendMessageW(hWnd, LVM_GETITEMTEXTW, wParam, (LPARAM)&wLVItem);
+					pmLVItem->mask = wLVItem.mask;
+					pmLVItem->iItem = wLVItem.iItem;
+					pmLVItem->iSubItem = wLVItem.iSubItem;
+					pmLVItem->state = wLVItem.state;
+					pmLVItem->stateMask = wLVItem.stateMask;
 					WtoM(pmLVItem->pszText, pmLVItem->cchTextMax, wLVItem.pszText, -1);
 					TerminateStringM(pmLVItem->pszText, pmLVItem->cchTextMax);
+					pmLVItem->iImage = wLVItem.iImage;
+					pmLVItem->lParam = wLVItem.lParam;
+					pmLVItem->iIndent = wLVItem.iIndent;
+					break;
+				default:
+					r = SendMessageW(hWnd, Msg, wParam, lParam);
+					break;
 				}
-				pmLVItem->iImage = wLVItem.iImage;
-				pmLVItem->lParam = wLVItem.lParam;
-				pmLVItem->iIndent = wLVItem.iIndent;
-				break;
-			case LVM_SETITEMA:
-				pmLVItem = (LVITEMA*)lParam;
-				wLVItem.mask = pmLVItem->mask;
-				wLVItem.iItem = pmLVItem->iItem;
-				wLVItem.iSubItem = pmLVItem->iSubItem;
-				wLVItem.state = pmLVItem->state;
-				wLVItem.stateMask = pmLVItem->stateMask;
-				if(pmLVItem->mask & LVIF_TEXT)
-				{
-					pw0 = DuplicateMtoW(pmLVItem->pszText, -1);
-					wLVItem.pszText = pw0;
-					// TODO: cchTextMaxの確認
-					wLVItem.cchTextMax = pmLVItem->cchTextMax;
-				}
-				wLVItem.iImage = pmLVItem->iImage;
-				wLVItem.lParam = pmLVItem->lParam;
-				wLVItem.iIndent = pmLVItem->iIndent;
-				r = SendMessageW(hWnd, LVM_SETITEMW, wParam, (LPARAM)&wLVItem);
-				break;
-			case LVM_INSERTITEMA:
-				pmLVItem = (LVITEMA*)lParam;
-				wLVItem.mask = pmLVItem->mask;
-				wLVItem.iItem = pmLVItem->iItem;
-				wLVItem.iSubItem = pmLVItem->iSubItem;
-				wLVItem.state = pmLVItem->state;
-				wLVItem.stateMask = pmLVItem->stateMask;
-				if(pmLVItem->mask & LVIF_TEXT)
-				{
-					pw0 = DuplicateMtoW(pmLVItem->pszText, -1);
-					wLVItem.pszText = pw0;
-					// TODO: cchTextMaxの確認
-					wLVItem.cchTextMax = pmLVItem->cchTextMax;
-				}
-				wLVItem.iImage = pmLVItem->iImage;
-				wLVItem.lParam = pmLVItem->lParam;
-				wLVItem.iIndent = pmLVItem->iIndent;
-				r = SendMessageW(hWnd, LVM_INSERTITEMW, wParam, (LPARAM)&wLVItem);
-				break;
-			case LVM_FINDITEMA:
-				pmLVFindInfo = (LVFINDINFOA*)lParam;
-				wLVFindInfo.flags = pmLVFindInfo->flags;
-				if(pmLVFindInfo->flags & (LVFI_STRING | LVFI_PARTIAL))
-				{
-					pw0 = DuplicateMtoW(pmLVFindInfo->psz, -1);
-					wLVFindInfo.psz = pw0;
-				}
-				wLVFindInfo.lParam = pmLVFindInfo->lParam;
-				wLVFindInfo.pt = pmLVFindInfo->pt;
-				wLVFindInfo.vkDirection = pmLVFindInfo->vkDirection;
-				r = SendMessageW(hWnd, LVM_FINDITEMW, wParam, (LPARAM)&wLVFindInfo);
-				break;
-			case LVM_GETCOLUMNA:
-				pmLVColumn = (LVCOLUMNA*)lParam;
-				wLVColumn.mask = pmLVColumn->mask;
-				wLVColumn.fmt = pmLVColumn->fmt;
-				wLVColumn.cx = pmLVColumn->cx;
-				Size = pmLVColumn->cchTextMax * 4;
-				if(pmLVColumn->mask & LVCF_TEXT)
-				{
-					pw0 = AllocateStringW(Size);
-					wLVColumn.pszText = pw0;
-					wLVColumn.cchTextMax = Size;
-				}
-				wLVColumn.iSubItem = pmLVColumn->iSubItem;
-				wLVColumn.iImage = pmLVColumn->iImage;
-				wLVColumn.iOrder = pmLVColumn->iOrder;
-				r = SendMessageW(hWnd, LVM_GETCOLUMNW, wParam, (LPARAM)&wLVColumn);
-				pmLVColumn->mask = wLVColumn.mask;
-				pmLVColumn->fmt = wLVColumn.fmt;
-				pmLVColumn->cx = wLVColumn.cx;
-				if(pmLVColumn->mask & LVCF_TEXT)
-				{
-					WtoM(pmLVColumn->pszText, pmLVColumn->cchTextMax, wLVColumn.pszText, -1);
-					TerminateStringM(pmLVColumn->pszText, pmLVColumn->cchTextMax);
-				}
-				pmLVColumn->iSubItem = wLVColumn.iSubItem;
-				pmLVColumn->iImage = wLVColumn.iImage;
-				pmLVColumn->iOrder = wLVColumn.iOrder;
-				break;
-			case LVM_INSERTCOLUMNA:
-				pmLVColumn = (LVCOLUMNA*)lParam;
-				wLVColumn.mask = pmLVColumn->mask;
-				wLVColumn.fmt = pmLVColumn->fmt;
-				wLVColumn.cx = pmLVColumn->cx;
-				if(pmLVColumn->mask & LVCF_TEXT)
-				{
-					pw0 = DuplicateMtoW(pmLVColumn->pszText, -1);
-					wLVColumn.pszText = pw0;
-					// TODO: cchTextMaxの確認
-					wLVColumn.cchTextMax = pmLVColumn->cchTextMax;
-				}
-				wLVColumn.iSubItem = pmLVColumn->iSubItem;
-				wLVColumn.iImage = pmLVColumn->iImage;
-				wLVColumn.iOrder = pmLVColumn->iOrder;
-				r = SendMessageW(hWnd, LVM_INSERTCOLUMNW, wParam, (LPARAM)&wLVColumn);
-				break;
-			case LVM_GETITEMTEXTA:
-				pmLVItem = (LVITEMA*)lParam;
-				wLVItem.mask = pmLVItem->mask;
-				wLVItem.iItem = pmLVItem->iItem;
-				wLVItem.iSubItem = pmLVItem->iSubItem;
-				wLVItem.state = pmLVItem->state;
-				wLVItem.stateMask = pmLVItem->stateMask;
-				Size = pmLVItem->cchTextMax * 4;
-				pw0 = AllocateStringW(Size);
-				wLVItem.pszText = pw0;
-				wLVItem.cchTextMax = Size;
-				wLVItem.iImage = pmLVItem->iImage;
-				wLVItem.lParam = pmLVItem->lParam;
-				wLVItem.iIndent = pmLVItem->iIndent;
-				r = SendMessageW(hWnd, LVM_GETITEMTEXTW, wParam, (LPARAM)&wLVItem);
-				pmLVItem->mask = wLVItem.mask;
-				pmLVItem->iItem = wLVItem.iItem;
-				pmLVItem->iSubItem = wLVItem.iSubItem;
-				pmLVItem->state = wLVItem.state;
-				pmLVItem->stateMask = wLVItem.stateMask;
-				WtoM(pmLVItem->pszText, pmLVItem->cchTextMax, wLVItem.pszText, -1);
-				TerminateStringM(pmLVItem->pszText, pmLVItem->cchTextMax);
-				pmLVItem->iImage = wLVItem.iImage;
-				pmLVItem->lParam = wLVItem.lParam;
-				pmLVItem->iIndent = wLVItem.iIndent;
-				break;
-			default:
-				r = SendMessageW(hWnd, Msg, wParam, lParam);
-				break;
 			}
-		}
-		else if(_wcsicmp(ClassName, STATUSCLASSNAMEW) == 0)
-		{
-			switch(Msg)
+			else if (_wcsicmp(ClassName, STATUSCLASSNAMEW) == 0)
 			{
-			case SB_SETTEXTA:
-				pw0 = DuplicateMtoW((LPCSTR)lParam, -1);
-				r = SendMessageW(hWnd, SB_SETTEXTW, wParam, (LPARAM)pw0);
-				break;
-			default:
-				r = SendMessageW(hWnd, Msg, wParam, lParam);
-				break;
+				switch (Msg)
+				{
+				case SB_SETTEXTA:
+					pw0 = DuplicateMtoW((LPCSTR)lParam, -1);
+					r = SendMessageW(hWnd, SB_SETTEXTW, wParam, (LPARAM)pw0);
+					break;
+				default:
+					r = SendMessageW(hWnd, Msg, wParam, lParam);
+					break;
+				}
 			}
-		}
-		else if(_wcsicmp(ClassName, WC_TREEVIEWW) == 0)
-		{
-			switch(Msg)
+			else if (_wcsicmp(ClassName, WC_TREEVIEWW) == 0)
 			{
-			case TVM_GETITEMA:
-				pmTVItem = (TVITEMEXA*)lParam;
-				wTVItem.mask = pmTVItem->mask;
-				wTVItem.hItem = pmTVItem->hItem;
-				wTVItem.state = pmTVItem->state;
-				wTVItem.stateMask = pmTVItem->stateMask;
-				if(pmTVItem->mask & TVIF_TEXT)
+				switch (Msg)
 				{
-					Size = pmTVItem->cchTextMax * 4;
-					pw0 = AllocateStringW(Size);
-					wTVItem.pszText = pw0;
-					wTVItem.cchTextMax = Size;
+				case TVM_GETITEMA:
+					pmTVItem = (TVITEMEXA*)lParam;
+					wTVItem.mask = pmTVItem->mask;
+					wTVItem.hItem = pmTVItem->hItem;
+					wTVItem.state = pmTVItem->state;
+					wTVItem.stateMask = pmTVItem->stateMask;
+					if (pmTVItem->mask & TVIF_TEXT)
+					{
+						Size = pmTVItem->cchTextMax * 4;
+						pw0 = AllocateStringW(Size);
+						wTVItem.pszText = pw0;
+						wTVItem.cchTextMax = Size;
+					}
+					wTVItem.iImage = pmTVItem->iImage;
+					wTVItem.iSelectedImage = pmTVItem->iSelectedImage;
+					wTVItem.cChildren = pmTVItem->cChildren;
+					wTVItem.lParam = pmTVItem->lParam;
+					wTVItem.iIntegral = pmTVItem->iIntegral;
+					//				wTVItem.uStateEx = pmTVItem->uStateEx;
+					//				wTVItem.hwnd = pmTVItem->hwnd;
+					//				wTVItem.iExpandedImage = pmTVItem->iExpandedImage;
+					//				wTVItem.iReserved = pmTVItem->iReserved;
+					r = SendMessageW(hWnd, TVM_GETITEMW, wParam, (LPARAM)&wTVItem);
+					pmTVItem->mask = wTVItem.mask;
+					pmTVItem->hItem = wTVItem.hItem;
+					pmTVItem->state = wTVItem.state;
+					pmTVItem->stateMask = wTVItem.stateMask;
+					if (pmTVItem->mask & TVIF_TEXT)
+					{
+						WtoM(pmTVItem->pszText, pmTVItem->cchTextMax, wTVItem.pszText, -1);
+						TerminateStringM(pmTVItem->pszText, pmTVItem->cchTextMax);
+					}
+					pmTVItem->iImage = wTVItem.iImage;
+					pmTVItem->iSelectedImage = wTVItem.iSelectedImage;
+					pmTVItem->cChildren = wTVItem.cChildren;
+					pmTVItem->lParam = wTVItem.lParam;
+					pmTVItem->iIntegral = wTVItem.iIntegral;
+					//				pmTVItem->uStateEx = wTVItem.uStateEx;
+					//				pmTVItem->hwnd = wTVItem.hwnd;
+					//				pmTVItem->iExpandedImage = wTVItem.iExpandedImage;
+					//				pmTVItem->iReserved = wTVItem.iReserved;
+					break;
+				case TVM_INSERTITEMA:
+					pmTVInsert = (TVINSERTSTRUCTA*)lParam;
+					wTVInsert.hParent = pmTVInsert->hParent;
+					wTVInsert.hInsertAfter = pmTVInsert->hInsertAfter;
+					wTVInsert.itemex.mask = pmTVInsert->itemex.mask;
+					wTVInsert.itemex.hItem = pmTVInsert->itemex.hItem;
+					wTVInsert.itemex.state = pmTVInsert->itemex.state;
+					wTVInsert.itemex.stateMask = pmTVInsert->itemex.stateMask;
+					if (pmTVInsert->itemex.mask & TVIF_TEXT)
+					{
+						pw0 = DuplicateMtoW(pmTVInsert->itemex.pszText, -1);
+						wTVInsert.itemex.pszText = pw0;
+						// TODO: cchTextMaxの確認
+						wTVInsert.itemex.cchTextMax = pmTVInsert->itemex.cchTextMax;
+					}
+					wTVInsert.itemex.iImage = pmTVInsert->itemex.iImage;
+					wTVInsert.itemex.iSelectedImage = pmTVInsert->itemex.iSelectedImage;
+					wTVInsert.itemex.cChildren = pmTVInsert->itemex.cChildren;
+					wTVInsert.itemex.lParam = pmTVInsert->itemex.lParam;
+					wTVInsert.itemex.iIntegral = pmTVInsert->itemex.iIntegral;
+					//				wTVInsert.itemex.uStateEx = pmTVInsert->itemex.uStateEx;
+					//				wTVInsert.itemex.hwnd = pmTVInsert->itemex.hwnd;
+					//				wTVInsert.itemex.iExpandedImage = pmTVInsert->itemex.iExpandedImage;
+					//				wTVInsert.itemex.iReserved = pmTVInsert->itemex.iReserved;
+					r = SendMessageW(hWnd, TVM_INSERTITEMW, wParam, (LPARAM)&wTVInsert);
+					break;
+				default:
+					r = SendMessageW(hWnd, Msg, wParam, lParam);
+					break;
 				}
-				wTVItem.iImage = pmTVItem->iImage;
-				wTVItem.iSelectedImage = pmTVItem->iSelectedImage;
-				wTVItem.cChildren = pmTVItem->cChildren;
-				wTVItem.lParam = pmTVItem->lParam;
-				wTVItem.iIntegral = pmTVItem->iIntegral;
-//				wTVItem.uStateEx = pmTVItem->uStateEx;
-//				wTVItem.hwnd = pmTVItem->hwnd;
-//				wTVItem.iExpandedImage = pmTVItem->iExpandedImage;
-//				wTVItem.iReserved = pmTVItem->iReserved;
-				r = SendMessageW(hWnd, TVM_GETITEMW, wParam, (LPARAM)&wTVItem);
-				pmTVItem->mask = wTVItem.mask;
-				pmTVItem->hItem = wTVItem.hItem;
-				pmTVItem->state = wTVItem.state;
-				pmTVItem->stateMask = wTVItem.stateMask;
-				if(pmTVItem->mask & TVIF_TEXT)
-				{
-					WtoM(pmTVItem->pszText, pmTVItem->cchTextMax, wTVItem.pszText, -1);
-					TerminateStringM(pmTVItem->pszText, pmTVItem->cchTextMax);
-				}
-				pmTVItem->iImage = wTVItem.iImage;
-				pmTVItem->iSelectedImage = wTVItem.iSelectedImage;
-				pmTVItem->cChildren = wTVItem.cChildren;
-				pmTVItem->lParam = wTVItem.lParam;
-				pmTVItem->iIntegral = wTVItem.iIntegral;
-//				pmTVItem->uStateEx = wTVItem.uStateEx;
-//				pmTVItem->hwnd = wTVItem.hwnd;
-//				pmTVItem->iExpandedImage = wTVItem.iExpandedImage;
-//				pmTVItem->iReserved = wTVItem.iReserved;
-				break;
-			case TVM_INSERTITEMA:
-				pmTVInsert = (TVINSERTSTRUCTA*)lParam;
-				wTVInsert.hParent = pmTVInsert->hParent;
-				wTVInsert.hInsertAfter = pmTVInsert->hInsertAfter;
-				wTVInsert.itemex.mask = pmTVInsert->itemex.mask;
-				wTVInsert.itemex.hItem = pmTVInsert->itemex.hItem;
-				wTVInsert.itemex.state = pmTVInsert->itemex.state;
-				wTVInsert.itemex.stateMask = pmTVInsert->itemex.stateMask;
-				if(pmTVInsert->itemex.mask & TVIF_TEXT)
-				{
-					pw0 = DuplicateMtoW(pmTVInsert->itemex.pszText, -1);
-					wTVInsert.itemex.pszText = pw0;
-					// TODO: cchTextMaxの確認
-					wTVInsert.itemex.cchTextMax = pmTVInsert->itemex.cchTextMax;
-				}
-				wTVInsert.itemex.iImage = pmTVInsert->itemex.iImage;
-				wTVInsert.itemex.iSelectedImage = pmTVInsert->itemex.iSelectedImage;
-				wTVInsert.itemex.cChildren = pmTVInsert->itemex.cChildren;
-				wTVInsert.itemex.lParam = pmTVInsert->itemex.lParam;
-				wTVInsert.itemex.iIntegral = pmTVInsert->itemex.iIntegral;
-//				wTVInsert.itemex.uStateEx = pmTVInsert->itemex.uStateEx;
-//				wTVInsert.itemex.hwnd = pmTVInsert->itemex.hwnd;
-//				wTVInsert.itemex.iExpandedImage = pmTVInsert->itemex.iExpandedImage;
-//				wTVInsert.itemex.iReserved = pmTVInsert->itemex.iReserved;
-				r = SendMessageW(hWnd, TVM_INSERTITEMW, wParam, (LPARAM)&wTVInsert);
-				break;
-			default:
-				r = SendMessageW(hWnd, Msg, wParam, lParam);
-				break;
 			}
+			else
+				r = SendMessageW(hWnd, Msg, wParam, lParam);
+			break;
 		}
-		else
-			r = SendMessageW(hWnd, Msg, wParam, lParam);
-		break;
-	}
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	return r;
 }
@@ -1464,34 +1464,34 @@ END_ROUTINE
 LRESULT DefDlgProcM(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	LRESULT r = 0;
-START_ROUTINE
-	// WNDPROCがShift_JIS用であるため
-	if(IsWindowUnicode(hWnd))
-		r = DefDlgProcW(hWnd, Msg, wParam, lParam);
-	else
-		r = DefDlgProcA(hWnd, Msg, wParam, lParam);
-END_ROUTINE
-	return r;
+	START_ROUTINE
+		// WNDPROCがShift_JIS用であるため
+		if (IsWindowUnicode(hWnd))
+			r = DefDlgProcW(hWnd, Msg, wParam, lParam);
+		else
+			r = DefDlgProcA(hWnd, Msg, wParam, lParam);
+	END_ROUTINE
+		return r;
 }
 
 LRESULT SendDlgItemMessageM(HWND hDlg, int nIDDlgItem, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	LRESULT r = 0;
-START_ROUTINE
-	r = SendMessageM(GetDlgItem(hDlg, nIDDlgItem), Msg, wParam, lParam);
-END_ROUTINE
-	return r;
+	START_ROUTINE
+		r = SendMessageM(GetDlgItem(hDlg, nIDDlgItem), Msg, wParam, lParam);
+	END_ROUTINE
+		return r;
 }
 
 BOOL SetWindowTextM(HWND hWnd, LPCSTR lpString)
 {
 	BOOL r = FALSE;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpString, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpString, -1);
 	r = SetWindowTextW(hWnd, pw0);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -1499,18 +1499,18 @@ UINT DragQueryFileM(HDROP hDrop, UINT iFile, LPSTR lpszFile, UINT cch)
 {
 	UINT r = 0;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	if(iFile == (UINT)-1)
-		r = DragQueryFileW(hDrop, iFile, (LPWSTR)lpszFile, cch);
-	else
-	{
-		pw0 = AllocateStringW(cch * 4);
-		DragQueryFileW(hDrop, iFile, pw0, cch * 4);
-		WtoM(lpszFile, cch, pw0, -1);
-		r = TerminateStringM(lpszFile, cch);
-	}
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	START_ROUTINE
+		if (iFile == (UINT)-1)
+			r = DragQueryFileW(hDrop, iFile, (LPWSTR)lpszFile, cch);
+		else
+		{
+			pw0 = AllocateStringW(cch * 4);
+			DragQueryFileW(hDrop, iFile, pw0, cch * 4);
+			WtoM(lpszFile, cch, pw0, -1);
+			r = TerminateStringM(lpszFile, cch);
+		}
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -1518,26 +1518,26 @@ LPSTR GetCommandLineM()
 {
 	LPSTR r = 0;
 	static char* pm0 = NULL;
-START_ROUTINE
-	if(!pm0)
-		pm0 = DuplicateWtoM(GetCommandLineW(), -1);
+	START_ROUTINE
+		if (!pm0)
+			pm0 = DuplicateWtoM(GetCommandLineW(), -1);
 	r = pm0;
-END_ROUTINE
-	return r;
+	END_ROUTINE
+		return r;
 }
 
 DWORD GetCurrentDirectoryM(DWORD nBufferLength, LPSTR lpBuffer)
 {
 	DWORD r = 0;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	// TODO: バッファが不十分な場合に必要なサイズを返す
-	pw0 = AllocateStringW(nBufferLength * 4);
+	START_ROUTINE
+		// TODO: バッファが不十分な場合に必要なサイズを返す
+		pw0 = AllocateStringW(nBufferLength * 4);
 	GetCurrentDirectoryW(nBufferLength * 4, pw0);
 	WtoM(lpBuffer, nBufferLength, pw0, -1);
 	r = TerminateStringM(lpBuffer, nBufferLength);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -1545,11 +1545,11 @@ BOOL SetCurrentDirectoryM(LPCSTR lpPathName)
 {
 	BOOL r = FALSE;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpPathName, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpPathName, -1);
 	r = SetCurrentDirectoryW(pw0);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -1557,13 +1557,13 @@ DWORD GetTempPathM(DWORD nBufferLength, LPSTR lpBuffer)
 {
 	DWORD r = 0;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = AllocateStringW(nBufferLength * 4);
+	START_ROUTINE
+		pw0 = AllocateStringW(nBufferLength * 4);
 	GetTempPathW(nBufferLength * 4, pw0);
 	WtoM(lpBuffer, nBufferLength, pw0, -1);
 	r = TerminateStringM(lpBuffer, nBufferLength);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -1571,11 +1571,11 @@ DWORD GetFileAttributesM(LPCSTR lpFileName)
 {
 	DWORD r = FALSE;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpFileName, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpFileName, -1);
 	r = GetFileAttributesW(pw0);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -1583,13 +1583,13 @@ DWORD GetModuleFileNameM(HMODULE hModule, LPCH lpFilename, DWORD nSize)
 {
 	DWORD r = 0;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = AllocateStringW(nSize * 4);
+	START_ROUTINE
+		pw0 = AllocateStringW(nSize * 4);
 	GetModuleFileNameW(hModule, pw0, nSize * 4);
 	WtoM(lpFilename, nSize, pw0, -1);
 	r = TerminateStringM(lpFilename, nSize);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -1597,11 +1597,11 @@ LSTATUS RegOpenKeyExM(HKEY hKey, LPCSTR lpSubKey, DWORD ulOptions, REGSAM samDes
 {
 	LSTATUS r = 0;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpSubKey, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpSubKey, -1);
 	r = RegOpenKeyExW(hKey, pw0, ulOptions, samDesired, phkResult);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -1610,12 +1610,12 @@ LSTATUS RegCreateKeyExM(HKEY hKey, LPCSTR lpSubKey, DWORD Reserved, LPSTR lpClas
 	LSTATUS r = 0;
 	wchar_t* pw0 = NULL;
 	wchar_t* pw1 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpSubKey, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpSubKey, -1);
 	pw1 = DuplicateMtoW(lpClass, -1);
 	r = RegCreateKeyExW(hKey, pw0, Reserved, pw1, dwOptions, samDesired, lpSecurityAttributes, phkResult, lpdwDisposition);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	return r;
 }
@@ -1624,11 +1624,11 @@ LSTATUS RegDeleteValueM(HKEY hKey, LPCSTR lpValueName)
 {
 	LSTATUS r = 0;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpValueName, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpValueName, -1);
 	r = RegDeleteValueW(hKey, pw0);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -1639,21 +1639,21 @@ LSTATUS RegQueryValueExM(HKEY hKey, LPCSTR lpValueName, LPDWORD lpReserved, LPDW
 	wchar_t* pw1 = NULL;
 	DWORD dwType;
 	DWORD wcbData;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpValueName, -1);
-	if(RegQueryValueExW(hKey, pw0, NULL, &dwType, NULL, 0) == ERROR_SUCCESS)
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpValueName, -1);
+	if (RegQueryValueExW(hKey, pw0, NULL, &dwType, NULL, 0) == ERROR_SUCCESS)
 	{
-		switch(dwType)
+		switch (dwType)
 		{
 		case REG_SZ:
 		case REG_EXPAND_SZ:
 		case REG_MULTI_SZ:
-			if(lpcbData)
+			if (lpcbData)
 			{
 				pw1 = AllocateStringW(*lpcbData / sizeof(char) * 4);
 				wcbData = *lpcbData / sizeof(char) * 4;
 				r = RegQueryValueExW(hKey, pw0, lpReserved, lpType, (LPBYTE)pw1, &wcbData);
-				if(lpData)
+				if (lpData)
 					*lpcbData = sizeof(char) * WtoM((char*)lpData, *lpcbData / sizeof(char), pw1, wcbData / sizeof(wchar_t));
 				else
 					*lpcbData = sizeof(char) * WtoM(NULL, 0, pw1, wcbData / sizeof(wchar_t));
@@ -1666,8 +1666,8 @@ START_ROUTINE
 	}
 	else
 		r = RegQueryValueExW(hKey, pw0, lpReserved, lpType, lpData, lpcbData);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	return r;
 }
@@ -1678,9 +1678,9 @@ LSTATUS RegSetValueExM(HKEY hKey, LPCSTR lpValueName, DWORD Reserved, DWORD dwTy
 	wchar_t* pw0 = NULL;
 	wchar_t* pw1 = NULL;
 	DWORD wcbData;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpValueName, -1);
-	switch(dwType)
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpValueName, -1);
+	switch (dwType)
 	{
 	case REG_SZ:
 	case REG_EXPAND_SZ:
@@ -1694,8 +1694,8 @@ START_ROUTINE
 		break;
 	}
 	r = RegSetValueExW(hKey, pw0, Reserved, dwType, lpData, cbData);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	return r;
 }
@@ -1704,11 +1704,11 @@ BOOL TextOutM(HDC hdc, int x, int y, LPCSTR lpString, int c)
 {
 	BOOL r = FALSE;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpString, c);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpString, c);
 	r = TextOutW(hdc, x, y, pw0, wcslen(pw0));
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -1716,11 +1716,11 @@ BOOL GetTextExtentPoint32M(HDC hdc, LPCSTR lpString, int c, LPSIZE psizl)
 {
 	BOOL r = FALSE;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpString, c);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpString, c);
 	r = GetTextExtentPoint32W(hdc, pw0, wcslen(pw0), psizl);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -1730,48 +1730,48 @@ INT_PTR PropertySheetM(LPCPROPSHEETHEADERA v0)
 	PROPSHEETHEADERW a0;
 	PROPSHEETPAGEW* pwPage;
 	UINT i;
-START_ROUTINE
-	a0.dwSize = sizeof(PROPSHEETHEADERW);
+	START_ROUTINE
+		a0.dwSize = sizeof(PROPSHEETHEADERW);
 	a0.dwFlags = v0->dwFlags;
 	a0.hwndParent = v0->hwndParent;
 	a0.hInstance = v0->hInstance;
-	if(v0->dwFlags & PSH_USEICONID)
+	if (v0->dwFlags & PSH_USEICONID)
 		a0.pszIcon = DuplicateMtoW(v0->pszIcon, -1);
 	else
 		a0.hIcon = v0->hIcon;
 	a0.pszCaption = DuplicateMtoW(v0->pszCaption, -1);
 	a0.nPages = v0->nPages;
-	if(v0->dwFlags & PSH_USEPSTARTPAGE)
+	if (v0->dwFlags & PSH_USEPSTARTPAGE)
 		a0.pStartPage = DuplicateMtoW(v0->pStartPage, -1);
 	else
 		a0.nStartPage = v0->nStartPage;
-	if(v0->dwFlags & PSH_PROPSHEETPAGE)
+	if (v0->dwFlags & PSH_PROPSHEETPAGE)
 	{
-		if(v0->ppsp && (pwPage = (PROPSHEETPAGEW*)malloc(sizeof(PROPSHEETPAGEW) * v0->nPages)))
+		if (v0->ppsp && (pwPage = (PROPSHEETPAGEW*)malloc(sizeof(PROPSHEETPAGEW) * v0->nPages)))
 		{
-			for(i = 0; i < v0->nPages; i++)
+			for (i = 0; i < v0->nPages; i++)
 			{
 				pwPage[i].dwSize = sizeof(PROPSHEETPAGEW);
 				pwPage[i].dwFlags = v0->ppsp[i].dwFlags;
 				pwPage[i].hInstance = v0->ppsp[i].hInstance;
-				if(v0->ppsp[i].dwFlags & PSP_DLGINDIRECT)
+				if (v0->ppsp[i].dwFlags & PSP_DLGINDIRECT)
 					pwPage[i].pResource = v0->ppsp[i].pResource;
 				else
 					pwPage[i].pszTemplate = DuplicateMtoW(v0->ppsp[i].pszTemplate, -1);
-				if(v0->ppsp[i].dwFlags & PSP_USEICONID)
+				if (v0->ppsp[i].dwFlags & PSP_USEICONID)
 					pwPage[i].pszIcon = DuplicateMtoW(v0->ppsp[i].pszIcon, -1);
 				else
 					pwPage[i].hIcon = v0->ppsp[i].hIcon;
-				if(v0->ppsp[i].dwFlags & PSP_USETITLE)
+				if (v0->ppsp[i].dwFlags & PSP_USETITLE)
 					pwPage[i].pszTitle = DuplicateMtoW(v0->ppsp[i].pszTitle, -1);
 				pwPage[i].pfnDlgProc = v0->ppsp[i].pfnDlgProc;
 				pwPage[i].lParam = v0->ppsp[i].lParam;
 				// TODO: pfnCallback
 				pwPage[i].pfnCallback = (LPFNPSPCALLBACKW)v0->ppsp[i].pfnCallback;
 				pwPage[i].pcRefParent = v0->ppsp[i].pcRefParent;
-				if(v0->ppsp[i].dwFlags & PSP_USEHEADERTITLE)
+				if (v0->ppsp[i].dwFlags & PSP_USEHEADERTITLE)
 					pwPage[i].pszHeaderTitle = DuplicateMtoW(v0->ppsp[i].pszHeaderTitle, -1);
-				if(v0->ppsp[i].dwFlags & PSP_USEHEADERSUBTITLE)
+				if (v0->ppsp[i].dwFlags & PSP_USEHEADERSUBTITLE)
 					pwPage[i].pszHeaderSubTitle = DuplicateMtoW(v0->ppsp[i].pszHeaderSubTitle, -1);
 			}
 		}
@@ -1782,40 +1782,40 @@ START_ROUTINE
 	else
 		a0.phpage = v0->phpage;
 	a0.pfnCallback = v0->pfnCallback;
-	if(v0->dwFlags & PSH_USEHBMWATERMARK)
+	if (v0->dwFlags & PSH_USEHBMWATERMARK)
 		a0.hbmWatermark = v0->hbmWatermark;
 	else
 		a0.pszbmWatermark = DuplicateMtoW(v0->pszbmWatermark, -1);
 	r = PropertySheetW(&a0);
-	if(a0.dwFlags & PSH_USEICONID)
+	if (a0.dwFlags & PSH_USEICONID)
 		FreeDuplicatedString((void*)a0.pszIcon);
 	FreeDuplicatedString((void*)a0.pszCaption);
-	if(v0->dwFlags & PSH_USEPSTARTPAGE)
+	if (v0->dwFlags & PSH_USEPSTARTPAGE)
 		FreeDuplicatedString((void*)a0.pStartPage);
-	if(v0->dwFlags & PSH_PROPSHEETPAGE)
+	if (v0->dwFlags & PSH_PROPSHEETPAGE)
 	{
-		if(pwPage)
+		if (pwPage)
 		{
-			for(i = 0; i < v0->nPages; i++)
+			for (i = 0; i < v0->nPages; i++)
 			{
-				if(!(v0->ppsp[i].dwFlags & PSP_DLGINDIRECT))
+				if (!(v0->ppsp[i].dwFlags & PSP_DLGINDIRECT))
 					FreeDuplicatedString((void*)pwPage[i].pszTemplate);
-				if(v0->ppsp[i].dwFlags & PSP_USEICONID)
+				if (v0->ppsp[i].dwFlags & PSP_USEICONID)
 					FreeDuplicatedString((void*)pwPage[i].pszIcon);
-				if(v0->ppsp[i].dwFlags & PSP_USETITLE)
+				if (v0->ppsp[i].dwFlags & PSP_USETITLE)
 					FreeDuplicatedString((void*)pwPage[i].pszTitle);
-				if(v0->ppsp[i].dwFlags & PSP_USEHEADERTITLE)
+				if (v0->ppsp[i].dwFlags & PSP_USEHEADERTITLE)
 					FreeDuplicatedString((void*)pwPage[i].pszHeaderTitle);
-				if(v0->ppsp[i].dwFlags & PSP_USEHEADERSUBTITLE)
+				if (v0->ppsp[i].dwFlags & PSP_USEHEADERSUBTITLE)
 					FreeDuplicatedString((void*)pwPage[i].pszHeaderSubTitle);
 			}
 			free(pwPage);
 		}
 	}
-	if(!(v0->dwFlags & PSH_USEHBMWATERMARK))
+	if (!(v0->dwFlags & PSH_USEHBMWATERMARK))
 		FreeDuplicatedString((void*)a0.pszbmWatermark);
-END_ROUTINE
-	return r;
+	END_ROUTINE
+		return r;
 }
 
 BOOL GetOpenFileNameM(LPOPENFILENAMEA v0)
@@ -1832,8 +1832,8 @@ BOOL GetOpenFileNameM(LPOPENFILENAMEA v0)
 	wchar_t* pw8 = NULL;
 	wchar_t* pw9 = NULL;
 	OPENFILENAMEW wofn;
-START_ROUTINE
-	wofn.lStructSize = sizeof(OPENFILENAMEW);
+	START_ROUTINE
+		wofn.lStructSize = sizeof(OPENFILENAMEW);
 	wofn.hwndOwner = v0->hwndOwner;
 	wofn.hInstance = v0->hInstance;
 	pw0 = DuplicateMtoWMultiString(v0->lpstrFilter);
@@ -1867,8 +1867,8 @@ START_ROUTINE
 	TerminateStringM(v0->lpstrFile, v0->nMaxFile);
 	v0->nFileOffset = WtoM(NULL, 0, wofn.lpstrFile, wofn.nFileOffset);
 	v0->nFileExtension = WtoM(NULL, 0, wofn.lpstrFile, wofn.nFileExtension);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	FreeDuplicatedString(pw2);
 	FreeDuplicatedString(pw3);
@@ -1892,8 +1892,8 @@ BOOL GetSaveFileNameM(LPOPENFILENAMEA v0)
 	wchar_t* pw8 = NULL;
 	wchar_t* pw9 = NULL;
 	OPENFILENAMEW wofn;
-START_ROUTINE
-	wofn.lStructSize = sizeof(OPENFILENAMEW);
+	START_ROUTINE
+		wofn.lStructSize = sizeof(OPENFILENAMEW);
 	wofn.hwndOwner = v0->hwndOwner;
 	wofn.hInstance = v0->hInstance;
 	pw0 = DuplicateMtoWMultiString(v0->lpstrFilter);
@@ -1927,8 +1927,8 @@ START_ROUTINE
 	TerminateStringM(v0->lpstrFile, v0->nMaxFile);
 	v0->nFileOffset = WtoM(NULL, 0, wofn.lpstrFile, wofn.nFileOffset);
 	v0->nFileExtension = WtoM(NULL, 0, wofn.lpstrFile, wofn.nFileExtension);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	FreeDuplicatedString(pw2);
 	FreeDuplicatedString(pw3);
@@ -1942,11 +1942,11 @@ HWND HtmlHelpM(HWND hwndCaller, LPCSTR pszFile, UINT uCommand, DWORD_PTR dwData)
 {
 	HWND r = NULL;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(pszFile, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(pszFile, -1);
 	r = HtmlHelpW(hwndCaller, pw0, uCommand, dwData);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -1960,8 +1960,8 @@ BOOL CreateProcessM(LPCSTR lpApplicationName, LPSTR lpCommandLine, LPSECURITY_AT
 	wchar_t* pw4 = NULL;
 	wchar_t* pw5 = NULL;
 	STARTUPINFOW wStartupInfo;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpApplicationName, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpApplicationName, -1);
 	pw1 = DuplicateMtoWBuffer(lpCommandLine, -1, (strlen(lpCommandLine) + 1) * 4);
 	pw2 = DuplicateMtoW(lpCurrentDirectory, -1);
 	wStartupInfo.cb = sizeof(LPSTARTUPINFOW);
@@ -1987,8 +1987,8 @@ START_ROUTINE
 	wStartupInfo.hStdError = lpStartupInfo->hStdError;
 	r = CreateProcessW(pw0, pw1, lpProcessAttributes, lpThreadAttributes, bInheritHandles, dwCreationFlags, lpEnvironment, pw2, &wStartupInfo, lpProcessInformation);
 	WtoM(lpCommandLine, strlen(lpCommandLine) + 1, pw1, -1);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	FreeDuplicatedString(pw2);
 	FreeDuplicatedString(pw3);
@@ -2004,16 +2004,16 @@ HINSTANCE FindExecutableM(LPCSTR lpFile, LPCSTR lpDirectory, LPSTR lpResult)
 	wchar_t* pw1 = NULL;
 	wchar_t* pw2 = NULL;
 	wchar_t* pw3 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpFile, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpFile, -1);
 	pw1 = DuplicateMtoW(lpDirectory, -1);
 	pw2 = AllocateStringW(MAX_PATH * 4);
 	r = FindExecutableW(pw0, pw1, pw2);
 	// バッファ長不明のためオーバーランの可能性あり
 	WtoM(lpResult, MAX_PATH, pw2, -1);
 	TerminateStringM(lpResult, MAX_PATH);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	FreeDuplicatedString(pw2);
 	FreeDuplicatedString(pw3);
@@ -2027,14 +2027,14 @@ HINSTANCE ShellExecuteM(HWND hwnd, LPCSTR lpOperation, LPCSTR lpFile, LPCSTR lpP
 	wchar_t* pw1 = NULL;
 	wchar_t* pw2 = NULL;
 	wchar_t* pw3 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpOperation, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpOperation, -1);
 	pw1 = DuplicateMtoW(lpFile, -1);
 	pw2 = DuplicateMtoW(lpParameters, -1);
 	pw3 = DuplicateMtoW(lpDirectory, -1);
 	r = ShellExecuteW(hwnd, pw0, pw1, pw2, pw3, nShowCmd);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	FreeDuplicatedString(pw2);
 	FreeDuplicatedString(pw3);
@@ -2050,8 +2050,8 @@ BOOL ShellExecuteExM(LPSHELLEXECUTEINFOA lpExecInfo)
 	wchar_t* pw3 = NULL;
 	wchar_t* pw4 = NULL;
 	SHELLEXECUTEINFOW wExecInfo;
-START_ROUTINE
-	wExecInfo.cbSize = sizeof(SHELLEXECUTEINFOW);
+	START_ROUTINE
+		wExecInfo.cbSize = sizeof(SHELLEXECUTEINFOW);
 	wExecInfo.fMask = lpExecInfo->fMask;
 	wExecInfo.hwnd = lpExecInfo->hwnd;
 	pw0 = DuplicateMtoW(lpExecInfo->lpVerb, -1);
@@ -2065,7 +2065,7 @@ START_ROUTINE
 	wExecInfo.nShow = lpExecInfo->nShow;
 	wExecInfo.hInstApp = lpExecInfo->hInstApp;
 	wExecInfo.lpIDList = lpExecInfo->lpIDList;
-	if(lpExecInfo->fMask & SEE_MASK_CLASSNAME)
+	if (lpExecInfo->fMask & SEE_MASK_CLASSNAME)
 	{
 		pw4 = DuplicateMtoW(lpExecInfo->lpClass, -1);
 		wExecInfo.lpClass = pw4;
@@ -2077,8 +2077,8 @@ START_ROUTINE
 	r = ShellExecuteExW(&wExecInfo);
 	lpExecInfo->hInstApp = wExecInfo.hInstApp;
 	lpExecInfo->hProcess = wExecInfo.hProcess;
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	FreeDuplicatedString(pw2);
 	FreeDuplicatedString(pw3);
@@ -2092,8 +2092,8 @@ PIDLIST_ABSOLUTE SHBrowseForFolderM(LPBROWSEINFOA lpbi)
 	wchar_t* pw0 = NULL;
 	wchar_t* pw1 = NULL;
 	BROWSEINFOW wbi;
-START_ROUTINE
-	wbi.hwndOwner = lpbi->hwndOwner;
+	START_ROUTINE
+		wbi.hwndOwner = lpbi->hwndOwner;
 	wbi.pidlRoot = lpbi->pidlRoot;
 	pw0 = DuplicateMtoWBuffer(lpbi->pszDisplayName, -1, MAX_PATH * 4);
 	wbi.pszDisplayName = pw0;
@@ -2108,8 +2108,8 @@ START_ROUTINE
 	// バッファ長不明のためオーバーランの可能性あり
 	WtoM(lpbi->pszDisplayName, MAX_PATH, wbi.pszDisplayName, -1);
 	lpbi->iImage = wbi.iImage;
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	return r;
 }
@@ -2118,14 +2118,14 @@ BOOL SHGetPathFromIDListM(PCIDLIST_ABSOLUTE pidl, LPSTR pszPath)
 {
 	BOOL r = FALSE;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = AllocateStringW(MAX_PATH * 4);
+	START_ROUTINE
+		pw0 = AllocateStringW(MAX_PATH * 4);
 	r = SHGetPathFromIDListW(pidl, pw0);
 	// バッファ長不明のためオーバーランの可能性あり
 	WtoM(pszPath, MAX_PATH, pw0, -1);
 	TerminateStringM(pszPath, MAX_PATH);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -2136,8 +2136,8 @@ int SHFileOperationM(LPSHFILEOPSTRUCTA lpFileOp)
 	wchar_t* pw1 = NULL;
 	wchar_t* pw2 = NULL;
 	SHFILEOPSTRUCTW wFileOp;
-START_ROUTINE
-	wFileOp.hwnd = lpFileOp->hwnd;
+	START_ROUTINE
+		wFileOp.hwnd = lpFileOp->hwnd;
 	wFileOp.wFunc = lpFileOp->wFunc;
 	pw0 = DuplicateMtoWMultiString(lpFileOp->pFrom);
 	wFileOp.pFrom = pw0;
@@ -2146,25 +2146,25 @@ START_ROUTINE
 	wFileOp.fFlags = lpFileOp->fFlags;
 	wFileOp.fAnyOperationsAborted = lpFileOp->fAnyOperationsAborted;
 	wFileOp.hNameMappings = lpFileOp->hNameMappings;
-	if(lpFileOp->fFlags & FOF_SIMPLEPROGRESS)
+	if (lpFileOp->fFlags & FOF_SIMPLEPROGRESS)
 		pw2 = DuplicateMtoW(lpFileOp->lpszProgressTitle, -1);
 	r = SHFileOperationW(&wFileOp);
 	lpFileOp->fAnyOperationsAborted = wFileOp.fAnyOperationsAborted;
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	FreeDuplicatedString(pw2);
 	return r;
 }
 
-DWORD_PTR SHGetFileInfoM(LPCSTR pszPath, DWORD dwFileAttributes, SHFILEINFOA *psfi, UINT cbFileInfo, UINT uFlags)
+DWORD_PTR SHGetFileInfoM(LPCSTR pszPath, DWORD dwFileAttributes, SHFILEINFOA* psfi, UINT cbFileInfo, UINT uFlags)
 {
 	DWORD_PTR r = 0;
 	wchar_t* pw0 = NULL;
 	SHFILEINFOW wsfi;
-START_ROUTINE
-	pw0 = DuplicateMtoWMultiString(pszPath);
-	if((r = SHGetFileInfoW(pw0, dwFileAttributes, &wsfi, cbFileInfo, uFlags)) != 0)
+	START_ROUTINE
+		pw0 = DuplicateMtoWMultiString(pszPath);
+	if ((r = SHGetFileInfoW(pw0, dwFileAttributes, &wsfi, cbFileInfo, uFlags)) != 0)
 	{
 		psfi->hIcon = wsfi.hIcon;
 		psfi->iIcon = wsfi.iIcon;
@@ -2172,8 +2172,8 @@ START_ROUTINE
 		WtoM(psfi->szDisplayName, MAX_PATH, wsfi.szDisplayName, -1);
 		WtoM(psfi->szTypeName, 80, wsfi.szTypeName, -1);
 	}
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -2181,16 +2181,16 @@ BOOL AppendMenuM(HMENU hMenu, UINT uFlags, UINT_PTR uIDNewItem, LPCSTR lpNewItem
 {
 	int r = 0;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	if(uFlags & (MF_BITMAP | MF_OWNERDRAW))
-		r = AppendMenuW(hMenu, uFlags, uIDNewItem, (LPCWSTR)lpNewItem);
-	else
-	{
-		pw0 = DuplicateMtoW(lpNewItem, -1);
-		r = AppendMenuW(hMenu, uFlags, uIDNewItem, pw0);
-	}
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	START_ROUTINE
+		if (uFlags & (MF_BITMAP | MF_OWNERDRAW))
+			r = AppendMenuW(hMenu, uFlags, uIDNewItem, (LPCWSTR)lpNewItem);
+		else
+		{
+			pw0 = DuplicateMtoW(lpNewItem, -1);
+			r = AppendMenuW(hMenu, uFlags, uIDNewItem, pw0);
+		}
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -2199,8 +2199,8 @@ BOOL GetMenuItemInfoM(HMENU hmenu, UINT item, BOOL fByPosition, LPMENUITEMINFOA 
 	BOOL r = FALSE;
 	wchar_t* pw0 = NULL;
 	MENUITEMINFOW wmii;
-START_ROUTINE
-	wmii.cbSize = sizeof(MENUITEMINFOW);
+	START_ROUTINE
+		wmii.cbSize = sizeof(MENUITEMINFOW);
 	wmii.fMask = lpmii->fMask;
 	wmii.fType = lpmii->fType;
 	wmii.fState = lpmii->fState;
@@ -2209,7 +2209,7 @@ START_ROUTINE
 	wmii.hbmpChecked = lpmii->hbmpChecked;
 	wmii.hbmpUnchecked = lpmii->hbmpUnchecked;
 	wmii.dwItemData = lpmii->dwItemData;
-	if(lpmii->fMask & MIIM_TYPE)
+	if (lpmii->fMask & MIIM_TYPE)
 	{
 		pw0 = DuplicateMtoWBuffer(lpmii->dwTypeData, -1, lpmii->cch * 4);
 		wmii.dwTypeData = pw0;
@@ -2226,17 +2226,17 @@ START_ROUTINE
 	lpmii->dwItemData = wmii.dwItemData;
 	WtoM(lpmii->dwTypeData, lpmii->cch, wmii.dwTypeData, -1);
 	TerminateStringM(lpmii->dwTypeData, lpmii->cch);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
-HFONT CreateFontIndirectM(CONST LOGFONTA *lplf)
+HFONT CreateFontIndirectM(CONST LOGFONTA* lplf)
 {
 	HFONT r = NULL;
 	LOGFONTW wlf;
-START_ROUTINE
-	wlf.lfHeight = lplf->lfHeight;
+	START_ROUTINE
+		wlf.lfHeight = lplf->lfHeight;
 	wlf.lfWidth = lplf->lfWidth;
 	wlf.lfEscapement = lplf->lfEscapement;
 	wlf.lfOrientation = lplf->lfOrientation;
@@ -2252,8 +2252,8 @@ START_ROUTINE
 	MtoW(wlf.lfFaceName, LF_FACESIZE, lplf->lfFaceName, -1);
 	TerminateStringW(wlf.lfFaceName, LF_FACESIZE);
 	r = CreateFontIndirect(&wlf);
-END_ROUTINE
-	return r;
+	END_ROUTINE
+		return r;
 }
 
 BOOL ChooseFontM(LPCHOOSEFONTA v0)
@@ -2263,11 +2263,11 @@ BOOL ChooseFontM(LPCHOOSEFONTA v0)
 	wchar_t* pw1 = NULL;
 	CHOOSEFONTW a0;
 	LOGFONTW* pwlf;
-START_ROUTINE
-	a0.lStructSize = sizeof(CHOOSEFONTW);
+	START_ROUTINE
+		a0.lStructSize = sizeof(CHOOSEFONTW);
 	a0.hwndOwner = v0->hwndOwner;
 	a0.hDC = v0->hDC;
-	if(v0->lpLogFont && (pwlf = (LOGFONTW*)malloc(sizeof(LOGFONTW))))
+	if (v0->lpLogFont && (pwlf = (LOGFONTW*)malloc(sizeof(LOGFONTW))))
 	{
 		pwlf->lfHeight = v0->lpLogFont->lfHeight;
 		pwlf->lfWidth = v0->lpLogFont->lfWidth;
@@ -2302,7 +2302,7 @@ START_ROUTINE
 	a0.nSizeMin = v0->nSizeMin;
 	a0.nSizeMax = v0->nSizeMax;
 	r = ChooseFontW(&a0);
-	if(v0->lpLogFont)
+	if (v0->lpLogFont)
 	{
 		v0->lpLogFont->lfHeight = pwlf->lfHeight;
 		v0->lpLogFont->lfWidth = pwlf->lfWidth;
@@ -2324,10 +2324,10 @@ START_ROUTINE
 	WtoM(v0->lpszStyle, LF_FACESIZE, pw1, -1);
 	TerminateStringM(v0->lpszStyle, LF_FACESIZE);
 	v0->nFontType = a0.nFontType;
-	if(pwlf)
+	if (pwlf)
 		free(pwlf);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	return r;
 }
@@ -2336,11 +2336,11 @@ INT_PTR DialogBoxParamM(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndPar
 {
 	INT_PTR r = 0;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpTemplateName, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpTemplateName, -1);
 	r = DialogBoxParamW(hInstance, pw0, hWndParent, lpDialogFunc, dwInitParam);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -2348,11 +2348,11 @@ HWND CreateDialogParamM(HINSTANCE hInstance, LPCSTR lpTemplateName, HWND hWndPar
 {
 	HWND r = NULL;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpTemplateName, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpTemplateName, -1);
 	r = CreateDialogParamW(hInstance, pw0, hWndParent, lpDialogFunc, dwInitParam);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -2360,11 +2360,11 @@ BOOL sndPlaySoundM(LPCSTR pszSound, UINT fuSound)
 {
 	BOOL r = FALSE;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(pszSound, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(pszSound, -1);
 	r = sndPlaySoundW(pw0, fuSound);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -2375,25 +2375,25 @@ HANDLE SetClipboardDataM(UINT uFormat, HANDLE hMem)
 	int Length;
 	int BufferLength;
 	HGLOBAL hBufferMem;
-START_ROUTINE
-	if(uFormat == CF_TEXT)
-	{
-		p = (char*)GlobalLock(hMem);
-		Length = (int)GlobalSize(hMem);
-		BufferLength = MtoW(NULL, 0, p, Length);
-		if(hBufferMem = GlobalAlloc(GMEM_MOVEABLE, sizeof(wchar_t) * BufferLength))
+	START_ROUTINE
+		if (uFormat == CF_TEXT)
 		{
-			MtoW((LPWSTR)GlobalLock(hBufferMem), BufferLength, p, Length);
-			GlobalUnlock(hBufferMem);
-			r = SetClipboardData(CF_UNICODETEXT, hBufferMem);
+			p = (char*)GlobalLock(hMem);
+			Length = (int)GlobalSize(hMem);
+			BufferLength = MtoW(NULL, 0, p, Length);
+			if (hBufferMem = GlobalAlloc(GMEM_MOVEABLE, sizeof(wchar_t) * BufferLength))
+			{
+				MtoW((LPWSTR)GlobalLock(hBufferMem), BufferLength, p, Length);
+				GlobalUnlock(hBufferMem);
+				r = SetClipboardData(CF_UNICODETEXT, hBufferMem);
+			}
+			GlobalUnlock(hMem);
+			GlobalFree(hMem);
 		}
-		GlobalUnlock(hMem);
-		GlobalFree(hMem);
-	}
-	else
-		r = SetClipboardData(uFormat, hMem);
-END_ROUTINE
-	return r;
+		else
+			r = SetClipboardData(uFormat, hMem);
+	END_ROUTINE
+		return r;
 }
 
 BOOL CopyFileM(LPCSTR lpExistingFileName, LPCSTR lpNewFileName, BOOL bFailIfExists)
@@ -2401,12 +2401,12 @@ BOOL CopyFileM(LPCSTR lpExistingFileName, LPCSTR lpNewFileName, BOOL bFailIfExis
 	BOOL r = FALSE;
 	wchar_t* pw0 = NULL;
 	wchar_t* pw1 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpExistingFileName, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpExistingFileName, -1);
 	pw1 = DuplicateMtoW(lpNewFileName, -1);
 	r = CopyFileW(pw0, pw1, bFailIfExists);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	return r;
 }
@@ -2416,12 +2416,12 @@ BOOL MoveFileM(LPCSTR lpExistingFileName, LPCSTR lpNewFileName)
 	BOOL r = FALSE;
 	wchar_t* pw0 = NULL;
 	wchar_t* pw1 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpExistingFileName, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpExistingFileName, -1);
 	pw1 = DuplicateMtoW(lpNewFileName, -1);
 	r = MoveFileW(pw0, pw1);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	return r;
 }
@@ -2430,11 +2430,11 @@ BOOL DeleteFileM(LPCSTR lpFileName)
 {
 	BOOL r = FALSE;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpFileName, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpFileName, -1);
 	r = DeleteFileW(pw0);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -2442,11 +2442,11 @@ BOOL CreateDirectoryM(LPCSTR lpPathName, LPSECURITY_ATTRIBUTES lpSecurityAttribu
 {
 	BOOL r = FALSE;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpPathName, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpPathName, -1);
 	r = CreateDirectoryW(pw0, lpSecurityAttributes);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
@@ -2454,238 +2454,238 @@ BOOL RemoveDirectoryM(LPCSTR lpPathName)
 {
 	BOOL r = FALSE;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(lpPathName, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(lpPathName, -1);
 	r = RemoveDirectoryW(pw0);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
-int mkdirM(const char * _Path)
+int mkdirM(const char* _Path)
 {
 	int r = -1;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(_Path, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(_Path, -1);
 	r = _wmkdir(pw0);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
-int _mkdirM(const char * _Path)
+int _mkdirM(const char* _Path)
 {
 	int r = -1;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(_Path, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(_Path, -1);
 	r = _wmkdir(pw0);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
-int rmdirM(const char * _Path)
+int rmdirM(const char* _Path)
 {
 	int r = -1;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(_Path, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(_Path, -1);
 	r = _wrmdir(pw0);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
-int _rmdirM(const char * _Path)
+int _rmdirM(const char* _Path)
 {
 	int r = -1;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(_Path, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(_Path, -1);
 	r = _wrmdir(pw0);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
-int removeM(const char * _Filename)
+int removeM(const char* _Filename)
 {
 	int r = -1;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(_Filename, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(_Filename, -1);
 	r = _wremove(pw0);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
-int _removeM(const char * _Filename)
+int _removeM(const char* _Filename)
 {
 	int r = -1;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(_Filename, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(_Filename, -1);
 	r = _wremove(pw0);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
-int _unlinkM(const char * _Filename)
+int _unlinkM(const char* _Filename)
 {
 	int r = -1;
 	wchar_t* pw0 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(_Filename, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(_Filename, -1);
 	r = _wunlink(pw0);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	return r;
 }
 
-size_t _mbslenM(const unsigned char * _Str)
+size_t _mbslenM(const unsigned char* _Str)
 {
 	size_t r = 0;
-START_ROUTINE
-	while(GetNextCharM(_Str, NULL, &_Str) > 0)
-	{
-		r++;
-	}
-END_ROUTINE
-	return r;
+	START_ROUTINE
+		while (GetNextCharM(_Str, NULL, &_Str) > 0)
+		{
+			r++;
+		}
+	END_ROUTINE
+		return r;
 }
 
-unsigned char * _mbschrM(const unsigned char * _Str, unsigned int _Ch)
+unsigned char* _mbschrM(const unsigned char* _Str, unsigned int _Ch)
 {
 	unsigned char* r = NULL;
 	unsigned int c;
 	unsigned char* p;
-START_ROUTINE
-	while((c = GetNextCharM(_Str, NULL, &p)) > 0)
-	{
-		if(c == _Ch)
-			break;
-		_Str = p;
-	}
-	if(c == _Ch)
+	START_ROUTINE
+		while ((c = GetNextCharM(_Str, NULL, &p)) > 0)
+		{
+			if (c == _Ch)
+				break;
+			_Str = p;
+		}
+	if (c == _Ch)
 		r = (unsigned char*)_Str;
-END_ROUTINE
-	return r;
+	END_ROUTINE
+		return r;
 }
 
-unsigned char * _mbsrchrM(const unsigned char * _Str, unsigned int _Ch)
+unsigned char* _mbsrchrM(const unsigned char* _Str, unsigned int _Ch)
 {
 	unsigned char* r = NULL;
 	unsigned int c;
 	unsigned char* p;
-START_ROUTINE
-	while((c = GetNextCharM(_Str, NULL, &p)) > 0)
-	{
-		if(c == _Ch)
-			r = (unsigned char*)_Str;
-		_Str = p;
-	}
-	if(c == _Ch)
+	START_ROUTINE
+		while ((c = GetNextCharM(_Str, NULL, &p)) > 0)
+		{
+			if (c == _Ch)
+				r = (unsigned char*)_Str;
+			_Str = p;
+		}
+	if (c == _Ch)
 		r = (unsigned char*)_Str;
-END_ROUTINE
-	return r;
+	END_ROUTINE
+		return r;
 }
 
-unsigned char * _mbsstrM(const unsigned char * _Str, const unsigned char * _Substr)
+unsigned char* _mbsstrM(const unsigned char* _Str, const unsigned char* _Substr)
 {
 	unsigned char* r = NULL;
-START_ROUTINE
-	r = strstr(_Str, _Substr);
-END_ROUTINE
-	return r;
+	START_ROUTINE
+		r = strstr(_Str, _Substr);
+	END_ROUTINE
+		return r;
 }
 
-int _mbscmpM(const unsigned char * _Str1, const unsigned char * _Str2)
+int _mbscmpM(const unsigned char* _Str1, const unsigned char* _Str2)
 {
 	int r = 0;
-START_ROUTINE
-	r = strcmp(_Str1, _Str2);
-END_ROUTINE
-	return r;
+	START_ROUTINE
+		r = strcmp(_Str1, _Str2);
+	END_ROUTINE
+		return r;
 }
 
-int _mbsicmpM(const unsigned char * _Str1, const unsigned char * _Str2)
+int _mbsicmpM(const unsigned char* _Str1, const unsigned char* _Str2)
 {
 	int r = 0;
-START_ROUTINE
-	r = _stricmp(_Str1, _Str2);
-END_ROUTINE
-	return r;
+	START_ROUTINE
+		r = _stricmp(_Str1, _Str2);
+	END_ROUTINE
+		return r;
 }
 
-int _mbsncmpM(const unsigned char * _Str1, const unsigned char * _Str2, size_t _MaxCount)
+int _mbsncmpM(const unsigned char* _Str1, const unsigned char* _Str2, size_t _MaxCount)
 {
 	int r = 0;
 	DWORD c1;
 	DWORD c2;
-START_ROUTINE
-	c1 = 0;
+	START_ROUTINE
+		c1 = 0;
 	c2 = 0;
-	while(_MaxCount > 0)
+	while (_MaxCount > 0)
 	{
 		c1 = GetNextCharM(_Str1, NULL, &_Str1);
 		c2 = GetNextCharM(_Str2, NULL, &_Str2);
-		if(c1 != c2)
+		if (c1 != c2)
 			break;
 		_MaxCount--;
-		if(c1 == 0 || c2 == 0)
+		if (c1 == 0 || c2 == 0)
 			break;
 	}
 	r = c1 - c2;
-END_ROUTINE
-	return r;
+	END_ROUTINE
+		return r;
 }
 
-unsigned char * _mbslwrM(unsigned char * _String)
+unsigned char* _mbslwrM(unsigned char* _String)
 {
 	unsigned char* r = NULL;
-START_ROUTINE
-	r = _strlwr(_String);
-END_ROUTINE
-	return r;
+	START_ROUTINE
+		r = _strlwr(_String);
+	END_ROUTINE
+		return r;
 }
 
-unsigned char * _mbsuprM(unsigned char * _String)
+unsigned char* _mbsuprM(unsigned char* _String)
 {
 	unsigned char* r = NULL;
-START_ROUTINE
-	r = _strupr(_String);
-END_ROUTINE
-	return r;
+	START_ROUTINE
+		r = _strupr(_String);
+	END_ROUTINE
+		return r;
 }
 
-unsigned char * _mbsnincM(const unsigned char * _Str, size_t _Count)
+unsigned char* _mbsnincM(const unsigned char* _Str, size_t _Count)
 {
 	unsigned char* r = NULL;
-START_ROUTINE
-	while(_Count > 0 && GetNextCharM(_Str, NULL, &_Str) > 0)
-	{
-		_Count--;
-	}
+	START_ROUTINE
+		while (_Count > 0 && GetNextCharM(_Str, NULL, &_Str) > 0)
+		{
+			_Count--;
+		}
 	r = (unsigned char*)_Str;
-END_ROUTINE
-	return r;
+	END_ROUTINE
+		return r;
 }
 
-FILE * fopenM(const char * _Filename, const char * _Mode)
+FILE* fopenM(const char* _Filename, const char* _Mode)
 {
 	FILE* r = NULL;
 	wchar_t* pw0 = NULL;
 	wchar_t* pw1 = NULL;
-START_ROUTINE
-	pw0 = DuplicateMtoW(_Filename, -1);
+	START_ROUTINE
+		pw0 = DuplicateMtoW(_Filename, -1);
 	pw1 = DuplicateMtoW(_Mode, -1);
 	r = _wfopen(pw0, pw1);
-END_ROUTINE
-	FreeDuplicatedString(pw0);
+	END_ROUTINE
+		FreeDuplicatedString(pw0);
 	FreeDuplicatedString(pw1);
 	return r;
 }

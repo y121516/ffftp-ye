@@ -5,25 +5,25 @@
 ===============================================================================
 / Copyright (C) 1997-2007 Sota. All rights reserved.
 /
-/ Redistribution and use in source and binary forms, with or without 
-/ modification, are permitted provided that the following conditions 
+/ Redistribution and use in source and binary forms, with or without
+/ modification, are permitted provided that the following conditions
 / are met:
 /
-/  1. Redistributions of source code must retain the above copyright 
+/  1. Redistributions of source code must retain the above copyright
 /     notice, this list of conditions and the following disclaimer.
-/  2. Redistributions in binary form must reproduce the above copyright 
-/     notice, this list of conditions and the following disclaimer in the 
+/  2. Redistributions in binary form must reproduce the above copyright
+/     notice, this list of conditions and the following disclaimer in the
 /     documentation and/or other materials provided with the distribution.
 /
-/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR 
-/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
-/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, 
-/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF 
-/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON 
-/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
+/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 / THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /============================================================================*/
 
@@ -46,7 +46,7 @@
 /*===== プロトタイプ =====*/
 
 static void TipsShow(HWND hWnd, RECT rectTitle, LPCTSTR lpszTitleText, int xoffset, int xoffset2, int InRect);
-static int CellRectFromPoint(HWND hWnd, POINT  point, RECT *cellrect, int *col);
+static int CellRectFromPoint(HWND hWnd, POINT  point, RECT* cellrect, int* col);
 static LRESULT CALLBACK TitleTipWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 /*===== ローカルなワーク =====*/
@@ -74,26 +74,26 @@ int InitListViewTips(HWND hWnd, HINSTANCE hInst)
 	Ret = FFFTP_FAIL;
 
 	wClass.cbSize = sizeof(WNDCLASSEX);
-	wClass.style         = 0;
-	wClass.lpfnWndProc   = TitleTipWndProc;
-	wClass.cbClsExtra    = 0;
-	wClass.cbWndExtra    = 0;
-	wClass.hInstance     = hInst;
-	wClass.hIcon         = NULL;
-	wClass.hCursor       = NULL;
+	wClass.style = 0;
+	wClass.lpfnWndProc = TitleTipWndProc;
+	wClass.cbClsExtra = 0;
+	wClass.cbWndExtra = 0;
+	wClass.hInstance = hInst;
+	wClass.hIcon = NULL;
+	wClass.hCursor = NULL;
 	wClass.hbrBackground = (HBRUSH)CreateSolidBrush(GetSysColor(COLOR_INFOBK));
-	wClass.lpszMenuName  = NULL;
+	wClass.lpszMenuName = NULL;
 	wClass.lpszClassName = "XTitleTip";
-	wClass.hIconSm       = NULL;
+	wClass.hIconSm = NULL;
 	RegisterClassEx(&wClass);
 
 	hWndTips = CreateWindowEx(WS_EX_TOOLWINDOW | WS_EX_TOPMOST,
-				"XTitleTip", NULL,
-				WS_BORDER | WS_POPUP,
-				0, 0, 0, 0,
-				hWnd, NULL, hInst, NULL);
+		"XTitleTip", NULL,
+		WS_BORDER | WS_POPUP,
+		0, 0, 0, 0,
+		hWnd, NULL, hInst, NULL);
 
-	if(hWndTips != NULL)
+	if (hWndTips != NULL)
 		Ret = FFFTP_SUCCESS;
 
 	return(Ret);
@@ -111,7 +111,7 @@ int InitListViewTips(HWND hWnd, HINSTANCE hInst)
 
 void DeleteListViewTips(void)
 {
-	if(hWndTips != NULL)
+	if (hWndTips != NULL)
 		DestroyWindow(hWndTips);
 	return;
 }
@@ -173,31 +173,31 @@ void CheckTipsDisplay(HWND hWnd, LPARAM lParam)
 
 	Point.x = LOWORD(lParam);
 	Point.y = HIWORD(lParam);
-	if(InRect == NO)
+	if (InRect == NO)
 	{
 		row = CellRectFromPoint(hWnd, Point, &cellrect, &col);
-		if(row != -1)
+		if (row != -1)
 		{
-			cur_rect=cellrect;
+			cur_rect = cellrect;
 			offset = 6;
 			offset2 = offset;
-			if( col == 0 ) 
+			if (col == 0)
 			{
-				ListView_GetItemRect(hWnd,  row, &rcLabel, LVIR_LABEL);
+				ListView_GetItemRect(hWnd, row, &rcLabel, LVIR_LABEL);
 				offset = rcLabel.left - cellrect.left + offset / 2;
 				offset2 = 1;
 			}
 			cellrect.top--;
 			strcpy(Buf, "");
-			ListView_GetItemText(hWnd,  row, col, Buf, 256 );
-			if(strlen(Buf) > 0)
-				TipsShow(hWnd, cellrect, Buf, offset-1, offset2-1, InRect);
+			ListView_GetItemText(hWnd, row, col, Buf, 256);
+			if (strlen(Buf) > 0)
+				TipsShow(hWnd, cellrect, Buf, offset - 1, offset2 - 1, InRect);
 			InRect = YES;
 		}
 	}
 	else
 	{
-		if(PtInRect(&cur_rect, Point) == FALSE)
+		if (PtInRect(&cur_rect, Point) == FALSE)
 		{
 			EraseListViewTips();
 			InRect = NO;
@@ -229,9 +229,9 @@ static void TipsShow(HWND hWnd, RECT rectTitle, LPCTSTR lpszTitleText, int xoffs
 	RECT rectDisplay;
 	SIZE size;
 
-	if(InRect == NO)
+	if (InRect == NO)
 	{
-		if(GetFocus() != NULL)
+		if (GetFocus() != NULL)
 		{
 			RectClientToScreen(hWnd, &rectTitle);
 
@@ -251,15 +251,15 @@ static void TipsShow(HWND hWnd, RECT rectTitle, LPCTSTR lpszTitleText, int xoffs
 			rectDisplay.left += xoffset;
 			rectDisplay.right = rectDisplay.left + size.cx + 2;
 
-			if(rectDisplay.right > rectTitle.right-xoffset2)
+			if (rectDisplay.right > rectTitle.right - xoffset2)
 			{
 				rectDisplay.right += 1;
 
-				SetWindowPos(hWndTips, HWND_TOPMOST, 
-					rectDisplay.left, rectDisplay.top, 
-					rectDisplay.right - rectDisplay.left, 
-					rectDisplay.bottom - rectDisplay.top, 
-					SWP_SHOWWINDOW|SWP_NOACTIVATE );
+				SetWindowPos(hWndTips, HWND_TOPMOST,
+					rectDisplay.left, rectDisplay.top,
+					rectDisplay.right - rectDisplay.left,
+					rectDisplay.bottom - rectDisplay.top,
+					SWP_SHOWWINDOW | SWP_NOACTIVATE);
 
 				TextOut(dc, 0, 0, lpszTitleText, strlen(lpszTitleText));
 
@@ -287,7 +287,7 @@ static void TipsShow(HWND hWnd, RECT rectTitle, LPCTSTR lpszTitleText, int xoffs
 *			-1=該当なし
 *----------------------------------------------------------------------------*/
 
-static int CellRectFromPoint(HWND hWnd, POINT point, RECT *cellrect, int *col)
+static int CellRectFromPoint(HWND hWnd, POINT point, RECT* cellrect, int* col)
 {
 	int colnum;
 	int nColumnCount;
@@ -301,31 +301,31 @@ static int CellRectFromPoint(HWND hWnd, POINT point, RECT *cellrect, int *col)
 	Ret = -1;
 	// 64ビット対応
 //	if((GetWindowLong(hWnd, GWL_STYLE) & LVS_TYPEMASK) == LVS_REPORT )
-	if((GetWindowLongPtr(hWnd, GWL_STYLE) & LVS_TYPEMASK) == LVS_REPORT )
+	if ((GetWindowLongPtr(hWnd, GWL_STYLE) & LVS_TYPEMASK) == LVS_REPORT)
 	{
 		row = ListView_GetTopIndex(hWnd);
 		bottom = row + ListView_GetCountPerPage(hWnd);
-		if(bottom > ListView_GetItemCount(hWnd))
+		if (bottom > ListView_GetItemCount(hWnd))
 			bottom = ListView_GetItemCount(hWnd);
 
 		nColumnCount = Header_GetItemCount(GetDlgItem(hWnd, 0));
 
-		for(; row <= bottom; row++)
+		for (; row <= bottom; row++)
 		{
 			ListView_GetItemRect(hWnd, row, &rect, LVIR_BOUNDS);
-			if(PtInRect(&rect, point))
+			if (PtInRect(&rect, point))
 			{
-				for(colnum = 0; colnum < nColumnCount; colnum++)
+				for (colnum = 0; colnum < nColumnCount; colnum++)
 				{
 					colwidth = ListView_GetColumnWidth(hWnd, colnum);
-					if((point.x >= rect.left) && 
-					   (point.x < (rect.left + colwidth)))
+					if ((point.x >= rect.left) &&
+						(point.x < (rect.left + colwidth)))
 					{
 						GetClientRect(hWnd, &rectClient);
-						if(point.x <= rectClient.right)
+						if (point.x <= rectClient.right)
 						{
 							rect.right = rect.left + colwidth;
-							if(rect.right > rectClient.right)
+							if (rect.right > rectClient.right)
 								rect.right = rectClient.right;
 							*cellrect = rect;
 							*col = colnum;

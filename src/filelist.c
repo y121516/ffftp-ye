@@ -5,25 +5,25 @@
 ===============================================================================
 / Copyright (C) 1997-2007 Sota. All rights reserved.
 /
-/ Redistribution and use in source and binary forms, with or without 
-/ modification, are permitted provided that the following conditions 
+/ Redistribution and use in source and binary forms, with or without
+/ modification, are permitted provided that the following conditions
 / are met:
 /
-/  1. Redistributions of source code must retain the above copyright 
+/  1. Redistributions of source code must retain the above copyright
 /     notice, this list of conditions and the following disclaimer.
-/  2. Redistributions in binary form must reproduce the above copyright 
-/     notice, this list of conditions and the following disclaimer in the 
+/  2. Redistributions in binary form must reproduce the above copyright
+/     notice, this list of conditions and the following disclaimer in the
 /     documentation and/or other materials provided with the distribution.
 /
-/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR 
-/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
-/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, 
-/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF 
-/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON 
-/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
+/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 / THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /============================================================================*/
 
@@ -71,7 +71,7 @@
 /*===== ファイルリストのリスト用ストラクチャ =====*/
 
 typedef struct {
-	FILELIST *Top;			/* ファイルリストの先頭 */
+	FILELIST* Top;			/* ファイルリストの先頭 */
 	int Files;				/* ファイルの数 */
 } FLISTANCHOR;
 
@@ -80,59 +80,59 @@ typedef struct {
 static LRESULT CALLBACK LocalWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 static LRESULT CALLBACK RemoteWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 static LRESULT FileListCommonWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-static void AddDispFileList(FLISTANCHOR *Anchor, char *Name, FILETIME *Time, LONGLONG Size, int Attr, int Type, int Link, char *Owner, int InfoExist, int Win);
-static void EraseDispFileList(FLISTANCHOR *Anchor);
-static void DispFileList2View(HWND hWnd, FLISTANCHOR *Anchor);
+static void AddDispFileList(FLISTANCHOR* Anchor, char* Name, FILETIME* Time, LONGLONG Size, int Attr, int Type, int Link, char* Owner, int InfoExist, int Win);
+static void EraseDispFileList(FLISTANCHOR* Anchor);
+static void DispFileList2View(HWND hWnd, FLISTANCHOR* Anchor);
 // ファイルアイコン表示対応
 //static void AddListView(HWND hWnd, int Pos, char *Name, int Type, LONGLONG Size, FILETIME *Time, int Attr, char *Owner, int Link, int InfoExist);
-static void AddListView(HWND hWnd, int Pos, char *Name, int Type, LONGLONG Size, FILETIME *Time, int Attr, char *Owner, int Link, int InfoExist, int ImageId);
+static void AddListView(HWND hWnd, int Pos, char* Name, int Type, LONGLONG Size, FILETIME* Time, int Attr, char* Owner, int Link, int InfoExist, int ImageId);
 // 64ビット対応
 //static BOOL CALLBACK SelectDialogCallBack(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lParam);
 static INT_PTR CALLBACK SelectDialogCallBack(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lParam);
 static int GetImageIndex(int Win, int Pos);
-static void DispListList(FILELIST *Pos, char *Title);
+static void DispListList(FILELIST* Pos, char* Title);
 // ファイル一覧バグ修正
 //static void MakeRemoteTree1(char *Path, char *Cur, FILELIST **Base, int *CancelCheckWork);
 //static void MakeRemoteTree2(char *Path, char *Cur, FILELIST **Base, int *CancelCheckWork);
-static int MakeRemoteTree1(char *Path, char *Cur, FILELIST **Base, int *CancelCheckWork);
-static int MakeRemoteTree2(char *Path, char *Cur, FILELIST **Base, int *CancelCheckWork);
-static void CopyTmpListToFileList(FILELIST **Base, FILELIST *List);
+static int MakeRemoteTree1(char* Path, char* Cur, FILELIST** Base, int* CancelCheckWork);
+static int MakeRemoteTree2(char* Path, char* Cur, FILELIST** Base, int* CancelCheckWork);
+static void CopyTmpListToFileList(FILELIST** Base, FILELIST* List);
 // 文字化け対策
 //static int GetListOneLine(char *Buf, int Max, FILE *Fd);
-static int GetListOneLine(char *Buf, int Max, FILE *Fd, int Convert);
-static int MakeDirPath(char *Str, int ListType, char *Path, char *Dir);
+static int GetListOneLine(char* Buf, int Max, FILE* Fd, int Convert);
+static int MakeDirPath(char* Str, int ListType, char* Path, char* Dir);
 // ファイル一覧バグ修正
 //static void MakeLocalTree(char *Path, FILELIST **Base);
-static int MakeLocalTree(char *Path, FILELIST **Base);
-static void AddFileList(FILELIST *Pkt, FILELIST **Base);
-static int AnalyzeFileInfo(char *Str);
-static int CheckUnixType(char *Str, char *Tmp, int Add1, int Add2, int Day);
-static int CheckHHMMformat(char *Str);
-static int CheckYYMMDDformat(char *Str, char Sym, int Dig3);
-static int CheckYYYYMMDDformat(char *Str, char Sym);
+static int MakeLocalTree(char* Path, FILELIST** Base);
+static void AddFileList(FILELIST* Pkt, FILELIST** Base);
+static int AnalyzeFileInfo(char* Str);
+static int CheckUnixType(char* Str, char* Tmp, int Add1, int Add2, int Day);
+static int CheckHHMMformat(char* Str);
+static int CheckYYMMDDformat(char* Str, char Sym, int Dig3);
+static int CheckYYYYMMDDformat(char* Str, char Sym);
 // Windows Server 2008 R2
-static int CheckMMDDYYYYformat(char *Str, char Sym);
-static int ResolveFileInfo(char *Str, int ListType, char *Fname, LONGLONG *Size, FILETIME *Time, int *Attr, char *Owner, int *Link, int *InfoExist);
-static int FindField(char *Str, char *Buf, int Num, int ToLast);
+static int CheckMMDDYYYYformat(char* Str, char Sym);
+static int ResolveFileInfo(char* Str, int ListType, char* Fname, LONGLONG* Size, FILETIME* Time, int* Attr, char* Owner, int* Link, int* InfoExist);
+static int FindField(char* Str, char* Buf, int Num, int ToLast);
 // MLSD対応
-static int FindField2(char *Str, char *Buf, char Separator, int Num, int ToLast);
-static void GetMonth(char *Str, WORD *Month, WORD *Day);
-static int GetYearMonthDay(char *Str, WORD *Year, WORD *Month, WORD *Day);
-static int GetHourAndMinute(char *Str, WORD *Hour, WORD *Minute);
-static int GetVMSdate(char *Str, WORD *Year, WORD *Month, WORD *Day);
-static int CheckSpecialDirName(char *Fname);
-static int AskFilterStr(char *Fname, int Type);
+static int FindField2(char* Str, char* Buf, char Separator, int Num, int ToLast);
+static void GetMonth(char* Str, WORD* Month, WORD* Day);
+static int GetYearMonthDay(char* Str, WORD* Year, WORD* Month, WORD* Day);
+static int GetHourAndMinute(char* Str, WORD* Hour, WORD* Minute);
+static int GetVMSdate(char* Str, WORD* Year, WORD* Month, WORD* Day);
+static int CheckSpecialDirName(char* Fname);
+static int AskFilterStr(char* Fname, int Type);
 // 64ビット対応
 //static BOOL CALLBACK FilterWndProc(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lParam);
 static INT_PTR CALLBACK FilterWndProc(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lParam);
-static int atoi_n(const char *Str, int Len);
+static int atoi_n(const char* Str, int Len);
 
 /*===== 外部参照 =====*/
 
 extern int SepaWidth;
 extern int RemoteWidth;
 extern int ListHeight;
-extern char FilterStr[FILTER_EXT_LEN+1];
+extern char FilterStr[FILTER_EXT_LEN + 1];
 extern HWND hHelpWin;
 // 外部アプリケーションへドロップ後にローカル側のファイル一覧に作業フォルダが表示されるバグ対策
 extern int SuppressRefresh;
@@ -145,7 +145,7 @@ extern int CancelFlg;
 extern int LocalWidth;
 extern int LocalTabWidth[4];
 extern int RemoteTabWidth[6];
-extern char UserMailAdrs[USER_MAIL_LEN+1];
+extern char UserMailAdrs[USER_MAIL_LEN + 1];
 extern HFONT ListFont;
 extern int ListType;
 extern int FindMode;
@@ -172,7 +172,7 @@ static HIMAGELIST ListImg = NULL;
 // ファイルアイコン表示対応
 static HIMAGELIST ListImgFileIcon = NULL;
 
-static char FindStr[40+1] = { "*" };		/* 検索文字列 */
+static char FindStr[40 + 1] = { "*" };		/* 検索文字列 */
 static int IgnoreNew = NO;
 static int IgnoreOld = NO;
 static int IgnoreExist = NO;
@@ -185,8 +185,8 @@ static int StratusMode;			/* 0=ファイル, 1=ディレクトリ, 2=リンク *
 
 
 // リモートファイルリスト (2007.9.3 yutaka)
-static FILELIST *remoteFileListBase;
-static FILELIST *remoteFileListBaseNoExpand;
+static FILELIST* remoteFileListBase;
+static FILELIST* remoteFileListBaseNoExpand;
 static char remoteFileDir[FMAX_PATH + 1];
 
 
@@ -219,12 +219,12 @@ int MakeListWin(HWND hWnd, HINSTANCE hInst)
 //			0, TOOLWIN_HEIGHT*2, LocalWidth, ListHeight,
 //			GetMainHwnd(), (HMENU)1500, hInst, NULL);
 	hWndListLocal = CreateWindowEx(/*WS_EX_STATICEDGE*/WS_EX_CLIENTEDGE,
-			WC_LISTVIEWA, NULL,
-			WS_CHILD | /*WS_BORDER | */LVS_REPORT | LVS_SHOWSELALWAYS,
-			0, AskToolWinHeight()*2, LocalWidth, ListHeight,
-			GetMainHwnd(), (HMENU)1500, hInst, NULL);
+		WC_LISTVIEWA, NULL,
+		WS_CHILD | /*WS_BORDER | */LVS_REPORT | LVS_SHOWSELALWAYS,
+		0, AskToolWinHeight() * 2, LocalWidth, ListHeight,
+		GetMainHwnd(), (HMENU)1500, hInst, NULL);
 
-	if(hWndListLocal != NULL)
+	if (hWndListLocal != NULL)
 	{
 		// 64ビット対応
 //		LocalProcPtr = (WNDPROC)SetWindowLong(hWndListLocal, GWL_WNDPROC, (LONG)LocalWndProc);
@@ -234,10 +234,10 @@ int MakeListWin(HWND hWnd, HINSTANCE hInst)
 		Tmp |= LVS_EX_FULLROWSELECT;
 		SendMessage(hWndListLocal, LVM_SETEXTENDEDLISTVIEWSTYLE, 0, (LPARAM)Tmp);
 
-		if(ListFont != NULL)
+		if (ListFont != NULL)
 			SendMessage(hWndListLocal, WM_SETFONT, (WPARAM)ListFont, MAKELPARAM(TRUE, 0));
 
-		ListImg = ImageList_LoadBitmap(hInst, MAKEINTRESOURCE(dirattr_bmp), 16, 9, RGB(255,0,0));
+		ListImg = ImageList_LoadBitmap(hInst, MAKEINTRESOURCE(dirattr_bmp), 16, 9, RGB(255, 0, 0));
 		SendMessage(hWndListLocal, LVM_SETIMAGELIST, LVSIL_SMALL, (LPARAM)ListImg);
 		ShowWindow(hWndListLocal, SW_SHOW);
 
@@ -276,12 +276,12 @@ int MakeListWin(HWND hWnd, HINSTANCE hInst)
 //			LocalWidth + SepaWidth, TOOLWIN_HEIGHT*2, RemoteWidth, ListHeight,
 //			GetMainHwnd(), (HMENU)1500, hInst, NULL);
 	hWndListRemote = CreateWindowEx(/*WS_EX_STATICEDGE*/WS_EX_CLIENTEDGE,
-			WC_LISTVIEWA, NULL,
-			WS_CHILD | /*WS_BORDER | */LVS_REPORT | LVS_SHOWSELALWAYS,
-			LocalWidth + SepaWidth, AskToolWinHeight()*2, RemoteWidth, ListHeight,
-			GetMainHwnd(), (HMENU)1500, hInst, NULL);
+		WC_LISTVIEWA, NULL,
+		WS_CHILD | /*WS_BORDER | */LVS_REPORT | LVS_SHOWSELALWAYS,
+		LocalWidth + SepaWidth, AskToolWinHeight() * 2, RemoteWidth, ListHeight,
+		GetMainHwnd(), (HMENU)1500, hInst, NULL);
 
-	if(hWndListRemote != NULL)
+	if (hWndListRemote != NULL)
 	{
 		// 64ビット対応
 //		RemoteProcPtr = (WNDPROC)SetWindowLong(hWndListRemote, GWL_WNDPROC, (LONG)RemoteWndProc);
@@ -291,7 +291,7 @@ int MakeListWin(HWND hWnd, HINSTANCE hInst)
 		Tmp |= LVS_EX_FULLROWSELECT;
 		SendMessage(hWndListRemote, LVM_SETEXTENDEDLISTVIEWSTYLE, 0, (LPARAM)Tmp);
 
-		if(ListFont != NULL)
+		if (ListFont != NULL)
 			SendMessage(hWndListRemote, WM_SETFONT, (WPARAM)ListFont, MAKELPARAM(TRUE, 0));
 
 		SendMessage(hWndListRemote, LVM_SETIMAGELIST, LVSIL_SMALL, (LPARAM)ListImg);
@@ -336,8 +336,8 @@ int MakeListWin(HWND hWnd, HINSTANCE hInst)
 	}
 
 	Sts = FFFTP_SUCCESS;
-	if((hWndListLocal == NULL) ||
-	   (hWndListRemote == NULL))
+	if ((hWndListLocal == NULL) ||
+		(hWndListRemote == NULL))
 	{
 		Sts = FFFTP_FAIL;
 	}
@@ -356,11 +356,11 @@ int MakeListWin(HWND hWnd, HINSTANCE hInst)
 
 void DeleteListWin(void)
 {
-//	if(ListImg != NULL)
-//		ImageList_Destroy(ListImg);
-	if(hWndListLocal != NULL)
+	//	if(ListImg != NULL)
+	//		ImageList_Destroy(ListImg);
+	if (hWndListLocal != NULL)
 		DestroyWindow(hWndListLocal);
-	if(hWndListRemote != NULL)
+	if (hWndListRemote != NULL)
 		DestroyWindow(hWndListRemote);
 	return;
 }
@@ -439,9 +439,9 @@ static BOOL CALLBACK doOleDlgProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 #define TIMER_ELAPSE (100)       // WM_TIMERの発生間隔
 	MSG message;
 
-	switch( msg ){
+	switch (msg) {
 	case WM_INITDIALOG:  // ダイアログボックスが作成されたとき
-		SetTimer( hDlg, TIMER_ID, 0, NULL);
+		SetTimer(hDlg, TIMER_ID, 0, NULL);
 		return TRUE;
 
 	case WM_TIMER:
@@ -451,25 +451,26 @@ static BOOL CALLBACK doOleDlgProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 			break;
 
 		if (PeekMessage(&message, NULL, 0, 0, PM_REMOVE)) {
-				TranslateMessage(&message);
-				DispatchMessage(&message);
+			TranslateMessage(&message);
+			DispatchMessage(&message);
 
-		} else {
+		}
+		else {
 			if (AskTransferNow() == NO) {
-				EndDialog( hDlg, 0 );
+				EndDialog(hDlg, 0);
 				return TRUE;
 			}
 		}
 
-		SetTimer( hDlg, TIMER_ID, TIMER_ELAPSE, NULL );
+		SetTimer(hDlg, TIMER_ID, TIMER_ELAPSE, NULL);
 		return TRUE;
 
 	case WM_COMMAND:     // ダイアログボックス内の何かが選択されたとき
-		switch( LOWORD( wp ) ){
-//		case IDOK:       // 「OK」ボタンが選択された
+		switch (LOWORD(wp)) {
+			//		case IDOK:       // 「OK」ボタンが選択された
 		case IDCANCEL:   // 「キャンセル」ボタンが選択された
 			// ダイアログボックスを消す
-			EndDialog( hDlg, 0 );
+			EndDialog(hDlg, 0);
 			break;
 		}
 		return TRUE;
@@ -483,11 +484,11 @@ static BOOL CALLBACK doOleDlgProc(HWND hDlg, UINT msg, WPARAM wp, LPARAM lp)
 
 static void doTransferRemoteFile(void)
 {
-	FILELIST *FileListBase, *FileListBaseNoExpand, *pf;
+	FILELIST* FileListBase, * FileListBaseNoExpand, * pf;
 	// 特定の操作を行うと異常終了するバグ修正
 //	int CancelFlg = NO;
-	char LocDir[FMAX_PATH+1];
-	char TmpDir[FMAX_PATH+1];
+	char LocDir[FMAX_PATH + 1];
+	char TmpDir[FMAX_PATH + 1];
 	// 環境依存の不具合対策
 //	char buf[32];
 //	int i;
@@ -499,15 +500,15 @@ static void doTransferRemoteFile(void)
 		return;
 
 	// 特定の操作を行うと異常終了するバグ修正
-	while(1)
+	while (1)
 	{
 		MSG msg;
-		if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		else if(AskTransferNow() == NO)
+		else if (AskTransferNow() == NO)
 			break;
 		Sleep(10);
 	}
@@ -539,8 +540,8 @@ static void doTransferRemoteFile(void)
 #endif
 
 	// 既存のファイルを削除する
-	for (pf = FileListBase ; pf ; pf = pf->Next) {
-		char fn[FMAX_PATH+1];
+	for (pf = FileListBase; pf; pf = pf->Next) {
+		char fn[FMAX_PATH + 1];
 
 		strncpy_s(fn, sizeof(fn), TmpDir, _TRUNCATE);
 		strncat_s(fn, sizeof(fn), "\\", _TRUNCATE);
@@ -560,7 +561,7 @@ static void doTransferRemoteFile(void)
 
 	// 特定の操作を行うと異常終了するバグ修正
 //	for (i = 0 ; i < 10 ; i++) {
-	while(1)
+	while (1)
 	{
 		MSG msg;
 
@@ -568,7 +569,8 @@ static void doTransferRemoteFile(void)
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 
-		} else {
+		}
+		else {
 			// 転送スレッドが動き出したら抜ける。
 			if (AskTransferNow() == YES)
 				break;
@@ -582,15 +584,15 @@ static void doTransferRemoteFile(void)
 	// (2007.9.11 yutaka)
 	// 特定の操作を行うと異常終了するバグ修正
 //	DialogBox(GetFtpInst(), MAKEINTRESOURCE(IDD_OLEDRAG), GetMainHwnd(), (DLGPROC)doOleDlgProc);
-	while(1)
+	while (1)
 	{
 		MSG msg;
-		if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		else if(AskTransferNow() == NO)
+		else if (AskTransferNow() == NO)
 			break;
 		Sleep(10);
 	}
@@ -610,7 +612,7 @@ static void doTransferRemoteFile(void)
 #if 0
 	// add temporary list
 	if (remoteFileListBase != NULL) {
-		FILELIST *pf = remoteFileListBase;
+		FILELIST* pf = remoteFileListBase;
 		char fn[FMAX_PATH + 1];
 		while (pf) {
 			strncpy_s(fn, sizeof(fn), remoteFileDir, _TRUNCATE);
@@ -624,7 +626,7 @@ static void doTransferRemoteFile(void)
 }
 
 
-int isDirectory(char *fn)
+int isDirectory(char* fn)
 {
 	struct _stat buf;
 
@@ -643,7 +645,7 @@ void doDeleteRemoteFile(void)
 #if 0
 		int dirs = 0;
 		int i, count;
-		FILELIST *pf = remoteFileListBase;
+		FILELIST* pf = remoteFileListBase;
 		char fn[FMAX_PATH + 1];
 		while (pf) {
 			strncpy_s(fn, sizeof(fn), remoteFileDir, _TRUNCATE);
@@ -651,14 +653,15 @@ void doDeleteRemoteFile(void)
 			strncat_s(fn, sizeof(fn), pf->File, _TRUNCATE);
 			if (isDirectory(fn)) {
 				dirs++;
-			} else {
+			}
+			else {
 				remove(fn);
 			}
 			pf = pf->Next;
 		}
 
 		count = 0;
-		for (i = 0 ; i < 1000 ; i++) {
+		for (i = 0; i < 1000; i++) {
 			pf = remoteFileListBase;
 			while (pf) {
 				strncpy_s(fn, sizeof(fn), remoteFileDir, _TRUNCATE);
@@ -674,12 +677,12 @@ void doDeleteRemoteFile(void)
 				pf = pf->Next;
 			}
 		}
-skip:
+	skip:
 		_rmdir(remoteFileDir);  // 自分で作ったディレクトリも消す
 #else
-		SHFILEOPSTRUCT FileOp = { NULL, FO_DELETE, remoteFileDir, NULL, 
-			FOF_SILENT | FOF_NOCONFIRMATION | FOF_NOERRORUI, 
-			FALSE, NULL, NULL };	
+		SHFILEOPSTRUCT FileOp = { NULL, FO_DELETE, remoteFileDir, NULL,
+			FOF_SILENT | FOF_NOCONFIRMATION | FOF_NOERRORUI,
+			FALSE, NULL, NULL };
 		SHFileOperation(&FileOp);
 #endif
 
@@ -687,7 +690,7 @@ skip:
 		remoteFileListBase = NULL;
 	}
 
-	if (remoteFileListBaseNoExpand != NULL)	{
+	if (remoteFileListBaseNoExpand != NULL) {
 		DeleteFileList(&remoteFileListBaseNoExpand);
 		remoteFileListBaseNoExpand = NULL;
 	}
@@ -697,26 +700,27 @@ skip:
 // yutaka
 // cf. http://www.nakka.com/lib/
 /* ドロップファイルの作成 */
-static HDROP APIPRIVATE CreateDropFileMem(char **FileName,int cnt,BOOL fWide)
+static HDROP APIPRIVATE CreateDropFileMem(char** FileName, int cnt, BOOL fWide)
 {
 	HDROP hDrop;
 	LPDROPFILES lpDropFile;
 	wchar_t wbuf[BUF_SIZE];
 	int flen = 0;
 	int i;
-	
-	if(fWide == TRUE){
+
+	if (fWide == TRUE) {
 		/* ワイドキャラ */
-		for(i = 0;i < cnt;i++){
+		for (i = 0; i < cnt; i++) {
 			// UTF-8対応
 //			MultiByteToWideChar(CP_ACP,0,FileName[i],-1,wbuf,BUF_SIZE);
 //			flen += (wcslen(wbuf) + 1) * sizeof(wchar_t);
 			flen += sizeof(wchar_t) * MtoW(NULL, 0, FileName[i], -1);
 		}
 		flen++;
-	}else{
+	}
+	else {
 		/* マルチバイト */
-		for(i = 0;i < cnt;i++){
+		for (i = 0; i < cnt; i++) {
 			// UTF-8対応
 //			flen += lstrlen(FileName[i]) + 1;
 			MtoW(wbuf, BUF_SIZE, FileName[i], -1);
@@ -724,12 +728,12 @@ static HDROP APIPRIVATE CreateDropFileMem(char **FileName,int cnt,BOOL fWide)
 		}
 	}
 
-	hDrop = (HDROP)GlobalAlloc(GHND,sizeof(DROPFILES) + flen + 1);
-	if (hDrop == NULL){
+	hDrop = (HDROP)GlobalAlloc(GHND, sizeof(DROPFILES) + flen + 1);
+	if (hDrop == NULL) {
 		return NULL;
 	}
 
-	lpDropFile = (LPDROPFILES) GlobalLock(hDrop);
+	lpDropFile = (LPDROPFILES)GlobalLock(hDrop);
 	lpDropFile->pFiles = sizeof(DROPFILES);		/* ファイル名のリストまでのオフセット */
 	lpDropFile->pt.x = 0;
 	lpDropFile->pt.y = 0;
@@ -737,24 +741,25 @@ static HDROP APIPRIVATE CreateDropFileMem(char **FileName,int cnt,BOOL fWide)
 	lpDropFile->fWide = fWide;					/* ワイドキャラの場合は TRUE */
 
 	/* 構造体の後ろにファイル名のリストをコピーする。(ファイル名\0ファイル名\0ファイル名\0\0) */
-	if(fWide == TRUE){
+	if (fWide == TRUE) {
 		/* ワイドキャラ */
-		wchar_t *buf;
+		wchar_t* buf;
 
-		buf = (wchar_t *)(&lpDropFile[1]);
-		for(i = 0;i < cnt;i++){
+		buf = (wchar_t*)(&lpDropFile[1]);
+		for (i = 0; i < cnt; i++) {
 			// UTF-8対応
 //			MultiByteToWideChar(CP_ACP,0,FileName[i],-1,wbuf,BUF_SIZE);
 //			wcscpy(buf,wbuf);
 //			buf += wcslen(wbuf) + 1;
 			buf += MtoW(buf, BUF_SIZE, FileName[i], -1);
 		}
-	}else{
+	}
+	else {
 		/* マルチバイト */
-		char *buf;
+		char* buf;
 
-		buf = (char *)(&lpDropFile[1]);
-		for(i = 0;i < cnt;i++){
+		buf = (char*)(&lpDropFile[1]);
+		for (i = 0; i < cnt; i++) {
 			// UTF-8対応
 //			lstrcpy(buf,FileName[i]);
 //			buf += lstrlen(FileName[i]) + 1;
@@ -782,7 +787,7 @@ static void doDragDrop(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	/* ドラッグ&ドロップの開始 */
 	cf[0] = CF_HDROP;
 	cf[1] = CF_HDROP;	/* ファイル */
-	if((ret = OLE_IDropSource_Start(hWnd,WM_GETDATA, WM_DRAGOVER, cf,1,DROPEFFECT_COPY | DROPEFFECT_MOVE | DROPEFFECT_LINK)) == DROPEFFECT_MOVE){
+	if ((ret = OLE_IDropSource_Start(hWnd, WM_GETDATA, WM_DRAGOVER, cf, 1, DROPEFFECT_COPY | DROPEFFECT_MOVE | DROPEFFECT_LINK)) == DROPEFFECT_MOVE) {
 	}
 
 	// ドロップ先のアプリに WM_LBUTTONUP を飛ばす。
@@ -790,7 +795,7 @@ static void doDragDrop(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 //	GetCursorPos(&pt);
 	pt = DropPoint;
 	ScreenToClient(hWnd, &pt);
-	PostMessage(hWnd,WM_LBUTTONUP,0,MAKELPARAM(pt.x,pt.y));
+	PostMessage(hWnd, WM_LBUTTONUP, 0, MAKELPARAM(pt.x, pt.y));
 	// ドロップ先が他プロセスかつカーソルが自プロセスのドロップ可能なウィンドウ上にある場合の対策
 	EnableWindow(GetMainHwnd(), TRUE);
 }
@@ -830,7 +835,7 @@ static LRESULT FileListCommonWndProc(HWND hWnd, UINT message, WPARAM wParam, LPA
 	hWndDst = hWndListRemote;
 	ProcPtr = LocalProcPtr;
 	hWndHistEdit = GetLocalHistEditHwnd();
-	if(hWnd == hWndListRemote)
+	if (hWnd == hWndListRemote)
 	{
 		Win = WIN_REMOTE;
 		hWndDst = hWndListLocal;
@@ -840,401 +845,406 @@ static LRESULT FileListCommonWndProc(HWND hWnd, UINT message, WPARAM wParam, LPA
 
 	switch (message)
 	{
-		case WM_SYSKEYDOWN:
-			if (wParam == 'D') {	// Alt+D
-				SetFocus(hWndHistEdit);
-				break;
-			}
-			EraseListViewTips();
-			return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
-
-		case WM_KEYDOWN:
-			if(wParam == 0x09)
-			{
-				SetFocus(hWndDst);
-				break;
-			}
-			EraseListViewTips();
-			return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
-
-		case WM_SETFOCUS :
-			SetFocusHwnd(hWnd);
-			MakeButtonsFocus();
-			DispCurrentWindow(Win);
-			DispSelectedSpace();
-			return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
-
-		case WM_KILLFOCUS :
-			EraseListViewTips();
-			MakeButtonsFocus();
-			DispCurrentWindow(-1);
-			return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
-
-		case WM_DROPFILES :
-			// 同時接続対応
-			if(AskUserOpeDisabled() == YES)
-				break;
-			// ドラッグ中は処理しない。ドラッグ後にWM_LBUTTONDOWNが飛んでくるため、そこで処理する。
-			if (Dragging == YES) 
-				return (FALSE);
-
-			if(hWnd == hWndListRemote)
-			{
-				if(AskConnecting() == YES)
-					UploadDragProc(wParam);
-			}
-			else if(hWnd == hWndListLocal)
-			{
-				ChangeDirDropFileProc(wParam);
-			}
+	case WM_SYSKEYDOWN:
+		if (wParam == 'D') {	// Alt+D
+			SetFocus(hWndHistEdit);
 			break;
+		}
+		EraseListViewTips();
+		return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
 
-		case WM_LBUTTONDOWN :
+	case WM_KEYDOWN:
+		if (wParam == 0x09)
+		{
+			SetFocus(hWndDst);
+			break;
+		}
+		EraseListViewTips();
+		return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
+
+	case WM_SETFOCUS:
+		SetFocusHwnd(hWnd);
+		MakeButtonsFocus();
+		DispCurrentWindow(Win);
+		DispSelectedSpace();
+		return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
+
+	case WM_KILLFOCUS:
+		EraseListViewTips();
+		MakeButtonsFocus();
+		DispCurrentWindow(-1);
+		return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
+
+	case WM_DROPFILES:
+		// 同時接続対応
+		if (AskUserOpeDisabled() == YES)
+			break;
+		// ドラッグ中は処理しない。ドラッグ後にWM_LBUTTONDOWNが飛んでくるため、そこで処理する。
+		if (Dragging == YES)
+			return (FALSE);
+
+		if (hWnd == hWndListRemote)
+		{
+			if (AskConnecting() == YES)
+				UploadDragProc(wParam);
+		}
+		else if (hWnd == hWndListLocal)
+		{
+			ChangeDirDropFileProc(wParam);
+		}
+		break;
+
+	case WM_LBUTTONDOWN:
+		// 特定の操作を行うと異常終了するバグ修正
+		if (AskUserOpeDisabled() == YES)
+			break;
+		if (Dragging == YES)
+			break;
+		DragFirstTime = NO;
+		GetCursorPos(&DropPoint);
+		EraseListViewTips();
+		SetFocus(hWnd);
+		DragPoint.x = LOWORD(lParam);
+		DragPoint.y = HIWORD(lParam);
+		hWndDragStart = hWnd;
+		return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
+		break;
+
+	case WM_LBUTTONUP:
+		// 特定の操作を行うと異常終了するバグ修正
+		if (AskUserOpeDisabled() == YES)
+			break;
+		if (Dragging == YES)
+		{
+			Dragging = NO;
+			ReleaseCapture();
+			hCsrDrg = LoadCursor(NULL, IDC_ARROW);
+			SetCursor(hCsrDrg);
+
+			Point.x = (long)(short)LOWORD(lParam);
+			Point.y = (long)(short)HIWORD(lParam);
+			ClientToScreen(hWnd, &Point);
+			hWndPnt = WindowFromPoint(Point);
+			if (hWndPnt == hWndDst)  // local <-> remote 
+			{
+				if (hWndPnt == hWndListRemote) {
+					PostMessage(GetMainHwnd(), WM_COMMAND, MAKEWPARAM(MENU_UPLOAD, 0), 0);
+				}
+				else if (hWndPnt == hWndListLocal) {
+					PostMessage(GetMainHwnd(), WM_COMMAND, MAKEWPARAM(MENU_DOWNLOAD, 0), 0);
+				}
+			}
+			else { // 同一ウィンドウ内の場合 (yutaka)
+				if (hWndDragStart == hWndListRemote && hWndPnt == hWndListRemote) {
+					// remote <-> remoteの場合は、サーバでのファイルの移動を行う。(2007.9.5 yutaka)
+					if (RemoteDropFileIndex != -1) {
+						ListView_SetItemState(hWnd, RemoteDropFileIndex, 0, LVIS_DROPHILITED);
+						MoveRemoteFileProc(RemoteDropFileIndex);
+					}
+
+				}
+
+			}
+		}
+		return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
+
+	case WM_DRAGDROP:
+		// OLE D&Dを開始する (yutaka)
+		// 特定の操作を行うと異常終了するバグ修正
+//			doDragDrop(hWnd, message, wParam, lParam);
+		if (DragFirstTime == NO)
+			doDragDrop(hWnd, message, wParam, lParam);
+		DragFirstTime = YES;
+		return (TRUE);
+		break;
+
+	case WM_GETDATA:  // ファイルのパスをD&D先のアプリへ返す (yutaka)
+		switch (wParam)
+		{
+		case CF_HDROP:		/* ファイル */
+		{
+			OSVERSIONINFO os_info;
+			BOOL NTFlag = FALSE;
+			char** FileNameList;
+			int filelen;
+			int i, j, filenum = 0;
+
+			FILELIST* FileListBase, * FileListBaseNoExpand, * pf;
 			// 特定の操作を行うと異常終了するバグ修正
-			if(AskUserOpeDisabled() == YES)
-				break;
-			if(Dragging == YES)
-				break;
-			DragFirstTime = NO;
+//					int CancelFlg = NO;
+			char LocDir[FMAX_PATH + 1];
+			char* PathDir;
+
+			// 特定の操作を行うと異常終了するバグ修正
 			GetCursorPos(&DropPoint);
-			EraseListViewTips();
-			SetFocus(hWnd);
-			DragPoint.x = LOWORD(lParam);
-			DragPoint.y = HIWORD(lParam);
-			hWndDragStart = hWnd;
-			return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
-			break;
+			hWndPnt = WindowFromPoint(DropPoint);
+			hWndParent = GetParent(hWndPnt);
+			DisableUserOpe();
+			CancelFlg = NO;
 
-		case WM_LBUTTONUP :
+			// 変数が未初期化のバグ修正
+			FileListBaseNoExpand = NULL;
+			// ローカル側で選ばれているファイルをFileListBaseに登録
+			if (hWndDragStart == hWndListLocal) {
+				AskLocalCurDir(LocDir, FMAX_PATH);
+				PathDir = LocDir;
+
+				FileListBase = NULL;
+				// ローカル側からアプリケーションにD&Dできないバグ修正
+//						MakeSelectedFileList(WIN_LOCAL, YES, NO, &FileListBase, &CancelFlg);			
+				if (hWndPnt != hWndListRemote && hWndPnt != hWndListLocal && hWndParent != hWndListRemote && hWndParent != hWndListLocal)
+					MakeSelectedFileList(WIN_LOCAL, NO, NO, &FileListBase, &CancelFlg);
+				FileListBaseNoExpand = FileListBase;
+
+			}
+			else if (hWndDragStart == hWndListRemote) {
+				// 特定の操作を行うと異常終了するバグ修正
+//						GetCursorPos(&Point);
+//						hWndPnt = WindowFromPoint(Point);
+//						hWndParent = GetParent(hWndPnt);
+				if (hWndPnt == hWndListRemote || hWndPnt == hWndListLocal ||
+					hWndParent == hWndListRemote || hWndParent == hWndListLocal) {
+					FileListBase = NULL;
+
+				}
+				else {
+					// 選択されているリモートファイルのリストアップ
+					// このタイミングでリモートからローカルの一時フォルダへダウンロードする
+					// (2007.8.31 yutaka)
+					doTransferRemoteFile();
+					PathDir = remoteFileDir;
+					FileListBase = remoteFileListBase;
+					FileListBaseNoExpand = remoteFileListBaseNoExpand;
+				}
+
+			}
+
+#if defined(HAVE_TANDEM)
+			if (FileListBaseNoExpand == NULL)
+				pf = FileListBase;
+			else
+#endif
+				pf = FileListBaseNoExpand;
 			// 特定の操作を行うと異常終了するバグ修正
-			if(AskUserOpeDisabled() == YES)
-				break;
-			if(Dragging == YES)
+			if (pf != NULL)
 			{
 				Dragging = NO;
 				ReleaseCapture();
 				hCsrDrg = LoadCursor(NULL, IDC_ARROW);
 				SetCursor(hCsrDrg);
+				// ドロップ先が他プロセスかつカーソルが自プロセスのドロップ可能なウィンドウ上にある場合の対策
+				EnableWindow(GetMainHwnd(), FALSE);
+			}
+			EnableUserOpe();
+			// ドロップ先が他プロセスかつカーソルが自プロセスのドロップ可能なウィンドウ上にある場合の対策
+			if (pf != NULL)
+				EnableWindow(GetMainHwnd(), FALSE);
+			for (filenum = 0; pf; filenum++) {
+				pf = pf->Next;
+			}
+			// ファイルが未選択の場合は何もしない。(yutaka)
+			if (filenum <= 0) {
+				*((HANDLE*)lParam) = NULL;
+				return (FALSE);
+			}
 
+			/* ファイル名の配列を作成する */
+			FileNameList = (char**)GlobalAlloc(GPTR, sizeof(char*) * filenum);
+			if (FileNameList == NULL) {
+				abort();
+			}
+			pf = FileListBaseNoExpand;
+			for (j = 0; pf; j++) {
+				filelen = strlen(PathDir) + 1 + strlen(pf->File) + 1;
+				FileNameList[j] = (char*)GlobalAlloc(GPTR, filelen);
+				strncpy_s(FileNameList[j], filelen, PathDir, _TRUNCATE);
+				strncat_s(FileNameList[j], filelen, "\\", _TRUNCATE);
+				strncat_s(FileNameList[j], filelen, pf->File, _TRUNCATE);
+				pf = pf->Next;
+#if 0
+				if (FileListBase->Node == NODE_DIR) {
+					// フォルダを掴んだ場合はそれ以降展開しない
+					filenum = 1;
+					break;
+				}
+#endif
+			}
+
+			os_info.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+			GetVersionEx(&os_info);
+			if (os_info.dwPlatformId == VER_PLATFORM_WIN32_NT) {
+				NTFlag = TRUE;
+			}
+
+			/* ドロップファイルリストの作成 */
+			/* NTの場合はUNICODEになるようにする */
+			*((HANDLE*)lParam) = CreateDropFileMem(FileNameList, filenum, NTFlag);
+
+			/* ファイル名の配列を解放する */
+			for (i = 0; i < filenum; i++) {
+				GlobalFree(FileNameList[i]);
+			}
+			GlobalFree(FileNameList);
+
+			if (hWndDragStart == hWndListLocal) {
+				DeleteFileList(&FileListBase);
+			}
+			else {
+				// あとでファイル削除してフリーする
+			}
+
+			return (TRUE);
+		}
+		break;
+
+		default:
+			*((HANDLE*)lParam) = NULL;
+			break;
+		}
+
+		break;
+
+	case WM_DRAGOVER:
+	{
+		LVHITTESTINFO hi;
+		int Node, index;
+		static int prev_index = -1;
+
+		// 同一ウィンドウ内でのD&Dはリモート側のみ
+		if (Win != WIN_REMOTE)
+			break;
+
+		if (MoveMode == MOVE_DISABLE)
+			break;
+
+		memset(&hi, 0, sizeof(hi));
+
+		GetCursorPos(&Point);
+		hWndPnt = WindowFromPoint(Point);
+		ScreenToClient(hWnd, &Point);
+
+		hi.pt = Point;
+
+		// 以前の選択を消す
+		ListView_SetItemState(hWnd, prev_index, 0, LVIS_DROPHILITED);
+		RemoteDropFileIndex = -1;
+
+		if ((hWndPnt == hWndListRemote) && (ListView_HitTest(hWnd, &hi) != -1)) {
+			if (hi.flags == LVHT_ONITEMLABEL) { // The position is over a list-view item's text.
+
+				index = hi.iItem;
+				prev_index = index;
+				Node = GetNodeType(Win, index);
+				if (Node == NODE_DIR) {
+					ListView_SetItemState(hWnd, index, LVIS_DROPHILITED, LVIS_DROPHILITED);
+					RemoteDropFileIndex = index;
+				}
+			}
+		}
+
+	}
+	break;
+
+	case WM_RBUTTONDOWN:
+		// 特定の操作を行うと異常終了するバグ修正
+		if (AskUserOpeDisabled() == YES)
+			break;
+		/* ここでファイルを選ぶ */
+		CallWindowProc(ProcPtr, hWnd, message, wParam, lParam);
+
+		EraseListViewTips();
+		SetFocus(hWnd);
+		if (hWnd == hWndListRemote)
+			RemoteRbuttonMenu(0);
+		else if (hWnd == hWndListLocal)
+			LocalRbuttonMenu(0);
+		break;
+
+	case WM_LBUTTONDBLCLK:
+		// 特定の操作を行うと異常終了するバグ修正
+		if (AskUserOpeDisabled() == YES)
+			break;
+		DoubleClickProc(Win, NO, -1);
+		break;
+
+	case WM_MOUSEMOVE:
+		// 特定の操作を行うと異常終了するバグ修正
+		if (AskUserOpeDisabled() == YES)
+			break;
+		if (wParam == MK_LBUTTON)
+		{
+			if ((Dragging == NO) &&
+				(hWnd == hWndDragStart) &&
+				(AskConnecting() == YES) &&
+				(SendMessage(hWnd, LVM_GETSELECTEDCOUNT, 0, 0) > 0) &&
+				((abs((short)LOWORD(lParam) - DragPoint.x) > 5) ||
+					(abs((short)HIWORD(lParam) - DragPoint.y) > 5)))
+			{
+				SetCapture(hWnd);
+				Dragging = YES;
+				hCsrDrg = LoadCursor(GetFtpInst(), MAKEINTRESOURCE(drag_csr));
+				hCsrNoDrg = LoadCursor(GetFtpInst(), MAKEINTRESOURCE(nodrop_csr));
+				SetCursor(hCsrDrg);
+			}
+			else if (Dragging == YES)
+			{
 				Point.x = (long)(short)LOWORD(lParam);
 				Point.y = (long)(short)HIWORD(lParam);
 				ClientToScreen(hWnd, &Point);
 				hWndPnt = WindowFromPoint(Point);
-				if(hWndPnt == hWndDst)  // local <-> remote 
-				{
-					if(hWndPnt == hWndListRemote) {
-						PostMessage(GetMainHwnd(), WM_COMMAND, MAKEWPARAM(MENU_UPLOAD, 0), 0);
-					} else if(hWndPnt == hWndListLocal) {
-						PostMessage(GetMainHwnd(), WM_COMMAND, MAKEWPARAM(MENU_DOWNLOAD, 0), 0);
-					}
-				} else { // 同一ウィンドウ内の場合 (yutaka)
-					if (hWndDragStart == hWndListRemote && hWndPnt == hWndListRemote) {
-						// remote <-> remoteの場合は、サーバでのファイルの移動を行う。(2007.9.5 yutaka)
-						if (RemoteDropFileIndex != -1) {
-							ListView_SetItemState(hWnd, RemoteDropFileIndex, 0, LVIS_DROPHILITED);
-							MoveRemoteFileProc(RemoteDropFileIndex);
-						}
-
-					}
-
-				}
-			}
-			return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
-
-		case WM_DRAGDROP:  
-			// OLE D&Dを開始する (yutaka)
-			// 特定の操作を行うと異常終了するバグ修正
-//			doDragDrop(hWnd, message, wParam, lParam);
-			if(DragFirstTime == NO)
-				doDragDrop(hWnd, message, wParam, lParam);
-			DragFirstTime = YES;
-			return (TRUE);
-			break;
-
-		case WM_GETDATA:  // ファイルのパスをD&D先のアプリへ返す (yutaka)
-			switch(wParam)
-			{
-			case CF_HDROP:		/* ファイル */
-				{
-					OSVERSIONINFO os_info;
-					BOOL NTFlag = FALSE;
-					char **FileNameList;
-					int filelen;
-					int i, j, filenum = 0;
-
-					FILELIST *FileListBase, *FileListBaseNoExpand, *pf;
-					// 特定の操作を行うと異常終了するバグ修正
-//					int CancelFlg = NO;
-					char LocDir[FMAX_PATH+1];
-					char *PathDir;
-
-					// 特定の操作を行うと異常終了するバグ修正
-					GetCursorPos(&DropPoint);
-					hWndPnt = WindowFromPoint(DropPoint);
-					hWndParent = GetParent(hWndPnt);
-					DisableUserOpe();
-					CancelFlg = NO;
-
-					// 変数が未初期化のバグ修正
-					FileListBaseNoExpand = NULL;
-					// ローカル側で選ばれているファイルをFileListBaseに登録
-					if (hWndDragStart == hWndListLocal) {
-						AskLocalCurDir(LocDir, FMAX_PATH);
-						PathDir = LocDir;
-
-						FileListBase = NULL;
-						// ローカル側からアプリケーションにD&Dできないバグ修正
-//						MakeSelectedFileList(WIN_LOCAL, YES, NO, &FileListBase, &CancelFlg);			
-						if(hWndPnt != hWndListRemote && hWndPnt != hWndListLocal && hWndParent != hWndListRemote && hWndParent != hWndListLocal)
-							MakeSelectedFileList(WIN_LOCAL, NO, NO, &FileListBase, &CancelFlg);			
-						FileListBaseNoExpand = FileListBase;
-
-					} else if (hWndDragStart == hWndListRemote) {
-						// 特定の操作を行うと異常終了するバグ修正
-//						GetCursorPos(&Point);
-//						hWndPnt = WindowFromPoint(Point);
-//						hWndParent = GetParent(hWndPnt);
-						if (hWndPnt == hWndListRemote || hWndPnt == hWndListLocal ||
-							hWndParent == hWndListRemote || hWndParent == hWndListLocal) {
-							FileListBase = NULL;
-
-						} else {
-							// 選択されているリモートファイルのリストアップ
-							// このタイミングでリモートからローカルの一時フォルダへダウンロードする
-							// (2007.8.31 yutaka)
-							doTransferRemoteFile();
-							PathDir = remoteFileDir;
-							FileListBase = remoteFileListBase;
-							FileListBaseNoExpand = remoteFileListBaseNoExpand;
-						}
-
-					} 
-
-#if defined(HAVE_TANDEM)
-					if(FileListBaseNoExpand == NULL)
-						pf = FileListBase;
-					else
-#endif
-					pf = FileListBaseNoExpand;
-					// 特定の操作を行うと異常終了するバグ修正
-					if(pf != NULL)
-					{
-						Dragging = NO;
-						ReleaseCapture();
-						hCsrDrg = LoadCursor(NULL, IDC_ARROW);
-						SetCursor(hCsrDrg);
-						// ドロップ先が他プロセスかつカーソルが自プロセスのドロップ可能なウィンドウ上にある場合の対策
-						EnableWindow(GetMainHwnd(), FALSE);
-					}
-					EnableUserOpe();
-					// ドロップ先が他プロセスかつカーソルが自プロセスのドロップ可能なウィンドウ上にある場合の対策
-					if(pf != NULL)
-						EnableWindow(GetMainHwnd(), FALSE);
-					for (filenum = 0; pf ; filenum++) {
-						pf = pf->Next;
-					}
-					// ファイルが未選択の場合は何もしない。(yutaka)
-					if (filenum <= 0) {
-						*((HANDLE *)lParam) = NULL;
-						return (FALSE);
-					}
-					
-					/* ファイル名の配列を作成する */
-					FileNameList = (char **)GlobalAlloc(GPTR,sizeof(char *) * filenum);
-					if(FileNameList == NULL){
-						abort();
-					}
-					pf = FileListBaseNoExpand;
-					for (j = 0; pf ; j++) {
-						filelen = strlen(PathDir) + 1 + strlen(pf->File) + 1;
-						FileNameList[j] = (char *)GlobalAlloc(GPTR, filelen);
-						strncpy_s(FileNameList[j], filelen, PathDir, _TRUNCATE);
-						strncat_s(FileNameList[j], filelen, "\\", _TRUNCATE);
-						strncat_s(FileNameList[j], filelen, pf->File, _TRUNCATE);
-						pf = pf->Next;
-#if 0
-						if (FileListBase->Node == NODE_DIR) { 
-							// フォルダを掴んだ場合はそれ以降展開しない
-							filenum = 1;
-							break;
-						}
-#endif
-					}
-					
-					os_info.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-					GetVersionEx(&os_info);
-					if(os_info.dwPlatformId == VER_PLATFORM_WIN32_NT){
-						NTFlag = TRUE;
-					}
-
-					/* ドロップファイルリストの作成 */
-					/* NTの場合はUNICODEになるようにする */
-					*((HANDLE *)lParam) = CreateDropFileMem(FileNameList, filenum, NTFlag);
-
-					/* ファイル名の配列を解放する */
-					for (i = 0; i < filenum ; i++) {
-						GlobalFree(FileNameList[i]);
-					}
-					GlobalFree(FileNameList);
-
-					if (hWndDragStart == hWndListLocal) {
-						DeleteFileList(&FileListBase);
-					} else {
-						// あとでファイル削除してフリーする
-					}
-
-					return (TRUE);
-				}
-				break;
-
-			default:
-				*((HANDLE *)lParam) = NULL;
-				break;
-			}
-
-			break;
-
-		case WM_DRAGOVER:
-			{
-				LVHITTESTINFO hi;
-				int Node, index;
-				static int prev_index = -1;
-
-				// 同一ウィンドウ内でのD&Dはリモート側のみ
-				if (Win != WIN_REMOTE)
-					break;
-
-				if(MoveMode == MOVE_DISABLE)
-					break;
-
-				memset(&hi, 0, sizeof(hi));
-
-				GetCursorPos(&Point);
-				hWndPnt = WindowFromPoint(Point);
-				ScreenToClient(hWnd, &Point);
-
-				hi.pt = Point;
-
-				// 以前の選択を消す
-				ListView_SetItemState(hWnd, prev_index, 0, LVIS_DROPHILITED);
-				RemoteDropFileIndex = -1;
-
-				if ((hWndPnt == hWndListRemote) && (ListView_HitTest(hWnd, &hi) != -1)) {
-					if (hi.flags == LVHT_ONITEMLABEL) { // The position is over a list-view item's text.
-					
-						index = hi.iItem;
-						prev_index = index;
-						Node = GetNodeType(Win, index);
-						if (Node == NODE_DIR) {
-							ListView_SetItemState(hWnd, index, LVIS_DROPHILITED, LVIS_DROPHILITED);
-							RemoteDropFileIndex = index;
-						}
-					}
-				} 
-
-			}
-			break;
-
-		case WM_RBUTTONDOWN :
-			// 特定の操作を行うと異常終了するバグ修正
-			if(AskUserOpeDisabled() == YES)
-				break;
-			/* ここでファイルを選ぶ */
-			CallWindowProc(ProcPtr, hWnd, message, wParam, lParam);
-
-			EraseListViewTips();
-			SetFocus(hWnd);
-			if(hWnd == hWndListRemote)
-				RemoteRbuttonMenu(0);
-			else if(hWnd == hWndListLocal)
-				LocalRbuttonMenu(0);
-			break;
-
-		case WM_LBUTTONDBLCLK :
-			// 特定の操作を行うと異常終了するバグ修正
-			if(AskUserOpeDisabled() == YES)
-				break;
-			DoubleClickProc(Win, NO, -1);
-			break;
-
-		case WM_MOUSEMOVE :
-			// 特定の操作を行うと異常終了するバグ修正
-			if(AskUserOpeDisabled() == YES)
-				break;
-			if(wParam == MK_LBUTTON)
-			{
-				if((Dragging == NO) && 
-				   (hWnd == hWndDragStart) &&
-				   (AskConnecting() == YES) &&
-				   (SendMessage(hWnd, LVM_GETSELECTEDCOUNT, 0, 0) > 0) &&
-				   ((abs((short)LOWORD(lParam) - DragPoint.x) > 5) ||
-					(abs((short)HIWORD(lParam) - DragPoint.y) > 5)))
-				{
-					SetCapture(hWnd);
-					Dragging = YES;
-					hCsrDrg = LoadCursor(GetFtpInst(), MAKEINTRESOURCE(drag_csr));
-					hCsrNoDrg = LoadCursor(GetFtpInst(), MAKEINTRESOURCE(nodrop_csr));
+				if ((hWndPnt == hWndListRemote) || (hWndPnt == hWndListLocal))
 					SetCursor(hCsrDrg);
-				}
-				else if(Dragging == YES)
-				{
-					Point.x = (long)(short)LOWORD(lParam);
-					Point.y = (long)(short)HIWORD(lParam);
-					ClientToScreen(hWnd, &Point);
-					hWndPnt = WindowFromPoint(Point);
-					if((hWndPnt == hWndListRemote) || (hWndPnt == hWndListLocal))
-						SetCursor(hCsrDrg);
-					else {
-						// マウスポインタの×表示をやめる (yutaka)
+				else {
+					// マウスポインタの×表示をやめる (yutaka)
 #if 0
-						SetCursor(hCsrNoDrg);
+					SetCursor(hCsrNoDrg);
 #endif
-					}
-
-					// OLE D&Dの開始を指示する
-					PostMessage(hWnd, WM_DRAGDROP, MAKEWPARAM(wParam, lParam), 0);
-
 				}
-				else
-					return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
+
+				// OLE D&Dの開始を指示する
+				PostMessage(hWnd, WM_DRAGDROP, MAKEWPARAM(wParam, lParam), 0);
+
 			}
 			else
-			{
-				CheckTipsDisplay(hWnd, lParam);
 				return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
-			}
-			break;
-
-		case WM_MOUSEWHEEL :
-			// デッドロック対策
-			if(AskUserOpeDisabled() == YES)
-				break;
-			if(Dragging == NO)
-			{
-				short zDelta = (short)HIWORD(wParam);
-
-				EraseListViewTips();
-				Point.x = (short)LOWORD(lParam);
-				Point.y = (short)HIWORD(lParam);
-				hWndPnt = WindowFromPoint(Point);
-
-				if((wParam & MAKEWPARAM(MK_SHIFT, 0)) && 
-				   ((hWndPnt == hWndListRemote) ||
-					(hWndPnt == hWndListLocal) || 
-					(hWndPnt == GetTaskWnd())))
-				{
-					PostMessage(hWndPnt, WM_VSCROLL, zDelta > 0 ? MAKEWPARAM(SB_PAGEUP, 0) : MAKEWPARAM(SB_PAGEDOWN, 0), 0);
-//					PostMessage(hWndPnt, WM_VSCROLL, MAKEWPARAM(SB_ENDSCROLL, 0), 0);
-				}
-				else if(hWndPnt == hWnd)
-					return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
-				else if((hWndPnt == hWndDst) || (hWndPnt == GetTaskWnd()))
-					PostMessage(hWndPnt, message, wParam, lParam);
-			}
-			break;
-
-		default :
+		}
+		else
+		{
+			CheckTipsDisplay(hWnd, lParam);
 			return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
+		}
+		break;
+
+	case WM_MOUSEWHEEL:
+		// デッドロック対策
+		if (AskUserOpeDisabled() == YES)
+			break;
+		if (Dragging == NO)
+		{
+			short zDelta = (short)HIWORD(wParam);
+
+			EraseListViewTips();
+			Point.x = (short)LOWORD(lParam);
+			Point.y = (short)HIWORD(lParam);
+			hWndPnt = WindowFromPoint(Point);
+
+			if ((wParam & MAKEWPARAM(MK_SHIFT, 0)) &&
+				((hWndPnt == hWndListRemote) ||
+					(hWndPnt == hWndListLocal) ||
+					(hWndPnt == GetTaskWnd())))
+			{
+				PostMessage(hWndPnt, WM_VSCROLL, zDelta > 0 ? MAKEWPARAM(SB_PAGEUP, 0) : MAKEWPARAM(SB_PAGEDOWN, 0), 0);
+				//					PostMessage(hWndPnt, WM_VSCROLL, MAKEWPARAM(SB_ENDSCROLL, 0), 0);
+			}
+			else if (hWndPnt == hWnd)
+				return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
+			else if ((hWndPnt == hWndDst) || (hWndPnt == GetTaskWnd()))
+				PostMessage(hWndPnt, message, wParam, lParam);
+		}
+		break;
+
+	default:
+		return(CallWindowProc(ProcPtr, hWnd, message, wParam, lParam));
 	}
 	return(0L);
 }
@@ -1257,17 +1267,17 @@ void GetListTabWidth(void)
 	// 変数が未初期化のバグ修正
 	memset(&LvCol, 0, sizeof(LV_COLUMN));
 
-	for(i = 0; i <= 3; i++)
+	for (i = 0; i <= 3; i++)
 	{
 		LvCol.mask = LVCF_WIDTH;
-		if(SendMessage(hWndListLocal, LVM_GETCOLUMN, i, (LPARAM)&LvCol) == TRUE)
+		if (SendMessage(hWndListLocal, LVM_GETCOLUMN, i, (LPARAM)&LvCol) == TRUE)
 			LocalTabWidth[i] = LvCol.cx;
 	}
 
-	for(i = 0; i <= 5; i++)
+	for (i = 0; i <= 5; i++)
 	{
 		LvCol.mask = LVCF_WIDTH;
-		if(SendMessage(hWndListRemote, LVM_GETCOLUMN, i, (LPARAM)&LvCol) == TRUE)
+		if (SendMessage(hWndListRemote, LVM_GETCOLUMN, i, (LPARAM)&LvCol) == TRUE)
 			RemoteTabWidth[i] = LvCol.cx;
 	}
 	return;
@@ -1289,47 +1299,47 @@ void SetListViewType(void)
 //	long lStyle;
 	LONG_PTR lStyle;
 
-	switch(ListType)
+	switch (ListType)
 	{
-		case LVS_LIST :
-			// 64ビット対応
+	case LVS_LIST:
+		// 64ビット対応
 //			lStyle = GetWindowLong(GetLocalHwnd(), GWL_STYLE);
-			lStyle = GetWindowLongPtr(GetLocalHwnd(), GWL_STYLE);
-			lStyle &= ~(LVS_REPORT | LVS_LIST);
-			lStyle |= LVS_LIST;
-			// 64ビット対応
+		lStyle = GetWindowLongPtr(GetLocalHwnd(), GWL_STYLE);
+		lStyle &= ~(LVS_REPORT | LVS_LIST);
+		lStyle |= LVS_LIST;
+		// 64ビット対応
 //			SetWindowLong(GetLocalHwnd(), GWL_STYLE, lStyle);
-			SetWindowLongPtr(GetLocalHwnd(), GWL_STYLE, lStyle);
+		SetWindowLongPtr(GetLocalHwnd(), GWL_STYLE, lStyle);
 
-			// 64ビット対応
+		// 64ビット対応
 //			lStyle = GetWindowLong(GetRemoteHwnd(), GWL_STYLE);
-			lStyle = GetWindowLongPtr(GetRemoteHwnd(), GWL_STYLE);
-			lStyle &= ~(LVS_REPORT | LVS_LIST);
-			lStyle |= LVS_LIST;
-			// 64ビット対応
+		lStyle = GetWindowLongPtr(GetRemoteHwnd(), GWL_STYLE);
+		lStyle &= ~(LVS_REPORT | LVS_LIST);
+		lStyle |= LVS_LIST;
+		// 64ビット対応
 //			SetWindowLong(GetRemoteHwnd(), GWL_STYLE, lStyle);
-			SetWindowLongPtr(GetRemoteHwnd(), GWL_STYLE, lStyle);
-			break;
+		SetWindowLongPtr(GetRemoteHwnd(), GWL_STYLE, lStyle);
+		break;
 
-		default :
-			// 64ビット対応
+	default:
+		// 64ビット対応
 //			lStyle = GetWindowLong(GetLocalHwnd(), GWL_STYLE);
-			lStyle = GetWindowLongPtr(GetLocalHwnd(), GWL_STYLE);
-			lStyle &= ~(LVS_REPORT | LVS_LIST);
-			lStyle |= LVS_REPORT;
-			// 64ビット対応
+		lStyle = GetWindowLongPtr(GetLocalHwnd(), GWL_STYLE);
+		lStyle &= ~(LVS_REPORT | LVS_LIST);
+		lStyle |= LVS_REPORT;
+		// 64ビット対応
 //			SetWindowLong(GetLocalHwnd(), GWL_STYLE, lStyle);
-			SetWindowLongPtr(GetLocalHwnd(), GWL_STYLE, lStyle);
+		SetWindowLongPtr(GetLocalHwnd(), GWL_STYLE, lStyle);
 
-			// 64ビット対応
+		// 64ビット対応
 //			lStyle = GetWindowLong(GetRemoteHwnd(), GWL_STYLE);
-			lStyle = GetWindowLongPtr(GetRemoteHwnd(), GWL_STYLE);
-			lStyle &= ~(LVS_REPORT | LVS_LIST);
-			lStyle |= LVS_REPORT;
-			// 64ビット対応
+		lStyle = GetWindowLongPtr(GetRemoteHwnd(), GWL_STYLE);
+		lStyle &= ~(LVS_REPORT | LVS_LIST);
+		lStyle |= LVS_REPORT;
+		// 64ビット対応
 //			SetWindowLong(GetRemoteHwnd(), GWL_STYLE, lStyle);
-			SetWindowLongPtr(GetRemoteHwnd(), GWL_STYLE, lStyle);
-			break;
+		SetWindowLongPtr(GetRemoteHwnd(), GWL_STYLE, lStyle);
+		break;
 	}
 	return;
 }
@@ -1344,49 +1354,49 @@ void SetListViewType(void)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void GetRemoteDirForWnd(int Mode, int *CancelCheckWork)
+void GetRemoteDirForWnd(int Mode, int* CancelCheckWork)
 {
-	FILE *fd;
+	FILE* fd;
 	LONGLONG Size;
-	char Str[FMAX_PATH+1];
-	char Buf[FMAX_PATH+1];
+	char Str[FMAX_PATH + 1];
+	char Buf[FMAX_PATH + 1];
 	FILETIME Time;
 	int Attr;
 	int Type;
 	int ListType;
 	int Num;
 	FLISTANCHOR Anchor;
-	char Owner[OWNER_NAME_LEN+1];
+	char Owner[OWNER_NAME_LEN + 1];
 	int Link;
 	int InfoExist;
 
-//#pragma aaa
-//DoPrintf("===== GetRemoteDirForWnd");
+	//#pragma aaa
+	//DoPrintf("===== GetRemoteDirForWnd");
 
 	Anchor.Top = NULL;
 	Anchor.Files = 0;
 
-	if(AskConnecting() == YES)
+	if (AskConnecting() == YES)
 	{
-//		SetCursor(LoadCursor(NULL, IDC_WAIT));
+		//		SetCursor(LoadCursor(NULL, IDC_WAIT));
 		DisableUserOpe();
 
 		AskRemoteCurDir(Buf, FMAX_PATH);
 		SetRemoteDirHist(Buf);
 
 		Type = FTP_COMPLETE;
-		if(Mode != CACHE_LASTREAD)
+		if (Mode != CACHE_LASTREAD)
 		{
 
-			if((Num = AskCached(Buf)) == -1)
+			if ((Num = AskCached(Buf)) == -1)
 			{
 				Num = AskFreeCache();
 				Mode = CACHE_REFRESH;
 			}
 
-			if(Mode == CACHE_REFRESH)
+			if (Mode == CACHE_REFRESH)
 			{
-				if((Type = DoDirListCmdSkt("", "", Num, CancelCheckWork)) == FTP_COMPLETE)
+				if ((Type = DoDirListCmdSkt("", "", Num, CancelCheckWork)) == FTP_COMPLETE)
 					SetCache(Num, Buf);
 				else
 					ClearCache(Num);
@@ -1395,25 +1405,25 @@ void GetRemoteDirForWnd(int Mode, int *CancelCheckWork)
 		else
 			Num = AskCurrentFileListNum();
 
-		if(Type == FTP_COMPLETE)
+		if (Type == FTP_COMPLETE)
 		{
 			SetCurrentFileListNum(Num);
 			MakeCacheFileName(Num, Buf);
-			if((fd = fopen(Buf, "rb"))!=NULL)
+			if ((fd = fopen(Buf, "rb")) != NULL)
 			{
 				ListType = LIST_UNKNOWN;
 
 				// 文字化け対策
 //				while(GetListOneLine(Str, FMAX_PATH, fd) == FFFTP_SUCCESS)
-				while(GetListOneLine(Str, FMAX_PATH, fd, YES) == FFFTP_SUCCESS)
+				while (GetListOneLine(Str, FMAX_PATH, fd, YES) == FFFTP_SUCCESS)
 				{
-					if((ListType = AnalyzeFileInfo(Str)) != LIST_UNKNOWN)
+					if ((ListType = AnalyzeFileInfo(Str)) != LIST_UNKNOWN)
 					{
-						if((Type = ResolveFileInfo(Str, ListType, Buf, &Size, &Time, &Attr, Owner, &Link, &InfoExist)) != NODE_NONE)
+						if ((Type = ResolveFileInfo(Str, ListType, Buf, &Size, &Time, &Attr, Owner, &Link, &InfoExist)) != NODE_NONE)
 						{
-							if(AskFilterStr(Buf, Type) == YES)
+							if (AskFilterStr(Buf, Type) == YES)
 							{
-								if((DotFile == YES) || (Buf[0] != '.'))
+								if ((DotFile == YES) || (Buf[0] != '.'))
 								{
 									AddDispFileList(&Anchor, Buf, &Time, Size, Attr, Type, Link, Owner, InfoExist, WIN_REMOTE);
 								}
@@ -1442,17 +1452,17 @@ void GetRemoteDirForWnd(int Mode, int *CancelCheckWork)
 			 * ようにする(VIEWはクリアして良い) */
 			if (AskHostType() != HTYPE_VMS)
 #endif
-			SetTaskMsg(MSGJPN049);
+				SetTaskMsg(MSGJPN049);
 			SendMessage(GetRemoteHwnd(), LVM_DELETEALLITEMS, 0, 0);
 		}
 
-//		SetCursor(LoadCursor(NULL, IDC_ARROW));
+		//		SetCursor(LoadCursor(NULL, IDC_ARROW));
 		EnableUserOpe();
 
 	}
 
-//#pragma aaa
-//DoPrintf("===== GetRemoteDirForWnd Done");
+	//#pragma aaa
+	//DoPrintf("===== GetRemoteDirForWnd Done");
 
 	return;
 }
@@ -1468,15 +1478,15 @@ void GetRemoteDirForWnd(int Mode, int *CancelCheckWork)
 *----------------------------------------------------------------------------*/
 
 // ファイルアイコン表示対応
-void RefreshIconImageList(FLISTANCHOR *Anchor)
+void RefreshIconImageList(FLISTANCHOR* Anchor)
 {
 	HBITMAP hBitmap;
 	int ImageId;
-	FILELIST *Pos;
+	FILELIST* Pos;
 	int i;
-	char Cur[FMAX_PATH+1];
+	char Cur[FMAX_PATH + 1];
 	SHFILEINFO FileInfo;
-	if(DispFileIcon == YES)
+	if (DispFileIcon == YES)
 	{
 		SendMessage(hWndListLocal, LVM_SETIMAGELIST, LVSIL_SMALL, (LPARAM)NULL);
 		ShowWindow(hWndListLocal, SW_SHOW);
@@ -1489,10 +1499,10 @@ void RefreshIconImageList(FLISTANCHOR *Anchor)
 		DeleteObject(hBitmap);
 		ImageId = 0;
 		Pos = Anchor->Top;
-		for(i = 0; i < Anchor->Files; i++)
+		for (i = 0; i < Anchor->Files; i++)
 		{
 			Pos->ImageId = -1;
-			if(Pos->Node == NODE_DRIVE)
+			if (Pos->Node == NODE_DRIVE)
 				strcpy(Cur, Pos->File);
 			else
 			{
@@ -1500,9 +1510,9 @@ void RefreshIconImageList(FLISTANCHOR *Anchor)
 				SetYenTail(Cur);
 				strcat(Cur, Pos->File);
 			}
-			if(SHGetFileInfo(Cur, 0, &FileInfo, sizeof(SHFILEINFO), SHGFI_SMALLICON | SHGFI_ICON) != 0)
+			if (SHGetFileInfo(Cur, 0, &FileInfo, sizeof(SHFILEINFO), SHGFI_SMALLICON | SHGFI_ICON) != 0)
 			{
-				if(ImageList_AddIcon(ListImgFileIcon, FileInfo.hIcon) >= 0)
+				if (ImageList_AddIcon(ListImgFileIcon, FileInfo.hIcon) >= 0)
 				{
 					Pos->ImageId = ImageId;
 					ImageId++;
@@ -1529,8 +1539,8 @@ void GetLocalDirForWnd(void)
 {
 	HANDLE fHnd;
 	WIN32_FIND_DATA Find;
-	char Scan[FMAX_PATH+1];
-	char *Pos;
+	char Scan[FMAX_PATH + 1];
+	char* Pos;
 	char Buf[10];
 	FILETIME Time;
 	FLISTANCHOR Anchor;
@@ -1545,7 +1555,7 @@ void GetLocalDirForWnd(void)
 	DispLocalFreeSpace(Scan);
 
 	// ローカル側自動更新
-	if(ChangeNotification != INVALID_HANDLE_VALUE)
+	if (ChangeNotification != INVALID_HANDLE_VALUE)
 		FindCloseChangeNotification(ChangeNotification);
 	ChangeNotification = FindFirstChangeNotification(Scan, FALSE, FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME | FILE_NOTIFY_CHANGE_ATTRIBUTES | FILE_NOTIFY_CHANGE_SIZE | FILE_NOTIFY_CHANGE_LAST_WRITE);
 
@@ -1553,42 +1563,41 @@ void GetLocalDirForWnd(void)
 
 	SetYenTail(Scan);
 	strcat(Scan, "*");
-	if((fHnd = FindFirstFileAttr(Scan, &Find, DispIgnoreHide)) != INVALID_HANDLE_VALUE)
+	if ((fHnd = FindFirstFileAttr(Scan, &Find, DispIgnoreHide)) != INVALID_HANDLE_VALUE)
 	{
 		do
 		{
-			if((strcmp(Find.cFileName, ".") != 0) &&
-			   (strcmp(Find.cFileName, "..") != 0))
+			if ((strcmp(Find.cFileName, ".") != 0) &&
+				(strcmp(Find.cFileName, "..") != 0))
 			{
-				if((DotFile == YES) || (Find.cFileName[0] != '.'))
+				if ((DotFile == YES) || (Find.cFileName[0] != '.'))
 				{
-					if(Find.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+					if (Find.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 						AddDispFileList(&Anchor, Find.cFileName, &Find.ftLastWriteTime, MakeLongLong(Find.nFileSizeHigh, Find.nFileSizeLow), 0, NODE_DIR, NO, "", FINFO_ALL, WIN_LOCAL);
 					else
 					{
-						if(AskFilterStr(Find.cFileName, NODE_FILE) == YES)
+						if (AskFilterStr(Find.cFileName, NODE_FILE) == YES)
 						{
 							AddDispFileList(&Anchor, Find.cFileName, &Find.ftLastWriteTime, MakeLongLong(Find.nFileSizeHigh, Find.nFileSizeLow), 0, NODE_FILE, NO, "", FINFO_ALL, WIN_LOCAL);
 						}
 					}
 				}
 			}
-		}
-		while(FindNextFileAttr(fHnd, &Find, DispIgnoreHide) == TRUE);
+		} while (FindNextFileAttr(fHnd, &Find, DispIgnoreHide) == TRUE);
 		FindClose(fHnd);
 	}
 
 	/* ドライブ */
-	if(DispDrives)
+	if (DispDrives)
 	{
 		GetLogicalDriveStrings(FMAX_PATH, Scan);
 		NoDrives = LoadHideDriveListRegistry();
 
 		Pos = Scan;
-		while(*Pos != NUL)
+		while (*Pos != NUL)
 		{
 			Tmp = toupper(*Pos) - 'A';
-			if((NoDrives & (0x00000001 << Tmp)) == 0)
+			if ((NoDrives & (0x00000001 << Tmp)) == 0)
 			{
 				sprintf(Buf, "%s", Pos);
 				memset(&Time, 0, sizeof(FILETIME));
@@ -1628,12 +1637,12 @@ void GetLocalDirForWnd(void)
 *		なし
 *----------------------------------------------------------------------------*/
 
-static void AddDispFileList(FLISTANCHOR *Anchor, char *Name, FILETIME *Time, LONGLONG Size, int Attr, int Type, int Link, char *Owner, int InfoExist, int Win)
+static void AddDispFileList(FLISTANCHOR* Anchor, char* Name, FILETIME* Time, LONGLONG Size, int Attr, int Type, int Link, char* Owner, int InfoExist, int Win)
 {
 	int i;
-	FILELIST *Pos;
-	FILELIST *Prev;
-	FILELIST *New;
+	FILELIST* Pos;
+	FILELIST* Prev;
+	FILELIST* New;
 	int FileSort;
 	int DirSort;
 	int Sort;
@@ -1641,28 +1650,28 @@ static void AddDispFileList(FLISTANCHOR *Anchor, char *Name, FILETIME *Time, LON
 
 	FileSort = AskSortType(ITEM_LFILE);
 	DirSort = AskSortType(ITEM_LDIR);
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 	{
 		FileSort = AskSortType(ITEM_RFILE);
 		DirSort = AskSortType(ITEM_RDIR);
 	}
 
 	Pos = Anchor->Top;
-	for(i = 0; i < Anchor->Files; i++)
+	for (i = 0; i < Anchor->Files; i++)
 	{
-		if((Type == NODE_DIR) && (Pos->Node == NODE_FILE))
+		if ((Type == NODE_DIR) && (Pos->Node == NODE_FILE))
 			break;
-		if((Type == NODE_FILE) && (Pos->Node == NODE_DRIVE))
+		if ((Type == NODE_FILE) && (Pos->Node == NODE_DRIVE))
 			break;
 
-		if(Type == Pos->Node)
+		if (Type == Pos->Node)
 		{
-			if(Type == NODE_DIR)
+			if (Type == NODE_DIR)
 				Sort = DirSort;
 			else
 				Sort = FileSort;
 
-			if((Sort & SORT_GET_ORD) == SORT_ASCENT)
+			if ((Sort & SORT_GET_ORD) == SORT_ASCENT)
 			{
 				// 読みにくいのでリファクタリング
 //				if((((Sort & SORT_MASK_ORD) == SORT_EXT) &&
@@ -1679,25 +1688,25 @@ static void AddDispFileList(FLISTANCHOR *Anchor, char *Name, FILETIME *Time, LON
 //				{
 //					break;
 //				}
-				if(((Sort & SORT_MASK_ORD) == SORT_EXT) &&
+				if (((Sort & SORT_MASK_ORD) == SORT_EXT) &&
 					((Cmp = _mbsicmp(GetFileExt(Name), GetFileExt(Pos->File))) < 0))
 					break;
 #if defined(HAVE_TANDEM)
-				if((AskHostType() == HTYPE_TANDEM) &&
+				if ((AskHostType() == HTYPE_TANDEM) &&
 					((Sort & SORT_MASK_ORD) == SORT_EXT) &&
 					((Cmp = Attr - Pos->Attr) < 0))
 					break;
 #endif
-				if(((Sort & SORT_MASK_ORD) == SORT_SIZE) &&
+				if (((Sort & SORT_MASK_ORD) == SORT_SIZE) &&
 					((Cmp = Size - Pos->Size) < 0))
 					break;
-				if(((Sort & SORT_MASK_ORD) == SORT_DATE) &&
+				if (((Sort & SORT_MASK_ORD) == SORT_DATE) &&
 					((Cmp = CompareFileTime(Time, &Pos->Time)) < 0))
 					break;
 
-				if(((Sort & SORT_MASK_ORD) == SORT_NAME) || (Cmp == 0))
+				if (((Sort & SORT_MASK_ORD) == SORT_NAME) || (Cmp == 0))
 				{
-					if(_mbsicmp(Name, Pos->File) < 0)
+					if (_mbsicmp(Name, Pos->File) < 0)
 						break;
 				}
 			}
@@ -1718,25 +1727,25 @@ static void AddDispFileList(FLISTANCHOR *Anchor, char *Name, FILETIME *Time, LON
 //				{
 //					break;
 //				}
-				if((((Sort & SORT_MASK_ORD) == SORT_EXT) &&
+				if ((((Sort & SORT_MASK_ORD) == SORT_EXT) &&
 					((Cmp = _mbsicmp(GetFileExt(Name), GetFileExt(Pos->File))) > 0)))
 					break;
 #if defined(HAVE_TANDEM)
-				if(((AskHostType() == HTYPE_TANDEM) &&
+				if (((AskHostType() == HTYPE_TANDEM) &&
 					((Sort & SORT_MASK_ORD) == SORT_EXT) &&
 					((Cmp = Attr - Pos->Attr) > 0)))
 					break;
 #endif
-				if(((Sort & SORT_MASK_ORD) == SORT_SIZE) &&
+				if (((Sort & SORT_MASK_ORD) == SORT_SIZE) &&
 					((Cmp = Size - Pos->Size) > 0))
 					break;
-				if(((Sort & SORT_MASK_ORD) == SORT_DATE) &&
+				if (((Sort & SORT_MASK_ORD) == SORT_DATE) &&
 					((Cmp = CompareFileTime(Time, &Pos->Time)) > 0))
 					break;
 
-				if(((Sort & SORT_MASK_ORD) == SORT_NAME) || (Cmp == 0))
+				if (((Sort & SORT_MASK_ORD) == SORT_NAME) || (Cmp == 0))
 				{
-					if(_mbsicmp(Name, Pos->File) > 0)
+					if (_mbsicmp(Name, Pos->File) > 0)
 						break;
 				}
 			}
@@ -1745,7 +1754,7 @@ static void AddDispFileList(FLISTANCHOR *Anchor, char *Name, FILETIME *Time, LON
 		Pos = Pos->Next;
 	}
 
-	if((New = malloc(sizeof(FILELIST))) != NULL)
+	if ((New = malloc(sizeof(FILELIST))) != NULL)
 	{
 		strcpy(New->File, Name);
 		New->Node = Type;
@@ -1756,7 +1765,7 @@ static void AddDispFileList(FLISTANCHOR *Anchor, char *Name, FILETIME *Time, LON
 		strcpy(New->Owner, Owner);
 		New->InfoExist = InfoExist;
 
-		if(Pos == Anchor->Top)
+		if (Pos == Anchor->Top)
 		{
 			New->Next = Anchor->Top;
 			Anchor->Top = New;
@@ -1781,14 +1790,14 @@ static void AddDispFileList(FLISTANCHOR *Anchor, char *Name, FILETIME *Time, LON
 *		なし
 *----------------------------------------------------------------------------*/
 
-static void EraseDispFileList(FLISTANCHOR *Anchor)
+static void EraseDispFileList(FLISTANCHOR* Anchor)
 {
-	FILELIST *Pos;
-	FILELIST *Next;
+	FILELIST* Pos;
+	FILELIST* Next;
 	int i;
 
 	Pos = Anchor->Top;
-	for(i = 0; i < Anchor->Files; i++)
+	for (i = 0; i < Anchor->Files; i++)
 	{
 		Next = Pos->Next;
 		free(Pos);
@@ -1810,16 +1819,16 @@ static void EraseDispFileList(FLISTANCHOR *Anchor)
 *		なし
 *----------------------------------------------------------------------------*/
 
-static void DispFileList2View(HWND hWnd, FLISTANCHOR *Anchor)
+static void DispFileList2View(HWND hWnd, FLISTANCHOR* Anchor)
 {
 	int i;
-	FILELIST *Pos;
+	FILELIST* Pos;
 
 	SendMessage(hWnd, WM_SETREDRAW, (WPARAM)FALSE, 0);
 	SendMessage(hWnd, LVM_DELETEALLITEMS, 0, 0);
 
 	Pos = Anchor->Top;
-	for(i = 0; i < Anchor->Files; i++)
+	for (i = 0; i < Anchor->Files; i++)
 	{
 		// ファイルアイコン表示対応
 //		AddListView(hWnd, -1, Pos->File, Pos->Node, Pos->Size, &Pos->Time, Pos->Attr, Pos->Owner, Pos->Link, Pos->InfoExist);
@@ -1855,12 +1864,12 @@ static void DispFileList2View(HWND hWnd, FLISTANCHOR *Anchor)
 
 // ファイルアイコン表示対応
 //static void AddListView(HWND hWnd, int Pos, char *Name, int Type, LONGLONG Size, FILETIME *Time, int Attr, char *Owner, int Link, int InfoExist)
-static void AddListView(HWND hWnd, int Pos, char *Name, int Type, LONGLONG Size, FILETIME *Time, int Attr, char *Owner, int Link, int InfoExist, int ImageId)
+static void AddListView(HWND hWnd, int Pos, char* Name, int Type, LONGLONG Size, FILETIME* Time, int Attr, char* Owner, int Link, int InfoExist, int ImageId)
 {
 	LV_ITEM LvItem;
 	char Tmp[20];
 
-	if(Pos == -1)
+	if (Pos == -1)
 		Pos = SendMessage(hWnd, LVM_GETITEMCOUNT, 0, 0);
 
 	// 変数が未初期化のバグ修正
@@ -1870,14 +1879,14 @@ static void AddListView(HWND hWnd, int Pos, char *Name, int Type, LONGLONG Size,
 	LvItem.iItem = Pos;
 	LvItem.iSubItem = 0;
 	LvItem.pszText = Name;
-	if((Type == NODE_FILE) && (AskTransferTypeAssoc(Name, TYPE_X) == TYPE_I))
+	if ((Type == NODE_FILE) && (AskTransferTypeAssoc(Name, TYPE_X) == TYPE_I))
 		Type = 3;
-	if(Link == NO)
+	if (Link == NO)
 		LvItem.iImage = Type;
 	else
 		LvItem.iImage = 4;
 	// ファイルアイコン表示対応
-	if(DispFileIcon == YES && hWnd == GetLocalHwnd())
+	if (DispFileIcon == YES && hWnd == GetLocalHwnd())
 		LvItem.iImage = ImageId + 5;
 	LvItem.iItem = SendMessage(hWnd, LVM_INSERTITEM, 0, (LPARAM)&LvItem);
 
@@ -1892,11 +1901,11 @@ static void AddListView(HWND hWnd, int Pos, char *Name, int Type, LONGLONG Size,
 	LvItem.iItem = SendMessage(hWnd, LVM_SETITEM, 0, (LPARAM)&LvItem);
 
 	/* サイズ */
-	if(Type == NODE_DIR)
+	if (Type == NODE_DIR)
 		strcpy(Tmp, "<DIR>");
-	else if(Type == NODE_DRIVE)
+	else if (Type == NODE_DRIVE)
 		strcpy(Tmp, "<DRIVE>");
-	else if(Size >= 0)
+	else if (Size >= 0)
 		MakeNumString(Size, Tmp, TRUE);
 	else
 		strcpy(Tmp, "");
@@ -1914,23 +1923,24 @@ static void AddListView(HWND hWnd, int Pos, char *Name, int Type, LONGLONG Size,
 	if (AskHostType() == HTYPE_TANDEM) {
 		_itoa_s(Attr, Tmp, sizeof(Tmp), 10);
 		LvItem.pszText = Tmp;
-	} else
+	}
+	else
 #endif
-	LvItem.pszText = GetFileExt(Name);
+		LvItem.pszText = GetFileExt(Name);
 	LvItem.iItem = SendMessage(hWnd, LVM_SETITEM, 0, (LPARAM)&LvItem);
 
-	if(hWnd == GetRemoteHwnd())
+	if (hWnd == GetRemoteHwnd())
 	{
 		/* 属性 */
 		strcpy(Tmp, "");
 #if defined(HAVE_TANDEM)
-		if((InfoExist & FINFO_ATTR) && (AskHostType() != HTYPE_TANDEM))
+		if ((InfoExist & FINFO_ATTR) && (AskHostType() != HTYPE_TANDEM))
 #else
-		if(InfoExist & FINFO_ATTR)
+		if (InfoExist & FINFO_ATTR)
 #endif
 			// ファイルの属性を数字で表示
 //			AttrValue2String(Attr, Tmp);
-			AttrValue2String(Attr, Tmp, DispPermissionsNumber);
+AttrValue2String(Attr, Tmp, DispPermissionsNumber);
 		LvItem.mask = LVIF_TEXT;
 		LvItem.iItem = Pos;
 		LvItem.iSubItem = 4;
@@ -1957,9 +1967,9 @@ static void AddListView(HWND hWnd, int Pos, char *Name, int Type, LONGLONG Size,
 *		なし
 *----------------------------------------------------------------------------*/
 
-void ReSortDispList(int Win, int *CancelCheckWork)
+void ReSortDispList(int Win, int* CancelCheckWork)
 {
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 		GetRemoteDirForWnd(CACHE_LASTREAD, CancelCheckWork);
 	else
 		GetLocalDirForWnd();
@@ -1979,14 +1989,14 @@ void ReSortDispList(int Win, int *CancelCheckWork)
 
 // ローカル側自動更新
 //void SelectFileInList(HWND hWnd, int Type)
-void SelectFileInList(HWND hWnd, int Type, FILELIST *Base)
+void SelectFileInList(HWND hWnd, int Type, FILELIST* Base)
 {
 	int Win;
 	int WinDst;
 	int i;
 	int Num;
-	char RegExp[FMAX_PATH+1];
-	char Name[FMAX_PATH+1];
+	char RegExp[FMAX_PATH + 1];
+	char Name[FMAX_PATH + 1];
 	LV_ITEM LvItem;
 	int CsrPos;
 	FILETIME Time1;
@@ -1997,122 +2007,122 @@ void SelectFileInList(HWND hWnd, int Type, FILELIST *Base)
 	memset(&LvItem, 0, sizeof(LV_ITEM));
 	Win = WIN_LOCAL;
 	WinDst = WIN_REMOTE;
-	if(hWnd == GetRemoteHwnd())
+	if (hWnd == GetRemoteHwnd())
 	{
 		Win = WIN_REMOTE;
 		WinDst = WIN_LOCAL;
 	}
 
 	Num = GetItemCount(Win);
-	switch(Type)
+	switch (Type)
 	{
-		case SELECT_ALL :
-			LvItem.state = 0;
-			if(GetSelectedCount(Win) <= 1)
-				LvItem.state = LVIS_SELECTED;
-			for(i = 0; i < Num; i++)
+	case SELECT_ALL:
+		LvItem.state = 0;
+		if (GetSelectedCount(Win) <= 1)
+			LvItem.state = LVIS_SELECTED;
+		for (i = 0; i < Num; i++)
+		{
+			if (GetNodeType(Win, i) != NODE_DRIVE)
 			{
-				if(GetNodeType(Win, i) != NODE_DRIVE)
-				{
-					LvItem.mask = LVIF_STATE;
-					LvItem.iItem = i;
-					LvItem.stateMask = LVIS_SELECTED;
-					LvItem.iSubItem = 0;
-					SendMessage(hWnd, LVM_SETITEMSTATE, i, (LPARAM)&LvItem);
-				}
-			}
-			break;
-
-		case SELECT_REGEXP :
-			if(((Win == WIN_LOCAL) &&
-				(DialogBox(GetFtpInst(), MAKEINTRESOURCE(sel_local_dlg), hWnd, SelectDialogCallBack) == YES)) ||
-			   ((Win == WIN_REMOTE) &&
-				(DialogBox(GetFtpInst(), MAKEINTRESOURCE(sel_remote_dlg), hWnd, SelectDialogCallBack) == YES)))
-			{
-				strcpy(RegExp, FindStr);
-//				if(FindMode == 0)
-//					WildCard2RegExp(RegExp);
-
-				_mbslwr(RegExp);
-				if((FindMode == 0) || (JreCompileStr(RegExp) == TRUE))
-				{
-					CsrPos = -1;
-					for(i = 0; i < Num; i++)
-					{
-						GetNodeName(Win, i, Name, FMAX_PATH);
-						Find = FindNameNode(WinDst, Name);
-
-						_mbslwr(Name);
-						LvItem.state = 0;
-						if(GetNodeType(Win, i) != NODE_DRIVE)
-						{
-							if(((FindMode == 0) && (CheckFname(Name, RegExp) == FFFTP_SUCCESS)) ||
-							   ((FindMode != 0) && (JreGetStrMatchInfo(Name, 0) != NULL)))
-							{
-								LvItem.state = LVIS_SELECTED;
-
-								if(Find >= 0)
-								{
-									if(IgnoreExist == YES)
-										LvItem.state = 0;
-
-									if((LvItem.state != 0) && (IgnoreNew == YES))
-									{
-										GetNodeTime(Win, i, &Time1);
-										GetNodeTime(WinDst, Find, &Time2);
-										if(CompareFileTime(&Time1, &Time2) > 0)
-											LvItem.state = 0;
-									}
-
-									if((LvItem.state != 0) && (IgnoreOld == YES))
-									{
-										GetNodeTime(Win, i, &Time1);
-										GetNodeTime(WinDst, Find, &Time2);
-										if(CompareFileTime(&Time1, &Time2) < 0)
-											LvItem.state = 0;
-									}
-								}
-							}
-						}
-
-						if((LvItem.state != 0) && (CsrPos == -1))
-							CsrPos = i;
-
-						LvItem.mask = LVIF_STATE;
-						LvItem.iItem = i;
-						LvItem.stateMask = LVIS_SELECTED;
-						LvItem.iSubItem = 0;
-						SendMessage(hWnd, LVM_SETITEMSTATE, i, (LPARAM)&LvItem);
-					}
-					if(CsrPos != -1)
-					{
-						LvItem.mask = LVIF_STATE;
-						LvItem.iItem = CsrPos;
-						LvItem.state = LVIS_FOCUSED;
-						LvItem.stateMask = LVIS_FOCUSED;
-						LvItem.iSubItem = 0;
-						SendMessage(hWnd, LVM_SETITEMSTATE, CsrPos, (LPARAM)&LvItem);
-						SendMessage(hWnd, LVM_ENSUREVISIBLE, CsrPos, (LPARAM)TRUE);
-					}
-				}
-			}
-			break;
-
-		// ローカル側自動更新
-		case SELECT_LIST :
-			for(i = 0; i < Num; i++)
-			{
-				LvItem.state = 0;
-				GetNodeName(Win, i, Name, FMAX_PATH);
-				if(SearchFileList(Name, Base, COMP_STRICT) != NULL)
-					LvItem.state = LVIS_SELECTED;
 				LvItem.mask = LVIF_STATE;
 				LvItem.iItem = i;
 				LvItem.stateMask = LVIS_SELECTED;
 				LvItem.iSubItem = 0;
 				SendMessage(hWnd, LVM_SETITEMSTATE, i, (LPARAM)&LvItem);
 			}
-			break;
+		}
+		break;
+
+	case SELECT_REGEXP:
+		if (((Win == WIN_LOCAL) &&
+			(DialogBox(GetFtpInst(), MAKEINTRESOURCE(sel_local_dlg), hWnd, SelectDialogCallBack) == YES)) ||
+			((Win == WIN_REMOTE) &&
+				(DialogBox(GetFtpInst(), MAKEINTRESOURCE(sel_remote_dlg), hWnd, SelectDialogCallBack) == YES)))
+		{
+			strcpy(RegExp, FindStr);
+			//				if(FindMode == 0)
+			//					WildCard2RegExp(RegExp);
+
+			_mbslwr(RegExp);
+			if ((FindMode == 0) || (JreCompileStr(RegExp) == TRUE))
+			{
+				CsrPos = -1;
+				for (i = 0; i < Num; i++)
+				{
+					GetNodeName(Win, i, Name, FMAX_PATH);
+					Find = FindNameNode(WinDst, Name);
+
+					_mbslwr(Name);
+					LvItem.state = 0;
+					if (GetNodeType(Win, i) != NODE_DRIVE)
+					{
+						if (((FindMode == 0) && (CheckFname(Name, RegExp) == FFFTP_SUCCESS)) ||
+							((FindMode != 0) && (JreGetStrMatchInfo(Name, 0) != NULL)))
+						{
+							LvItem.state = LVIS_SELECTED;
+
+							if (Find >= 0)
+							{
+								if (IgnoreExist == YES)
+									LvItem.state = 0;
+
+								if ((LvItem.state != 0) && (IgnoreNew == YES))
+								{
+									GetNodeTime(Win, i, &Time1);
+									GetNodeTime(WinDst, Find, &Time2);
+									if (CompareFileTime(&Time1, &Time2) > 0)
+										LvItem.state = 0;
+								}
+
+								if ((LvItem.state != 0) && (IgnoreOld == YES))
+								{
+									GetNodeTime(Win, i, &Time1);
+									GetNodeTime(WinDst, Find, &Time2);
+									if (CompareFileTime(&Time1, &Time2) < 0)
+										LvItem.state = 0;
+								}
+							}
+						}
+					}
+
+					if ((LvItem.state != 0) && (CsrPos == -1))
+						CsrPos = i;
+
+					LvItem.mask = LVIF_STATE;
+					LvItem.iItem = i;
+					LvItem.stateMask = LVIS_SELECTED;
+					LvItem.iSubItem = 0;
+					SendMessage(hWnd, LVM_SETITEMSTATE, i, (LPARAM)&LvItem);
+				}
+				if (CsrPos != -1)
+				{
+					LvItem.mask = LVIF_STATE;
+					LvItem.iItem = CsrPos;
+					LvItem.state = LVIS_FOCUSED;
+					LvItem.stateMask = LVIS_FOCUSED;
+					LvItem.iSubItem = 0;
+					SendMessage(hWnd, LVM_SETITEMSTATE, CsrPos, (LPARAM)&LvItem);
+					SendMessage(hWnd, LVM_ENSUREVISIBLE, CsrPos, (LPARAM)TRUE);
+				}
+			}
+		}
+		break;
+
+		// ローカル側自動更新
+	case SELECT_LIST:
+		for (i = 0; i < Num; i++)
+		{
+			LvItem.state = 0;
+			GetNodeName(Win, i, Name, FMAX_PATH);
+			if (SearchFileList(Name, Base, COMP_STRICT) != NULL)
+				LvItem.state = LVIS_SELECTED;
+			LvItem.mask = LVIF_STATE;
+			LvItem.iItem = i;
+			LvItem.stateMask = LVIS_SELECTED;
+			LvItem.iSubItem = 0;
+			SendMessage(hWnd, LVM_SETITEMSTATE, i, (LPARAM)&LvItem);
+		}
+		break;
 	}
 	return;
 }
@@ -2136,36 +2146,36 @@ static INT_PTR CALLBACK SelectDialogCallBack(HWND hDlg, UINT iMessage, WPARAM wP
 {
 	switch (iMessage)
 	{
-		case WM_INITDIALOG :
-			SendDlgItemMessage(hDlg, SEL_FNAME, EM_LIMITTEXT, 40, 0);
-			SendDlgItemMessage(hDlg, SEL_FNAME, WM_SETTEXT, 0, (LPARAM)FindStr);
-			SendDlgItemMessage(hDlg, SEL_REGEXP, BM_SETCHECK, FindMode, 0);
-			SendDlgItemMessage(hDlg, SEL_NOOLD, BM_SETCHECK, IgnoreOld, 0);
-			SendDlgItemMessage(hDlg, SEL_NONEW, BM_SETCHECK, IgnoreNew, 0);
-			SendDlgItemMessage(hDlg, SEL_NOEXIST, BM_SETCHECK, IgnoreExist, 0);
-			return(TRUE);
+	case WM_INITDIALOG:
+		SendDlgItemMessage(hDlg, SEL_FNAME, EM_LIMITTEXT, 40, 0);
+		SendDlgItemMessage(hDlg, SEL_FNAME, WM_SETTEXT, 0, (LPARAM)FindStr);
+		SendDlgItemMessage(hDlg, SEL_REGEXP, BM_SETCHECK, FindMode, 0);
+		SendDlgItemMessage(hDlg, SEL_NOOLD, BM_SETCHECK, IgnoreOld, 0);
+		SendDlgItemMessage(hDlg, SEL_NONEW, BM_SETCHECK, IgnoreNew, 0);
+		SendDlgItemMessage(hDlg, SEL_NOEXIST, BM_SETCHECK, IgnoreExist, 0);
+		return(TRUE);
 
-		case WM_COMMAND :
-			switch(GET_WM_COMMAND_ID(wParam, lParam))
-			{
-				case IDOK :
-					SendDlgItemMessage(hDlg, SEL_FNAME, WM_GETTEXT, 40+1, (LPARAM)FindStr);
-					FindMode = SendDlgItemMessage(hDlg, SEL_REGEXP, BM_GETCHECK, 0, 0);
-					IgnoreOld = SendDlgItemMessage(hDlg, SEL_NOOLD, BM_GETCHECK, 0, 0);
-					IgnoreNew = SendDlgItemMessage(hDlg, SEL_NONEW, BM_GETCHECK, 0, 0);
-					IgnoreExist = SendDlgItemMessage(hDlg, SEL_NOEXIST, BM_GETCHECK, 0, 0);
-					EndDialog(hDlg, YES);
-					break;
+	case WM_COMMAND:
+		switch (GET_WM_COMMAND_ID(wParam, lParam))
+		{
+		case IDOK:
+			SendDlgItemMessage(hDlg, SEL_FNAME, WM_GETTEXT, 40 + 1, (LPARAM)FindStr);
+			FindMode = SendDlgItemMessage(hDlg, SEL_REGEXP, BM_GETCHECK, 0, 0);
+			IgnoreOld = SendDlgItemMessage(hDlg, SEL_NOOLD, BM_GETCHECK, 0, 0);
+			IgnoreNew = SendDlgItemMessage(hDlg, SEL_NONEW, BM_GETCHECK, 0, 0);
+			IgnoreExist = SendDlgItemMessage(hDlg, SEL_NOEXIST, BM_GETCHECK, 0, 0);
+			EndDialog(hDlg, YES);
+			break;
 
-				case IDCANCEL :
-					EndDialog(hDlg, NO);
-					break;
+		case IDCANCEL:
+			EndDialog(hDlg, NO);
+			break;
 
-				case IDHELP :
-					hHelpWin = HtmlHelp(NULL, AskHelpFilePath(), HH_HELP_CONTEXT, IDH_HELP_TOPIC_0000061);
-					break;
-			}
-			return(TRUE);
+		case IDHELP:
+			hHelpWin = HtmlHelp(NULL, AskHelpFilePath(), HH_HELP_CONTEXT, IDH_HELP_TOPIC_0000061);
+			break;
+		}
+		return(TRUE);
 	}
 	return(FALSE);
 }
@@ -2186,78 +2196,78 @@ void FindFileInList(HWND hWnd, int Type)
 	int Win;
 	int i;
 	int Num;
-	static char RegExp[FMAX_PATH+1] = { "" };
-	char Name[FMAX_PATH+1];
+	static char RegExp[FMAX_PATH + 1] = { "" };
+	char Name[FMAX_PATH + 1];
 	LV_ITEM LvItem;
-	char *Title;
+	char* Title;
 
 	// 変数が未初期化のバグ修正
 	memset(&LvItem, 0, sizeof(LV_ITEM));
 	Win = WIN_LOCAL;
 	Title = MSGJPN050;
-	if(hWnd == GetRemoteHwnd())
+	if (hWnd == GetRemoteHwnd())
 	{
 		Win = WIN_REMOTE;
 		Title = MSGJPN051;
 	}
 
 	Num = GetItemCount(Win);
-	switch(Type)
+	switch (Type)
 	{
-		case FIND_FIRST :
-			if(InputDialogBox(find_dlg, hWnd, Title, FindStr, 40+1, &FindMode, IDH_HELP_TOPIC_0000001) == YES)
+	case FIND_FIRST:
+		if (InputDialogBox(find_dlg, hWnd, Title, FindStr, 40 + 1, &FindMode, IDH_HELP_TOPIC_0000001) == YES)
+		{
+			strcpy(RegExp, FindStr);
+			//				if(FindMode == 0)
+			//					WildCard2RegExp(RegExp);
+
+			_mbslwr(RegExp);
+			if ((FindMode == 0) || (JreCompileStr(RegExp) == TRUE))
 			{
-				strcpy(RegExp, FindStr);
-//				if(FindMode == 0)
-//					WildCard2RegExp(RegExp);
-
-				_mbslwr(RegExp);
-				if((FindMode == 0) || (JreCompileStr(RegExp) == TRUE))
+				for (i = GetCurrentItem(Win) + 1; i < Num; i++)
 				{
-					for(i = GetCurrentItem(Win)+1; i < Num; i++)
-					{
-						GetNodeName(Win, i, Name, FMAX_PATH);
-						_mbslwr(Name);
+					GetNodeName(Win, i, Name, FMAX_PATH);
+					_mbslwr(Name);
 
-						LvItem.state = 0;
-						if(((FindMode == 0) && (CheckFname(Name, RegExp) == FFFTP_SUCCESS)) ||
-						   ((FindMode != 0) && (JreGetStrMatchInfo(Name, 0) != NULL)))
-						{
-							LvItem.mask = LVIF_STATE;
-							LvItem.iItem = i;
-							LvItem.state = LVIS_FOCUSED;
-							LvItem.stateMask = LVIS_FOCUSED;
-							LvItem.iSubItem = 0;
-							SendMessage(hWnd, LVM_SETITEMSTATE, i, (LPARAM)&LvItem);
-							SendMessage(hWnd, LVM_ENSUREVISIBLE, i, (LPARAM)TRUE);
-							break;
-						}
+					LvItem.state = 0;
+					if (((FindMode == 0) && (CheckFname(Name, RegExp) == FFFTP_SUCCESS)) ||
+						((FindMode != 0) && (JreGetStrMatchInfo(Name, 0) != NULL)))
+					{
+						LvItem.mask = LVIF_STATE;
+						LvItem.iItem = i;
+						LvItem.state = LVIS_FOCUSED;
+						LvItem.stateMask = LVIS_FOCUSED;
+						LvItem.iSubItem = 0;
+						SendMessage(hWnd, LVM_SETITEMSTATE, i, (LPARAM)&LvItem);
+						SendMessage(hWnd, LVM_ENSUREVISIBLE, i, (LPARAM)TRUE);
+						break;
 					}
 				}
 			}
-			break;
+		}
+		break;
 
-		case FIND_NEXT :
-			for(i = GetCurrentItem(Win)+1; i < Num; i++)
+	case FIND_NEXT:
+		for (i = GetCurrentItem(Win) + 1; i < Num; i++)
+		{
+			GetNodeName(Win, i, Name, FMAX_PATH);
+			_mbslwr(Name);
+
+			LvItem.state = 0;
+			if (((FindMode == 0) && (CheckFname(Name, RegExp) == FFFTP_SUCCESS)) ||
+				((FindMode != 0) && (JreGetStrMatchInfo(Name, 0) != NULL)))
 			{
-				GetNodeName(Win, i, Name, FMAX_PATH);
-				_mbslwr(Name);
-
-				LvItem.state = 0;
-				if(((FindMode == 0) && (CheckFname(Name, RegExp) == FFFTP_SUCCESS)) ||
-				   ((FindMode != 0) && (JreGetStrMatchInfo(Name, 0) != NULL)))
-				{
-					LvItem.mask = LVIF_STATE;
-					LvItem.iItem = i;
-					LvItem.state = LVIS_FOCUSED;
-					LvItem.stateMask = LVIS_FOCUSED;
-					LvItem.iSubItem = 0;
-					SendMessage(hWnd, LVM_SETITEMSTATE, i, (LPARAM)&LvItem);
-					SendMessage(hWnd, LVM_ENSUREVISIBLE, i, (LPARAM)TRUE);
-					break;
-				}
+				LvItem.mask = LVIF_STATE;
+				LvItem.iItem = i;
+				LvItem.state = LVIS_FOCUSED;
+				LvItem.stateMask = LVIS_FOCUSED;
+				LvItem.iSubItem = 0;
+				SendMessage(hWnd, LVM_SETITEMSTATE, i, (LPARAM)&LvItem);
+				SendMessage(hWnd, LVM_ENSUREVISIBLE, i, (LPARAM)TRUE);
+				break;
 			}
-			break;
+		}
+		break;
 	}
 	return;
 }
@@ -2273,11 +2283,11 @@ void FindFileInList(HWND hWnd, int Type)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void WildCard2RegExp(char *Str)
+void WildCard2RegExp(char* Str)
 {
-	char Tmp[FMAX_PATH+1];
-	char *Org;
-	char *Pos;
+	char Tmp[FMAX_PATH + 1];
+	char* Org;
+	char* Pos;
 	UINT Ch;
 
 	Org = Str;
@@ -2285,29 +2295,29 @@ void WildCard2RegExp(char *Str)
 
 	*Pos++ = '^';
 	*Pos++ = '(';
-	while(*Str != NUL)
+	while (*Str != NUL)
 	{
-		if(Pos >= Tmp + FMAX_PATH - 3)
+		if (Pos >= Tmp + FMAX_PATH - 3)
 			break;
 
 		Ch = _mbsnextc(Str);
 		Str = _mbsinc(Str);
 
-		if(Ch <= 0x7F)
+		if (Ch <= 0x7F)
 		{
-			if(strchr("[]()^$.+", Ch) != NULL)
+			if (strchr("[]()^$.+", Ch) != NULL)
 			{
 				*Pos++ = '\\';
 				*Pos++ = Ch;
 			}
-			else if(Ch == '*')
+			else if (Ch == '*')
 			{
 				*Pos++ = '.';
 				*Pos++ = '*';
 			}
-			else if(Ch == '?')
+			else if (Ch == '?')
 				*Pos++ = '.';
-			else if(Ch == '|')
+			else if (Ch == '|')
 			{
 				*Pos++ = '|';
 			}
@@ -2345,10 +2355,10 @@ int GetCurrentItem(int Win)
 	int Ret;
 
 	hWnd = GetLocalHwnd();
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 		hWnd = GetRemoteHwnd();
 
-	if((Ret = SendMessage(hWnd, LVM_GETNEXTITEM, -1, MAKELPARAM(LVNI_ALL | LVNI_FOCUSED, 0))) == -1)
+	if ((Ret = SendMessage(hWnd, LVM_GETNEXTITEM, -1, MAKELPARAM(LVNI_ALL | LVNI_FOCUSED, 0))) == -1)
 		Ret = 0;
 
 	return(Ret);
@@ -2369,7 +2379,7 @@ int GetItemCount(int Win)
 	HWND hWnd;
 
 	hWnd = GetLocalHwnd();
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 		hWnd = GetRemoteHwnd();
 
 	return(SendMessage(hWnd, LVM_GETITEMCOUNT, 0, 0));
@@ -2390,7 +2400,7 @@ int GetSelectedCount(int Win)
 	HWND hWnd;
 
 	hWnd = GetLocalHwnd();
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 		hWnd = GetRemoteHwnd();
 
 	return(SendMessage(hWnd, LVM_GETSELECTEDCOUNT, 0, 0));
@@ -2414,11 +2424,11 @@ int GetFirstSelected(int Win, int All)
 	int Ope;
 
 	hWnd = GetLocalHwnd();
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 		hWnd = GetRemoteHwnd();
 
 	Ope = LVNI_SELECTED;
-	if(All == YES)
+	if (All == YES)
 		Ope = LVNI_ALL;
 
 	return(SendMessage(hWnd, LVM_GETNEXTITEM, (WPARAM)-1, (LPARAM)MAKELPARAM(Ope, 0)));
@@ -2443,11 +2453,11 @@ int GetNextSelected(int Win, int Pos, int All)
 	int Ope;
 
 	hWnd = GetLocalHwnd();
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 		hWnd = GetRemoteHwnd();
 
 	Ope = LVNI_SELECTED;
-	if(All == YES)
+	if (All == YES)
 		Ope = LVNI_ALL;
 
 	return(SendMessage(hWnd, LVM_GETNEXTITEM, (WPARAM)Pos, (LPARAM)MAKELPARAM(Ope, 0)));
@@ -2455,43 +2465,43 @@ int GetNextSelected(int Win, int Pos, int All)
 
 
 // ローカル側自動更新
-int GetHotSelected(int Win, char *Fname)
+int GetHotSelected(int Win, char* Fname)
 {
 	HWND hWnd;
 	int Pos;
 
 	hWnd = GetLocalHwnd();
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 		hWnd = GetRemoteHwnd();
 
 	Pos = SendMessage(hWnd, LVM_GETNEXTITEM, (WPARAM)-1, (LPARAM)MAKELPARAM(LVNI_FOCUSED, 0));
-	if(Pos != -1)
+	if (Pos != -1)
 		GetNodeName(Win, Pos, Fname, FMAX_PATH);
 
 	return Pos;
 }
 
-int SetHotSelected(int Win, char *Fname)
+int SetHotSelected(int Win, char* Fname)
 {
 	HWND hWnd;
 	int i;
 	int Num;
-	char Name[FMAX_PATH+1];
+	char Name[FMAX_PATH + 1];
 	LV_ITEM LvItem;
 	int Pos;
 
 	hWnd = GetLocalHwnd();
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 		hWnd = GetRemoteHwnd();
 
 	Num = GetItemCount(Win);
 	memset(&LvItem, 0, sizeof(LV_ITEM));
 	Pos = -1;
-	for(i = 0; i < Num; i++)
+	for (i = 0; i < Num; i++)
 	{
 		LvItem.state = 0;
 		GetNodeName(Win, i, Name, FMAX_PATH);
-		if(_mbscmp(Fname, Name) == 0)
+		if (_mbscmp(Fname, Name) == 0)
 		{
 			Pos = i;
 			LvItem.state = LVIS_FOCUSED;
@@ -2517,13 +2527,13 @@ int SetHotSelected(int Win, char *Fname)
 *			-1=見つからなかった
 *----------------------------------------------------------------------------*/
 
-int FindNameNode(int Win, char *Name)
+int FindNameNode(int Win, char* Name)
 {
 	LV_FINDINFO FindInfo;
 	HWND hWnd;
 
 	hWnd = GetLocalHwnd();
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 		hWnd = GetRemoteHwnd();
 
 	// 変数が未初期化のバグ修正
@@ -2546,13 +2556,13 @@ int FindNameNode(int Win, char *Name)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void GetNodeName(int Win, int Pos, char *Buf, int Max)
+void GetNodeName(int Win, int Pos, char* Buf, int Max)
 {
 	HWND hWnd;
 	LV_ITEM LvItem;
 
 	hWnd = GetLocalHwnd();
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 		hWnd = GetRemoteHwnd();
 
 	// 変数が未初期化のバグ修正
@@ -2579,7 +2589,7 @@ void GetNodeName(int Win, int Pos, char *Buf, int Max)
 *			YES/NO=日付情報がなかった
 *----------------------------------------------------------------------------*/
 
-int GetNodeTime(int Win, int Pos, FILETIME *Buf)
+int GetNodeTime(int Win, int Pos, FILETIME* Buf)
 {
 	HWND hWnd;
 	LV_ITEM LvItem;
@@ -2587,7 +2597,7 @@ int GetNodeTime(int Win, int Pos, FILETIME *Buf)
 	int Ret;
 
 	hWnd = GetLocalHwnd();
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 		hWnd = GetRemoteHwnd();
 
 	// 変数が未初期化のバグ修正
@@ -2615,7 +2625,7 @@ int GetNodeTime(int Win, int Pos, FILETIME *Buf)
 *			YES/NO=サイズ情報がなかった
 *----------------------------------------------------------------------------*/
 
-int GetNodeSize(int Win, int Pos, LONGLONG *Buf)
+int GetNodeSize(int Win, int Pos, LONGLONG* Buf)
 {
 	HWND hWnd;
 	LV_ITEM LvItem;
@@ -2623,7 +2633,7 @@ int GetNodeSize(int Win, int Pos, LONGLONG *Buf)
 	int Ret;
 
 	hWnd = GetLocalHwnd();
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 		hWnd = GetRemoteHwnd();
 
 	// 変数が未初期化のバグ修正
@@ -2637,18 +2647,19 @@ int GetNodeSize(int Win, int Pos, LONGLONG *Buf)
 	*Buf = -1;
 	Ret = NO;
 #if defined(HAVE_TANDEM)
-	if(AskHostType() == HTYPE_TANDEM) {
-		RemoveComma(Tmp);
-		*Buf = _atoi64(Tmp);
-		Ret = YES;
-	} else
-#endif
-	if(strlen(Tmp) > 0)
-	{
+	if (AskHostType() == HTYPE_TANDEM) {
 		RemoveComma(Tmp);
 		*Buf = _atoi64(Tmp);
 		Ret = YES;
 	}
+	else
+#endif
+		if (strlen(Tmp) > 0)
+		{
+			RemoveComma(Tmp);
+			*Buf = _atoi64(Tmp);
+			Ret = YES;
+		}
 	return(Ret);
 }
 
@@ -2665,7 +2676,7 @@ int GetNodeSize(int Win, int Pos, LONGLONG *Buf)
 *			YES/NO=サイズ情報がなかった
 *----------------------------------------------------------------------------*/
 
-int GetNodeAttr(int Win, int Pos, int *Buf)
+int GetNodeAttr(int Win, int Pos, int* Buf)
 {
 	LV_ITEM LvItem;
 	char Tmp[20];
@@ -2673,29 +2684,29 @@ int GetNodeAttr(int Win, int Pos, int *Buf)
 
 	*Buf = 0;
 	Ret = NO;
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 	{
 		// 変数が未初期化のバグ修正
 		memset(&LvItem, 0, sizeof(LV_ITEM));
 		LvItem.mask = LVIF_TEXT;
 		LvItem.iItem = Pos;
 #if defined(HAVE_TANDEM)
-		if(AskHostType() == HTYPE_TANDEM)
+		if (AskHostType() == HTYPE_TANDEM)
 			LvItem.iSubItem = 3;
 		else
 #endif
-		LvItem.iSubItem = 4;
+			LvItem.iSubItem = 4;
 		LvItem.pszText = Tmp;
 		LvItem.cchTextMax = 20;
 		SendMessage(GetRemoteHwnd(), LVM_GETITEM, 0, (LPARAM)&LvItem);
-		if(strlen(Tmp) > 0)
+		if (strlen(Tmp) > 0)
 		{
 #if defined(HAVE_TANDEM)
-			if(AskHostType() == HTYPE_TANDEM)
+			if (AskHostType() == HTYPE_TANDEM)
 				*Buf = atoi(Tmp);
 			else
 #endif
-			*Buf = AttrString2Value(Tmp);
+				* Buf = AttrString2Value(Tmp);
 			Ret = YES;
 		}
 	}
@@ -2721,7 +2732,7 @@ int GetNodeType(int Win, int Pos)
 	HWND hWnd;
 
 	hWnd = GetLocalHwnd();
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 		hWnd = GetRemoteHwnd();
 
 	// 変数が未初期化のバグ修正
@@ -2733,9 +2744,9 @@ int GetNodeType(int Win, int Pos)
 	LvItem.cchTextMax = 20;
 	SendMessage(hWnd, LVM_GETITEM, 0, (LPARAM)&LvItem);
 
-	if(strcmp(Tmp, "<DIR>") == 0)
+	if (strcmp(Tmp, "<DIR>") == 0)
 		Ret = NODE_DIR;
-	else if(strcmp(Tmp, "<DRIVE>") == 0)
+	else if (strcmp(Tmp, "<DRIVE>") == 0)
 		Ret = NODE_DRIVE;
 	else
 		Ret = NODE_FILE;
@@ -2760,7 +2771,7 @@ static int GetImageIndex(int Win, int Pos)
 	LV_ITEM LvItem;
 
 	hWnd = GetLocalHwnd();
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 		hWnd = GetRemoteHwnd();
 
 	// 変数が未初期化のバグ修正
@@ -2785,12 +2796,12 @@ static int GetImageIndex(int Win, int Pos)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void GetNodeOwner(int Win, int Pos, char *Buf, int Max)
+void GetNodeOwner(int Win, int Pos, char* Buf, int Max)
 {
 	LV_ITEM LvItem;
 
 	strcpy(Buf, "");
-	if(Win == WIN_REMOTE)
+	if (Win == WIN_REMOTE)
 	{
 		// 変数が未初期化のバグ修正
 		memset(&LvItem, 0, sizeof(LV_ITEM));
@@ -2838,13 +2849,13 @@ double GetSelectedTotalSize(int Win)
 	int Pos;
 
 	Ret = 0;
-	if(GetSelectedCount(Win) > 0)
+	if (GetSelectedCount(Win) > 0)
 	{
 		Pos = GetFirstSelected(Win, NO);
-		while(Pos != -1)
+		while (Pos != -1)
 		{
 			GetNodeSize(Win, Pos, &Size);
-			if(Size >= 0)
+			if (Size >= 0)
 				Ret += Size;
 			Pos = GetNextSelected(Win, Pos, NO);
 		}
@@ -2874,13 +2885,13 @@ double GetSelectedTotalSize(int Win)
 
 // ファイル一覧バグ修正
 //void MakeSelectedFileList(int Win, int Expand, int All, FILELIST **Base, int *CancelCheckWork)
-int MakeSelectedFileList(int Win, int Expand, int All, FILELIST **Base, int *CancelCheckWork)
+int MakeSelectedFileList(int Win, int Expand, int All, FILELIST** Base, int* CancelCheckWork)
 {
 	// ファイル一覧バグ修正
 	int Sts;
 	int Pos;
-	char Name[FMAX_PATH+1];
-	char Cur[FMAX_PATH+1];
+	char Name[FMAX_PATH + 1];
+	char Cur[FMAX_PATH + 1];
 	FILELIST Pkt;
 	int Node;
 	DWORD Attr;
@@ -2888,55 +2899,55 @@ int MakeSelectedFileList(int Win, int Expand, int All, FILELIST **Base, int *Can
 
 	// ファイル一覧バグ修正
 	Sts = FFFTP_SUCCESS;
-	if((All == YES) || (GetSelectedCount(Win) > 0))
+	if ((All == YES) || (GetSelectedCount(Win) > 0))
 	{
 		/*===== カレントディレクトリのファイル =====*/
 
 		Pos = GetFirstSelected(Win, All);
-		while(Pos != -1)
+		while (Pos != -1)
 		{
 			Node = GetNodeType(Win, Pos);
-			if((Node == NODE_FILE) ||
-			   ((Expand == NO) && (Node == NODE_DIR)))
+			if ((Node == NODE_FILE) ||
+				((Expand == NO) && (Node == NODE_DIR)))
 			{
 				// 変数が未初期化のバグ修正
 				memset(&Pkt, 0, sizeof(FILELIST));
 
 				Pkt.InfoExist = 0;
 				GetNodeName(Win, Pos, Pkt.File, FMAX_PATH);
-				if(GetNodeSize(Win, Pos, &Pkt.Size) == YES)
+				if (GetNodeSize(Win, Pos, &Pkt.Size) == YES)
 					Pkt.InfoExist |= FINFO_SIZE;
-				if(GetNodeAttr(Win, Pos, &Pkt.Attr) == YES)
+				if (GetNodeAttr(Win, Pos, &Pkt.Attr) == YES)
 					Pkt.InfoExist |= FINFO_ATTR;
-				if(GetNodeTime(Win, Pos, &Pkt.Time) == YES)
+				if (GetNodeTime(Win, Pos, &Pkt.Time) == YES)
 					Pkt.InfoExist |= (FINFO_TIME | FINFO_DATE);
 				Pkt.Node = Node;
 
 				Ignore = NO;
-				if((DispIgnoreHide == YES) && (Win == WIN_LOCAL))
+				if ((DispIgnoreHide == YES) && (Win == WIN_LOCAL))
 				{
 					AskLocalCurDir(Cur, FMAX_PATH);
 					SetYenTail(Cur);
 					strcat(Cur, Pkt.File);
 					Attr = GetFileAttributes(Cur);
-					if((Attr != 0xFFFFFFFF) && (Attr & FILE_ATTRIBUTE_HIDDEN))
+					if ((Attr != 0xFFFFFFFF) && (Attr & FILE_ATTRIBUTE_HIDDEN))
 						Ignore = YES;
 				}
 
-				if(Ignore == NO)
+				if (Ignore == NO)
 					AddFileList(&Pkt, Base);
 			}
 			Pos = GetNextSelected(Win, Pos, All);
 		}
 
-		if(Expand == YES)
+		if (Expand == YES)
 		{
 			/*===== ディレクトリツリー =====*/
 
 			Pos = GetFirstSelected(Win, All);
-			while(Pos != -1)
+			while (Pos != -1)
 			{
-				if(GetNodeType(Win, Pos) == NODE_DIR)
+				if (GetNodeType(Win, Pos) == NODE_DIR)
 				{
 					// 変数が未初期化のバグ修正
 					memset(&Pkt, 0, sizeof(FILELIST));
@@ -2944,24 +2955,24 @@ int MakeSelectedFileList(int Win, int Expand, int All, FILELIST **Base, int *Can
 					GetNodeName(Win, Pos, Name, FMAX_PATH);
 					strcpy(Pkt.File, Name);
 					ReplaceAll(Pkt.File, '\\', '/');
-//8/26
+					//8/26
 
 					Ignore = NO;
-					if((DispIgnoreHide == YES) && (Win == WIN_LOCAL))
+					if ((DispIgnoreHide == YES) && (Win == WIN_LOCAL))
 					{
 						AskLocalCurDir(Cur, FMAX_PATH);
 						SetYenTail(Cur);
 						strcat(Cur, Pkt.File);
 						ReplaceAll(Cur, '/', '\\');
 						Attr = GetFileAttributes(Cur);
-						if((Attr != 0xFFFFFFFF) && (Attr & FILE_ATTRIBUTE_HIDDEN))
+						if ((Attr != 0xFFFFFFFF) && (Attr & FILE_ATTRIBUTE_HIDDEN))
 							Ignore = YES;
 					}
 
-					if(Ignore == NO)
+					if (Ignore == NO)
 					{
-//						Pkt.Node = NODE_DIR;
-						if(GetImageIndex(Win, Pos) == 4) // symlink
+						//						Pkt.Node = NODE_DIR;
+						if (GetImageIndex(Win, Pos) == 4) // symlink
 							Pkt.Node = NODE_FILE;
 						else
 							Pkt.Node = NODE_DIR;
@@ -2970,47 +2981,47 @@ int MakeSelectedFileList(int Win, int Expand, int All, FILELIST **Base, int *Can
 						memset(&Pkt.Time, 0, sizeof(FILETIME));
 						AddFileList(&Pkt, Base);
 
-//						if(Win == WIN_LOCAL)
-//							MakeLocalTree(Name, Base);
-//						else
-//						{
-//							AskRemoteCurDir(Cur, FMAX_PATH);
-//
-//							if((AskListCmdMode() == NO) &&
-//							   (AskUseNLST_R() == YES))
-//								MakeRemoteTree1(Name, Cur, Base, CancelCheckWork);
-//							else
-//								MakeRemoteTree2(Name, Cur, Base, CancelCheckWork);
-//						}
-						if(GetImageIndex(Win, Pos) != 4) { // symlink
-							if(Win == WIN_LOCAL)
-							// ファイル一覧バグ修正
-//								MakeLocalTree(Name, Base);
+						//						if(Win == WIN_LOCAL)
+						//							MakeLocalTree(Name, Base);
+						//						else
+						//						{
+						//							AskRemoteCurDir(Cur, FMAX_PATH);
+						//
+						//							if((AskListCmdMode() == NO) &&
+						//							   (AskUseNLST_R() == YES))
+						//								MakeRemoteTree1(Name, Cur, Base, CancelCheckWork);
+						//							else
+						//								MakeRemoteTree2(Name, Cur, Base, CancelCheckWork);
+						//						}
+						if (GetImageIndex(Win, Pos) != 4) { // symlink
+							if (Win == WIN_LOCAL)
+								// ファイル一覧バグ修正
+	//								MakeLocalTree(Name, Base);
 							{
-								if(MakeLocalTree(Name, Base) == FFFTP_FAIL)
+								if (MakeLocalTree(Name, Base) == FFFTP_FAIL)
 									Sts = FFFTP_FAIL;
 							}
 							else
 							{
 								AskRemoteCurDir(Cur, FMAX_PATH);
 
-								if((AskListCmdMode() == NO) &&
-								   (AskUseNLST_R() == YES))
-								// ファイル一覧バグ修正
-//									MakeRemoteTree1(Name, Cur, Base, CancelCheckWork);
+								if ((AskListCmdMode() == NO) &&
+									(AskUseNLST_R() == YES))
+									// ファイル一覧バグ修正
+	//									MakeRemoteTree1(Name, Cur, Base, CancelCheckWork);
 								{
-									if(MakeRemoteTree1(Name, Cur, Base, CancelCheckWork) == FFFTP_FAIL)
+									if (MakeRemoteTree1(Name, Cur, Base, CancelCheckWork) == FFFTP_FAIL)
 										Sts = FFFTP_FAIL;
 								}
 								else
-								// ファイル一覧バグ修正
-//									MakeRemoteTree2(Name, Cur, Base, CancelCheckWork);
+									// ファイル一覧バグ修正
+	//									MakeRemoteTree2(Name, Cur, Base, CancelCheckWork);
 								{
-									if(MakeRemoteTree2(Name, Cur, Base, CancelCheckWork) == FFFTP_FAIL)
+									if (MakeRemoteTree2(Name, Cur, Base, CancelCheckWork) == FFFTP_FAIL)
 										Sts = FFFTP_FAIL;
 								}
 
-//DispListList(*Base, "LIST");
+								//DispListList(*Base, "LIST");
 
 							}
 						}
@@ -3028,10 +3039,10 @@ int MakeSelectedFileList(int Win, int Expand, int All, FILELIST **Base, int *Can
 
 /* デバッグ用 */
 /* ファイルリストの内容を表示 */
-static void DispListList(FILELIST *Pos, char *Title)
+static void DispListList(FILELIST* Pos, char* Title)
 {
 	DoPrintf("############ %s ############", Title);
-	while(Pos != NULL)
+	while (Pos != NULL)
 	{
 		DoPrintf("%d %s", Pos->Node, Pos->File);
 		Pos = Pos->Next;
@@ -3052,12 +3063,12 @@ static void DispListList(FILELIST *Pos, char *Title)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void MakeDroppedFileList(WPARAM wParam, char *Cur, FILELIST **Base)
+void MakeDroppedFileList(WPARAM wParam, char* Cur, FILELIST** Base)
 {
 	int Max;
 	int i;
-	char Name[FMAX_PATH+1];
-	char Tmp[FMAX_PATH+1];
+	char Name[FMAX_PATH + 1];
+	char Tmp[FMAX_PATH + 1];
 	FILELIST Pkt;
 	HANDLE fHnd;
 	WIN32_FIND_DATA Find;
@@ -3069,11 +3080,11 @@ void MakeDroppedFileList(WPARAM wParam, char *Cur, FILELIST **Base)
 	DragQueryFile((HDROP)wParam, 0, Cur, FMAX_PATH);
 	GetUpperDir(Cur);
 
-	for(i = 0; i < Max; i++)
+	for (i = 0; i < Max; i++)
 	{
 		DragQueryFile((HDROP)wParam, i, Name, FMAX_PATH);
 
-		if((GetFileAttributes(Name) & FILE_ATTRIBUTE_DIRECTORY) == 0)
+		if ((GetFileAttributes(Name) & FILE_ATTRIBUTE_DIRECTORY) == 0)
 		{
 			// 変数が未初期化のバグ修正
 			memset(&Pkt, 0, sizeof(FILELIST));
@@ -3087,14 +3098,14 @@ void MakeDroppedFileList(WPARAM wParam, char *Cur, FILELIST **Base)
 			Pkt.Size = 0;
 			Pkt.InfoExist = 0;
 #endif
-			if((fHnd = FindFirstFile(Name, &Find)) != INVALID_HANDLE_VALUE)
+			if ((fHnd = FindFirstFile(Name, &Find)) != INVALID_HANDLE_VALUE)
 			{
 				FindClose(fHnd);
 				Pkt.Time = Find.ftLastWriteTime;
 				// タイムスタンプのバグ修正
-				if(FileTimeToSystemTime(&Pkt.Time, &TmpStime))
+				if (FileTimeToSystemTime(&Pkt.Time, &TmpStime))
 				{
-					if(DispTimeSeconds == NO)
+					if (DispTimeSeconds == NO)
 						TmpStime.wSecond = 0;
 					TmpStime.wMilliseconds = 0;
 					SystemTimeToFileTime(&TmpStime, &Pkt.Time);
@@ -3112,11 +3123,11 @@ void MakeDroppedFileList(WPARAM wParam, char *Cur, FILELIST **Base)
 
 	GetCurrentDirectory(FMAX_PATH, Tmp);
 	SetCurrentDirectory(Cur);
-	for(i = 0; i < Max; i++)
+	for (i = 0; i < Max; i++)
 	{
 		DragQueryFile((HDROP)wParam, i, Name, FMAX_PATH);
 
-		if(GetFileAttributes(Name) & FILE_ATTRIBUTE_DIRECTORY)
+		if (GetFileAttributes(Name) & FILE_ATTRIBUTE_DIRECTORY)
 		{
 			// 変数が未初期化のバグ修正
 			memset(&Pkt, 0, sizeof(FILELIST));
@@ -3146,7 +3157,7 @@ void MakeDroppedFileList(WPARAM wParam, char *Cur, FILELIST **Base)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void MakeDroppedDir(WPARAM wParam, char *Cur)
+void MakeDroppedDir(WPARAM wParam, char* Cur)
 {
 	int Max;
 
@@ -3175,7 +3186,7 @@ void MakeDroppedDir(WPARAM wParam, char *Cur)
 
 // ファイル一覧バグ修正
 //static void MakeRemoteTree1(char *Path, char *Cur, FILELIST **Base, int *CancelCheckWork)
-static int MakeRemoteTree1(char *Path, char *Cur, FILELIST **Base, int *CancelCheckWork)
+static int MakeRemoteTree1(char* Path, char* Cur, FILELIST** Base, int* CancelCheckWork)
 {
 	// ファイル一覧バグ修正
 	int Ret;
@@ -3183,15 +3194,15 @@ static int MakeRemoteTree1(char *Path, char *Cur, FILELIST **Base, int *CancelCh
 
 	// ファイル一覧バグ修正
 	Ret = FFFTP_FAIL;
-	if(DoCWD(Path, NO, NO, NO) == FTP_COMPLETE)
+	if (DoCWD(Path, NO, NO, NO) == FTP_COMPLETE)
 	{
 		/* サブフォルダも含めたリストを取得 */
 		Sts = DoDirListCmdSkt("R", "", 999, CancelCheckWork);	/* NLST -alLR*/
 		DoCWD(Cur, NO, NO, NO);
 
-		if(Sts == FTP_COMPLETE)
-		// ファイル一覧バグ修正
-//			AddRemoteTreeToFileList(999, Path, RDIR_NLST, Base);
+		if (Sts == FTP_COMPLETE)
+			// ファイル一覧バグ修正
+	//			AddRemoteTreeToFileList(999, Path, RDIR_NLST, Base);
 		{
 			AddRemoteTreeToFileList(999, Path, RDIR_NLST, Base);
 			Ret = FFFTP_SUCCESS;
@@ -3219,20 +3230,20 @@ static int MakeRemoteTree1(char *Path, char *Cur, FILELIST **Base, int *CancelCh
 
 // ファイル一覧バグ修正
 //static void MakeRemoteTree2(char *Path, char *Cur, FILELIST **Base, int *CancelCheckWork)
-static int MakeRemoteTree2(char *Path, char *Cur, FILELIST **Base, int *CancelCheckWork)
+static int MakeRemoteTree2(char* Path, char* Cur, FILELIST** Base, int* CancelCheckWork)
 {
 	// ファイル一覧バグ修正
 	int Ret;
 	int Sts;
-	FILELIST *CurList;
-	FILELIST *Pos;
+	FILELIST* CurList;
+	FILELIST* Pos;
 	FILELIST Pkt;
 
 	// ファイル一覧バグ修正
 	Ret = FFFTP_FAIL;
 	/* VAX VMS は CWD xxx/yyy という指定ができないので	*/
 	/* CWD xxx, Cwd yyy と複数に分ける					*/
-	if(AskHostType() != HTYPE_VMS)
+	if (AskHostType() != HTYPE_VMS)
 		Sts = DoCWD(Path, NO, NO, NO);
 	else
 	{
@@ -3243,12 +3254,12 @@ static int MakeRemoteTree2(char *Path, char *Cur, FILELIST **Base, int *CancelCh
 		Sts = DoCWDStepByStep(Path, Cur);
 	}
 
-	if(Sts == FTP_COMPLETE)
+	if (Sts == FTP_COMPLETE)
 	{
 		Sts = DoDirListCmdSkt("", "", 999, CancelCheckWork);		/* NLST -alL*/
 		DoCWD(Cur, NO, NO, NO);
 
-		if(Sts == FTP_COMPLETE)
+		if (Sts == FTP_COMPLETE)
 		{
 			CurList = NULL;
 			AddRemoteTreeToFileList(999, Path, RDIR_CWD, &CurList);
@@ -3258,18 +3269,18 @@ static int MakeRemoteTree2(char *Path, char *Cur, FILELIST **Base, int *CancelCh
 			Ret = FFFTP_SUCCESS;
 
 			Pos = CurList;
-			while(Pos != NULL)
+			while (Pos != NULL)
 			{
-				if(Pos->Node == NODE_DIR)
+				if (Pos->Node == NODE_DIR)
 				{
 					// 変数が未初期化のバグ修正
 					memset(&Pkt, 0, sizeof(FILELIST));
 
 					/* まずディレクトリ名をセット */
 					strcpy(Pkt.File, Pos->File);
-//					Pkt.Node = NODE_DIR;
+					//					Pkt.Node = NODE_DIR;
 					Pkt.Link = Pos->Link;
-					if(Pkt.Link == YES)
+					if (Pkt.Link == YES)
 						Pkt.Node = NODE_FILE;
 					else
 						Pkt.Node = NODE_DIR;
@@ -3280,11 +3291,11 @@ static int MakeRemoteTree2(char *Path, char *Cur, FILELIST **Base, int *CancelCh
 
 					/* そのディレクトリの中を検索 */
 //					MakeRemoteTree2(Pos->File, Cur, Base, CancelCheckWork);
-					if(Pkt.Link == NO)
-					// ファイル一覧バグ修正
-//						MakeRemoteTree2(Pos->File, Cur, Base, CancelCheckWork);
+					if (Pkt.Link == NO)
+						// ファイル一覧バグ修正
+	//						MakeRemoteTree2(Pos->File, Cur, Base, CancelCheckWork);
 					{
-						if(MakeRemoteTree2(Pos->File, Cur, Base, CancelCheckWork) == FFFTP_FAIL)
+						if (MakeRemoteTree2(Pos->File, Cur, Base, CancelCheckWork) == FFFTP_FAIL)
 							Ret = FFFTP_FAIL;
 					}
 				}
@@ -3313,11 +3324,11 @@ static int MakeRemoteTree2(char *Path, char *Cur, FILELIST **Base, int *CancelCh
 *		ディレクトリの情報はコピーしない
 *----------------------------------------------------------------------------*/
 
-static void CopyTmpListToFileList(FILELIST **Base, FILELIST *List)
+static void CopyTmpListToFileList(FILELIST** Base, FILELIST* List)
 {
-	while(List != NULL)
+	while (List != NULL)
 	{
-		if(List->Node == NODE_FILE)
+		if (List->Node == NODE_FILE)
 			AddFileList(List, Base);
 
 		List = List->Next;
@@ -3338,24 +3349,24 @@ static void CopyTmpListToFileList(FILELIST **Base, FILELIST *List)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void AddRemoteTreeToFileList(int Num, char *Path, int IncDir, FILELIST **Base)
+void AddRemoteTreeToFileList(int Num, char* Path, int IncDir, FILELIST** Base)
 {
-	char Str[FMAX_PATH+1];
-	char Dir[FMAX_PATH+1];
-	char Name[FMAX_PATH+1];
+	char Str[FMAX_PATH + 1];
+	char Dir[FMAX_PATH + 1];
+	char Name[FMAX_PATH + 1];
 	LONGLONG Size;
 	FILETIME Time;
 	int Attr;
 	FILELIST Pkt;
-	FILE *fd;
+	FILE* fd;
 	int Node;
 	int ListType;
-	char Owner[OWNER_NAME_LEN+1];
+	char Owner[OWNER_NAME_LEN + 1];
 	int Link;
 	int InfoExist;
 
 	MakeCacheFileName(Num, Str);
-	if((fd = fopen(Str, "rb")) != NULL)
+	if ((fd = fopen(Str, "rb")) != NULL)
 	{
 		strcpy(Dir, Path);
 
@@ -3363,13 +3374,13 @@ void AddRemoteTreeToFileList(int Num, char *Path, int IncDir, FILELIST **Base)
 
 		// 文字化け対策
 //		while(GetListOneLine(Str, FMAX_PATH, fd) == FFFTP_SUCCESS)
-		while(GetListOneLine(Str, FMAX_PATH, fd, YES) == FFFTP_SUCCESS)
+		while (GetListOneLine(Str, FMAX_PATH, fd, YES) == FFFTP_SUCCESS)
 		{
-			if((ListType = AnalyzeFileInfo(Str)) == LIST_UNKNOWN)
+			if ((ListType = AnalyzeFileInfo(Str)) == LIST_UNKNOWN)
 			{
-				if(MakeDirPath(Str, ListType, Path, Dir) == FFFTP_SUCCESS)
+				if (MakeDirPath(Str, ListType, Path, Dir) == FFFTP_SUCCESS)
 				{
-					if(IncDir == RDIR_NLST)
+					if (IncDir == RDIR_NLST)
 					{
 						// 変数が未初期化のバグ修正
 						memset(&Pkt, 0, sizeof(FILELIST));
@@ -3387,16 +3398,16 @@ void AddRemoteTreeToFileList(int Num, char *Path, int IncDir, FILELIST **Base)
 			{
 				Node = ResolveFileInfo(Str, ListType, Name, &Size, &Time, &Attr, Owner, &Link, &InfoExist);
 
-				if(AskFilterStr(Name, Node) == YES)
+				if (AskFilterStr(Name, Node) == YES)
 				{
-					if((Node == NODE_FILE) ||
-					   ((IncDir == RDIR_CWD) && (Node == NODE_DIR)))
+					if ((Node == NODE_FILE) ||
+						((IncDir == RDIR_CWD) && (Node == NODE_DIR)))
 					{
 						// 変数が未初期化のバグ修正
 						memset(&Pkt, 0, sizeof(FILELIST));
 
 						strcpy(Pkt.File, Dir);
-						if(strlen(Pkt.File) > 0)
+						if (strlen(Pkt.File) > 0)
 							SetSlashTail(Pkt.File);
 						strcat(Pkt.File, Name);
 						Pkt.Node = Node;
@@ -3433,37 +3444,37 @@ void AddRemoteTreeToFileList(int Num, char *Path, int IncDir, FILELIST **Base)
 
 // 文字化け対策
 //static int GetListOneLine(char *Buf, int Max, FILE *Fd)
-static int GetListOneLine(char *Buf, int Max, FILE *Fd, int Convert)
+static int GetListOneLine(char* Buf, int Max, FILE* Fd, int Convert)
 {
-	char Tmp[FMAX_PATH+1];
+	char Tmp[FMAX_PATH + 1];
 	int Sts;
 
 	Sts = FFFTP_FAIL;
-	while((Sts == FFFTP_FAIL) && (fgets(Buf, Max, Fd) != NULL))
+	while ((Sts == FFFTP_FAIL) && (fgets(Buf, Max, Fd) != NULL))
 	{
 		Sts = FFFTP_SUCCESS;
 		// 文字化け対策
-		if(Convert == YES)
+		if (Convert == YES)
 			ChangeFnameRemote2Local(Buf, Max);
 		RemoveReturnCode(Buf);
 		ReplaceAll(Buf, '\x08', ' ');
 
 		/* VAX VMSではファイル情報が複数行にわかれている	*/
 		/* それを１行にまとめる								*/
-		if(AskHostType() == HTYPE_VMS)
+		if (AskHostType() == HTYPE_VMS)
 		{
-			if(strchr(Buf, ';') == NULL)	/* ファイル名以外の行 */
+			if (strchr(Buf, ';') == NULL)	/* ファイル名以外の行 */
 				Sts = FFFTP_FAIL;
 			else
 			{
 				Max -= strlen(Buf);
-				while(strchr(Buf, ')') == NULL)
+				while (strchr(Buf, ')') == NULL)
 				{
-					if(fgets(Tmp, FMAX_PATH, Fd) != NULL)
+					if (fgets(Tmp, FMAX_PATH, Fd) != NULL)
 					{
 						RemoveReturnCode(Tmp);
 						ReplaceAll(Buf, '\x08', ' ');
-						if((int)strlen(Tmp) > Max)
+						if ((int)strlen(Tmp) > Max)
 							Tmp[Max] = NUL;
 						Max -= strlen(Tmp);
 						strcat(Buf, Tmp);
@@ -3475,7 +3486,7 @@ static int GetListOneLine(char *Buf, int Max, FILE *Fd, int Convert)
 		}
 	}
 
-//	DoPrintf("List : %s", Buf);
+	//	DoPrintf("List : %s", Buf);
 
 	return(Sts);
 }
@@ -3494,44 +3505,44 @@ static int GetListOneLine(char *Buf, int Max, FILE *Fd, int Convert)
 *			FFFTP_SUCCESS/FFFTP_FAIL=ディレクトリ情報でない
 *----------------------------------------------------------------------------*/
 
-static int MakeDirPath(char *Str, int ListType, char *Path, char *Dir)
+static int MakeDirPath(char* Str, int ListType, char* Path, char* Dir)
 {
 	int Sts;
 
 	Sts = FFFTP_FAIL;
-	switch(ListType)
+	switch (ListType)
 	{
-		case LIST_ACOS :
-		case LIST_ACOS_4 :
-			break;
+	case LIST_ACOS:
+	case LIST_ACOS_4:
+		break;
 
-		default:
-			if(*(Str + strlen(Str) - 1) == ':')		/* 最後が : ならサブディレクトリ */
+	default:
+		if (*(Str + strlen(Str) - 1) == ':')		/* 最後が : ならサブディレクトリ */
+		{
+			if (strcmp(Str, ".:") != 0)
 			{
-				if(strcmp(Str, ".:") != 0)
+				if ((strncmp(Str, "./", 2) == 0) ||
+					(strncmp(Str, ".\\", 2) == 0))
 				{
-					if((strncmp(Str, "./", 2) == 0) ||
-					   (strncmp(Str, ".\\", 2) == 0))
-					{
-						Str += 2;
-					}
+					Str += 2;
+				}
 
-					if(strlen(Str) > 1)
-					{
-						strcpy(Dir, Path);
-						SetSlashTail(Dir);
-						strcat(Dir, Str);
-						*(Dir + strlen(Dir) - 1) = NUL;
+				if (strlen(Str) > 1)
+				{
+					strcpy(Dir, Path);
+					SetSlashTail(Dir);
+					strcat(Dir, Str);
+					*(Dir + strlen(Dir) - 1) = NUL;
 
-						// 文字化け対策
+					// 文字化け対策
 //						ChangeFnameRemote2Local(Dir, FMAX_PATH);
 
-						ReplaceAll(Dir, '\\', '/');
-					}
+					ReplaceAll(Dir, '\\', '/');
 				}
-				Sts = FFFTP_SUCCESS;
 			}
-			break;
+			Sts = FFFTP_SUCCESS;
+		}
+		break;
 	}
 	return(Sts);
 }
@@ -3549,11 +3560,11 @@ static int MakeDirPath(char *Str, int ListType, char *Path, char *Dir)
 
 // ファイル一覧バグ修正
 //static void MakeLocalTree(char *Path, FILELIST **Base)
-static int MakeLocalTree(char *Path, FILELIST **Base)
+static int MakeLocalTree(char* Path, FILELIST** Base)
 {
 	// ファイル一覧バグ修正
 	int Sts;
-	char Src[FMAX_PATH+1];
+	char Src[FMAX_PATH + 1];
 	HANDLE fHnd;
 	WIN32_FIND_DATA FindBuf;
 	FILELIST Pkt;
@@ -3567,13 +3578,13 @@ static int MakeLocalTree(char *Path, FILELIST **Base)
 	strcat(Src, "*");
 	ReplaceAll(Src, '/', '\\');
 
-	if((fHnd = FindFirstFileAttr(Src, &FindBuf, DispIgnoreHide)) != INVALID_HANDLE_VALUE)
+	if ((fHnd = FindFirstFileAttr(Src, &FindBuf, DispIgnoreHide)) != INVALID_HANDLE_VALUE)
 	{
 		do
 		{
-			if((FindBuf.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
+			if ((FindBuf.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0)
 			{
-				if(AskFilterStr(FindBuf.cFileName, NODE_FILE) == YES)
+				if (AskFilterStr(FindBuf.cFileName, NODE_FILE) == YES)
 				{
 					// 変数が未初期化のバグ修正
 					memset(&Pkt, 0, sizeof(FILELIST));
@@ -3590,9 +3601,9 @@ static int MakeLocalTree(char *Path, FILELIST **Base)
 //					FileTimeToSystemTime(&Pkt.Time, &TmpStime);
 //					TmpStime.wSecond = 0;
 //					SystemTimeToFileTime(&TmpStime, &Pkt.Time);
-					if(FileTimeToSystemTime(&Pkt.Time, &TmpStime))
+					if (FileTimeToSystemTime(&Pkt.Time, &TmpStime))
 					{
-						if(DispTimeSeconds == NO)
+						if (DispTimeSeconds == NO)
 							TmpStime.wSecond = 0;
 						TmpStime.wMilliseconds = 0;
 						SystemTimeToFileTime(&TmpStime, &Pkt.Time);
@@ -3602,20 +3613,19 @@ static int MakeLocalTree(char *Path, FILELIST **Base)
 					AddFileList(&Pkt, Base);
 				}
 			}
-		}
-		while(FindNextFileAttr(fHnd, &FindBuf, DispIgnoreHide) == TRUE);
+		} while (FindNextFileAttr(fHnd, &FindBuf, DispIgnoreHide) == TRUE);
 		FindClose(fHnd);
 	}
 
-	if((fHnd = FindFirstFileAttr(Src, &FindBuf, DispIgnoreHide)) != INVALID_HANDLE_VALUE)
+	if ((fHnd = FindFirstFileAttr(Src, &FindBuf, DispIgnoreHide)) != INVALID_HANDLE_VALUE)
 	{
 		// ファイル一覧バグ修正
 		Sts = FFFTP_SUCCESS;
 		do
 		{
-			if((FindBuf.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) &&
-			   (strcmp(FindBuf.cFileName, ".") != 0) &&
-			   (strcmp(FindBuf.cFileName, "..") != 0))
+			if ((FindBuf.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) &&
+				(strcmp(FindBuf.cFileName, ".") != 0) &&
+				(strcmp(FindBuf.cFileName, "..") != 0))
 			{
 				// 変数が未初期化のバグ修正
 				memset(&Pkt, 0, sizeof(FILELIST));
@@ -3633,11 +3643,10 @@ static int MakeLocalTree(char *Path, FILELIST **Base)
 
 				// ファイル一覧バグ修正
 //				MakeLocalTree(Src, Base);
-				if(MakeLocalTree(Src, Base) == FFFTP_FAIL)
+				if (MakeLocalTree(Src, Base) == FFFTP_FAIL)
 					Sts = FFFTP_FAIL;
 			}
-		}
-		while(FindNextFileAttr(fHnd, &FindBuf, DispIgnoreHide) == TRUE);
+		} while (FindNextFileAttr(fHnd, &FindBuf, DispIgnoreHide) == TRUE);
 		FindClose(fHnd);
 	}
 	// ファイル一覧バグ修正
@@ -3656,18 +3665,18 @@ static int MakeLocalTree(char *Path, FILELIST **Base)
 *		なし
 *----------------------------------------------------------------------------*/
 
-static void AddFileList(FILELIST *Pkt, FILELIST **Base)
+static void AddFileList(FILELIST* Pkt, FILELIST** Base)
 {
-	FILELIST *Pos;
-	FILELIST *Prev;
+	FILELIST* Pos;
+	FILELIST* Prev;
 
 	DoPrintf("FileList : NODE=%d : %s", Pkt->Node, Pkt->File);
 
 	/* リストの重複を取り除く */
 	Pos = *Base;
-	while(Pos != NULL)
+	while (Pos != NULL)
 	{
-		if(strcmp(Pkt->File, Pos->File) == 0)
+		if (strcmp(Pkt->File, Pos->File) == 0)
 		{
 			DoPrintf(" --> Duplicate!!");
 			break;
@@ -3676,14 +3685,14 @@ static void AddFileList(FILELIST *Pkt, FILELIST **Base)
 		Pos = Pos->Next;
 	}
 
-	if(Pos == NULL)		/* 重複していないので登録する */
+	if (Pos == NULL)		/* 重複していないので登録する */
 	{
-		if((Pos = malloc(sizeof(FILELIST))) != NULL)
+		if ((Pos = malloc(sizeof(FILELIST))) != NULL)
 		{
 			memcpy(Pos, Pkt, sizeof(FILELIST));
 			Pos->Next = NULL;
 
-			if(*Base == NULL)
+			if (*Base == NULL)
 				*Base = Pos;
 			else
 				Prev->Next = Pos;
@@ -3702,13 +3711,13 @@ static void AddFileList(FILELIST *Pkt, FILELIST **Base)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void DeleteFileList(FILELIST **Base)
+void DeleteFileList(FILELIST** Base)
 {
-	FILELIST *New;
-	FILELIST *Next;
+	FILELIST* New;
+	FILELIST* Next;
 
 	New = *Base;
-	while(New != NULL)
+	while (New != NULL)
 	{
 		Next = New->Next;
 		free(New);
@@ -3731,28 +3740,28 @@ void DeleteFileList(FILELIST **Base)
 *			NULL=見つからない
 *----------------------------------------------------------------------------*/
 
-FILELIST *SearchFileList(char *Fname, FILELIST *Base, int Caps)
+FILELIST* SearchFileList(char* Fname, FILELIST* Base, int Caps)
 {
-	char Tmp[FMAX_PATH+1];
+	char Tmp[FMAX_PATH + 1];
 
-	while(Base != NULL)
+	while (Base != NULL)
 	{
-		if(Caps == COMP_STRICT)
+		if (Caps == COMP_STRICT)
 		{
-			if(_mbscmp(Fname, Base->File) == 0)
+			if (_mbscmp(Fname, Base->File) == 0)
 				break;
 		}
 		else
 		{
-			if(_mbsicmp(Fname, Base->File) == 0)
+			if (_mbsicmp(Fname, Base->File) == 0)
 			{
-				if(Caps == COMP_IGNORE)
+				if (Caps == COMP_IGNORE)
 					break;
 				else
 				{
 					strcpy(Tmp, Base->File);
 					_mbslwr(Tmp);
-					if(_mbscmp(Tmp, Base->File) == 0)
+					if (_mbscmp(Tmp, Base->File) == 0)
 						break;
 				}
 			}
@@ -3772,43 +3781,43 @@ FILELIST *SearchFileList(char *Fname, FILELIST *Base, int Caps)
 *		int リストタイプ (LIST_xxx)
 *----------------------------------------------------------------------------*/
 
-static int AnalyzeFileInfo(char *Str)
+static int AnalyzeFileInfo(char* Str)
 {
 	int Ret;
-	char Tmp[FMAX_PATH+1];
+	char Tmp[FMAX_PATH + 1];
 	int Add1;
 	int TmpInt;
 	int Flag1;
 	WORD Month;
 	WORD Day;
 
-//DoPrintf("LIST : %s", Str);
+	//DoPrintf("LIST : %s", Str);
 
 	Ret = LIST_UNKNOWN;
 	Flag1 = AskHostType();
-	if(Flag1 == HTYPE_ACOS)
+	if (Flag1 == HTYPE_ACOS)
 		Ret = LIST_ACOS;
-	else if(Flag1 == HTYPE_ACOS_4)
+	else if (Flag1 == HTYPE_ACOS_4)
 		Ret = LIST_ACOS_4;
-	else if(Flag1 == HTYPE_VMS)
+	else if (Flag1 == HTYPE_VMS)
 		Ret = LIST_VMS;
-	else if(Flag1 == HTYPE_IRMX)
+	else if (Flag1 == HTYPE_IRMX)
 		Ret = LIST_IRMX;
-	else if(Flag1 == HTYPE_STRATUS)
+	else if (Flag1 == HTYPE_STRATUS)
 		Ret = LIST_STRATUS;
-	else if(Flag1 == HTYPE_AGILENT)
+	else if (Flag1 == HTYPE_AGILENT)
 		Ret = LIST_AGILENT;
-	else if(Flag1 == HTYPE_SHIBASOKU)
+	else if (Flag1 == HTYPE_SHIBASOKU)
 		Ret = LIST_SHIBASOKU;
 	else
 	{
 		// MLSD対応
-		if(FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS)
+		if (FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS)
 		{
 			_strlwr(Tmp);
-			if(strstr(Tmp, "type=") != NULL)
+			if (strstr(Tmp, "type=") != NULL)
 			{
-				if(FindField2(Str, Tmp, ';', 1, NO) == FFFTP_SUCCESS && FindField2(Str, Tmp, '=', 1, NO) == FFFTP_SUCCESS)
+				if (FindField2(Str, Tmp, ';', 1, NO) == FFFTP_SUCCESS && FindField2(Str, Tmp, '=', 1, NO) == FFFTP_SUCCESS)
 				{
 					Ret = LIST_MLSD;
 				}
@@ -3821,18 +3830,18 @@ static int AnalyzeFileInfo(char *Str)
 
 		// MLSD対応
 //		if(FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS)
-		if(Ret == LIST_UNKNOWN && FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS)
+		if (Ret == LIST_UNKNOWN && FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS)
 		{
 			/* MELCOM80は "d rwxrwxrwx" のようにスペースが空いている */
 			Flag1 = NO;
-			if((strlen(Tmp) == 1) && (strchr("-dDlL", Tmp[0]) != NULL))
+			if ((strlen(Tmp) == 1) && (strchr("-dDlL", Tmp[0]) != NULL))
 			{
-				if(FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS)
+				if (FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS)
 				{
-					if((strlen(Tmp) == 9) ||
-					   ((strlen(Tmp) > 9) && (IsDigit(Tmp[9]) != 0)))
+					if ((strlen(Tmp) == 9) ||
+						((strlen(Tmp) > 9) && (IsDigit(Tmp[9]) != 0)))
 					{
-						memmove(Str+1, Str+2, strlen(Str+2)+1);
+						memmove(Str + 1, Str + 2, strlen(Str + 2) + 1);
 						FindField(Str, Tmp, 0, NO);
 						Flag1 = YES;
 					}
@@ -3841,105 +3850,105 @@ static int AnalyzeFileInfo(char *Str)
 
 			// バグ修正
 //			if(strlen(Tmp) >= 10)
-			if((strlen(Tmp) >= 10) && (strchr("+-dfl", Tmp[0]) != NULL))
+			if ((strlen(Tmp) >= 10) && (strchr("+-dfl", Tmp[0]) != NULL))
 			{
 				Add1 = 0;
-				if((strlen(Tmp) > 10) && (IsDigit(Tmp[10]) != 0))
+				if ((strlen(Tmp) > 10) && (IsDigit(Tmp[10]) != 0))
 				{
 					/* こういう時 */
 					/*   drwxr-xr-x1234  owner group  1024  Nov 6 14:21 Linux/    */
 					Add1 = -1;
 				}
 
-////////////
-// LIST_UNIX_60 support
-				if(FindField(Str, Tmp, 7+Add1, NO) == FFFTP_SUCCESS)
+				////////////
+				// LIST_UNIX_60 support
+				if (FindField(Str, Tmp, 7 + Add1, NO) == FFFTP_SUCCESS)
 				{
 					GetMonth(Tmp, &Month, &Day);
-					if(Month != 0)
+					if (Month != 0)
 					{
 						Ret = CheckUnixType(Str, Tmp, Add1, 2, Day);
 					}
 				}
-///////////
+				///////////
 
-////////////
-// LIST_UNIX_12 support
-				if((Ret == LIST_UNKNOWN) &&
-				   (FindField(Str, Tmp, 6+Add1, NO) == FFFTP_SUCCESS))
+				////////////
+				// LIST_UNIX_12 support
+				if ((Ret == LIST_UNKNOWN) &&
+					(FindField(Str, Tmp, 6 + Add1, NO) == FFFTP_SUCCESS))
 				{
 					GetMonth(Tmp, &Month, &Day);
-					if(Month != 0)
+					if (Month != 0)
 					{
 						Ret = CheckUnixType(Str, Tmp, Add1, 0, Day);
 					}
 				}
-//////////////////
+				//////////////////
 
-////////////
-// LIST_UNIX_70 support
-				if((Ret == LIST_UNKNOWN) &&
-				   (FindField(Str, Tmp, 6+Add1, NO) == FFFTP_SUCCESS))
+				////////////
+				// LIST_UNIX_70 support
+				if ((Ret == LIST_UNKNOWN) &&
+					(FindField(Str, Tmp, 6 + Add1, NO) == FFFTP_SUCCESS))
 				{
 					GetMonth(Tmp, &Month, &Day);
-					if(Month != 0)
+					if (Month != 0)
 					{
 						Ret = CheckUnixType(Str, Tmp, Add1, 1, Day);
 					}
 				}
-///////////
+				///////////
 
-				if((Ret == LIST_UNKNOWN) &&
-				   (FindField(Str, Tmp, 5+Add1, NO) == FFFTP_SUCCESS))
+				if ((Ret == LIST_UNKNOWN) &&
+					(FindField(Str, Tmp, 5 + Add1, NO) == FFFTP_SUCCESS))
 				{
 					GetMonth(Tmp, &Month, &Day);
-					if(Month != 0)
+					if (Month != 0)
 					{
 						Ret = CheckUnixType(Str, Tmp, Add1, 0, Day);
 					}
 				}
 
-				if((Ret == LIST_UNKNOWN) &&
-				   (FindField(Str, Tmp, 4+Add1, NO) == FFFTP_SUCCESS))
+				if ((Ret == LIST_UNKNOWN) &&
+					(FindField(Str, Tmp, 4 + Add1, NO) == FFFTP_SUCCESS))
 				{
 					GetMonth(Tmp, &Month, &Day);
-					if(Month != 0)
+					if (Month != 0)
 					{
 						Ret = CheckUnixType(Str, Tmp, Add1, -1, Day);
 					}
 				}
 
-				if((Ret == LIST_UNKNOWN) &&
-				   (FindField(Str, Tmp, 3+Add1, NO) == FFFTP_SUCCESS))
+				if ((Ret == LIST_UNKNOWN) &&
+					(FindField(Str, Tmp, 3 + Add1, NO) == FFFTP_SUCCESS))
 				{
 					GetMonth(Tmp, &Month, &Day);
-					if(Month != 0)
+					if (Month != 0)
 					{
 						Ret = CheckUnixType(Str, Tmp, Add1, -2, Day);
 					}
 				}
 
 				// linux-ftpd
-				if((Ret == LIST_UNKNOWN) &&
-				   (FindField(Str, Tmp, 7+Add1, NO) == FFFTP_SUCCESS))
+				if ((Ret == LIST_UNKNOWN) &&
+					(FindField(Str, Tmp, 7 + Add1, NO) == FFFTP_SUCCESS))
 				{
-					if((FindField(Str, Tmp, 5, NO) == FFFTP_SUCCESS) &&
-					   (CheckYYYYMMDDformat(Tmp, NUL) != 0))
+					if ((FindField(Str, Tmp, 5, NO) == FFFTP_SUCCESS) &&
+						(CheckYYYYMMDDformat(Tmp, NUL) != 0))
 					{
-						if((FindField(Str, Tmp, 6, NO) == FFFTP_SUCCESS) &&
-						   (CheckHHMMformat(Tmp) == YES))
+						if ((FindField(Str, Tmp, 6, NO) == FFFTP_SUCCESS) &&
+							(CheckHHMMformat(Tmp) == YES))
 						{
 							Ret = LIST_UNIX_16;
 						}
 					}
 				}
 
-				if((Ret != LIST_UNKNOWN) && (Flag1 == YES))
+				if ((Ret != LIST_UNKNOWN) && (Flag1 == YES))
 					Ret |= LIST_MELCOM;
 
 				// uClinux
-				if((Ret == LIST_UNKNOWN) &&
-				   (FindField(Str, Tmp, 5+Add1, NO) == FFFTP_SUCCESS))
+				if ((Ret == LIST_UNKNOWN) &&
+					(FindField(Str, Tmp, 5 + Add1, NO) == FFFTP_SUCCESS))
 				{
 					Ret = LIST_UNIX_17;
 				}
@@ -3949,18 +3958,18 @@ static int AnalyzeFileInfo(char *Str)
 		/* 以下のフォーマットをチェック */
 		/* LIST_AS400 */
 
-		if(Ret == LIST_UNKNOWN)
+		if (Ret == LIST_UNKNOWN)
 		{
-			if((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
-			   (CheckYYMMDDformat(Tmp, NUL, NO) != 0))
+			if ((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
+				(CheckYYMMDDformat(Tmp, NUL, NO) != 0))
 			{
-				if((FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS) &&
-				   (CheckYYMMDDformat(Tmp, NUL, NO) != 0))
+				if ((FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS) &&
+					(CheckYYMMDDformat(Tmp, NUL, NO) != 0))
 				{
-					if((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
-					   (IsDigit(Tmp[0]) != 0))
+					if ((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
+						(IsDigit(Tmp[0]) != 0))
 					{
-						if(FindField(Str, Tmp, 5, NO) == FFFTP_SUCCESS)
+						if (FindField(Str, Tmp, 5, NO) == FFFTP_SUCCESS)
 						{
 							Ret = LIST_AS400;
 						}
@@ -3972,21 +3981,21 @@ static int AnalyzeFileInfo(char *Str)
 		/* 以下のフォーマットをチェック */
 		/* LIST_M1800 */
 
-		if(Ret == LIST_UNKNOWN)
+		if (Ret == LIST_UNKNOWN)
 		{
-			if((FindField(Str, Tmp, 5, NO) == FFFTP_SUCCESS) &&
-			   (CheckYYMMDDformat(Tmp, '*', NO) != 0))
+			if ((FindField(Str, Tmp, 5, NO) == FFFTP_SUCCESS) &&
+				(CheckYYMMDDformat(Tmp, '*', NO) != 0))
 			{
-				if((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
-				   ((IsDigit(Tmp[0]) != 0) || (StrAllSameChar(Tmp, '*') == YES)))
+				if ((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
+					((IsDigit(Tmp[0]) != 0) || (StrAllSameChar(Tmp, '*') == YES)))
 				{
-					if((FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS) &&
-					   ((IsDigit(Tmp[0]) != 0) || (StrAllSameChar(Tmp, '*') == YES)))
+					if ((FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS) &&
+						((IsDigit(Tmp[0]) != 0) || (StrAllSameChar(Tmp, '*') == YES)))
 					{
-						if((FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS) &&
-						   (strlen(Tmp) == 4))
+						if ((FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS) &&
+							(strlen(Tmp) == 4))
 						{
-							if(FindField(Str, Tmp, 6, NO) == FFFTP_SUCCESS)
+							if (FindField(Str, Tmp, 6, NO) == FFFTP_SUCCESS)
 							{
 								Ret = LIST_M1800;
 							}
@@ -3999,18 +4008,18 @@ static int AnalyzeFileInfo(char *Str)
 		/* 以下のフォーマットをチェック */
 		/* LIST_GP6000 */
 
-		if(Ret == LIST_UNKNOWN)
+		if (Ret == LIST_UNKNOWN)
 		{
-			if((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
-			   (CheckYYMMDDformat(Tmp, NUL, NO) != 0))
+			if ((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
+				(CheckYYMMDDformat(Tmp, NUL, NO) != 0))
 			{
-				if((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
-				   (CheckYYMMDDformat(Tmp, NUL, NO) != 0))
+				if ((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
+					(CheckYYMMDDformat(Tmp, NUL, NO) != 0))
 				{
-					if((FindField(Str, Tmp, 5, NO) == FFFTP_SUCCESS) &&
-					   (IsDigit(Tmp[0]) != 0))
+					if ((FindField(Str, Tmp, 5, NO) == FFFTP_SUCCESS) &&
+						(IsDigit(Tmp[0]) != 0))
 					{
-						if(FindField(Str, Tmp, 6, NO) == FFFTP_SUCCESS)
+						if (FindField(Str, Tmp, 6, NO) == FFFTP_SUCCESS)
 						{
 							Ret = LIST_GP6000;
 						}
@@ -4022,21 +4031,21 @@ static int AnalyzeFileInfo(char *Str)
 		/* 以下のフォーマットをチェック */
 		/* LIST_DOS_1, LIST_DOS_2 */
 
-		if(Ret == LIST_UNKNOWN)
+		if (Ret == LIST_UNKNOWN)
 		{
-			if((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
-			   (CheckHHMMformat(Tmp) == YES))
+			if ((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
+				(CheckHHMMformat(Tmp) == YES))
 			{
-				if((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
-				   ((Tmp[0] == '<') || (IsDigit(Tmp[0]) != 0)))
+				if ((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
+					((Tmp[0] == '<') || (IsDigit(Tmp[0]) != 0)))
 				{
-					if(FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS)
+					if (FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS)
 					{
-						if((FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS) &&
-						   (CheckYYMMDDformat(Tmp, NUL, YES) != 0))
+						if ((FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS) &&
+							(CheckYYMMDDformat(Tmp, NUL, YES) != 0))
 						{
 							TmpInt = atoi(Tmp);
-							if((TmpInt >= 1) && (TmpInt <= 12))
+							if ((TmpInt >= 1) && (TmpInt <= 12))
 								Ret = LIST_DOS_2;
 							else
 								Ret = LIST_DOS_1;
@@ -4049,16 +4058,16 @@ static int AnalyzeFileInfo(char *Str)
 		/* 以下のフォーマットをチェック */
 		/* LIST_DOS_3 */
 
-		if(Ret == LIST_UNKNOWN)
+		if (Ret == LIST_UNKNOWN)
 		{
-			if((FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS) &&
-			   (CheckHHMMformat(Tmp) == YES))
+			if ((FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS) &&
+				(CheckHHMMformat(Tmp) == YES))
 			{
-				if((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
-				   ((Tmp[0] == '<') || (IsDigit(Tmp[0]) != 0)))
+				if ((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
+					((Tmp[0] == '<') || (IsDigit(Tmp[0]) != 0)))
 				{
-					if((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
-					   (CheckYYMMDDformat(Tmp, NUL, YES) != 0))
+					if ((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
+						(CheckYYMMDDformat(Tmp, NUL, YES) != 0))
 					{
 						Ret = LIST_DOS_3;
 					}
@@ -4069,18 +4078,18 @@ static int AnalyzeFileInfo(char *Str)
 		/* 以下のフォーマットをチェック */
 		/* LIST_DOS_4 */
 
-		if(Ret == LIST_UNKNOWN)
+		if (Ret == LIST_UNKNOWN)
 		{
-			if((FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS) &&
-			   (CheckYYYYMMDDformat(Tmp, NUL) == YES))
+			if ((FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS) &&
+				(CheckYYYYMMDDformat(Tmp, NUL) == YES))
 			{
-				if((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
-				   (CheckYYMMDDformat(Tmp, NUL, NO) != 0))
+				if ((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
+					(CheckYYMMDDformat(Tmp, NUL, NO) != 0))
 				{
-					if((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
-					   ((Tmp[0] == '<') || (IsDigit(Tmp[0]) != 0)))
+					if ((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
+						((Tmp[0] == '<') || (IsDigit(Tmp[0]) != 0)))
 					{
-						if(FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS)
+						if (FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS)
 						{
 							Ret = LIST_DOS_4;
 						}
@@ -4090,18 +4099,18 @@ static int AnalyzeFileInfo(char *Str)
 		}
 
 		// Windows Server 2008 R2
-		if(Ret == LIST_UNKNOWN)
+		if (Ret == LIST_UNKNOWN)
 		{
-			if((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
-			   (CheckHHMMformat(Tmp) == YES))
+			if ((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
+				(CheckHHMMformat(Tmp) == YES))
 			{
-				if((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
-				   ((Tmp[0] == '<') || (IsDigit(Tmp[0]) != 0)))
+				if ((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
+					((Tmp[0] == '<') || (IsDigit(Tmp[0]) != 0)))
 				{
-					if(FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS)
+					if (FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS)
 					{
-						if((FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS) &&
-						   (CheckMMDDYYYYformat(Tmp, NUL) != 0))
+						if ((FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS) &&
+							(CheckMMDDYYYYformat(Tmp, NUL) != 0))
 						{
 							Ret = LIST_DOS_5;
 						}
@@ -4113,18 +4122,18 @@ static int AnalyzeFileInfo(char *Str)
 		/* 以下のフォーマットをチェック */
 		/* LIST_CHAMELEON */
 
-		if(Ret == LIST_UNKNOWN)
+		if (Ret == LIST_UNKNOWN)
 		{
-			if(FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS)
+			if (FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS)
 			{
 				GetMonth(Tmp, &Month, &Day);
-				if((Month != 0) && (Day == 0))
+				if ((Month != 0) && (Day == 0))
 				{
-					if((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
-					   ((Tmp[0] == '<') || (IsDigit(Tmp[0]) != 0)))
+					if ((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
+						((Tmp[0] == '<') || (IsDigit(Tmp[0]) != 0)))
 					{
-						if((FindField(Str, Tmp, 5, NO) == FFFTP_SUCCESS) &&
-						   (CheckHHMMformat(Tmp) == YES))
+						if ((FindField(Str, Tmp, 5, NO) == FFFTP_SUCCESS) &&
+							(CheckHHMMformat(Tmp) == YES))
 						{
 							Ret = LIST_CHAMELEON;
 						}
@@ -4136,18 +4145,18 @@ static int AnalyzeFileInfo(char *Str)
 		/* 以下のフォーマットをチェック */
 		/* LIST_OS2 */
 
-		if(Ret == LIST_UNKNOWN)
+		if (Ret == LIST_UNKNOWN)
 		{
-			if((FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS) &&
-			   (CheckHHMMformat(Tmp) == YES))
+			if ((FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS) &&
+				(CheckHHMMformat(Tmp) == YES))
 			{
-				if((FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS) &&
-				   (IsDigit(Tmp[0]) != 0))
+				if ((FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS) &&
+					(IsDigit(Tmp[0]) != 0))
 				{
-					if((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
-					   (CheckYYMMDDformat(Tmp, NUL, YES) != 0))
+					if ((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
+						(CheckYYMMDDformat(Tmp, NUL, YES) != 0))
 					{
-						if(FindField(Str, Tmp, 4, NO) == FFFTP_SUCCESS)
+						if (FindField(Str, Tmp, 4, NO) == FFFTP_SUCCESS)
 						{
 							Ret = LIST_OS2;
 						}
@@ -4159,34 +4168,34 @@ static int AnalyzeFileInfo(char *Str)
 		/* 以下のフォーマットをチェック */
 		/* LIST_OS7 */
 
-		if(Ret == LIST_UNKNOWN)
+		if (Ret == LIST_UNKNOWN)
 		{
-			if((FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS) &&
-			   (strlen(Tmp) == 10))
+			if ((FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS) &&
+				(strlen(Tmp) == 10))
 			{
-				if((FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS) &&
-				   (CheckYYMMDDformat(Tmp, NUL, NO) != 0))
+				if ((FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS) &&
+					(CheckYYMMDDformat(Tmp, NUL, NO) != 0))
 				{
-					if((FindField(Str, Tmp, 4, NO) == FFFTP_SUCCESS) &&
-					   (CheckYYMMDDformat(Tmp, NUL, NO) != 0))
+					if ((FindField(Str, Tmp, 4, NO) == FFFTP_SUCCESS) &&
+						(CheckYYMMDDformat(Tmp, NUL, NO) != 0))
 					{
-						if((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
-						   (IsDigit(Tmp[0]) != 0))
+						if ((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
+							(IsDigit(Tmp[0]) != 0))
 						{
-							if(FindField(Str, Tmp, 5, NO) == FFFTP_SUCCESS)
+							if (FindField(Str, Tmp, 5, NO) == FFFTP_SUCCESS)
 							{
 								Ret = LIST_OS7_2;
 							}
 						}
 					}
 				}
-				else if((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
-						(CheckYYMMDDformat(Tmp, NUL, NO) != 0))
+				else if ((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
+					(CheckYYMMDDformat(Tmp, NUL, NO) != 0))
 				{
-					if((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
-					   (CheckYYMMDDformat(Tmp, NUL, NO) != 0))
+					if ((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
+						(CheckYYMMDDformat(Tmp, NUL, NO) != 0))
 					{
-						if(FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS)
+						if (FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS)
 						{
 							Ret = LIST_OS7_1;
 						}
@@ -4198,21 +4207,21 @@ static int AnalyzeFileInfo(char *Str)
 		/* 以下のフォーマットをチェック */
 		/* LIST_ALLIED */
 
-		if(Ret == LIST_UNKNOWN)
+		if (Ret == LIST_UNKNOWN)
 		{
-			if((FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS) &&
-			   ((Tmp[0] == '<') || (IsDigit(Tmp[0]) != 0)))
+			if ((FindField(Str, Tmp, 0, NO) == FFFTP_SUCCESS) &&
+				((Tmp[0] == '<') || (IsDigit(Tmp[0]) != 0)))
 			{
-				if((FindField(Str, Tmp, 5, NO) == FFFTP_SUCCESS) &&
-				   (CheckHHMMformat(Tmp) == YES))
+				if ((FindField(Str, Tmp, 5, NO) == FFFTP_SUCCESS) &&
+					(CheckHHMMformat(Tmp) == YES))
 				{
-					if(FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS)
+					if (FindField(Str, Tmp, 3, NO) == FFFTP_SUCCESS)
 					{
 						GetMonth(Tmp, &Month, &Day);
-						if(Month != 0)
+						if (Month != 0)
 						{
-							if((FindField(Str, Tmp, 6, NO) == FFFTP_SUCCESS) &&
-							   (IsDigit(Tmp[0]) != 0))
+							if ((FindField(Str, Tmp, 6, NO) == FFFTP_SUCCESS) &&
+								(IsDigit(Tmp[0]) != 0))
 							{
 								Ret = LIST_ALLIED;
 							}
@@ -4225,18 +4234,18 @@ static int AnalyzeFileInfo(char *Str)
 		/* 以下のフォーマットをチェック */
 		/* LIST_OS9 */
 
-		if(Ret == LIST_UNKNOWN)
+		if (Ret == LIST_UNKNOWN)
 		{
-			if((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
-			   (CheckYYMMDDformat(Tmp, NUL, NO) != 0))
+			if ((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) &&
+				(CheckYYMMDDformat(Tmp, NUL, NO) != 0))
 			{
-				if((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
-				   (IsDigit(Tmp[0]) != 0) && (strlen(Tmp) == 4))
+				if ((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
+					(IsDigit(Tmp[0]) != 0) && (strlen(Tmp) == 4))
 				{
-					if((FindField(Str, Tmp, 5, NO) == FFFTP_SUCCESS) &&
-					   (IsDigit(Tmp[0]) != 0))
+					if ((FindField(Str, Tmp, 5, NO) == FFFTP_SUCCESS) &&
+						(IsDigit(Tmp[0]) != 0))
 					{
-						if(FindField(Str, Tmp, 6, NO) == FFFTP_SUCCESS)
+						if (FindField(Str, Tmp, 6, NO) == FFFTP_SUCCESS)
 						{
 							Ret = LIST_OS9;
 						}
@@ -4248,16 +4257,16 @@ static int AnalyzeFileInfo(char *Str)
 		/* 以下のフォーマットをチェック */
 		/* LIST_IBM */
 
-		if(Ret == LIST_UNKNOWN)
+		if (Ret == LIST_UNKNOWN)
 		{
-			if((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
-			   (CheckYYYYMMDDformat(Tmp, NUL) == YES))
+			if ((FindField(Str, Tmp, 2, NO) == FFFTP_SUCCESS) &&
+				(CheckYYYYMMDDformat(Tmp, NUL) == YES))
 			{
-				if((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) && IsDigit(Tmp[0]))
+				if ((FindField(Str, Tmp, 1, NO) == FFFTP_SUCCESS) && IsDigit(Tmp[0]))
 				{
-					if((FindField(Str, Tmp, 7, NO) == FFFTP_SUCCESS) && IsDigit(Tmp[0]))
+					if ((FindField(Str, Tmp, 7, NO) == FFFTP_SUCCESS) && IsDigit(Tmp[0]))
 					{
-						if(FindField(Str, Tmp, 9, NO) == FFFTP_SUCCESS)
+						if (FindField(Str, Tmp, 9, NO) == FFFTP_SUCCESS)
 						{
 							Ret = LIST_IBM;
 						}
@@ -4270,11 +4279,12 @@ static int AnalyzeFileInfo(char *Str)
 		/* LIST_TANDEM */
 
 		/* OSS の場合は自動判別可能のため Ret == LIST_UNKNOWN のチェックは後 */
-		if(AskRealHostType() == HTYPE_TANDEM) {
-			if(Ret == LIST_UNKNOWN) {
+		if (AskRealHostType() == HTYPE_TANDEM) {
+			if (Ret == LIST_UNKNOWN) {
 				SetOSS(NO);
 				Ret = LIST_TANDEM;
-			} else {
+			}
+			else {
 				SetOSS(YES);
 			}
 		}
@@ -4282,7 +4292,7 @@ static int AnalyzeFileInfo(char *Str)
 
 	}
 
-DoPrintf("ListType=%d", Ret);
+	DoPrintf("ListType=%d", Ret);
 
 	return(Ret);
 }
@@ -4301,7 +4311,7 @@ DoPrintf("ListType=%d", Ret);
 *		int リストタイプ (LIST_xxx)
 *----------------------------------------------------------------------------*/
 
-static int CheckUnixType(char *Str, char *Tmp, int Add1, int Add2, int Day)
+static int CheckUnixType(char* Str, char* Tmp, int Add1, int Add2, int Day)
 {
 	int Ret;
 	int Add3;
@@ -4312,21 +4322,21 @@ static int CheckUnixType(char *Str, char *Tmp, int Add1, int Add2, int Day)
 	Flag = 0;
 	Ret = LIST_UNKNOWN;
 
-//DayによってAdd3を変える
+	//DayによってAdd3を変える
 
 	Add3 = 0;
-	if(Day != 0)
+	if (Day != 0)
 		Add3 = -1;
 
 	// unix系チェック
-	if((Day != 0) ||
-	   ((FindField(Str, Tmp, 6+Add1+Add2+Add3, NO) == FFFTP_SUCCESS) &&
-		((atoi(Tmp) >= 1) && (atoi(Tmp) <= 31))))
+	if ((Day != 0) ||
+		((FindField(Str, Tmp, 6 + Add1 + Add2 + Add3, NO) == FFFTP_SUCCESS) &&
+			((atoi(Tmp) >= 1) && (atoi(Tmp) <= 31))))
 	{
-		if((FindField(Str, Tmp, 7+Add1+Add2+Add3, NO) == FFFTP_SUCCESS) &&
-		   ((atoi(Tmp) >= 1900) || (GetHourAndMinute(Tmp, &Hour, &Minute) == FFFTP_SUCCESS)))
+		if ((FindField(Str, Tmp, 7 + Add1 + Add2 + Add3, NO) == FFFTP_SUCCESS) &&
+			((atoi(Tmp) >= 1900) || (GetHourAndMinute(Tmp, &Hour, &Minute) == FFFTP_SUCCESS)))
 		{
-			if(FindField(Str, Tmp, 8+Add1+Add2+Add3, NO) == FFFTP_SUCCESS)
+			if (FindField(Str, Tmp, 8 + Add1 + Add2 + Add3, NO) == FFFTP_SUCCESS)
 			{
 				Flag = 1;
 			}
@@ -4334,23 +4344,23 @@ static int CheckUnixType(char *Str, char *Tmp, int Add1, int Add2, int Day)
 	}
 
 	// 中国語Solaris専用
-	if(Flag == 0)
+	if (Flag == 0)
 	{
-	   if((FindField(Str, Tmp, 7+Add1+Add2+Add3, NO) == FFFTP_SUCCESS) &&
-		  ((atoi(Tmp) >= 1) && (atoi(Tmp) <= 31)))
+		if ((FindField(Str, Tmp, 7 + Add1 + Add2 + Add3, NO) == FFFTP_SUCCESS) &&
+			((atoi(Tmp) >= 1) && (atoi(Tmp) <= 31)))
 		{
-			if((FindField(Str, Tmp, 5+Add1+Add2+Add3, NO) == FFFTP_SUCCESS) &&
-			   (atoi(Tmp) >= 1900))
+			if ((FindField(Str, Tmp, 5 + Add1 + Add2 + Add3, NO) == FFFTP_SUCCESS) &&
+				(atoi(Tmp) >= 1900))
 			{
-				if((FindField(Str, Tmp, 6+Add1+Add2+Add3, NO) == FFFTP_SUCCESS) &&
-				   (((atoi(Tmp) >= 1) && (atoi(Tmp) <= 9) && 
-					 ((unsigned char)Tmp[1] == 0xD4) &&
-					 ((unsigned char)Tmp[2] == 0xC2)) ||
-					((atoi(Tmp) >= 10) && (atoi(Tmp) <= 12) && 
-					 ((unsigned char)Tmp[2] == 0xD4) && 
-					 ((unsigned char)Tmp[3] == 0xC2))))
+				if ((FindField(Str, Tmp, 6 + Add1 + Add2 + Add3, NO) == FFFTP_SUCCESS) &&
+					(((atoi(Tmp) >= 1) && (atoi(Tmp) <= 9) &&
+						((unsigned char)Tmp[1] == 0xD4) &&
+						((unsigned char)Tmp[2] == 0xC2)) ||
+						((atoi(Tmp) >= 10) && (atoi(Tmp) <= 12) &&
+							((unsigned char)Tmp[2] == 0xD4) &&
+							((unsigned char)Tmp[3] == 0xC2))))
 				{
-					if(FindField(Str, Tmp, 8+Add1+Add2+Add3, NO) == FFFTP_SUCCESS)
+					if (FindField(Str, Tmp, 8 + Add1 + Add2 + Add3, NO) == FFFTP_SUCCESS)
 					{
 						Flag = 2;
 					}
@@ -4359,82 +4369,82 @@ static int CheckUnixType(char *Str, char *Tmp, int Add1, int Add2, int Day)
 		}
 	}
 
-	if(Flag != 0)
+	if (Flag != 0)
 	{
-		if(Add2 == 2)
+		if (Add2 == 2)
 		{
 			Ret = LIST_UNIX_60;
-			if(Flag == 2)
+			if (Flag == 2)
 				Ret = LIST_UNIX_64;
-			if(Day != 0)
+			if (Day != 0)
 				Ret = LIST_UNIX_61;
 
-			if(Add1 == -1)
+			if (Add1 == -1)
 			{
 				Ret = LIST_UNIX_62;
-				if(Flag == 2)
+				if (Flag == 2)
 					Ret = LIST_UNIX_65;
-				if(Day != 0)
+				if (Day != 0)
 					Ret = LIST_UNIX_63;
 			}
 		}
-		else if(Add2 == 1)
+		else if (Add2 == 1)
 		{
 			Ret = LIST_UNIX_70;
-			if(Flag == 2)
+			if (Flag == 2)
 				Ret = LIST_UNIX_74;
-			if(Day != 0)
+			if (Day != 0)
 				Ret = LIST_UNIX_71;
 
-			if(Add1 == -1)
+			if (Add1 == -1)
 			{
 				Ret = LIST_UNIX_72;
-				if(Flag == 2)
+				if (Flag == 2)
 					Ret = LIST_UNIX_75;
-				if(Day != 0)
+				if (Day != 0)
 					Ret = LIST_UNIX_73;
 			}
 		}
-		else if(Add2 == 0)
+		else if (Add2 == 0)
 		{
 			Ret = LIST_UNIX_10;
-			if(Flag == 2)
+			if (Flag == 2)
 				Ret = LIST_UNIX_14;
-			if(Day != 0)
+			if (Day != 0)
 				Ret = LIST_UNIX_11;
 
-			if(Add1 == -1)
+			if (Add1 == -1)
 			{
 				Ret = LIST_UNIX_12;
-				if(Flag == 2)
+				if (Flag == 2)
 					Ret = LIST_UNIX_15;
-				if(Day != 0)
+				if (Day != 0)
 					Ret = LIST_UNIX_13;
 			}
 		}
-		else if(Add2 == -1)
+		else if (Add2 == -1)
 		{
 			Ret = LIST_UNIX_20;
-			if(Flag == 2)
+			if (Flag == 2)
 				Ret = LIST_UNIX_24;
-			if(Day != 0)
+			if (Day != 0)
 				Ret = LIST_UNIX_21;
 
-			if(Add1 == -1)
+			if (Add1 == -1)
 			{
 				Ret = LIST_UNIX_22;
-				if(Flag == 2)
+				if (Flag == 2)
 					Ret = LIST_UNIX_25;
-				if(Day != 0)
+				if (Day != 0)
 					Ret = LIST_UNIX_23;
 			}
 		}
 		else
 		{
 			Ret = LIST_UNIX_50;
-			if(Flag == 2)
+			if (Flag == 2)
 				Ret = LIST_UNIX_54;
-			if(Day != 0)
+			if (Day != 0)
 				Ret = LIST_UNIX_51;
 		}
 	}
@@ -4456,17 +4466,17 @@ static int CheckUnixType(char *Str, char *Tmp, int Add1, int Add2, int Day)
 *		後ろに余分な文字が付いていてもよい
 *----------------------------------------------------------------------------*/
 
-static int CheckHHMMformat(char *Str)
+static int CheckHHMMformat(char* Str)
 {
 	int Ret;
 
 	Ret = NO;
-	if((strlen(Str) >= 3) &&
-	   (IsDigit(Str[0]) != 0))
+	if ((strlen(Str) >= 3) &&
+		(IsDigit(Str[0]) != 0))
 	{
-		if((Str = strchr(Str, ':')) != NULL)
+		if ((Str = strchr(Str, ':')) != NULL)
 		{
-			if(IsDigit(*(Str+1)) != 0)
+			if (IsDigit(*(Str + 1)) != 0)
 				Ret = YES;
 		}
 	}
@@ -4492,39 +4502,39 @@ static int CheckHHMMformat(char *Str)
 *		年月日でなくてもよい
 *----------------------------------------------------------------------------*/
 
-static int CheckYYMMDDformat(char *Str, char Sym, int Dig3)
+static int CheckYYMMDDformat(char* Str, char Sym, int Dig3)
 {
 	int Ret;
 
 	Ret = 0;
-	if((strlen(Str) == 8) &&
-	   (IsDigitSym(Str[0], Sym) != 0) && (IsDigitSym(Str[1], Sym) != 0) &&
-	   (IsDigit(Str[2]) == 0) &&
-	   (IsDigitSym(Str[3], Sym) != 0) && (IsDigitSym(Str[4], Sym) != 0) &&
-	   (IsDigit(Str[5]) == 0) &&
-	   (IsDigitSym(Str[6], Sym) != 0) && (IsDigitSym(Str[7], Sym) != 0))
+	if ((strlen(Str) == 8) &&
+		(IsDigitSym(Str[0], Sym) != 0) && (IsDigitSym(Str[1], Sym) != 0) &&
+		(IsDigit(Str[2]) == 0) &&
+		(IsDigitSym(Str[3], Sym) != 0) && (IsDigitSym(Str[4], Sym) != 0) &&
+		(IsDigit(Str[5]) == 0) &&
+		(IsDigitSym(Str[6], Sym) != 0) && (IsDigitSym(Str[7], Sym) != 0))
 	{
-		Ret = 1; 
+		Ret = 1;
 	}
-	if(Dig3 == YES)
+	if (Dig3 == YES)
 	{
-		if((strlen(Str) == 9) &&
-		   (IsDigitSym(Str[0], Sym) != 0) && (IsDigitSym(Str[1], Sym) != 0) && (IsDigitSym(Str[2], Sym) != 0) &&
-		   (IsDigit(Str[3]) == 0) &&
-		   (IsDigitSym(Str[4], Sym) != 0) && (IsDigitSym(Str[5], Sym) != 0) &&
-		   (IsDigit(Str[6]) == 0) &&
-		   (IsDigitSym(Str[7], Sym) != 0) && (IsDigitSym(Str[8], Sym) != 0))
+		if ((strlen(Str) == 9) &&
+			(IsDigitSym(Str[0], Sym) != 0) && (IsDigitSym(Str[1], Sym) != 0) && (IsDigitSym(Str[2], Sym) != 0) &&
+			(IsDigit(Str[3]) == 0) &&
+			(IsDigitSym(Str[4], Sym) != 0) && (IsDigitSym(Str[5], Sym) != 0) &&
+			(IsDigit(Str[6]) == 0) &&
+			(IsDigitSym(Str[7], Sym) != 0) && (IsDigitSym(Str[8], Sym) != 0))
 		{
-			Ret = 2; 
+			Ret = 2;
 		}
-		else if((strlen(Str) == 9) &&
-				(IsDigitSym(Str[0], Sym) != 0) && (IsDigitSym(Str[1], Sym) != 0) &&
-				(IsDigit(Str[2]) == 0) &&
-				(IsDigitSym(Str[3], Sym) != 0) && (IsDigitSym(Str[4], Sym) != 0) &&
-				(IsDigit(Str[5]) == 0) &&
-				(IsDigitSym(Str[6], Sym) != 0) && (IsDigitSym(Str[7], Sym) != 0) && (IsDigitSym(Str[8], Sym) != 0))
+		else if ((strlen(Str) == 9) &&
+			(IsDigitSym(Str[0], Sym) != 0) && (IsDigitSym(Str[1], Sym) != 0) &&
+			(IsDigit(Str[2]) == 0) &&
+			(IsDigitSym(Str[3], Sym) != 0) && (IsDigitSym(Str[4], Sym) != 0) &&
+			(IsDigit(Str[5]) == 0) &&
+			(IsDigitSym(Str[6], Sym) != 0) && (IsDigitSym(Str[7], Sym) != 0) && (IsDigitSym(Str[8], Sym) != 0))
 		{
-			Ret = 1; 
+			Ret = 1;
 		}
 	}
 	return(Ret);
@@ -4545,40 +4555,40 @@ static int CheckYYMMDDformat(char *Str, char Sym, int Dig3)
 *		年月日でなくてもよい
 *----------------------------------------------------------------------------*/
 
-static int CheckYYYYMMDDformat(char *Str, char Sym)
+static int CheckYYYYMMDDformat(char* Str, char Sym)
 {
 	int Ret;
 
 	Ret = NO;
-	if((strlen(Str) == 10) &&
-	   (IsDigitSym(Str[0], Sym) != 0) && (IsDigitSym(Str[1], Sym) != 0) &&
-	   (IsDigitSym(Str[2], Sym) != 0) && (IsDigitSym(Str[3], Sym) != 0) &&
-	   (IsDigit(Str[4]) == 0) &&
-	   (IsDigitSym(Str[5], Sym) != 0) && (IsDigitSym(Str[6], Sym) != 0) &&
-	   (IsDigit(Str[7]) == 0) &&
-	   (IsDigitSym(Str[8], Sym) != 0) && (IsDigitSym(Str[9], Sym) != 0))
+	if ((strlen(Str) == 10) &&
+		(IsDigitSym(Str[0], Sym) != 0) && (IsDigitSym(Str[1], Sym) != 0) &&
+		(IsDigitSym(Str[2], Sym) != 0) && (IsDigitSym(Str[3], Sym) != 0) &&
+		(IsDigit(Str[4]) == 0) &&
+		(IsDigitSym(Str[5], Sym) != 0) && (IsDigitSym(Str[6], Sym) != 0) &&
+		(IsDigit(Str[7]) == 0) &&
+		(IsDigitSym(Str[8], Sym) != 0) && (IsDigitSym(Str[9], Sym) != 0))
 	{
-		Ret = YES; 
+		Ret = YES;
 	}
 	return(Ret);
 }
 
 
 // Windows Server 2008 R2
-static int CheckMMDDYYYYformat(char *Str, char Sym)
+static int CheckMMDDYYYYformat(char* Str, char Sym)
 {
 	int Ret;
 
 	Ret = NO;
-	if((strlen(Str) == 10) &&
-	   (IsDigitSym(Str[0], Sym) != 0) && (IsDigitSym(Str[1], Sym) != 0) &&
-	   (IsDigit(Str[2]) == 0) &&
-	   (IsDigitSym(Str[3], Sym) != 0) && (IsDigitSym(Str[4], Sym) != 0) &&
-	   (IsDigit(Str[5]) == 0) &&
-	   (IsDigitSym(Str[6], Sym) != 0) && (IsDigitSym(Str[7], Sym) != 0) &&
-	   (IsDigitSym(Str[8], Sym) != 0) && (IsDigitSym(Str[9], Sym) != 0))
+	if ((strlen(Str) == 10) &&
+		(IsDigitSym(Str[0], Sym) != 0) && (IsDigitSym(Str[1], Sym) != 0) &&
+		(IsDigit(Str[2]) == 0) &&
+		(IsDigitSym(Str[3], Sym) != 0) && (IsDigitSym(Str[4], Sym) != 0) &&
+		(IsDigit(Str[5]) == 0) &&
+		(IsDigitSym(Str[6], Sym) != 0) && (IsDigitSym(Str[7], Sym) != 0) &&
+		(IsDigitSym(Str[8], Sym) != 0) && (IsDigitSym(Str[9], Sym) != 0))
 	{
-		Ret = YES; 
+		Ret = YES;
 	}
 	return(Ret);
 }
@@ -4601,12 +4611,12 @@ static int CheckMMDDYYYYformat(char *Str, char Sym)
 *		int 種類 (NODE_xxxx)
 *----------------------------------------------------------------------------*/
 
-static int ResolveFileInfo(char *Str, int ListType, char *Fname, LONGLONG *Size, FILETIME *Time, int *Attr, char *Owner, int *Link, int *InfoExist)
+static int ResolveFileInfo(char* Str, int ListType, char* Fname, LONGLONG* Size, FILETIME* Time, int* Attr, char* Owner, int* Link, int* InfoExist)
 {
 	SYSTEMTIME sTime;
 	SYSTEMTIME sTimeNow;
-	char Buf[FMAX_PATH+1];
-	char *Pos;
+	char Buf[FMAX_PATH + 1];
+	char* Pos;
 	char Flag;
 	int Ret;
 	int offs;
@@ -4623,11 +4633,11 @@ static int ResolveFileInfo(char *Str, int ListType, char *Fname, LONGLONG *Size,
 	/* まずクリアしておく */
 	Ret = NODE_NONE;
 	// バグ対策
-	memset(Fname, NUL, FMAX_PATH+1);
+	memset(Fname, NUL, FMAX_PATH + 1);
 	*Size = -1;
 	*Attr = 0;
 	*Link = NO;
-	memset(Owner, NUL, OWNER_NAME_LEN+1);
+	memset(Owner, NUL, OWNER_NAME_LEN + 1);
 	Time->dwLowDateTime = 0;
 	Time->dwHighDateTime = 0;
 	*InfoExist = 0;
@@ -4637,924 +4647,924 @@ static int ResolveFileInfo(char *Str, int ListType, char *Fname, LONGLONG *Size,
 
 	OrgListType = ListType;
 	ListType &= LIST_MASKFLG;
-	switch(ListType)
+	switch (ListType)
 	{
-		case LIST_DOS_1 :
-		case LIST_DOS_2 :
-		case LIST_DOS_3 :
-			if(ListType == LIST_DOS_1)
-				offs = 0;
-			else if(ListType == LIST_DOS_2)
-				offs = 1;
-			else
-				offs = 2;
-
-			*InfoExist |= (FINFO_DATE | FINFO_SIZE);
-
-			/* 時刻 */
-			FindField(Str, Buf, DosPos[offs][0], NO);
-			if((Pos = strchr(Buf, ':')) != NULL)
-			{
-				*InfoExist |= FINFO_TIME;
-				sTime.wHour = atoi(Buf);
-				sTime.wMinute = atoi(Pos+1);
-				sTime.wSecond = 0;
-				sTime.wMilliseconds = 0;
-
-				if(strlen(Pos) >= 4)
-				{
-					if(tolower(Pos[3]) == 'a')
-					{
-						if(sTime.wHour == 12)
-							sTime.wHour = 0;
-					}
-					else if(tolower(Pos[3]) == 'p')
-					{
-						if(sTime.wHour != 12)
-							sTime.wHour += 12;
-					}
-				}
-			}
-
-			/* 日付 */
-			FindField(Str, Buf, DosPos[offs][1], NO);
-			if((offs2 = CheckYYMMDDformat(Buf, NUL, YES)) == 0)
-				break;
-			offs2--;
-			sTime.wYear = Assume1900or2000(atoi(Buf + DosDate[offs][0][offs2]));
-			sTime.wMonth = atoi(Buf + DosDate[offs][1][offs2]);
-			sTime.wDay = atoi(Buf + DosDate[offs][2][offs2]);
-			SystemTimeToFileTime(&sTime, Time);
-			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
-
-			/* サイズ */
-			FindField(Str, Buf, DosPos[offs][2], NO);
-			*Size = _atoi64(Buf);
-
-			/* 名前 */
-			if(FindField(Str, Fname, DosPos[offs][3], DosLongFname[offs]) == FFFTP_SUCCESS)
-			{
-				Ret = NODE_FILE;
-				if(Buf[0] == '<')
-					Ret = NODE_DIR;
-			}
-			break;
-
-		case LIST_DOS_4 :
-			*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE);
-
-			/* 日付 */
-			FindField(Str, Buf, 0, NO);
-			sTime.wYear = atoi(Buf);
-			sTime.wMonth = atoi(Buf+5);
-			sTime.wDay = atoi(Buf+8);
-
-			/* 時刻 */
-			*InfoExist |= FINFO_TIME;
-			FindField(Str, Buf, 1, NO);
-			sTime.wHour = atoi(Buf);
-			sTime.wMinute = atoi(Buf+3);
-			sTime.wSecond = 0;				// atoi(Buf+6);
-			sTime.wMilliseconds = 0;
-			SystemTimeToFileTime(&sTime, Time);
-			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
-
-			/* サイズ */
-			FindField(Str, Buf, 2, NO);
-			*Size = _atoi64(Buf);
-
-			/* 名前 */
-			if(FindField(Str, Fname, 3, YES) == FFFTP_SUCCESS)
-			{
-				Ret = NODE_FILE;
-				if(Buf[0] == '<')
-					Ret = NODE_DIR;
-			}
-			break;
-
-		// Windows Server 2008 R2
-		case LIST_DOS_5 :
-			*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE);
-
-			/* 日付 */
-			FindField(Str, Buf, 0, NO);
-			sTime.wMonth = atoi(Buf);
-			sTime.wDay = atoi(Buf+3);
-			sTime.wYear = atoi(Buf+6);
-
-			/* 時刻 */
-			FindField(Str, Buf, 1, NO);
-			sTime.wHour = atoi(Buf);
-			sTime.wMinute = atoi(Buf+3);
-			sTime.wSecond = 0;
-			sTime.wMilliseconds = 0;
-			if(_strnicmp(Buf+5, "AM", 2) == 0)
-			{
-				if(sTime.wHour == 12)
-					sTime.wHour = 0;
-			}
-			else if(_strnicmp(Buf+5, "PM", 2) == 0)
-			{
-				if(sTime.wHour != 12)
-					sTime.wHour += 12;
-			}
-			SystemTimeToFileTime(&sTime, Time);
-			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
-
-			/* サイズ */
-			FindField(Str, Buf, 2, NO);
-			*Size = _atoi64(Buf);
-
-			/* 名前 */
-			if(FindField(Str, Fname, 3, YES) == FFFTP_SUCCESS)
-			{
-				Ret = NODE_FILE;
-				if(Buf[0] == '<')
-					Ret = NODE_DIR;
-			}
-			break;
-
-		case LIST_OS2 :
-			*InfoExist |= (FINFO_DATE | FINFO_SIZE);
-
-			/* 時刻 */
-			FindField(Str, Buf, 3, NO);
-			if((Pos = strchr(Buf, ':')) != NULL)
-			{
-				*InfoExist |= FINFO_TIME;
-				sTime.wHour = atoi(Buf);
-				sTime.wMinute = atoi(Pos+1);
-				sTime.wSecond = 0;
-				sTime.wMilliseconds = 0;
-			}
-
-			/* 日付 */
-			FindField(Str, Buf, 2, NO);
-			sTime.wYear = Assume1900or2000(atoi(Buf+6));
-			sTime.wMonth = atoi(Buf+0);
-			sTime.wDay = atoi(Buf+3);
-			SystemTimeToFileTime(&sTime, Time);
-			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
-
-			/* サイズ */
-			FindField(Str, Buf, 0, NO);
-			*Size = _atoi64(Buf);
-
-			/* 名前 */
-			if(FindField(Str, Fname, 4, YES) == FFFTP_SUCCESS)
-			{
-				FindField(Str, Buf, 1, NO);
-				Ret = NODE_FILE;
-				if(strstr(Buf, "DIR") != NULL)
-					Ret = NODE_DIR;
-			}
-			break;
-
-		case LIST_CHAMELEON :
-			*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE | FINFO_ATTR);
-
-			/* 属性 */
-			FindField(Str, Buf, 6, NO);
-			strcat(Buf, "------");
-			*Attr = AttrString2Value(Buf+1);
-
-			/* 日付 */
-			FindField(Str, Buf, 2, NO);
-			GetMonth(Buf, &sTime.wMonth, &sTime.wDay);	/* wDayは常に0 */
-			FindField(Str, Buf, 3, NO);
-			sTime.wDay = atoi(Buf);
-			FindField(Str, Buf, 4, NO);
-			sTime.wYear = atoi(Buf);
-
-			/* 時刻 */
-			FindField(Str, Buf, 5, NO);
-			sTime.wHour = atoi(Buf);
-			sTime.wMinute = atoi(Buf+3);
-			sTime.wSecond = 0;
-			sTime.wMilliseconds = 0;
-			SystemTimeToFileTime(&sTime, Time);
-			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
-
-			/* サイズ */
-			FindField(Str, Buf, 1, NO);
-			*Size = _atoi64(Buf);
-
-			/* 名前 */
-			if(FindField(Str, Fname, 0, NO) == FFFTP_SUCCESS)
-			{
-				Ret = NODE_FILE;
-				if(Buf[0] == '<')
-					Ret = NODE_DIR;
-			}
-			break;
-
-		case LIST_AS400 :
-			*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE);
-
-			/* オーナ名 */
-			FindField(Str, Buf, 0, NO);
-			strncpy(Owner, Buf, OWNER_NAME_LEN);
-
-			/* 時刻 */
-			FindField(Str, Buf, 3, NO);
-			sTime.wHour = atoi(Buf);
-			sTime.wMinute = atoi(Buf+3);
-			sTime.wSecond = 0;
-			sTime.wMilliseconds = 0;
-
-			/* 日付 */
-			FindField(Str, Buf, 2, NO);
-			sTime.wYear = Assume1900or2000(atoi(Buf));
-			sTime.wMonth = atoi(Buf + 3);
-			sTime.wDay = atoi(Buf + 6);
-			SystemTimeToFileTime(&sTime, Time);
-			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
-
-			/* サイズ */
-			FindField(Str, Buf, 1, NO);
-			*Size = _atoi64(Buf);
-
-			/* 名前 */
-			if(FindField(Str, Fname, 5, YES) == FFFTP_SUCCESS)
-			{
-				Ret = NODE_FILE;
-				if((Pos = strchr(Fname, '/')) != NULL)
-				{
-					Ret = NODE_DIR;
-					*Pos = NUL;
-				}
-			}
-			break;
-
-		case LIST_M1800 :
-			*InfoExist |= FINFO_ATTR;
-
-			/* 属性 */
-			FindField(Str, Buf, 0, NO);
-			strcat(Buf, "------");
-			*Attr = AttrString2Value(Buf+1);
-
-			/* 日付 */
-			Time->dwLowDateTime = 0;
-			Time->dwHighDateTime = 0;
-			FindField(Str, Buf, 5, NO);
-			if(Buf[0] != '*')
-			{
-				*InfoExist |= FINFO_DATE;
-				sTime.wHour = 0;
-				sTime.wMinute = 0;
-				sTime.wSecond = 0;
-				sTime.wMilliseconds = 0;
-
-				sTime.wYear = Assume1900or2000(atoi(Buf));
-				sTime.wMonth = atoi(Buf + 3);
-				sTime.wDay = atoi(Buf + 6);
-				SystemTimeToFileTime(&sTime, Time);
-				SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
-			}
-
-			/* 名前 */
-			if(FindField(Str, Fname, 6, YES) == FFFTP_SUCCESS)
-			{
-				RemoveTailingSpaces(Fname);
-				Ret = NODE_FILE;
-				if((Pos = strchr(Fname, '/')) != NULL)
-				{
-					Ret = NODE_DIR;
-					*Pos = NUL;
-				}
-			}
-			break;
-
-		case LIST_GP6000 :
-			*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE | FINFO_ATTR);
-
-			/* オーナ名 */
-			FindField(Str, Buf, 3, NO);
-			strncpy(Owner, Buf, OWNER_NAME_LEN);
-
-			/* 時刻 */
-			FindField(Str, Buf, 2, NO);
-			sTime.wHour = atoi(Buf);
-			sTime.wMinute = atoi(Buf+3);
-			sTime.wSecond = 0;
-			sTime.wMilliseconds = 0;
-
-			/* 日付 */
-			FindField(Str, Buf, 1, NO);
-			sTime.wYear = Assume1900or2000(atoi(Buf));
-			sTime.wMonth = atoi(Buf + 3);
-			sTime.wDay = atoi(Buf + 6);
-			SystemTimeToFileTime(&sTime, Time);
-			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
-
-			/* サイズ */
-			FindField(Str, Buf, 5, NO);
-			*Size = _atoi64(Buf);
-
-			/* 属性 */
-			FindField(Str, Buf, 0, NO);
-			*Attr = AttrString2Value(Buf+1);
-
-			/* 名前 */
-			if(FindField(Str, Fname, 6, YES) == FFFTP_SUCCESS)
-			{
-				Ret = NODE_FILE;
-				if(strchr("dl", Buf[0]) != NULL)
-					Ret = NODE_DIR;
-			}
-			break;
-
-		case LIST_ACOS :
-		case LIST_ACOS_4 :
-			/* 名前 */
-			FindField(Str, Fname, 0, NO);
-			Ret = NODE_FILE;
-			break;
-
-		case LIST_VMS :
-			*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE);
-
-			/* サイズ */
-			FindField(Str, Buf, 1, NO);
-			*Size = _atoi64(Buf) * BLOCK_SIZE;
-
-			/* 時刻／日付 */
-			FindField(Str, Buf, 2, NO);
-			GetVMSdate(Buf, &sTime.wYear, &sTime.wMonth, &sTime.wDay);
-
-			FindField(Str, Buf, 3, NO);
-			GetHourAndMinute(Buf, &sTime.wHour, &sTime.wMinute);
-
-			sTime.wSecond = 0;
-			sTime.wMilliseconds = 0;
-			SystemTimeToFileTime(&sTime, Time);
-			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
-
-			/* 名前 */
-			FindField(Str, Fname, 0, NO);
-
-			Ret = NODE_FILE;
-			if((Pos = strchr(Fname, '.')) != NULL)
-			{
-				if(_strnicmp(Pos, ".DIR;", 5) == 0)
-				{
-					/* OpenVMSの場合、ファイル/ディレクトリ削除時には".DIR;?"までないと
-					 * 削除できないので、ここではつぶさない */
-#if !defined(HAVE_OPENVMS)
-					*Pos = NUL;
-#endif
-					Ret = NODE_DIR;
-				}
-			}
-			break;
-
-		case LIST_OS7_2 :
-			*InfoExist |= FINFO_SIZE;
+	case LIST_DOS_1:
+	case LIST_DOS_2:
+	case LIST_DOS_3:
+		if (ListType == LIST_DOS_1)
+			offs = 0;
+		else if (ListType == LIST_DOS_2)
+			offs = 1;
+		else
 			offs = 2;
 
-			/* サイズ */
-			FindField(Str, Buf, 2, NO);
-			*Size = _atoi64(Buf);
-			/* ここにbreakはない */
+		*InfoExist |= (FINFO_DATE | FINFO_SIZE);
 
-		case LIST_OS7_1 :
-			*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_ATTR);
+		/* 時刻 */
+		FindField(Str, Buf, DosPos[offs][0], NO);
+		if ((Pos = strchr(Buf, ':')) != NULL)
+		{
+			*InfoExist |= FINFO_TIME;
+			sTime.wHour = atoi(Buf);
+			sTime.wMinute = atoi(Pos + 1);
+			sTime.wSecond = 0;
+			sTime.wMilliseconds = 0;
+
+			if (strlen(Pos) >= 4)
+			{
+				if (tolower(Pos[3]) == 'a')
+				{
+					if (sTime.wHour == 12)
+						sTime.wHour = 0;
+				}
+				else if (tolower(Pos[3]) == 'p')
+				{
+					if (sTime.wHour != 12)
+						sTime.wHour += 12;
+				}
+			}
+		}
+
+		/* 日付 */
+		FindField(Str, Buf, DosPos[offs][1], NO);
+		if ((offs2 = CheckYYMMDDformat(Buf, NUL, YES)) == 0)
+			break;
+		offs2--;
+		sTime.wYear = Assume1900or2000(atoi(Buf + DosDate[offs][0][offs2]));
+		sTime.wMonth = atoi(Buf + DosDate[offs][1][offs2]);
+		sTime.wDay = atoi(Buf + DosDate[offs][2][offs2]);
+		SystemTimeToFileTime(&sTime, Time);
+		SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+
+		/* サイズ */
+		FindField(Str, Buf, DosPos[offs][2], NO);
+		*Size = _atoi64(Buf);
+
+		/* 名前 */
+		if (FindField(Str, Fname, DosPos[offs][3], DosLongFname[offs]) == FFFTP_SUCCESS)
+		{
+			Ret = NODE_FILE;
+			if (Buf[0] == '<')
+				Ret = NODE_DIR;
+		}
+		break;
+
+	case LIST_DOS_4:
+		*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE);
+
+		/* 日付 */
+		FindField(Str, Buf, 0, NO);
+		sTime.wYear = atoi(Buf);
+		sTime.wMonth = atoi(Buf + 5);
+		sTime.wDay = atoi(Buf + 8);
+
+		/* 時刻 */
+		*InfoExist |= FINFO_TIME;
+		FindField(Str, Buf, 1, NO);
+		sTime.wHour = atoi(Buf);
+		sTime.wMinute = atoi(Buf + 3);
+		sTime.wSecond = 0;				// atoi(Buf+6);
+		sTime.wMilliseconds = 0;
+		SystemTimeToFileTime(&sTime, Time);
+		SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+
+		/* サイズ */
+		FindField(Str, Buf, 2, NO);
+		*Size = _atoi64(Buf);
+
+		/* 名前 */
+		if (FindField(Str, Fname, 3, YES) == FFFTP_SUCCESS)
+		{
+			Ret = NODE_FILE;
+			if (Buf[0] == '<')
+				Ret = NODE_DIR;
+		}
+		break;
+
+		// Windows Server 2008 R2
+	case LIST_DOS_5:
+		*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE);
+
+		/* 日付 */
+		FindField(Str, Buf, 0, NO);
+		sTime.wMonth = atoi(Buf);
+		sTime.wDay = atoi(Buf + 3);
+		sTime.wYear = atoi(Buf + 6);
+
+		/* 時刻 */
+		FindField(Str, Buf, 1, NO);
+		sTime.wHour = atoi(Buf);
+		sTime.wMinute = atoi(Buf + 3);
+		sTime.wSecond = 0;
+		sTime.wMilliseconds = 0;
+		if (_strnicmp(Buf + 5, "AM", 2) == 0)
+		{
+			if (sTime.wHour == 12)
+				sTime.wHour = 0;
+		}
+		else if (_strnicmp(Buf + 5, "PM", 2) == 0)
+		{
+			if (sTime.wHour != 12)
+				sTime.wHour += 12;
+		}
+		SystemTimeToFileTime(&sTime, Time);
+		SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+
+		/* サイズ */
+		FindField(Str, Buf, 2, NO);
+		*Size = _atoi64(Buf);
+
+		/* 名前 */
+		if (FindField(Str, Fname, 3, YES) == FFFTP_SUCCESS)
+		{
+			Ret = NODE_FILE;
+			if (Buf[0] == '<')
+				Ret = NODE_DIR;
+		}
+		break;
+
+	case LIST_OS2:
+		*InfoExist |= (FINFO_DATE | FINFO_SIZE);
+
+		/* 時刻 */
+		FindField(Str, Buf, 3, NO);
+		if ((Pos = strchr(Buf, ':')) != NULL)
+		{
+			*InfoExist |= FINFO_TIME;
+			sTime.wHour = atoi(Buf);
+			sTime.wMinute = atoi(Pos + 1);
+			sTime.wSecond = 0;
+			sTime.wMilliseconds = 0;
+		}
+
+		/* 日付 */
+		FindField(Str, Buf, 2, NO);
+		sTime.wYear = Assume1900or2000(atoi(Buf + 6));
+		sTime.wMonth = atoi(Buf + 0);
+		sTime.wDay = atoi(Buf + 3);
+		SystemTimeToFileTime(&sTime, Time);
+		SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+
+		/* サイズ */
+		FindField(Str, Buf, 0, NO);
+		*Size = _atoi64(Buf);
+
+		/* 名前 */
+		if (FindField(Str, Fname, 4, YES) == FFFTP_SUCCESS)
+		{
+			FindField(Str, Buf, 1, NO);
+			Ret = NODE_FILE;
+			if (strstr(Buf, "DIR") != NULL)
+				Ret = NODE_DIR;
+		}
+		break;
+
+	case LIST_CHAMELEON:
+		*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE | FINFO_ATTR);
+
+		/* 属性 */
+		FindField(Str, Buf, 6, NO);
+		strcat(Buf, "------");
+		*Attr = AttrString2Value(Buf + 1);
+
+		/* 日付 */
+		FindField(Str, Buf, 2, NO);
+		GetMonth(Buf, &sTime.wMonth, &sTime.wDay);	/* wDayは常に0 */
+		FindField(Str, Buf, 3, NO);
+		sTime.wDay = atoi(Buf);
+		FindField(Str, Buf, 4, NO);
+		sTime.wYear = atoi(Buf);
+
+		/* 時刻 */
+		FindField(Str, Buf, 5, NO);
+		sTime.wHour = atoi(Buf);
+		sTime.wMinute = atoi(Buf + 3);
+		sTime.wSecond = 0;
+		sTime.wMilliseconds = 0;
+		SystemTimeToFileTime(&sTime, Time);
+		SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+
+		/* サイズ */
+		FindField(Str, Buf, 1, NO);
+		*Size = _atoi64(Buf);
+
+		/* 名前 */
+		if (FindField(Str, Fname, 0, NO) == FFFTP_SUCCESS)
+		{
+			Ret = NODE_FILE;
+			if (Buf[0] == '<')
+				Ret = NODE_DIR;
+		}
+		break;
+
+	case LIST_AS400:
+		*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE);
+
+		/* オーナ名 */
+		FindField(Str, Buf, 0, NO);
+		strncpy(Owner, Buf, OWNER_NAME_LEN);
+
+		/* 時刻 */
+		FindField(Str, Buf, 3, NO);
+		sTime.wHour = atoi(Buf);
+		sTime.wMinute = atoi(Buf + 3);
+		sTime.wSecond = 0;
+		sTime.wMilliseconds = 0;
+
+		/* 日付 */
+		FindField(Str, Buf, 2, NO);
+		sTime.wYear = Assume1900or2000(atoi(Buf));
+		sTime.wMonth = atoi(Buf + 3);
+		sTime.wDay = atoi(Buf + 6);
+		SystemTimeToFileTime(&sTime, Time);
+		SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+
+		/* サイズ */
+		FindField(Str, Buf, 1, NO);
+		*Size = _atoi64(Buf);
+
+		/* 名前 */
+		if (FindField(Str, Fname, 5, YES) == FFFTP_SUCCESS)
+		{
+			Ret = NODE_FILE;
+			if ((Pos = strchr(Fname, '/')) != NULL)
+			{
+				Ret = NODE_DIR;
+				*Pos = NUL;
+			}
+		}
+		break;
+
+	case LIST_M1800:
+		*InfoExist |= FINFO_ATTR;
+
+		/* 属性 */
+		FindField(Str, Buf, 0, NO);
+		strcat(Buf, "------");
+		*Attr = AttrString2Value(Buf + 1);
+
+		/* 日付 */
+		Time->dwLowDateTime = 0;
+		Time->dwHighDateTime = 0;
+		FindField(Str, Buf, 5, NO);
+		if (Buf[0] != '*')
+		{
+			*InfoExist |= FINFO_DATE;
+			sTime.wHour = 0;
+			sTime.wMinute = 0;
+			sTime.wSecond = 0;
+			sTime.wMilliseconds = 0;
+
+			sTime.wYear = Assume1900or2000(atoi(Buf));
+			sTime.wMonth = atoi(Buf + 3);
+			sTime.wDay = atoi(Buf + 6);
+			SystemTimeToFileTime(&sTime, Time);
+			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+		}
+
+		/* 名前 */
+		if (FindField(Str, Fname, 6, YES) == FFFTP_SUCCESS)
+		{
+			RemoveTailingSpaces(Fname);
+			Ret = NODE_FILE;
+			if ((Pos = strchr(Fname, '/')) != NULL)
+			{
+				Ret = NODE_DIR;
+				*Pos = NUL;
+			}
+		}
+		break;
+
+	case LIST_GP6000:
+		*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE | FINFO_ATTR);
+
+		/* オーナ名 */
+		FindField(Str, Buf, 3, NO);
+		strncpy(Owner, Buf, OWNER_NAME_LEN);
+
+		/* 時刻 */
+		FindField(Str, Buf, 2, NO);
+		sTime.wHour = atoi(Buf);
+		sTime.wMinute = atoi(Buf + 3);
+		sTime.wSecond = 0;
+		sTime.wMilliseconds = 0;
+
+		/* 日付 */
+		FindField(Str, Buf, 1, NO);
+		sTime.wYear = Assume1900or2000(atoi(Buf));
+		sTime.wMonth = atoi(Buf + 3);
+		sTime.wDay = atoi(Buf + 6);
+		SystemTimeToFileTime(&sTime, Time);
+		SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+
+		/* サイズ */
+		FindField(Str, Buf, 5, NO);
+		*Size = _atoi64(Buf);
+
+		/* 属性 */
+		FindField(Str, Buf, 0, NO);
+		*Attr = AttrString2Value(Buf + 1);
+
+		/* 名前 */
+		if (FindField(Str, Fname, 6, YES) == FFFTP_SUCCESS)
+		{
+			Ret = NODE_FILE;
+			if (strchr("dl", Buf[0]) != NULL)
+				Ret = NODE_DIR;
+		}
+		break;
+
+	case LIST_ACOS:
+	case LIST_ACOS_4:
+		/* 名前 */
+		FindField(Str, Fname, 0, NO);
+		Ret = NODE_FILE;
+		break;
+
+	case LIST_VMS:
+		*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE);
+
+		/* サイズ */
+		FindField(Str, Buf, 1, NO);
+		*Size = _atoi64(Buf) * BLOCK_SIZE;
+
+		/* 時刻／日付 */
+		FindField(Str, Buf, 2, NO);
+		GetVMSdate(Buf, &sTime.wYear, &sTime.wMonth, &sTime.wDay);
+
+		FindField(Str, Buf, 3, NO);
+		GetHourAndMinute(Buf, &sTime.wHour, &sTime.wMinute);
+
+		sTime.wSecond = 0;
+		sTime.wMilliseconds = 0;
+		SystemTimeToFileTime(&sTime, Time);
+		SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+
+		/* 名前 */
+		FindField(Str, Fname, 0, NO);
+
+		Ret = NODE_FILE;
+		if ((Pos = strchr(Fname, '.')) != NULL)
+		{
+			if (_strnicmp(Pos, ".DIR;", 5) == 0)
+			{
+				/* OpenVMSの場合、ファイル/ディレクトリ削除時には".DIR;?"までないと
+				 * 削除できないので、ここではつぶさない */
+#if !defined(HAVE_OPENVMS)
+				*Pos = NUL;
+#endif
+				Ret = NODE_DIR;
+			}
+		}
+		break;
+
+	case LIST_OS7_2:
+		*InfoExist |= FINFO_SIZE;
+		offs = 2;
+
+		/* サイズ */
+		FindField(Str, Buf, 2, NO);
+		*Size = _atoi64(Buf);
+		/* ここにbreakはない */
+
+	case LIST_OS7_1:
+		*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_ATTR);
+
+		/* 日付 */
+		FindField(Str, Buf, 1 + offs, NO);
+		sTime.wYear = Assume1900or2000(atoi(Buf));
+		sTime.wMonth = atoi(Buf + 3);
+		sTime.wDay = atoi(Buf + 6);
+
+		/* 時刻 */
+		FindField(Str, Buf, 2 + offs, NO);
+		sTime.wHour = atoi(Buf);
+		sTime.wMinute = atoi(Buf + 3);
+		sTime.wSecond = 0;
+		sTime.wMilliseconds = 0;
+		SystemTimeToFileTime(&sTime, Time);
+		SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+
+		/* 属性 */
+		FindField(Str, Buf, 0, NO);
+		*Attr = AttrString2Value(Buf + 1);
+
+		/* 名前 */
+		if (FindField(Str, Fname, 3 + offs, YES) == FFFTP_SUCCESS)
+		{
+			RemoveTailingSpaces(Fname);
+			Ret = NODE_FILE;
+			if (strchr("dl", Buf[0]) != NULL)
+				Ret = NODE_DIR;
+		}
+		break;
+
+	case LIST_STRATUS:
+		if (FindField(Str, Buf, 0, NO) != FFFTP_SUCCESS)
+			break;
+		if (_strnicmp(Buf, "Files:", 6) == 0)
+			StratusMode = 0;
+		else if (_strnicmp(Buf, "Dirs:", 5) == 0)
+			StratusMode = 1;
+		else if (_strnicmp(Buf, "Links:", 6) == 0)
+			StratusMode = 2;
+		else
+		{
+			if (StratusMode == 0)
+				offs = 1;
+			else if (StratusMode == 1)
+				offs = 0;
+			else
+				break;
+
+			*InfoExist |= (FINFO_TIME | FINFO_DATE);
 
 			/* 日付 */
-			FindField(Str, Buf, 1+offs, NO);
+			if (FindField(Str, Buf, 2 + offs, NO) != FFFTP_SUCCESS)
+				break;
 			sTime.wYear = Assume1900or2000(atoi(Buf));
 			sTime.wMonth = atoi(Buf + 3);
 			sTime.wDay = atoi(Buf + 6);
 
 			/* 時刻 */
-			FindField(Str, Buf, 2+offs, NO);
+			if (FindField(Str, Buf, 3 + offs, NO) != FFFTP_SUCCESS)
+				break;
 			sTime.wHour = atoi(Buf);
-			sTime.wMinute = atoi(Buf+3);
+			sTime.wMinute = atoi(Buf + 3);
 			sTime.wSecond = 0;
 			sTime.wMilliseconds = 0;
 			SystemTimeToFileTime(&sTime, Time);
 			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
 
-			/* 属性 */
-			FindField(Str, Buf, 0, NO);
-			*Attr = AttrString2Value(Buf+1);
-
 			/* 名前 */
-			if(FindField(Str, Fname, 3+offs, YES) == FFFTP_SUCCESS)
-			{
-				RemoveTailingSpaces(Fname);
-				Ret = NODE_FILE;
-				if(strchr("dl", Buf[0]) != NULL)
-					Ret = NODE_DIR;
-			}
-			break;
-
-		case LIST_STRATUS :
-			if(FindField(Str, Buf, 0, NO) != FFFTP_SUCCESS)
+			if (FindField(Str, Fname, 4 + offs, YES) != FFFTP_SUCCESS)
 				break;
-			if(_strnicmp(Buf, "Files:", 6) == 0)
-				StratusMode = 0;
-			else if(_strnicmp(Buf, "Dirs:", 5) == 0)
-				StratusMode = 1;
-			else if(_strnicmp(Buf, "Links:", 6) == 0)
-				StratusMode = 2;
+
+			if (StratusMode == 0)
+			{
+				*InfoExist |= FINFO_SIZE;
+
+				/* サイズ */
+				if (FindField(Str, Buf, 1, NO) != FFFTP_SUCCESS)
+					break;
+				*Size = _atoi64(Buf) * 4096;
+
+				/* 種類（オーナ名のフィールドにいれる） */
+				if (FindField(Str, Buf, 2, NO) != FFFTP_SUCCESS)
+					break;
+				strncpy(Owner, Buf, OWNER_NAME_LEN);
+
+				Ret = NODE_FILE;
+			}
 			else
-			{
-				if(StratusMode == 0)
-					offs = 1;
-				else if(StratusMode == 1)
-					offs = 0;
-				else
-					break;
+				Ret = NODE_DIR;
+		}
+		break;
 
-				*InfoExist |= (FINFO_TIME | FINFO_DATE);
+	case LIST_IRMX:
+		*InfoExist |= (FINFO_DATE | FINFO_SIZE);
 
-				/* 日付 */
-				if(FindField(Str, Buf, 2+offs, NO) != FFFTP_SUCCESS)
-					break;
-				sTime.wYear = Assume1900or2000(atoi(Buf));
-				sTime.wMonth = atoi(Buf + 3);
-				sTime.wDay = atoi(Buf + 6);
-
-				/* 時刻 */
-				if(FindField(Str, Buf, 3+offs, NO) != FFFTP_SUCCESS)
-					break;
-				sTime.wHour = atoi(Buf);
-				sTime.wMinute = atoi(Buf+3);
-				sTime.wSecond = 0;
-				sTime.wMilliseconds = 0;
-				SystemTimeToFileTime(&sTime, Time);
-				SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
-
-				/* 名前 */
-				if(FindField(Str, Fname, 4+offs, YES) != FFFTP_SUCCESS)
-					break;
-
-				if(StratusMode == 0)
-				{
-					*InfoExist |= FINFO_SIZE;
-
-					/* サイズ */
-					if(FindField(Str, Buf, 1, NO) != FFFTP_SUCCESS)
-						break;
-					*Size = _atoi64(Buf) * 4096;
-
-					/* 種類（オーナ名のフィールドにいれる） */
-					if(FindField(Str, Buf, 2, NO) != FFFTP_SUCCESS)
-						break;
-					strncpy(Owner, Buf, OWNER_NAME_LEN);
-
-					Ret = NODE_FILE;
-				}
-				else
-					Ret = NODE_DIR;
-			}
+		/* 日付 */
+		for (offs = 11; offs > 7; offs--)
+		{
+			if ((err = FindField(Str, Buf, offs, NO)) == FFFTP_SUCCESS)
+				break;
+		}
+		if (err != FFFTP_SUCCESS)
 			break;
+		if (IsDigit(*Buf) == 0)
+			break;
+		sTime.wYear = Assume1900or2000(atoi(Buf));
+		if (FindField(Str, Buf, --offs, NO) != FFFTP_SUCCESS)
+			break;
+		GetMonth(Buf, &sTime.wMonth, &sTime.wDay);
+		if (FindField(Str, Buf, --offs, NO) != FFFTP_SUCCESS)
+			break;
+		if (IsDigit(*Buf) == 0)
+			break;
+		sTime.wDay = atoi(Buf);
+		sTime.wHour = 0;
+		sTime.wMinute = 0;
+		sTime.wSecond = 0;
+		sTime.wMilliseconds = 0;
+		SystemTimeToFileTime(&sTime, Time);
+		SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
 
-		case LIST_IRMX :
-			*InfoExist |= (FINFO_DATE | FINFO_SIZE);
+		/* オーナ名 */
+		if (FindField(Str, Buf, --offs, NO) != FFFTP_SUCCESS)
+			break;
+		strncpy(Owner, Buf, OWNER_NAME_LEN);
 
-			/* 日付 */
-			for(offs = 11; offs > 7; offs--)
-			{
-				if((err = FindField(Str, Buf, offs, NO)) == FFFTP_SUCCESS)
-					break;
-			}
-			if(err != FFFTP_SUCCESS)
+		/* サイズ */
+		do
+		{
+			if ((err = FindField(Str, Buf, --offs, NO)) != FFFTP_SUCCESS)
 				break;
-			if(IsDigit(*Buf) == 0)
-				break;
-			sTime.wYear = Assume1900or2000(atoi(Buf));
-			if(FindField(Str, Buf, --offs, NO) != FFFTP_SUCCESS)
-				break;
-			GetMonth(Buf, &sTime.wMonth, &sTime.wDay);
-			if(FindField(Str, Buf, --offs, NO) != FFFTP_SUCCESS)
-				break;
-			if(IsDigit(*Buf) == 0)
-				break;
-			sTime.wDay = atoi(Buf);
-			sTime.wHour = 0;
-			sTime.wMinute = 0;
-			sTime.wSecond = 0;
-			sTime.wMilliseconds = 0;
-			SystemTimeToFileTime(&sTime, Time);
-			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
-
-			/* オーナ名 */
-			if(FindField(Str, Buf, --offs, NO) != FFFTP_SUCCESS)
-				break;
-			strncpy(Owner, Buf, OWNER_NAME_LEN);
-
-			/* サイズ */
-			do
-			{
-				if((err = FindField(Str, Buf, --offs, NO)) != FFFTP_SUCCESS)
-					break;
-			}
-			while(IsDigit(*Buf) == 0);
-			--offs;
-			if((err = FindField(Str, Buf, --offs, NO)) != FFFTP_SUCCESS)
-				break;
-			RemoveComma(Buf);
-			*Size = _atoi64(Buf);
-			if((err = FindField(Str, Buf, --offs, NO)) != FFFTP_SUCCESS)
-				break;
-			if(IsDigit(*Buf) == 0)
-				break;
-			/* 名前 */
-			if(FindField(Str, Fname, 0, NO) != FFFTP_SUCCESS)
-				break;
-			/* 種類 */
-			if(offs == 0)
-				Ret = NODE_FILE;
+		} while (IsDigit(*Buf) == 0);
+		--offs;
+		if ((err = FindField(Str, Buf, --offs, NO)) != FFFTP_SUCCESS)
+			break;
+		RemoveComma(Buf);
+		*Size = _atoi64(Buf);
+		if ((err = FindField(Str, Buf, --offs, NO)) != FFFTP_SUCCESS)
+			break;
+		if (IsDigit(*Buf) == 0)
+			break;
+		/* 名前 */
+		if (FindField(Str, Fname, 0, NO) != FFFTP_SUCCESS)
+			break;
+		/* 種類 */
+		if (offs == 0)
+			Ret = NODE_FILE;
+		else
+		{
+			if ((FindField(Str, Buf, 1, NO) == FFFTP_SUCCESS) &&
+				(strcmp(Buf, "DR") == 0))
+				Ret = NODE_DIR;
 			else
-			{
-				if((FindField(Str, Buf, 1, NO) == FFFTP_SUCCESS) &&
-				   (strcmp(Buf, "DR") == 0))
-					Ret = NODE_DIR;
-				else
-					Ret = NODE_FILE;
-			}
-			break;
-
-		case LIST_ALLIED :
-			*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE);
-
-			/* 日付 */
-			FindField(Str, Buf, 3, NO);
-			GetMonth(Buf, &sTime.wMonth, &sTime.wDay);	/* wDayは常に0 */
-			FindField(Str, Buf, 4, NO);
-			sTime.wDay = atoi(Buf);
-			FindField(Str, Buf, 6, NO);
-			sTime.wYear = atoi(Buf);
-
-			/* 時刻 */
-			FindField(Str, Buf, 5, NO);
-			sTime.wHour = atoi(Buf);
-			sTime.wMinute = atoi(Buf+3);
-			sTime.wSecond = 0;
-			sTime.wMilliseconds = 0;
-			SystemTimeToFileTime(&sTime, Time);
-			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
-
-			/* サイズ */
-			FindField(Str, Buf, 0, NO);
-			*Size = _atoi64(Buf);
-
-			/* 名前 */
-			if(FindField(Str, Fname, 1, NO) == FFFTP_SUCCESS)
-			{
 				Ret = NODE_FILE;
-				if(Buf[0] == '<')
-					Ret = NODE_DIR;
-			}
-			break;
+		}
+		break;
 
-		case LIST_OS9 :
-			*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE);
+	case LIST_ALLIED:
+		*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE);
+
+		/* 日付 */
+		FindField(Str, Buf, 3, NO);
+		GetMonth(Buf, &sTime.wMonth, &sTime.wDay);	/* wDayは常に0 */
+		FindField(Str, Buf, 4, NO);
+		sTime.wDay = atoi(Buf);
+		FindField(Str, Buf, 6, NO);
+		sTime.wYear = atoi(Buf);
+
+		/* 時刻 */
+		FindField(Str, Buf, 5, NO);
+		sTime.wHour = atoi(Buf);
+		sTime.wMinute = atoi(Buf + 3);
+		sTime.wSecond = 0;
+		sTime.wMilliseconds = 0;
+		SystemTimeToFileTime(&sTime, Time);
+		SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+
+		/* サイズ */
+		FindField(Str, Buf, 0, NO);
+		*Size = _atoi64(Buf);
+
+		/* 名前 */
+		if (FindField(Str, Fname, 1, NO) == FFFTP_SUCCESS)
+		{
+			Ret = NODE_FILE;
+			if (Buf[0] == '<')
+				Ret = NODE_DIR;
+		}
+		break;
+
+	case LIST_OS9:
+		*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE);
+
+		/* 日付 */
+		FindField(Str, Buf, 1, NO);
+		sTime.wYear = Assume1900or2000(atoi(Buf));
+		sTime.wMonth = atoi(Buf + 3);
+		sTime.wDay = atoi(Buf + 6);
+		SystemTimeToFileTime(&sTime, Time);
+		SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+
+		/* 時刻 */
+		FindField(Str, Buf, 2, NO);
+		sTime.wHour = atoi_n(Buf, 2);
+		sTime.wMinute = atoi(Buf + 2);
+		sTime.wSecond = 0;
+		sTime.wMilliseconds = 0;
+		SystemTimeToFileTime(&sTime, Time);
+		SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+
+		/* サイズ */
+		FindField(Str, Buf, 5, NO);
+		*Size = _atoi64(Buf);
+
+		/* オーナ名 */
+		FindField(Str, Buf, 0, NO);
+		strncpy(Owner, Buf, OWNER_NAME_LEN);
+
+		/* オーナ名 */
+		FindField(Str, Buf, 3, NO);
+
+		/* 名前 */
+		if (FindField(Str, Fname, 6, NO) == FFFTP_SUCCESS)
+		{
+			if ((Buf[0] == 'd') || (Buf[0] == 'D'))
+				Ret = NODE_DIR;
+			else
+				Ret = NODE_FILE;
+		}
+		break;
+
+	case LIST_IBM:
+		*InfoExist |= FINFO_DATE;
+
+
+		/* 日付 */
+		FindField(Str, Buf, 2, NO);
+		sTime.wYear = atoi(Buf);
+		sTime.wMonth = atoi(Buf + 5);
+		sTime.wDay = atoi(Buf + 8);
+		sTime.wHour = 0;
+		sTime.wMinute = 0;
+		sTime.wSecond = 0;
+		sTime.wMilliseconds = 0;
+		SystemTimeToFileTime(&sTime, Time);
+		SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+
+		/* 名前 */
+		FindField(Str, Buf, 8, NO);
+		if (FindField(Str, Fname, 9, NO) == FFFTP_SUCCESS)
+		{
+			if (strcmp(Buf, "PO") == 0)
+				Ret = NODE_DIR;
+			else if (strcmp(Buf, "PS") == 0)
+				Ret = NODE_FILE;
+		}
+		break;
+
+	case LIST_AGILENT:
+		*InfoExist |= (FINFO_SIZE | FINFO_ATTR);
+
+		/* オーナ名 */
+		FindField(Str, Buf, 2, NO);
+		strncpy(Owner, Buf, OWNER_NAME_LEN);
+
+		/* サイズ */
+		FindField(Str, Buf, 4, NO);
+		*Size = _atoi64(Buf);
+
+		/* 属性 */
+		FindField(Str, Buf, 0, NO);
+		*Attr = AttrString2Value(Buf + 1);
+
+		/* 名前 */
+		if (FindField(Str, Fname, 5, YES) == FFFTP_SUCCESS)
+		{
+			Ret = NODE_FILE;
+			if (strchr("dl", Buf[0]) != NULL)
+				Ret = NODE_DIR;
+		}
+		break;
+
+	case LIST_SHIBASOKU:
+		*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE);
+
+		/* サイズ */
+		FindField(Str, Buf, 0, NO);
+		if (IsDigit(Buf[0]))
+		{
+			*Size = _atoi64(Buf);
 
 			/* 日付 */
 			FindField(Str, Buf, 1, NO);
-			sTime.wYear = Assume1900or2000(atoi(Buf));
-			sTime.wMonth = atoi(Buf + 3);
-			sTime.wDay = atoi(Buf + 6);
-			SystemTimeToFileTime(&sTime, Time);
-			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+			Buf[3] = '\0';
+			GetMonth(Buf, &sTime.wMonth, &sTime.wDay);
+			sTime.wDay = atoi(Buf + 4);
+			sTime.wYear = atoi(Buf + 7);
 
 			/* 時刻 */
 			FindField(Str, Buf, 2, NO);
-			sTime.wHour = atoi_n(Buf, 2);
-			sTime.wMinute = atoi(Buf+2);
-			sTime.wSecond = 0;
-			sTime.wMilliseconds = 0;
-			SystemTimeToFileTime(&sTime, Time);
-			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
-
-			/* サイズ */
-			FindField(Str, Buf, 5, NO);
-			*Size = _atoi64(Buf);
-
-			/* オーナ名 */
-			FindField(Str, Buf, 0, NO);
-			strncpy(Owner, Buf, OWNER_NAME_LEN);
-
-			/* オーナ名 */
-			FindField(Str, Buf, 3, NO);
-
-			/* 名前 */
-			if(FindField(Str, Fname, 6, NO) == FFFTP_SUCCESS)
-			{
-				if((Buf[0] == 'd') || (Buf[0] == 'D'))
-					Ret = NODE_DIR;
-				else
-					Ret = NODE_FILE;
-			}
-			break;
-
-		case LIST_IBM :
-			*InfoExist |= FINFO_DATE;
-
-
-			/* 日付 */
-			FindField(Str, Buf, 2, NO);
-			sTime.wYear = atoi(Buf);
-			sTime.wMonth = atoi(Buf + 5);
-			sTime.wDay = atoi(Buf + 8);
-			sTime.wHour = 0;
-			sTime.wMinute = 0;
+			sTime.wHour = atoi(Buf);
+			sTime.wMinute = atoi(Buf + 3);
 			sTime.wSecond = 0;
 			sTime.wMilliseconds = 0;
 			SystemTimeToFileTime(&sTime, Time);
 			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
 
 			/* 名前 */
-			FindField(Str, Buf, 8, NO);
-			if(FindField(Str, Fname, 9, NO) == FFFTP_SUCCESS)
+			FindField(Str, Fname, 3, NO);
+
+			/* 種類 */
+			Ret = NODE_FILE;
+			if (FindField(Str, Buf, 4, NO) == FFFTP_SUCCESS)
 			{
-				if(strcmp(Buf, "PO") == 0)
-					Ret = NODE_DIR;
-				else if(strcmp(Buf, "PS") == 0)
-					Ret = NODE_FILE;
-			}
-			break;
-
-		case LIST_AGILENT :
-			*InfoExist |= (FINFO_SIZE | FINFO_ATTR);
-
-			/* オーナ名 */
-			FindField(Str, Buf, 2, NO);
-			strncpy(Owner, Buf, OWNER_NAME_LEN);
-
-			/* サイズ */
-			FindField(Str, Buf, 4, NO);
-			*Size = _atoi64(Buf);
-
-			/* 属性 */
-			FindField(Str, Buf, 0, NO);
-			*Attr = AttrString2Value(Buf+1);
-
-			/* 名前 */
-			if(FindField(Str, Fname, 5, YES) == FFFTP_SUCCESS)
-			{
-				Ret = NODE_FILE;
-				if(strchr("dl", Buf[0]) != NULL)
+				if (strcmp(Buf, "<DIR>") == 0)
 					Ret = NODE_DIR;
 			}
-			break;
-
-		case LIST_SHIBASOKU :
-			*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE);
-
-			/* サイズ */
-			FindField(Str, Buf, 0, NO);
-			if(IsDigit(Buf[0]))
-			{
-				*Size = _atoi64(Buf);
-
-				/* 日付 */
-				FindField(Str, Buf, 1, NO);
-				Buf[3] = '\0';
-				GetMonth(Buf, &sTime.wMonth, &sTime.wDay);
-				sTime.wDay = atoi(Buf+4);
-				sTime.wYear = atoi(Buf+7);
-
-				/* 時刻 */
-				FindField(Str, Buf, 2, NO);
-				sTime.wHour = atoi(Buf);
-				sTime.wMinute = atoi(Buf+3);
-				sTime.wSecond = 0;
-				sTime.wMilliseconds = 0;
-				SystemTimeToFileTime(&sTime, Time);
-				SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
-
-				/* 名前 */
-				FindField(Str, Fname, 3, NO);
-
-				/* 種類 */
-				Ret = NODE_FILE;
-				if(FindField(Str, Buf, 4, NO) == FFFTP_SUCCESS)
-				{
-					if(strcmp(Buf, "<DIR>") == 0)
-						Ret = NODE_DIR;
-				}
-			}
-			break;
+		}
+		break;
 
 #if defined(HAVE_TANDEM)
-		case LIST_TANDEM :
-			*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE | FINFO_ATTR);
-			/* Open 中だったらずらす */
-			if(FindField(Str, Buf, 1, NO) != FFFTP_SUCCESS)
-				break;
-			if (!strncmp(Buf, "O", 1)) {
-				offs = 1;
-			}
-			/* 日付 */
-			if(FindField(Str, Buf, 3 + offs, NO) != FFFTP_SUCCESS)
-				break;
-			if (Buf[1] == '-') {  /* 日付が 1桁 */
-				sTime.wYear = Assume1900or2000(atoi(Buf + 6));
-				Buf[5] = 0;
-				GetMonth(Buf+2, &sTime.wMonth, &sTime.wDay);	/* wDayは常に0 */
-				sTime.wDay = atoi(Buf);
-				sTime.wDayOfWeek = 0;
-			} else {
-				sTime.wYear = Assume1900or2000(atoi(Buf + 7));
-				Buf[6] = 0;
-				GetMonth(Buf+3, &sTime.wMonth, &sTime.wDay);	/* wDayは常に0 */
-				sTime.wDay = atoi(Buf);
-				sTime.wDayOfWeek = 0;
-			}
-			/* 時刻 */
-			FindField(Str, Buf, 4 + offs, NO);
-			sTime.wHour = atoi(Buf);
-			sTime.wMinute = atoi(Buf+3);
-			sTime.wSecond = atoi(Buf+6);
-			sTime.wMilliseconds = 0;
-			SystemTimeToFileTime(&sTime, Time);
-			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+	case LIST_TANDEM:
+		*InfoExist |= (FINFO_TIME | FINFO_DATE | FINFO_SIZE | FINFO_ATTR);
+		/* Open 中だったらずらす */
+		if (FindField(Str, Buf, 1, NO) != FFFTP_SUCCESS)
+			break;
+		if (!strncmp(Buf, "O", 1)) {
+			offs = 1;
+		}
+		/* 日付 */
+		if (FindField(Str, Buf, 3 + offs, NO) != FFFTP_SUCCESS)
+			break;
+		if (Buf[1] == '-') {  /* 日付が 1桁 */
+			sTime.wYear = Assume1900or2000(atoi(Buf + 6));
+			Buf[5] = 0;
+			GetMonth(Buf + 2, &sTime.wMonth, &sTime.wDay);	/* wDayは常に0 */
+			sTime.wDay = atoi(Buf);
+			sTime.wDayOfWeek = 0;
+		}
+		else {
+			sTime.wYear = Assume1900or2000(atoi(Buf + 7));
+			Buf[6] = 0;
+			GetMonth(Buf + 3, &sTime.wMonth, &sTime.wDay);	/* wDayは常に0 */
+			sTime.wDay = atoi(Buf);
+			sTime.wDayOfWeek = 0;
+		}
+		/* 時刻 */
+		FindField(Str, Buf, 4 + offs, NO);
+		sTime.wHour = atoi(Buf);
+		sTime.wMinute = atoi(Buf + 3);
+		sTime.wSecond = atoi(Buf + 6);
+		sTime.wMilliseconds = 0;
+		SystemTimeToFileTime(&sTime, Time);
+		SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
 
-			/* 属性 セキュリティではなく FileCode を保存する */
-			FindField(Str, Buf, 1 + offs, NO);
-			*Attr = atoi(Buf);
-			/* サイズ */
-			FindField(Str, Buf, 2 + offs, NO);
-			*Size = _atoi64(Buf);
-			/* オーナ名 */
-			if(FindField(Str, Buf, 5 + offs, NO) == FFFTP_SUCCESS) {
-				if(strncmp(Buf, "Owner", sizeof("Owner"))) {
-					memset(Owner, NUL, OWNER_NAME_LEN+1);
-					strncpy(Owner, Buf, OWNER_NAME_LEN);
-					/* 通常は 255,255 だが、20, 33 などにも対応する */
-					/* 最後の文字が , だったら後ろとつなげる */
-					if (Buf[strlen(Buf)-1] == ',') {
-						FindField(Str, Buf, 6 + offs, NO);
-						strncat(Owner, Buf, OWNER_NAME_LEN - strlen(Buf));
-					}
-					/* ファイル名 */
-					if(FindField(Str, Fname, 0, NO) == FFFTP_SUCCESS) {
-						Ret = NODE_FILE;
-					}
+		/* 属性 セキュリティではなく FileCode を保存する */
+		FindField(Str, Buf, 1 + offs, NO);
+		*Attr = atoi(Buf);
+		/* サイズ */
+		FindField(Str, Buf, 2 + offs, NO);
+		*Size = _atoi64(Buf);
+		/* オーナ名 */
+		if (FindField(Str, Buf, 5 + offs, NO) == FFFTP_SUCCESS) {
+			if (strncmp(Buf, "Owner", sizeof("Owner"))) {
+				memset(Owner, NUL, OWNER_NAME_LEN + 1);
+				strncpy(Owner, Buf, OWNER_NAME_LEN);
+				/* 通常は 255,255 だが、20, 33 などにも対応する */
+				/* 最後の文字が , だったら後ろとつなげる */
+				if (Buf[strlen(Buf) - 1] == ',') {
+					FindField(Str, Buf, 6 + offs, NO);
+					strncat(Owner, Buf, OWNER_NAME_LEN - strlen(Buf));
+				}
+				/* ファイル名 */
+				if (FindField(Str, Fname, 0, NO) == FFFTP_SUCCESS) {
+					Ret = NODE_FILE;
 				}
 			}
-			break;
+		}
+		break;
 #endif
 
-			// MLSD対応
-			// 以下の形式に対応
-			// fact1=value1;fact2=value2;fact3=value3; filename\r\n
-			// 不完全な実装のホストが存在するため以下の形式も許容
-			// fact1=value1;fact2=value2;fact3=value3 filename\r\n
-			// fact1=value1;fact2=value2;fact3=value3;filename\r\n
-			// SymlinkはRFC3659の7.7.4. A More Complex Exampleに
-			// よるとtype=OS.unix=slink:(target)だが
-			// ProFTPDはtype=OS.unix=symlink:(target)となる
-		case LIST_MLSD:
+		// MLSD対応
+		// 以下の形式に対応
+		// fact1=value1;fact2=value2;fact3=value3; filename\r\n
+		// 不完全な実装のホストが存在するため以下の形式も許容
+		// fact1=value1;fact2=value2;fact3=value3 filename\r\n
+		// fact1=value1;fact2=value2;fact3=value3;filename\r\n
+		// SymlinkはRFC3659の7.7.4. A More Complex Exampleに
+		// よるとtype=OS.unix=slink:(target)だが
+		// ProFTPDはtype=OS.unix=symlink:(target)となる
+	case LIST_MLSD:
+	{
+		int i = 0;
+		char StrBuf[(FMAX_PATH * 2) + 1];
+		char Fact[FMAX_PATH + 1];
+		char Name[FMAX_PATH + 1];
+		char Value[FMAX_PATH + 1];
+		char Value2[FMAX_PATH + 1];
+		char* pFileName;
+		strncpy(StrBuf, Str, FMAX_PATH * 2);
+		StrBuf[FMAX_PATH * 2] = '\0';
+		if ((pFileName = strstr(StrBuf, "; ")) != NULL)
+		{
+			*pFileName = '\0';
+			pFileName += 2;
+		}
+		else if ((pFileName = strchr(StrBuf, ' ')) != NULL)
+		{
+			*pFileName = '\0';
+			pFileName++;
+		}
+		else if ((pFileName = strrchr(StrBuf, ';')) != NULL)
+		{
+			*pFileName = '\0';
+			pFileName++;
+		}
+		if (pFileName != NULL)
+			strcpy(Fname, pFileName);
+		while (FindField2(StrBuf, Fact, ';', i, NO) == FFFTP_SUCCESS)
+		{
+			if (FindField2(Fact, Name, '=', 0, NO) == FFFTP_SUCCESS && FindField2(Fact, Value, '=', 1, NO) == FFFTP_SUCCESS)
 			{
-				int i = 0;
-				char StrBuf[(FMAX_PATH * 2) + 1];
-				char Fact[FMAX_PATH + 1];
-				char Name[FMAX_PATH + 1];
-				char Value[FMAX_PATH + 1];
-				char Value2[FMAX_PATH + 1];
-				char* pFileName;
-				strncpy(StrBuf, Str, FMAX_PATH * 2);
-				StrBuf[FMAX_PATH * 2] = '\0';
-				if((pFileName = strstr(StrBuf, "; ")) != NULL)
+				if (_stricmp(Name, "type") == 0)
 				{
-					*pFileName = '\0';
-					pFileName += 2;
-				}
-				else if((pFileName = strchr(StrBuf, ' ')) != NULL)
-				{
-					*pFileName = '\0';
-					pFileName++;
-				}
-				else if((pFileName = strrchr(StrBuf, ';')) != NULL)
-				{
-					*pFileName = '\0';
-					pFileName++;
-				}
-				if(pFileName != NULL)
-					strcpy(Fname, pFileName);
-				while(FindField2(StrBuf, Fact, ';', i, NO) == FFFTP_SUCCESS)
-				{
-					if(FindField2(Fact, Name, '=', 0, NO) == FFFTP_SUCCESS && FindField2(Fact, Value, '=', 1, NO) == FFFTP_SUCCESS)
-					{
-						if(_stricmp(Name, "type") == 0)
-						{
-							if(_stricmp(Value, "dir") == 0)
+					if (_stricmp(Value, "dir") == 0)
+						Ret = NODE_DIR;
+					else if (_stricmp(Value, "file") == 0)
+						Ret = NODE_FILE;
+					else if (_stricmp(Value, "OS.unix") == 0)
+						if (FindField2(Fact, Value2, '=', 2, NO) == FFFTP_SUCCESS)
+							if (_stricmp(Value2, "symlink") == 0 || _stricmp(Value2, "slink") == 0) { // ProFTPD is symlink. A example of RFC3659 is slink.
 								Ret = NODE_DIR;
-							else if(_stricmp(Value, "file") == 0)
-								Ret = NODE_FILE;
-							else if(_stricmp(Value, "OS.unix") == 0)
-								if(FindField2(Fact, Value2, '=', 2, NO) == FFFTP_SUCCESS)
-									if(_stricmp(Value2, "symlink") == 0 || _stricmp(Value2, "slink") == 0) { // ProFTPD is symlink. A example of RFC3659 is slink.
-										Ret = NODE_DIR;
-										*Link = YES;
-									}
-						}
-						else if(_stricmp(Name, "size") == 0)
-						{
-							*Size = _atoi64(Value);
-							*InfoExist |= FINFO_SIZE;
-						}
-						else if(_stricmp(Name, "modify") == 0)
-						{
-							sTime.wYear = atoi_n(Value, 4);
-							sTime.wMonth = atoi_n(Value + 4, 2);
-							sTime.wDay = atoi_n(Value + 6, 2);
-							sTime.wHour = atoi_n(Value + 8, 2);
-							sTime.wMinute = atoi_n(Value + 10, 2);
-							sTime.wSecond = atoi_n(Value + 12, 2);
-							sTime.wMilliseconds = 0;
-							SystemTimeToFileTime(&sTime, Time);
-							// 時刻はGMT
-//							SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
-							*InfoExist |= FINFO_DATE | FINFO_TIME;
-						}
-						else if(_stricmp(Name, "UNIX.mode") == 0)
-						{
-							*Attr = strtol(Value, NULL, 16);
-							*InfoExist |= FINFO_ATTR;
-						}
-						else if(_stricmp(Name, "UNIX.owner") == 0)
-							strcpy(Owner, Value);
-					}
-					i++;
+								*Link = YES;
+							}
 				}
+				else if (_stricmp(Name, "size") == 0)
+				{
+					*Size = _atoi64(Value);
+					*InfoExist |= FINFO_SIZE;
+				}
+				else if (_stricmp(Name, "modify") == 0)
+				{
+					sTime.wYear = atoi_n(Value, 4);
+					sTime.wMonth = atoi_n(Value + 4, 2);
+					sTime.wDay = atoi_n(Value + 6, 2);
+					sTime.wHour = atoi_n(Value + 8, 2);
+					sTime.wMinute = atoi_n(Value + 10, 2);
+					sTime.wSecond = atoi_n(Value + 12, 2);
+					sTime.wMilliseconds = 0;
+					SystemTimeToFileTime(&sTime, Time);
+					// 時刻はGMT
+//							SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+					*InfoExist |= FINFO_DATE | FINFO_TIME;
+				}
+				else if (_stricmp(Name, "UNIX.mode") == 0)
+				{
+					*Attr = strtol(Value, NULL, 16);
+					*InfoExist |= FINFO_ATTR;
+				}
+				else if (_stricmp(Name, "UNIX.owner") == 0)
+					strcpy(Owner, Value);
 			}
-			break;
+			i++;
+		}
+	}
+	break;
 
-		case LIST_UNIX_10 :
-		case LIST_UNIX_11 :
-		case LIST_UNIX_12 :
-		case LIST_UNIX_13 :
-		case LIST_UNIX_14 :
-		case LIST_UNIX_15 :
-		case LIST_UNIX_20 :
-		case LIST_UNIX_21 :
-		case LIST_UNIX_22 :
-		case LIST_UNIX_23 :
-		case LIST_UNIX_24 :
-		case LIST_UNIX_25 :
-		case LIST_UNIX_50 :
-		case LIST_UNIX_51 :
-		case LIST_UNIX_54 :
-		case LIST_UNIX_60 :
-		case LIST_UNIX_61 :
-		case LIST_UNIX_62 :
-		case LIST_UNIX_63 :
-		case LIST_UNIX_64 :
-		case LIST_UNIX_65 :
-		case LIST_UNIX_70 :
-		case LIST_UNIX_71 :
-		case LIST_UNIX_72 :
-		case LIST_UNIX_73 :
-		case LIST_UNIX_74 :
-		case LIST_UNIX_75 :
-// MELCOMはビットフラグになっている
-//		case LIST_MELCOM :
-		// linux-ftpd
-		case LIST_UNIX_16 :
+	case LIST_UNIX_10:
+	case LIST_UNIX_11:
+	case LIST_UNIX_12:
+	case LIST_UNIX_13:
+	case LIST_UNIX_14:
+	case LIST_UNIX_15:
+	case LIST_UNIX_20:
+	case LIST_UNIX_21:
+	case LIST_UNIX_22:
+	case LIST_UNIX_23:
+	case LIST_UNIX_24:
+	case LIST_UNIX_25:
+	case LIST_UNIX_50:
+	case LIST_UNIX_51:
+	case LIST_UNIX_54:
+	case LIST_UNIX_60:
+	case LIST_UNIX_61:
+	case LIST_UNIX_62:
+	case LIST_UNIX_63:
+	case LIST_UNIX_64:
+	case LIST_UNIX_65:
+	case LIST_UNIX_70:
+	case LIST_UNIX_71:
+	case LIST_UNIX_72:
+	case LIST_UNIX_73:
+	case LIST_UNIX_74:
+	case LIST_UNIX_75:
+		// MELCOMはビットフラグになっている
+		//		case LIST_MELCOM :
+				// linux-ftpd
+	case LIST_UNIX_16:
 		// uClinux
-		case LIST_UNIX_17 :
-		default:
-			/* offsはサイズの位置, offs=0はカラム4 */
-			offs = 0;
-			if((ListType == LIST_UNIX_12) ||
-			   (ListType == LIST_UNIX_13) ||
-			   (ListType == LIST_UNIX_15) ||
-			   (ListType == LIST_UNIX_20) ||
-			   (ListType == LIST_UNIX_21) ||
-			   (ListType == LIST_UNIX_24))
-				offs = -1;
+	case LIST_UNIX_17:
+	default:
+		/* offsはサイズの位置, offs=0はカラム4 */
+		offs = 0;
+		if ((ListType == LIST_UNIX_12) ||
+			(ListType == LIST_UNIX_13) ||
+			(ListType == LIST_UNIX_15) ||
+			(ListType == LIST_UNIX_20) ||
+			(ListType == LIST_UNIX_21) ||
+			(ListType == LIST_UNIX_24))
+			offs = -1;
 
-			if((ListType == LIST_UNIX_22) ||
-			   (ListType == LIST_UNIX_23) ||
-			   (ListType == LIST_UNIX_25) ||
-			   (ListType == LIST_UNIX_50) ||
-			   (ListType == LIST_UNIX_51) ||
-			   (ListType == LIST_UNIX_54))
-				offs = -2;
+		if ((ListType == LIST_UNIX_22) ||
+			(ListType == LIST_UNIX_23) ||
+			(ListType == LIST_UNIX_25) ||
+			(ListType == LIST_UNIX_50) ||
+			(ListType == LIST_UNIX_51) ||
+			(ListType == LIST_UNIX_54))
+			offs = -2;
 
-			if((ListType == LIST_UNIX_60) ||
-			   (ListType == LIST_UNIX_61) ||
-			   (ListType == LIST_UNIX_64))
-				offs = 2;
+		if ((ListType == LIST_UNIX_60) ||
+			(ListType == LIST_UNIX_61) ||
+			(ListType == LIST_UNIX_64))
+			offs = 2;
 
-			if((ListType == LIST_UNIX_62) ||
-			   (ListType == LIST_UNIX_63) ||
-			   (ListType == LIST_UNIX_65) ||
-			   (ListType == LIST_UNIX_70) ||
-			   (ListType == LIST_UNIX_71) ||
-			   (ListType == LIST_UNIX_74))
-				offs = 1;
+		if ((ListType == LIST_UNIX_62) ||
+			(ListType == LIST_UNIX_63) ||
+			(ListType == LIST_UNIX_65) ||
+			(ListType == LIST_UNIX_70) ||
+			(ListType == LIST_UNIX_71) ||
+			(ListType == LIST_UNIX_74))
+			offs = 1;
 
-			/* offs2は時間(もしくは年)の位置 */
-			offs2 = 0;
-			// linux-ftpd
+		/* offs2は時間(もしくは年)の位置 */
+		offs2 = 0;
+		// linux-ftpd
 //			if((ListType == LIST_UNIX_11) ||
 //			   (ListType == LIST_UNIX_13) ||
 //			   (ListType == LIST_UNIX_21) ||
@@ -5564,212 +5574,212 @@ static int ResolveFileInfo(char *Str, int ListType, char *Fname, LONGLONG *Size,
 //			   (ListType == LIST_UNIX_63) ||
 //			   (ListType == LIST_UNIX_71) ||
 //			   (ListType == LIST_UNIX_73))
-			if((ListType == LIST_UNIX_11) ||
-			   (ListType == LIST_UNIX_13) ||
-			   (ListType == LIST_UNIX_21) ||
-			   (ListType == LIST_UNIX_23) ||
-			   (ListType == LIST_UNIX_51) ||
-			   (ListType == LIST_UNIX_61) ||
-			   (ListType == LIST_UNIX_63) ||
-			   (ListType == LIST_UNIX_71) ||
-			   (ListType == LIST_UNIX_73) ||
-			   (ListType == LIST_UNIX_16))
-				offs2 = -1;
-			// uClinux
-			if(ListType == LIST_UNIX_17)
-				offs2 = -3;
+		if ((ListType == LIST_UNIX_11) ||
+			(ListType == LIST_UNIX_13) ||
+			(ListType == LIST_UNIX_21) ||
+			(ListType == LIST_UNIX_23) ||
+			(ListType == LIST_UNIX_51) ||
+			(ListType == LIST_UNIX_61) ||
+			(ListType == LIST_UNIX_63) ||
+			(ListType == LIST_UNIX_71) ||
+			(ListType == LIST_UNIX_73) ||
+			(ListType == LIST_UNIX_16))
+			offs2 = -1;
+		// uClinux
+		if (ListType == LIST_UNIX_17)
+			offs2 = -3;
 
-			/* offs3はオーナ名の位置 */
-			offs3 = 0;
-			if((ListType == LIST_UNIX_12) ||
-			   (ListType == LIST_UNIX_13) ||
-			   (ListType == LIST_UNIX_15) ||
-			   (ListType == LIST_UNIX_22) ||
-			   (ListType == LIST_UNIX_23) ||
-			   (ListType == LIST_UNIX_25) ||
-			   (ListType == LIST_UNIX_50) ||
-			   (ListType == LIST_UNIX_51) ||
-			   (ListType == LIST_UNIX_62) ||
-			   (ListType == LIST_UNIX_63) ||
-			   (ListType == LIST_UNIX_65) ||
-			   (ListType == LIST_UNIX_72) ||
-			   (ListType == LIST_UNIX_73) ||
-			   (ListType == LIST_UNIX_75))
-				offs3 = -1;
+		/* offs3はオーナ名の位置 */
+		offs3 = 0;
+		if ((ListType == LIST_UNIX_12) ||
+			(ListType == LIST_UNIX_13) ||
+			(ListType == LIST_UNIX_15) ||
+			(ListType == LIST_UNIX_22) ||
+			(ListType == LIST_UNIX_23) ||
+			(ListType == LIST_UNIX_25) ||
+			(ListType == LIST_UNIX_50) ||
+			(ListType == LIST_UNIX_51) ||
+			(ListType == LIST_UNIX_62) ||
+			(ListType == LIST_UNIX_63) ||
+			(ListType == LIST_UNIX_65) ||
+			(ListType == LIST_UNIX_72) ||
+			(ListType == LIST_UNIX_73) ||
+			(ListType == LIST_UNIX_75))
+			offs3 = -1;
 
-			Flag2 = 0;
-			if((ListType == LIST_UNIX_14) ||
-			   (ListType == LIST_UNIX_15) ||
-			   (ListType == LIST_UNIX_24) ||
-			   (ListType == LIST_UNIX_25) ||
-			   (ListType == LIST_UNIX_54) ||
-			   (ListType == LIST_UNIX_64) ||
-			   (ListType == LIST_UNIX_65) ||
-			   (ListType == LIST_UNIX_74) ||
-			   (ListType == LIST_UNIX_75))
-				Flag2 = 1;
-			// uClinux
-			if(ListType == LIST_UNIX_17)
-				Flag2 = -1;
+		Flag2 = 0;
+		if ((ListType == LIST_UNIX_14) ||
+			(ListType == LIST_UNIX_15) ||
+			(ListType == LIST_UNIX_24) ||
+			(ListType == LIST_UNIX_25) ||
+			(ListType == LIST_UNIX_54) ||
+			(ListType == LIST_UNIX_64) ||
+			(ListType == LIST_UNIX_65) ||
+			(ListType == LIST_UNIX_74) ||
+			(ListType == LIST_UNIX_75))
+			Flag2 = 1;
+		// uClinux
+		if (ListType == LIST_UNIX_17)
+			Flag2 = -1;
 
-			*InfoExist |= (FINFO_DATE | FINFO_SIZE | FINFO_ATTR);
+		*InfoExist |= (FINFO_DATE | FINFO_SIZE | FINFO_ATTR);
 
-			/* 属性 */
-			FindField(Str, Buf, 0, NO);
-			*Attr = AttrString2Value(Buf+1);
+		/* 属性 */
+		FindField(Str, Buf, 0, NO);
+		*Attr = AttrString2Value(Buf + 1);
 
-			/* オーナ名 */
-			FindField(Str, Buf, 2+offs3, NO);
-			strncpy(Owner, Buf, OWNER_NAME_LEN);
+		/* オーナ名 */
+		FindField(Str, Buf, 2 + offs3, NO);
+		strncpy(Owner, Buf, OWNER_NAME_LEN);
 
-			/* サイズ */
-			FindField(Str, Buf, 4+offs, NO);
-			Pos = Buf;
-			if((*Pos != NUL) && (IsDigit(*Pos) == 0))
+		/* サイズ */
+		FindField(Str, Buf, 4 + offs, NO);
+		Pos = Buf;
+		if ((*Pos != NUL) && (IsDigit(*Pos) == 0))
+		{
+			Pos = strchr(Pos, NUL) - 1;
+			for (; Pos > Buf; Pos--)
 			{
-				Pos = strchr(Pos, NUL) - 1;
-				for(; Pos > Buf; Pos--)
+				if (IsDigit(*Pos) == 0)
 				{
-					if(IsDigit(*Pos) == 0)
-					{
-						Pos++;
-						break;
-					}
+					Pos++;
+					break;
 				}
 			}
-			*Size = _atoi64(Pos);
+		}
+		*Size = _atoi64(Pos);
 
-			if(Flag2 == 0)
+		if (Flag2 == 0)
+		{
+			/* 時刻／日付 */
+			GetLocalTime(&sTime);
+			memcpy(&sTimeNow, &sTime, sizeof(SYSTEMTIME));
+			sTime.wSecond = 0;
+			sTime.wMilliseconds = 0;
+
+			FindField(Str, Buf, 5 + offs, NO);
+			/* 日付が yy/mm/dd の場合に対応 */
+			if (GetYearMonthDay(Buf, &sTime.wYear, &sTime.wMonth, &sTime.wDay) == FFFTP_SUCCESS)
 			{
-				/* 時刻／日付 */
-				GetLocalTime(&sTime);
-				memcpy(&sTimeNow, &sTime, sizeof(SYSTEMTIME));
-				sTime.wSecond = 0;
-				sTime.wMilliseconds = 0;
+				sTime.wYear = Assume1900or2000(sTime.wYear);
 
-				FindField(Str, Buf, 5+offs, NO);
-				/* 日付が yy/mm/dd の場合に対応 */
-				if(GetYearMonthDay(Buf, &sTime.wYear, &sTime.wMonth, &sTime.wDay) == FFFTP_SUCCESS)
-				{
-					sTime.wYear = Assume1900or2000(sTime.wYear);
-
-					FindField(Str, Buf, 7+offs+offs2, NO);
-					if(GetHourAndMinute(Buf, &sTime.wHour, &sTime.wMinute) == FFFTP_SUCCESS)
-						*InfoExist |= FINFO_TIME;
-				}
-				// linux-ftpd
-				else if(CheckYYYYMMDDformat(Buf, NUL) != 0)
-				{
-					sTime.wYear = atoi(Buf);
-					sTime.wMonth = atoi(Buf+5);
-					sTime.wDay = atoi(Buf+8);
-					FindField(Str, Buf, 7+offs+offs2, NO);
-					if(GetHourAndMinute(Buf, &sTime.wHour, &sTime.wMinute) == FFFTP_SUCCESS)
-						*InfoExist |= FINFO_TIME;
-				}
-				else
-				{
-					GetMonth(Buf, &sTime.wMonth, &sTime.wDay);
-					if(offs2 == 0)
-					{
-						FindField(Str, Buf, 6+offs, NO);
-						sTime.wDay = atoi(Buf);
-					}
-
-					FindField(Str, Buf, 7+offs+offs2, NO);
-					if(GetHourAndMinute(Buf, &sTime.wHour, &sTime.wMinute) == FFFTP_FAIL)
-					{
-						sTime.wYear = atoi(Buf);
-					}
-					else
-					{
-						*InfoExist |= FINFO_TIME;
-
-						/* 年がない */
-						/* 現在の日付から推定 */
-						// 恐らくホストとローカルの時刻が異なる場合の対処のようだがとりあえず無効にする
-//						if((sTimeNow.wMonth == 12) && (sTime.wMonth == 1))
-//							sTime.wYear++;
-//						else if(sTimeNow.wMonth+1 == sTime.wMonth)
-						if(sTimeNow.wMonth+1 == sTime.wMonth)
-							/* nothing */;
-						else if(sTimeNow.wMonth < sTime.wMonth)
-							sTime.wYear--;
-
-
-//#################
-						/* 今年の今日以降のファイルは、実は去年のファイル */
-						if((sTime.wYear == sTimeNow.wYear) &&
-						   ((sTime.wMonth > sTimeNow.wMonth) ||
-							((sTime.wMonth == sTimeNow.wMonth) && (sTime.wDay > sTimeNow.wDay))))
-						{
-							sTime.wYear--;
-						}
-					}
-				}
+				FindField(Str, Buf, 7 + offs + offs2, NO);
+				if (GetHourAndMinute(Buf, &sTime.wHour, &sTime.wMinute) == FFFTP_SUCCESS)
+					*InfoExist |= FINFO_TIME;
 			}
-			// uClinux
-			else if(Flag2 == -1)
+			// linux-ftpd
+			else if (CheckYYYYMMDDformat(Buf, NUL) != 0)
 			{
-				*InfoExist &= ~(FINFO_DATE | FINFO_TIME);
+				sTime.wYear = atoi(Buf);
+				sTime.wMonth = atoi(Buf + 5);
+				sTime.wDay = atoi(Buf + 8);
+				FindField(Str, Buf, 7 + offs + offs2, NO);
+				if (GetHourAndMinute(Buf, &sTime.wHour, &sTime.wMinute) == FFFTP_SUCCESS)
+					*InfoExist |= FINFO_TIME;
 			}
 			else
 			{
-				/* LIST_UNIX_?4, LIST_UNIX_?5 の時 */
-				FindField(Str, Buf, 5+offs, NO);
-				sTime.wYear = atoi(Buf);
-				FindField(Str, Buf, 6+offs, NO);
-				sTime.wMonth = atoi(Buf);
-				FindField(Str, Buf, 7+offs, NO);
-				sTime.wDay = atoi(Buf);
-				sTime.wHour = 0;
-				sTime.wMinute = 0;
-				sTime.wSecond = 0;
-				sTime.wMilliseconds = 0;
-			}
-			SystemTimeToFileTime(&sTime, Time);
-			SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
-
-			/* 名前 */
-			if(FindField(Str, Fname, 8+offs+offs2, YES) == FFFTP_SUCCESS)
-			{
-				Flag = 'B';
-				if(OrgListType & LIST_MELCOM)
+				GetMonth(Buf, &sTime.wMonth, &sTime.wDay);
+				if (offs2 == 0)
 				{
-					Flag = Fname[14];
-					Fname[14] = NUL;
-					RemoveTailingSpaces(Fname);
+					FindField(Str, Buf, 6 + offs, NO);
+					sTime.wDay = atoi(Buf);
+				}
+
+				FindField(Str, Buf, 7 + offs + offs2, NO);
+				if (GetHourAndMinute(Buf, &sTime.wHour, &sTime.wMinute) == FFFTP_FAIL)
+				{
+					sTime.wYear = atoi(Buf);
 				}
 				else
 				{
-					if((Pos = strstr(Fname, " -> ")) != NULL)
-						*Pos = NUL;
-				}
+					*InfoExist |= FINFO_TIME;
 
-				if(strchr("dl", *Str) != NULL)
-				{
-					// 0x5Cが含まれる文字列を扱えないバグ修正
+					/* 年がない */
+					/* 現在の日付から推定 */
+					// 恐らくホストとローカルの時刻が異なる場合の対処のようだがとりあえず無効にする
+//						if((sTimeNow.wMonth == 12) && (sTime.wMonth == 1))
+//							sTime.wYear++;
+//						else if(sTimeNow.wMonth+1 == sTime.wMonth)
+					if (sTimeNow.wMonth + 1 == sTime.wMonth)
+						/* nothing */;
+					else if (sTimeNow.wMonth < sTime.wMonth)
+						sTime.wYear--;
+
+
+					//#################
+											/* 今年の今日以降のファイルは、実は去年のファイル */
+					if ((sTime.wYear == sTimeNow.wYear) &&
+						((sTime.wMonth > sTimeNow.wMonth) ||
+							((sTime.wMonth == sTimeNow.wMonth) && (sTime.wDay > sTimeNow.wDay))))
+					{
+						sTime.wYear--;
+					}
+				}
+			}
+		}
+		// uClinux
+		else if (Flag2 == -1)
+		{
+			*InfoExist &= ~(FINFO_DATE | FINFO_TIME);
+		}
+		else
+		{
+			/* LIST_UNIX_?4, LIST_UNIX_?5 の時 */
+			FindField(Str, Buf, 5 + offs, NO);
+			sTime.wYear = atoi(Buf);
+			FindField(Str, Buf, 6 + offs, NO);
+			sTime.wMonth = atoi(Buf);
+			FindField(Str, Buf, 7 + offs, NO);
+			sTime.wDay = atoi(Buf);
+			sTime.wHour = 0;
+			sTime.wMinute = 0;
+			sTime.wSecond = 0;
+			sTime.wMilliseconds = 0;
+		}
+		SystemTimeToFileTime(&sTime, Time);
+		SpecificLocalFileTime2FileTime(Time, AskHostTimeZone());
+
+		/* 名前 */
+		if (FindField(Str, Fname, 8 + offs + offs2, YES) == FFFTP_SUCCESS)
+		{
+			Flag = 'B';
+			if (OrgListType & LIST_MELCOM)
+			{
+				Flag = Fname[14];
+				Fname[14] = NUL;
+				RemoveTailingSpaces(Fname);
+			}
+			else
+			{
+				if ((Pos = strstr(Fname, " -> ")) != NULL)
+					*Pos = NUL;
+			}
+
+			if (strchr("dl", *Str) != NULL)
+			{
+				// 0x5Cが含まれる文字列を扱えないバグ修正
 //					if((_mbscmp(_mbsninc(Fname, _mbslen(Fname) - 1), "/") == 0) ||
 //					   (_mbscmp(_mbsninc(Fname, _mbslen(Fname) - 1), "\\") == 0))
 //					{
 //						*(Fname + strlen(Fname) - 1) = NUL;
 //					}
-					Ret = NODE_DIR;
-					if(*Str == 'l')
-						*Link = YES;
-				}
-				else if(strchr("-+f", *Str) != NULL)
-					Ret = NODE_FILE;
-
-				if((Ret == NODE_FILE) && (Flag != 'B'))
-					Ret = NODE_NONE;
+				Ret = NODE_DIR;
+				if (*Str == 'l')
+					*Link = YES;
 			}
-			break;
+			else if (strchr("-+f", *Str) != NULL)
+				Ret = NODE_FILE;
+
+			if ((Ret == NODE_FILE) && (Flag != 'B'))
+				Ret = NODE_NONE;
+		}
+		break;
 	}
 
 	// UTF-8対応
 //	if((Ret != NODE_NONE) && (strlen(Fname) > 0))
-	if(!(OrgListType & LIST_RAW_NAME) && (Ret != NODE_NONE) && (strlen(Fname) > 0))
+	if (!(OrgListType & LIST_RAW_NAME) && (Ret != NODE_NONE) && (strlen(Fname) > 0))
 	{
 		// UTF-8対応
 //		if(CheckSpecialDirName(Fname) == YES)
@@ -5779,13 +5789,13 @@ static int ResolveFileInfo(char *Str, int ListType, char *Fname, LONGLONG *Size,
 		// UTF-8の冗長表現によるディレクトリトラバーサル対策
 		FixStringM(Fname, Fname);
 		// 0x5Cが含まれる文字列を扱えないバグ修正
-		if((_mbscmp(_mbsninc(Fname, _mbslen(Fname) - 1), "/") == 0)
+		if ((_mbscmp(_mbsninc(Fname, _mbslen(Fname) - 1), "/") == 0)
 			|| (_mbscmp(_mbsninc(Fname, _mbslen(Fname) - 1), "\\") == 0))
 			*(Fname + strlen(Fname) - 1) = NUL;
-		if(CheckSpecialDirName(Fname) == YES)
+		if (CheckSpecialDirName(Fname) == YES)
 			Ret = NODE_NONE;
 		// 文字コードが正しくないために長さが0になったファイル名は表示しない
-		if(strlen(Fname) == 0)
+		if (strlen(Fname) == 0)
 			Ret = NODE_NONE;
 	}
 	return(Ret);
@@ -5805,25 +5815,25 @@ static int ResolveFileInfo(char *Str, int ListType, char *Fname, LONGLONG *Size,
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-static int FindField(char *Str, char *Buf, int Num, int ToLast)
+static int FindField(char* Str, char* Buf, int Num, int ToLast)
 {
-	char *Pos;
+	char* Pos;
 	int Sts;
 
 	Sts = FFFTP_FAIL;
 	*Buf = NUL;
-	if(Num >= 0)
+	if (Num >= 0)
 	{
-		while(*Str == ' ')
+		while (*Str == ' ')
 			Str++;
 
-		for(; Num > 0; Num--)
+		for (; Num > 0; Num--)
 		{
-			if((Str = strchr(Str, ' ')) != NULL)
+			if ((Str = strchr(Str, ' ')) != NULL)
 			{
-				while(*Str == ' ')
+				while (*Str == ' ')
 				{
-					if(*Str == NUL)
+					if (*Str == NUL)
 					{
 						Str = NULL;
 						break;
@@ -5836,9 +5846,9 @@ static int FindField(char *Str, char *Buf, int Num, int ToLast)
 		}
 	}
 
-	if(Str != NULL)
+	if (Str != NULL)
 	{
-		if((ToLast == YES) || ((Pos = strchr(Str, ' ')) == NULL))
+		if ((ToLast == YES) || ((Pos = strchr(Str, ' ')) == NULL))
 			strcpy(Buf, Str);
 		else
 		{
@@ -5852,25 +5862,25 @@ static int FindField(char *Str, char *Buf, int Num, int ToLast)
 
 
 // MLSD対応
-static int FindField2(char *Str, char *Buf, char Separator, int Num, int ToLast)
+static int FindField2(char* Str, char* Buf, char Separator, int Num, int ToLast)
 {
-	char *Pos;
+	char* Pos;
 	int Sts;
 
 	Sts = FFFTP_FAIL;
 	*Buf = NUL;
-	if(Num >= 0)
+	if (Num >= 0)
 	{
-		while(*Str == Separator)
+		while (*Str == Separator)
 			Str++;
 
-		for(; Num > 0; Num--)
+		for (; Num > 0; Num--)
 		{
-			if((Str = strchr(Str, Separator)) != NULL)
+			if ((Str = strchr(Str, Separator)) != NULL)
 			{
-				while(*Str == Separator)
+				while (*Str == Separator)
 				{
-					if(*Str == NUL)
+					if (*Str == NUL)
 					{
 						Str = NULL;
 						break;
@@ -5883,9 +5893,9 @@ static int FindField2(char *Str, char *Buf, char Separator, int Num, int ToLast)
 		}
 	}
 
-	if(Str != NULL)
+	if (Str != NULL)
 	{
-		if((ToLast == YES) || ((Pos = strchr(Str, Separator)) == NULL))
+		if ((ToLast == YES) || ((Pos = strchr(Str, Separator)) == NULL))
 			strcpy(Buf, Str);
 		else
 		{
@@ -5909,19 +5919,19 @@ static int FindField2(char *Str, char *Buf, char Separator, int Num, int ToLast)
 *		なし
 *----------------------------------------------------------------------------*/
 
-static void GetMonth(char *Str, WORD *Month, WORD *Day)
+static void GetMonth(char* Str, WORD* Month, WORD* Day)
 {
 	static const char DateStr[] = { "JanFebMarAprMayJunJulAugSepOctNovDec" };
-	char *Pos;
+	char* Pos;
 
 	*Month = 0;
 	*Day = 0;
 
-	if(IsDigit(*Str) == 0)
+	if (IsDigit(*Str) == 0)
 	{
 		_strlwr(Str);
 		*Str = toupper(*Str);
-		if((Pos = strstr(DateStr, Str)) != NULL)
+		if ((Pos = strstr(DateStr, Str)) != NULL)
 			*Month = ((Pos - DateStr) / 3) + 1;
 	}
 	else
@@ -5931,45 +5941,45 @@ static void GetMonth(char *Str, WORD *Month, WORD *Day)
 		ConvAutoToSJIS(Str, KANJI_NOCNV);
 
 		Pos = Str;
-		while(*Pos != NUL)
+		while (*Pos != NUL)
 		{
-			if(!IsDigit(*Pos))
+			if (!IsDigit(*Pos))
 			{
 				// UTF-8対応
 //				if((_mbsncmp(Pos, "月", 1) == 0) ||
 //				   (memcmp(Pos, "\xB7\xEE", 2) == 0) ||	/* EUCの「月」 */
 //				   (memcmp(Pos, "\xD4\xC2", 2) == 0))	/* GBコードの「月」 */
-				if(memcmp(Pos, "\xE6\x9C\x88", 3) == 0 || memcmp(Pos, "\x8C\x8E", 2) == 0 || memcmp(Pos, "\xB7\xEE", 2) == 0 || memcmp(Pos, "\xD4\xC2", 2) == 0)
+				if (memcmp(Pos, "\xE6\x9C\x88", 3) == 0 || memcmp(Pos, "\x8C\x8E", 2) == 0 || memcmp(Pos, "\xB7\xEE", 2) == 0 || memcmp(Pos, "\xD4\xC2", 2) == 0)
 				{
 					Pos += 2;
 					*Month = atoi(Str);
-					if((*Month < 1) || (*Month > 12))
+					if ((*Month < 1) || (*Month > 12))
 						*Month = 0;
 					else
 					{
 						/* 「10月11日」のように日がくっついている事がある */
-						if(*Pos != NUL)
+						if (*Pos != NUL)
 						{
 							*Day = atoi(Pos);
-							if((*Day < 1) || (*Day > 31))
+							if ((*Day < 1) || (*Day > 31))
 								*Day = 0;
 						}
 					}
 				}
-				else if(_mbsncmp(Pos, "/", 1) == 0)
+				else if (_mbsncmp(Pos, "/", 1) == 0)
 				{
 					/* 「10/」のような日付を返すものがある */
 					Pos += 1;
 					*Month = atoi(Str);
-					if((*Month < 1) || (*Month > 12))
+					if ((*Month < 1) || (*Month > 12))
 						*Month = 0;
 					else
 					{
 						/* 「10/11」のように日がくっついている事がある */
-						if(*Pos != NUL)
+						if (*Pos != NUL)
 						{
 							*Day = atoi(Pos);
-							if((*Day < 1) || (*Day > 31))
+							if ((*Day < 1) || (*Day > 31))
 								*Day = 0;
 						}
 					}
@@ -5999,16 +6009,16 @@ static void GetMonth(char *Str, WORD *Month, WORD *Day)
 *			01/07/25
 *		FFFTP_FAILを返す時は *Year = 0; *Month = 0; *Day = 0
 *----------------------------------------------------------------------------*/
-static int GetYearMonthDay(char *Str, WORD *Year, WORD *Month, WORD *Day)
+static int GetYearMonthDay(char* Str, WORD* Year, WORD* Month, WORD* Day)
 {
 	int Sts;
 
 	Sts = FFFTP_FAIL;
-	if(strlen(Str) == 8)
+	if (strlen(Str) == 8)
 	{
-		if(IsDigit(Str[0]) && IsDigit(Str[1]) && !IsDigit(Str[2]) &&
-		   IsDigit(Str[3]) && IsDigit(Str[4]) && !IsDigit(Str[5]) &&
-		   IsDigit(Str[6]) && IsDigit(Str[7]))
+		if (IsDigit(Str[0]) && IsDigit(Str[1]) && !IsDigit(Str[2]) &&
+			IsDigit(Str[3]) && IsDigit(Str[4]) && !IsDigit(Str[5]) &&
+			IsDigit(Str[6]) && IsDigit(Str[7]))
 		{
 			*Year = atoi(&Str[0]);
 			*Month = atoi(&Str[3]);
@@ -6037,24 +6047,24 @@ static int GetYearMonthDay(char *Str, WORD *Year, WORD *Month, WORD *Day)
 *		FFFTP_FAILを返す時は *Hour = 0; *Minute = 0
 *----------------------------------------------------------------------------*/
 
-static int GetHourAndMinute(char *Str, WORD *Hour, WORD *Minute)
+static int GetHourAndMinute(char* Str, WORD* Hour, WORD* Minute)
 {
 	int Ret;
-	char *Pos;
+	char* Pos;
 
 	Ret = FFFTP_FAIL;
-	if((_mbslen(Str) >= 3) && (isdigit(Str[0]) != 0))
+	if ((_mbslen(Str) >= 3) && (isdigit(Str[0]) != 0))
 	{
 		*Hour = atoi(Str);
-		if(*Hour <= 24)
+		if (*Hour <= 24)
 		{
-			if((Pos = _mbschr(Str, ':')) != NULL)
+			if ((Pos = _mbschr(Str, ':')) != NULL)
 			{
 				Pos++;
-				if(IsDigit(*Pos) != 0)
+				if (IsDigit(*Pos) != 0)
 				{
 					*Minute = atoi(Pos);
-					if(*Minute < 60)
+					if (*Minute < 60)
 						Ret = FFFTP_SUCCESS;
 				}
 			}
@@ -6064,20 +6074,20 @@ static int GetHourAndMinute(char *Str, WORD *Hour, WORD *Minute)
 				ConvAutoToSJIS(Str, KANJI_NOCNV);
 
 				Pos = Str;
-				while(*Pos != NUL)
+				while (*Pos != NUL)
 				{
-					if(IsDigit(*Pos) == 0)
+					if (IsDigit(*Pos) == 0)
 					{
 						// UTF-8対応
 //						if((_mbsncmp(Pos, "時", 1) == 0) ||
 //						   (memcmp(Pos, "\xBB\xFE", 2) == 0))	/* EUCの「時」 */
-						if(memcmp(Pos, "\xE6\x99\x82", 3) == 0 || memcmp(Pos, "\x8E\x9E", 2) == 0 || memcmp(Pos, "\xBB\xFE", 2) == 0)
+						if (memcmp(Pos, "\xE6\x99\x82", 3) == 0 || memcmp(Pos, "\x8E\x9E", 2) == 0 || memcmp(Pos, "\xBB\xFE", 2) == 0)
 						{
 							Pos += 2;
-							if(*Pos != NUL)
+							if (*Pos != NUL)
 							{
 								*Minute = atoi(Pos);
-								if(*Minute < 60)
+								if (*Minute < 60)
 									Ret = FFFTP_SUCCESS;
 							}
 						}
@@ -6088,14 +6098,14 @@ static int GetHourAndMinute(char *Str, WORD *Hour, WORD *Minute)
 			}
 		}
 	}
-	else if((_stricmp(Str, "a:m") == 0) || (_stricmp(Str, "p:m") == 0))
+	else if ((_stricmp(Str, "a:m") == 0) || (_stricmp(Str, "p:m") == 0))
 	{
 		*Hour = 0;
 		*Minute = 0;
 		Ret = FFFTP_SUCCESS;
 	}
 
-	if(Ret == FFFTP_FAIL)
+	if (Ret == FFFTP_FAIL)
 	{
 		*Hour = 0;
 		*Minute = 0;
@@ -6121,22 +6131,22 @@ static int GetHourAndMinute(char *Str, WORD *Hour, WORD *Minute)
 *		FFFTP_FAILを返す時は *Year = 0; *Month = 0; *Day = 0
 *----------------------------------------------------------------------------*/
 
-static int GetVMSdate(char *Str, WORD *Year, WORD *Month, WORD *Day)
+static int GetVMSdate(char* Str, WORD* Year, WORD* Month, WORD* Day)
 {
-	char *Pos;
+	char* Pos;
 	int Ret;
 	WORD Tmp;
 	char Buf[4];
 
 	Ret = FFFTP_FAIL;
 	*Day = atoi(Str);
-	if((Pos = strchr(Str, '-')) != NULL)
+	if ((Pos = strchr(Str, '-')) != NULL)
 	{
 		Pos++;
 		strncpy(Buf, Pos, 3);
 		Buf[3] = NUL;
 		GetMonth(Buf, Month, &Tmp);
-		if((Pos = strchr(Pos, '-')) != NULL)
+		if ((Pos = strchr(Pos, '-')) != NULL)
 		{
 			Pos++;
 			*Year = atoi(Pos);
@@ -6144,7 +6154,7 @@ static int GetVMSdate(char *Str, WORD *Year, WORD *Month, WORD *Day)
 		}
 	}
 
-	if(Ret == FFFTP_FAIL)
+	if (Ret == FFFTP_FAIL)
 	{
 		*Year = 0;
 		*Month = 0;
@@ -6165,7 +6175,7 @@ static int GetVMSdate(char *Str, WORD *Year, WORD *Month, WORD *Day)
 
 int Assume1900or2000(int Year)
 {
-	if(Year >= 60)
+	if (Year >= 60)
 		Year += 1900;
 	else
 		Year += 2000;
@@ -6183,12 +6193,12 @@ int Assume1900or2000(int Year)
 *		int ステータス (YES="."か".."のどちらか/NO)
 *----------------------------------------------------------------------------*/
 
-static int CheckSpecialDirName(char *Fname)
+static int CheckSpecialDirName(char* Fname)
 {
 	int Sts;
 
 	Sts = NO;
-	if((strcmp(Fname, ".") == 0) || (strcmp(Fname, "..") == 0))
+	if ((strcmp(Fname, ".") == 0) || (strcmp(Fname, "..") == 0))
 		Sts = YES;
 
 	return(Sts);
@@ -6210,30 +6220,30 @@ static int CheckSpecialDirName(char *Fname)
 *			*.txt;*.log
 *----------------------------------------------------------------------------*/
 
-static int AskFilterStr(char *Fname, int Type)
+static int AskFilterStr(char* Fname, int Type)
 {
 	int Ret;
-	char *Tbl;
-	char *Pos;
-	char Tmp[FILTER_EXT_LEN+1];
+	char* Tbl;
+	char* Pos;
+	char Tmp[FILTER_EXT_LEN + 1];
 
 	Tbl = FilterStr;
 	Ret = YES;
-	if((strlen(Tbl) > 0) && (Type == NODE_FILE))
+	if ((strlen(Tbl) > 0) && (Type == NODE_FILE))
 	{
 		Ret = NO;
-		while((Tbl != NULL) && (*Tbl != NUL))
+		while ((Tbl != NULL) && (*Tbl != NUL))
 		{
-			while(*Tbl == ';')
+			while (*Tbl == ';')
 				Tbl++;
-			if(*Tbl == NUL)
+			if (*Tbl == NUL)
 				break;
 
 			strcpy(Tmp, Tbl);
-			if((Pos = strchr(Tmp, ';')) != NULL)
+			if ((Pos = strchr(Tmp, ';')) != NULL)
 				*Pos = NUL;
 
-			if(CheckFname(Fname, Tmp) == FFFTP_SUCCESS)
+			if (CheckFname(Fname, Tmp) == FFFTP_SUCCESS)
 			{
 				Ret = YES;
 				break;
@@ -6255,9 +6265,9 @@ static int AskFilterStr(char *Fname, int Type)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void SetFilter(int *CancelCheckWork)
+void SetFilter(int* CancelCheckWork)
 {
-	if(DialogBox(GetFtpInst(), MAKEINTRESOURCE(filter_dlg), GetMainHwnd(), FilterWndProc) == YES)
+	if (DialogBox(GetFtpInst(), MAKEINTRESOURCE(filter_dlg), GetMainHwnd(), FilterWndProc) == YES)
 	{
 		DispWindowTitle();
 		GetLocalDirForWnd();
@@ -6285,33 +6295,33 @@ static INT_PTR CALLBACK FilterWndProc(HWND hDlg, UINT iMessage, WPARAM wParam, L
 {
 	switch (iMessage)
 	{
-		case WM_INITDIALOG :
-			SendDlgItemMessage(hDlg, FILTER_STR, EM_LIMITTEXT, FILTER_EXT_LEN+1, 0);
-			SendDlgItemMessage(hDlg, FILTER_STR, WM_SETTEXT, 0, (LPARAM)FilterStr);
-			return(TRUE);
+	case WM_INITDIALOG:
+		SendDlgItemMessage(hDlg, FILTER_STR, EM_LIMITTEXT, FILTER_EXT_LEN + 1, 0);
+		SendDlgItemMessage(hDlg, FILTER_STR, WM_SETTEXT, 0, (LPARAM)FilterStr);
+		return(TRUE);
 
-		case WM_COMMAND :
-			switch(GET_WM_COMMAND_ID(wParam, lParam))
-			{
-				case IDOK :
-					SendDlgItemMessage(hDlg, FILTER_STR, WM_GETTEXT, FILTER_EXT_LEN, (LPARAM)FilterStr);
-					EndDialog(hDlg, YES);
-					break;
+	case WM_COMMAND:
+		switch (GET_WM_COMMAND_ID(wParam, lParam))
+		{
+		case IDOK:
+			SendDlgItemMessage(hDlg, FILTER_STR, WM_GETTEXT, FILTER_EXT_LEN, (LPARAM)FilterStr);
+			EndDialog(hDlg, YES);
+			break;
 
-				case IDCANCEL :
-					EndDialog(hDlg, NO);
-					break;
+		case IDCANCEL:
+			EndDialog(hDlg, NO);
+			break;
 
-				case FILTER_NOR :
-					strcpy(FilterStr, "*");
-					EndDialog(hDlg, YES);
-					break;
+		case FILTER_NOR:
+			strcpy(FilterStr, "*");
+			EndDialog(hDlg, YES);
+			break;
 
-				case IDHELP :
-					hHelpWin = HtmlHelp(NULL, AskHelpFilePath(), HH_HELP_CONTEXT, IDH_HELP_TOPIC_0000021);
-					break;
-			}
-			return(TRUE);
+		case IDHELP:
+			hHelpWin = HtmlHelp(NULL, AskHelpFilePath(), HH_HELP_CONTEXT, IDH_HELP_TOPIC_0000021);
+			break;
+		}
+		return(TRUE);
 	}
 	return(FALSE);
 }
@@ -6320,15 +6330,15 @@ static INT_PTR CALLBACK FilterWndProc(HWND hDlg, UINT iMessage, WPARAM wParam, L
 
 
 
-static int atoi_n(const char *Str, int Len)
+static int atoi_n(const char* Str, int Len)
 {
-	char *Tmp;
+	char* Tmp;
 	int Ret;
 
 	Ret = 0;
-	if((Tmp = malloc(Len+1)) != NULL)
+	if ((Tmp = malloc(Len + 1)) != NULL)
 	{
-		memset(Tmp, 0, Len+1);
+		memset(Tmp, 0, Len + 1);
 		strncpy(Tmp, Str, Len);
 		Ret = atoi(Tmp);
 		free(Tmp);
@@ -6344,15 +6354,15 @@ static int atoi_n(const char *Str, int Len)
 // 優先度はUTF-8、Shift_JIS、EUC、JIS、UTF-8 HFS+の順
 int AnalyzeNameKanjiCode(int Num)
 {
-	char Str[FMAX_PATH+1];
-	char Name[FMAX_PATH+1];
+	char Str[FMAX_PATH + 1];
+	char Name[FMAX_PATH + 1];
 	LONGLONG Size;
 	FILETIME Time;
 	int Attr;
-	FILE *fd;
+	FILE* fd;
 	int Node;
 	int ListType;
-	char Owner[OWNER_NAME_LEN+1];
+	char Owner[OWNER_NAME_LEN + 1];
 	int Link;
 	int InfoExist;
 	int NameKanjiCode;
@@ -6365,7 +6375,7 @@ int AnalyzeNameKanjiCode(int Num)
 	char* p;
 	CODECONVINFO cInfo1;
 	CODECONVINFO cInfo2;
-	char Buf[FMAX_PATH+1];
+	char Buf[FMAX_PATH + 1];
 
 	NameKanjiCode = KANJI_AUTO;
 	Point = 0;
@@ -6375,28 +6385,28 @@ int AnalyzeNameKanjiCode(int Num)
 	PointUTF8N = 0;
 	PointUTF8HFSX = 0;
 	MakeCacheFileName(Num, Str);
-	if((fd = fopen(Str, "rb")) != NULL)
+	if ((fd = fopen(Str, "rb")) != NULL)
 	{
-		while(GetListOneLine(Str, FMAX_PATH, fd, NO) == FFFTP_SUCCESS)
+		while (GetListOneLine(Str, FMAX_PATH, fd, NO) == FFFTP_SUCCESS)
 		{
-			if((ListType = AnalyzeFileInfo(Str)) != LIST_UNKNOWN)
+			if ((ListType = AnalyzeFileInfo(Str)) != LIST_UNKNOWN)
 			{
 				strcpy(Name, "");
 				Node = ResolveFileInfo(Str, ListType | LIST_RAW_NAME, Name, &Size, &Time, &Attr, Owner, &Link, &InfoExist);
 				p = Name;
-				while(*p != '\0')
+				while (*p != '\0')
 				{
-					if(*p & 0x80)
+					if (*p & 0x80)
 					{
 						p = NULL;
 						break;
 					}
 					p++;
 				}
-				if(!p)
+				if (!p)
 				{
 					// ASCII文字の範囲外
-					if(!CheckStringM(Name))
+					if (!CheckStringM(Name))
 					{
 						InitCodeConvInfo(&cInfo1);
 						cInfo1.KanaCnv = NO;
@@ -6407,16 +6417,16 @@ int AnalyzeNameKanjiCode(int Num)
 						cInfo2 = cInfo1;
 						ConvUTF8NtoUTF8HFSX(&cInfo1);
 						ConvUTF8HFSXtoUTF8N(&cInfo2);
-						if(cInfo1.OutLen > (int)strlen(Name))
+						if (cInfo1.OutLen > (int)strlen(Name))
 							PointUTF8N++;
 						else
 							PointUTF8HFSX++;
-						if(cInfo2.OutLen < (int)strlen(Name))
+						if (cInfo2.OutLen < (int)strlen(Name))
 							PointUTF8HFSX++;
 						else
 							PointUTF8N++;
 					}
-					switch(CheckKanjiCode(Name, strlen(Name), KANJI_SJIS))
+					switch (CheckKanjiCode(Name, strlen(Name), KANJI_SJIS))
 					{
 					case KANJI_SJIS:
 						PointSJIS++;
@@ -6429,7 +6439,7 @@ int AnalyzeNameKanjiCode(int Num)
 				else
 				{
 					// ASCII文字の範囲内
-					switch(CheckKanjiCode(Name, strlen(Name), KANJI_SJIS))
+					switch (CheckKanjiCode(Name, strlen(Name), KANJI_SJIS))
 					{
 					case KANJI_JIS:
 						PointJIS++;
@@ -6440,27 +6450,27 @@ int AnalyzeNameKanjiCode(int Num)
 		}
 		fclose(fd);
 	}
-	if(PointUTF8HFSX >= Point)
+	if (PointUTF8HFSX >= Point)
 	{
 		NameKanjiCode = KANJI_UTF8HFSX;
 		Point = PointUTF8HFSX;
 	}
-	if(PointJIS >= Point)
+	if (PointJIS >= Point)
 	{
 		NameKanjiCode = KANJI_JIS;
 		Point = PointJIS;
 	}
-	if(PointEUC >= Point)
+	if (PointEUC >= Point)
 	{
 		NameKanjiCode = KANJI_EUC;
 		Point = PointEUC;
 	}
-	if(PointSJIS >= Point)
+	if (PointSJIS >= Point)
 	{
 		NameKanjiCode = KANJI_SJIS;
 		Point = PointSJIS;
 	}
-	if(PointUTF8N >= Point)
+	if (PointUTF8N >= Point)
 	{
 		NameKanjiCode = KANJI_UTF8N;
 		Point = PointUTF8N;

@@ -5,25 +5,25 @@
 ===============================================================================
 / Copyright (C) 1997-2007 Sota. All rights reserved.
 /
-/ Redistribution and use in source and binary forms, with or without 
-/ modification, are permitted provided that the following conditions 
+/ Redistribution and use in source and binary forms, with or without
+/ modification, are permitted provided that the following conditions
 / are met:
 /
-/  1. Redistributions of source code must retain the above copyright 
+/  1. Redistributions of source code must retain the above copyright
 /     notice, this list of conditions and the following disclaimer.
-/  2. Redistributions in binary form must reproduce the above copyright 
-/     notice, this list of conditions and the following disclaimer in the 
+/  2. Redistributions in binary form must reproduce the above copyright
+/     notice, this list of conditions and the following disclaimer in the
 /     documentation and/or other materials provided with the distribution.
 /
-/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR 
-/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
-/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, 
-/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF 
-/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON 
-/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
+/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 / THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /============================================================================*/
 
@@ -45,10 +45,10 @@
 
 /*===== プロトタイプ =====*/
 
-static int keycrunch(char *result, char *seed, char *passwd, int Type);
-static void secure_hash(char *x, int Type);
-static char *btoe(char *c, char *buf);
-static ulong extract(char *s, int start, int length);
+static int keycrunch(char* result, char* seed, char* passwd, int Type);
+static void secure_hash(char* x, int Type);
+static char* btoe(char* c, char* buf);
+static ulong extract(char* s, int start, int length);
 
 
 /*===== ローカルなワーク =====*/
@@ -301,16 +301,16 @@ static const char Wp[2048][4] = {
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-int Make6WordPass(int seq, char *seed, char *pass, int type, char *buf)
+int Make6WordPass(int seq, char* seed, char* pass, int type, char* buf)
 {
 	char key[8];
 	int i;
 	int Sts;
 
 	Sts = FFFTP_FAIL;
-	if(keycrunch(key, seed, pass, type) != FFFTP_FAIL)
+	if (keycrunch(key, seed, pass, type) != FFFTP_FAIL)
 	{
-		for(i = 0; i < seq; i++)
+		for (i = 0; i < seq; i++)
 			secure_hash(key, type);
 		btoe(key, buf);
 		Sts = FFFTP_SUCCESS;
@@ -320,114 +320,114 @@ int Make6WordPass(int seq, char *seed, char *pass, int type, char *buf)
 
 
 
-static int keycrunch(char *result, char *seed, char *passwd, int Type)
+static int keycrunch(char* result, char* seed, char* passwd, int Type)
 {
-	char *buf;
+	char* buf;
 	MD4_CTX md4;
 	MD5_CTX md5;
 	ulong results[5];
 	unsigned int buflen;
 
 	buflen = strlen(seed) + strlen(passwd);
-	if((buf = malloc(buflen + 1)) == NULL)
+	if ((buf = malloc(buflen + 1)) == NULL)
 		return(FFFTP_FAIL);
 	strcpy(buf, seed);
 	strcat(buf, passwd);
 
 	/* Crunch the key through MD[45] */
-	if(Type == MD4)
+	if (Type == MD4)
 	{
 		MD4Init(&md4);
-		MD4Update(&md4, (uchar *)buf, buflen);
-		MD4Final((uchar *)results, &md4);
+		MD4Update(&md4, (uchar*)buf, buflen);
+		MD4Final((uchar*)results, &md4);
 		results[0] ^= results[2];
 		results[1] ^= results[3];
 	}
-	else if(Type == MD5)
+	else if (Type == MD5)
 	{
 		MD5Init(&md5);
-		MD5Update(&md5, (uchar *)buf, buflen);
-		MD5Final((uchar *)results, &md5);
+		MD5Update(&md5, (uchar*)buf, buflen);
+		MD5Final((uchar*)results, &md5);
 		results[0] ^= results[2];
 		results[1] ^= results[3];
 	}
 	else
 	{
-		sha_memory((uchar *)buf, buflen, results);
-		results [0] ^= results [2];
-		results [1] ^= results [3];
-		results [0] ^= results [4];
+		sha_memory((uchar*)buf, buflen, results);
+		results[0] ^= results[2];
+		results[1] ^= results[3];
+		results[0] ^= results[4];
 	}
 	free(buf);
 
 	/* Only works on byte-addressed little-endian machines!! */
-	memcpy(result, (char *)results, 8);
+	memcpy(result, (char*)results, 8);
 
 	return(FFFTP_SUCCESS);
 }
 
 
 
-static void secure_hash(char *x, int Type)
+static void secure_hash(char* x, int Type)
 {
 	MD4_CTX md4;
 	MD5_CTX md5;
 	ulong results[5];
 
-	if(Type == MD4)
+	if (Type == MD4)
 	{
 		MD4Init(&md4);
-		MD4Update(&md4,(uchar *)x, 8);
-		MD4Final((uchar *)results, &md4);
+		MD4Update(&md4, (uchar*)x, 8);
+		MD4Final((uchar*)results, &md4);
 		results[0] ^= results[2];
 		results[1] ^= results[3];
 	}
-	else if(Type == MD5)
+	else if (Type == MD5)
 	{
 		MD5Init(&md5);
-		MD5Update(&md5,(uchar *)x, 8);
-		MD5Final((uchar *)results, &md5);
+		MD5Update(&md5, (uchar*)x, 8);
+		MD5Final((uchar*)results, &md5);
 		results[0] ^= results[2];
 		results[1] ^= results[3];
 	}
 	else
 	{
-		sha_memory((uchar *)x, 8, results);
-		results [0] ^= results [2];
-		results [1] ^= results [3];
-		results [0] ^= results [4];
+		sha_memory((uchar*)x, 8, results);
+		results[0] ^= results[2];
+		results[1] ^= results[3];
+		results[0] ^= results[4];
 	}
 
 	/* Only works on byte-addressed little-endian machines!! */
-	memcpy(x, (char *)results, 8);
+	memcpy(x, (char*)results, 8);
 
 	return;
 }
 
 
 
-static char *btoe(char *c, char *buf)
+static char* btoe(char* c, char* buf)
 {
 	char cp[9];
 	int p, i;
 
 	memcpy(cp, c, 8);
 	/* compute parity */
-	for(p = 0, i = 0; i < 64; i += 2)
-	p += extract(cp, i, 2);
+	for (p = 0, i = 0; i < 64; i += 2)
+		p += extract(cp, i, 2);
 	cp[8] = (char)p << 6;
 
 	buf[0] = '\0';
-	strncat(buf, Wp[extract(cp,  0, 11)], 4);
-	strcat (buf," ");
+	strncat(buf, Wp[extract(cp, 0, 11)], 4);
+	strcat(buf, " ");
 	strncat(buf, Wp[extract(cp, 11, 11)], 4);
-	strcat (buf," ");
+	strcat(buf, " ");
 	strncat(buf, Wp[extract(cp, 22, 11)], 4);
-	strcat (buf," ");
+	strcat(buf, " ");
 	strncat(buf, Wp[extract(cp, 33, 11)], 4);
-	strcat (buf," ");
+	strcat(buf, " ");
 	strncat(buf, Wp[extract(cp, 44, 11)], 4);
-	strcat (buf," ");
+	strcat(buf, " ");
 	strncat(buf, Wp[extract(cp, 55, 11)], 4);
 
 	return (buf);
@@ -435,7 +435,7 @@ static char *btoe(char *c, char *buf)
 
 
 
-static ulong extract(char *s, int start, int length)
+static ulong extract(char* s, int start, int length)
 {
 	ulong x;
 	unsigned char cl;
@@ -445,7 +445,7 @@ static ulong extract(char *s, int start, int length)
 	cl = s[start / 8];
 	cc = s[start / 8 + 1];
 	cr = s[start / 8 + 2];
-	x = ((ulong) (cl << 8 | cc) << 8 | cr);
+	x = ((ulong)(cl << 8 | cc) << 8 | cr);
 	x = x >> (24 - (length + (start % 8)));
 	x = (x & (0xffff >> (16 - length)));
 

@@ -5,25 +5,25 @@
 ===============================================================================
 / Copyright (C) 1997-2007 Sota. All rights reserved.
 /
-/ Redistribution and use in source and binary forms, with or without 
-/ modification, are permitted provided that the following conditions 
+/ Redistribution and use in source and binary forms, with or without
+/ modification, are permitted provided that the following conditions
 / are met:
 /
-/  1. Redistributions of source code must retain the above copyright 
+/  1. Redistributions of source code must retain the above copyright
 /     notice, this list of conditions and the following disclaimer.
-/  2. Redistributions in binary form must reproduce the above copyright 
-/     notice, this list of conditions and the following disclaimer in the 
+/  2. Redistributions in binary form must reproduce the above copyright
+/     notice, this list of conditions and the following disclaimer in the
 /     documentation and/or other materials provided with the distribution.
 /
-/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR 
-/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
-/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, 
-/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF 
-/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON 
-/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
+/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 / THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /============================================================================*/
 
@@ -52,9 +52,9 @@ static void AddOpenMenu(HMENU hMenu, UINT Flg);
 static LRESULT CALLBACK HistEditBoxWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 /* 2007/09/21 sunasunamix  ここから *********************/
-static LRESULT CALLBACK CountermeasureTbarMainProc(HWND hWnd,UINT uMessage,WPARAM wParam,LPARAM lParam);
-static LRESULT CALLBACK CountermeasureTbarLocalProc(HWND hWnd,UINT uMessage,WPARAM wParam,LPARAM lParam);
-static LRESULT CALLBACK CountermeasureTbarRemoteProc(HWND hWnd,UINT uMessage,WPARAM wParam,LPARAM lParam);
+static LRESULT CALLBACK CountermeasureTbarMainProc(HWND hWnd, UINT uMessage, WPARAM wParam, LPARAM lParam);
+static LRESULT CALLBACK CountermeasureTbarLocalProc(HWND hWnd, UINT uMessage, WPARAM wParam, LPARAM lParam);
+static LRESULT CALLBACK CountermeasureTbarRemoteProc(HWND hWnd, UINT uMessage, WPARAM wParam, LPARAM lParam);
 /********************************************* ここまで */
 
 
@@ -67,11 +67,11 @@ extern int CancelFlg;
 
 /* 設定値 */
 extern int DotFile;
-extern char AsciiExt[ASCII_EXT_LEN+1];
+extern char AsciiExt[ASCII_EXT_LEN + 1];
 extern int TransMode;
 extern int ListType;
 extern int LocalWidth;
-extern char ViewerName[VIEWERS][FMAX_PATH+1];
+extern char ViewerName[VIEWERS][FMAX_PATH + 1];
 extern int TransMode;
 extern int SortSave;
 // UTF-8対応
@@ -111,16 +111,16 @@ static int HideUI = 0;
 
 
 /* 2007/09/21 sunasunamix  ここから *********************/
-static WNDPROC pOldTbarMainProc   = NULL;
-static WNDPROC pOldTbarLocalProc  = NULL;
+static WNDPROC pOldTbarMainProc = NULL;
+static WNDPROC pOldTbarLocalProc = NULL;
 static WNDPROC pOldTbarRemoteProc = NULL;
 /********************************************* ここまで */
 
 
 /* 以前、コンボボックスにカレントフォルダを憶えさせていた流れで */
 /* このファイルでカレントフォルダを憶えさせる */
-static char LocalCurDir[FMAX_PATH+1];
-static char RemoteCurDir[FMAX_PATH+1];
+static char LocalCurDir[FMAX_PATH + 1];
+static char RemoteCurDir[FMAX_PATH + 1];
 
 
 /* メインのツールバー */
@@ -233,8 +233,8 @@ int MakeToolBarWindow(HWND hWnd, HINSTANCE hInst)
 {
 	int Sts;
 	RECT Rect1;
-	char Tmp[FMAX_PATH+1];
-	char *Pos;
+	char Tmp[FMAX_PATH + 1];
+	char* Pos;
 	int Tmp2;
 	DWORD NoDrives;
 	// 高DPI対応
@@ -257,28 +257,28 @@ int MakeToolBarWindow(HWND hWnd, HINSTANCE hInst)
 //				16,16,
 //				sizeof(TBBUTTON));
 	hOriginal = LoadImage(hInst, MAKEINTRESOURCE(main_toolbar_bmp), IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE | LR_LOADMAP3DCOLORS);
-	if(hOriginal != NULL)
+	if (hOriginal != NULL)
 	{
 		hResized = ResizeBitmap(hOriginal, 64, 64, 16, 64);
 		DeleteObject(hOriginal);
 	}
 	hWndTbarMain = CreateToolbarEx(
-				hWnd,
-				WS_CHILD | WS_VISIBLE | TBSTYLE_TOOLTIPS | CCS_TOP | TBSTYLE_FLAT,
-				1,
-				30,
-				NULL,
-				(UINT_PTR)hResized,
-				TbarDataMain,
-				sizeof(TbarDataMain)/sizeof(TBBUTTON),
-				CalcPixelX(16),CalcPixelY(16),
-				CalcPixelX(16),CalcPixelY(16),
-				sizeof(TBBUTTON));
-	if(hResized != NULL)
+		hWnd,
+		WS_CHILD | WS_VISIBLE | TBSTYLE_TOOLTIPS | CCS_TOP | TBSTYLE_FLAT,
+		1,
+		30,
+		NULL,
+		(UINT_PTR)hResized,
+		TbarDataMain,
+		sizeof(TbarDataMain) / sizeof(TBBUTTON),
+		CalcPixelX(16), CalcPixelY(16),
+		CalcPixelX(16), CalcPixelY(16),
+		sizeof(TBBUTTON));
+	if (hResized != NULL)
 		DeleteObject(hOriginal);
 	hResized = NULL;
 
-	if(hWndTbarMain != NULL)
+	if (hWndTbarMain != NULL)
 	{
 		/* 2007/09/21 sunasunamix  ここから *********************/
 		// 64ビット対応
@@ -308,28 +308,28 @@ int MakeToolBarWindow(HWND hWnd, HINSTANCE hInst)
 //				16,16,
 //				sizeof(TBBUTTON));
 	hOriginal = LoadImage(hInst, MAKEINTRESOURCE(remote_toolbar_bmp), IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE | LR_LOADMAP3DCOLORS);
-	if(hOriginal != NULL)
+	if (hOriginal != NULL)
 	{
 		hResized = ResizeBitmap(hOriginal, 64, 64, 16, 64);
 		DeleteObject(hOriginal);
 	}
 	hWndTbarLocal = CreateToolbarEx(
-				hWnd,
-				WS_CHILD | WS_VISIBLE | TBSTYLE_TOOLTIPS | CCS_NORESIZE | TBSTYLE_FLAT,
-				2,
-				2,
-				NULL,
-				(UINT_PTR)hResized,
-				TbarDataLocal,
-				sizeof(TbarDataLocal)/sizeof(TBBUTTON),
-				CalcPixelX(16),CalcPixelY(16),
-				CalcPixelX(16),CalcPixelY(16),
-				sizeof(TBBUTTON));
-	if(hResized != NULL)
+		hWnd,
+		WS_CHILD | WS_VISIBLE | TBSTYLE_TOOLTIPS | CCS_NORESIZE | TBSTYLE_FLAT,
+		2,
+		2,
+		NULL,
+		(UINT_PTR)hResized,
+		TbarDataLocal,
+		sizeof(TbarDataLocal) / sizeof(TBBUTTON),
+		CalcPixelX(16), CalcPixelY(16),
+		CalcPixelX(16), CalcPixelY(16),
+		sizeof(TBBUTTON));
+	if (hResized != NULL)
 		DeleteObject(hOriginal);
 	hResized = NULL;
 
-	if(hWndTbarLocal != NULL)
+	if (hWndTbarLocal != NULL)
 	{
 		/* 2007/09/21 sunasunamix  ここから *********************/
 		// 64ビット対応
@@ -351,7 +351,7 @@ int MakeToolBarWindow(HWND hWnd, HINSTANCE hInst)
 //#else
 //		DlgFont = CreateFont(Rect1.bottom-Rect1.top-8, 0, 0, 0, 0, FALSE,FALSE,FALSE,ANSI_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,DEFAULT_PITCH,MSGJPN254);
 //#endif
-		DlgFont = CreateFont(Rect1.bottom-Rect1.top-CalcPixelY(8), 0, 0, 0, 0, FALSE,FALSE,FALSE,DEFAULT_CHARSET,OUT_DEFAULT_PRECIS,CLIP_DEFAULT_PRECIS,DEFAULT_QUALITY,DEFAULT_PITCH,MSGJPN254);
+		DlgFont = CreateFont(Rect1.bottom - Rect1.top - CalcPixelY(8), 0, 0, 0, 0, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, MSGJPN254);
 
 		// 高DPI対応
 //		hWndDirLocal = CreateWindowEx(WS_EX_CLIENTEDGE,
@@ -360,19 +360,19 @@ int MakeToolBarWindow(HWND hWnd, HINSTANCE hInst)
 //					Rect1.right, Rect1.top, LocalWidth - Rect1.right, 200,
 //					hWndTbarLocal, (HMENU)COMBO_LOCAL, hInst, NULL);
 		hWndDirLocal = CreateWindowEx(WS_EX_CLIENTEDGE,
-					"COMBOBOX", "",
-					WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL | CBS_DROPDOWN | CBS_SORT | CBS_AUTOHSCROLL,
-					Rect1.right, Rect1.top, LocalWidth - Rect1.right, CalcPixelY(200),
-					hWndTbarLocal, (HMENU)COMBO_LOCAL, hInst, NULL);
+			"COMBOBOX", "",
+			WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL | CBS_DROPDOWN | CBS_SORT | CBS_AUTOHSCROLL,
+			Rect1.right, Rect1.top, LocalWidth - Rect1.right, CalcPixelY(200),
+			hWndTbarLocal, (HMENU)COMBO_LOCAL, hInst, NULL);
 
-		if(hWndDirLocal != NULL)
+		if (hWndDirLocal != NULL)
 		{
 			/* エディットコントロールを探す */
 			hWndDirLocalEdit = GetWindow(hWndDirLocal, GW_CHILD);
-			if(hWndDirLocalEdit != NULL)
+			if (hWndDirLocalEdit != NULL)
 				// 64ビット対応
 //				HistEditBoxProcPtr = (WNDPROC)SetWindowLong(hWndDirLocalEdit, GWL_WNDPROC, (LONG)HistEditBoxWndProc);
-				HistEditBoxProcPtr = (WNDPROC)SetWindowLongPtr(hWndDirLocalEdit, GWLP_WNDPROC, (LONG_PTR)HistEditBoxWndProc);
+HistEditBoxProcPtr = (WNDPROC)SetWindowLongPtr(hWndDirLocalEdit, GWLP_WNDPROC, (LONG_PTR)HistEditBoxWndProc);
 
 			SendMessage(hWndDirLocal, WM_SETFONT, (WPARAM)DlgFont, MAKELPARAM(TRUE, 0));
 			SendMessage(hWndDirLocal, CB_LIMITTEXT, FMAX_PATH, 0);
@@ -381,10 +381,10 @@ int MakeToolBarWindow(HWND hWnd, HINSTANCE hInst)
 			GetLogicalDriveStrings(FMAX_PATH, Tmp);
 			NoDrives = LoadHideDriveListRegistry();
 			Pos = Tmp;
-			while(*Pos != NUL)
+			while (*Pos != NUL)
 			{
 				Tmp2 = toupper(*Pos) - 'A';
-				if((NoDrives & (0x00000001 << Tmp2)) == 0)
+				if ((NoDrives & (0x00000001 << Tmp2)) == 0)
 					SetLocalDirHist(Pos);
 				Pos = strchr(Pos, NUL) + 1;
 			}
@@ -408,28 +408,28 @@ int MakeToolBarWindow(HWND hWnd, HINSTANCE hInst)
 //				16,16,
 //				sizeof(TBBUTTON));
 	hOriginal = LoadImage(hInst, MAKEINTRESOURCE(remote_toolbar_bmp), IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE | LR_LOADMAP3DCOLORS);
-	if(hOriginal != NULL)
+	if (hOriginal != NULL)
 	{
 		hResized = ResizeBitmap(hOriginal, 64, 64, 16, 64);
 		DeleteObject(hOriginal);
 	}
 	hWndTbarRemote = CreateToolbarEx(
-				hWnd,
-				WS_CHILD | WS_VISIBLE | TBSTYLE_TOOLTIPS | CCS_NORESIZE | TBSTYLE_FLAT,
-				3,
-				2,
-				NULL,
-				(UINT_PTR)hResized,
-				TbarDataRemote,
-				sizeof(TbarDataRemote)/sizeof(TBBUTTON),
-				CalcPixelX(16),CalcPixelY(16),
-				CalcPixelX(16),CalcPixelY(16),
-				sizeof(TBBUTTON));
-	if(hResized != NULL)
+		hWnd,
+		WS_CHILD | WS_VISIBLE | TBSTYLE_TOOLTIPS | CCS_NORESIZE | TBSTYLE_FLAT,
+		3,
+		2,
+		NULL,
+		(UINT_PTR)hResized,
+		TbarDataRemote,
+		sizeof(TbarDataRemote) / sizeof(TBBUTTON),
+		CalcPixelX(16), CalcPixelY(16),
+		CalcPixelX(16), CalcPixelY(16),
+		sizeof(TBBUTTON));
+	if (hResized != NULL)
 		DeleteObject(hOriginal);
 	hResized = NULL;
 
-	if(hWndTbarRemote != NULL)
+	if (hWndTbarRemote != NULL)
 	{
 		/* 2007/09/21 sunasunamix  ここから *********************/
 		// 64ビット対応
@@ -451,19 +451,19 @@ int MakeToolBarWindow(HWND hWnd, HINSTANCE hInst)
 //					Rect1.right, Rect1.top, RemoteWidth - Rect1.right, 200,
 //					hWndTbarRemote, (HMENU)COMBO_REMOTE, hInst, NULL);
 		hWndDirRemote = CreateWindowEx(WS_EX_CLIENTEDGE,
-					"COMBOBOX", "",
-					WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL | CBS_DROPDOWN | CBS_AUTOHSCROLL,
-					Rect1.right, Rect1.top, RemoteWidth - Rect1.right, CalcPixelY(200),
-					hWndTbarRemote, (HMENU)COMBO_REMOTE, hInst, NULL);
+			"COMBOBOX", "",
+			WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL | CBS_DROPDOWN | CBS_AUTOHSCROLL,
+			Rect1.right, Rect1.top, RemoteWidth - Rect1.right, CalcPixelY(200),
+			hWndTbarRemote, (HMENU)COMBO_REMOTE, hInst, NULL);
 
-		if(hWndDirRemote != NULL)
+		if (hWndDirRemote != NULL)
 		{
 			/* エディットコントロールを探す */
 			hWndDirRemoteEdit = GetWindow(hWndDirRemote, GW_CHILD);
-			if(hWndDirRemoteEdit != NULL)
+			if (hWndDirRemoteEdit != NULL)
 				// 64ビット対応
 //				HistEditBoxProcPtr = (WNDPROC)SetWindowLong(hWndDirRemoteEdit, GWL_WNDPROC, (LONG)HistEditBoxWndProc);
-				HistEditBoxProcPtr = (WNDPROC)SetWindowLongPtr(hWndDirRemoteEdit, GWLP_WNDPROC, (LONG_PTR)HistEditBoxWndProc);
+HistEditBoxProcPtr = (WNDPROC)SetWindowLongPtr(hWndDirRemoteEdit, GWLP_WNDPROC, (LONG_PTR)HistEditBoxWndProc);
 
 			SendMessage(hWndDirRemote, WM_SETFONT, (WPARAM)DlgFont, MAKELPARAM(TRUE, 0));
 			SendMessage(hWndDirRemote, CB_LIMITTEXT, FMAX_PATH, 0);
@@ -472,11 +472,11 @@ int MakeToolBarWindow(HWND hWnd, HINSTANCE hInst)
 	}
 
 	Sts = FFFTP_SUCCESS;
-	if((hWndTbarMain == NULL) ||
-	   (hWndTbarLocal == NULL) ||
-	   (hWndTbarRemote == NULL) ||
-	   (hWndDirLocal == NULL) ||
-	   (hWndDirRemote == NULL))
+	if ((hWndTbarMain == NULL) ||
+		(hWndTbarLocal == NULL) ||
+		(hWndTbarRemote == NULL) ||
+		(hWndDirLocal == NULL) ||
+		(hWndDirRemote == NULL))
 	{
 		Sts = FFFTP_FAIL;
 	}
@@ -489,48 +489,48 @@ int MakeToolBarWindow(HWND hWnd, HINSTANCE hInst)
 
 static LRESULT CALLBACK HistEditBoxWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	char Tmp[FMAX_PATH+1];
+	char Tmp[FMAX_PATH + 1];
 
 	switch (message)
 	{
-		case WM_CHAR :
-			if(wParam == 0x0D)		/* リターンキーが押された */
+	case WM_CHAR:
+		if (wParam == 0x0D)		/* リターンキーが押された */
+		{
+			if (hWnd == hWndDirLocalEdit)
 			{
-				if(hWnd == hWndDirLocalEdit)
-				{
-					SendMessage(hWndDirLocalEdit, WM_GETTEXT, FMAX_PATH+1, (LPARAM)Tmp);
-					DoLocalCWD(Tmp);
-					GetLocalDirForWnd();
-				}
-				else
-				{
-					// 同時接続対応
-					CancelFlg = NO;
-					SendMessage(hWndDirRemoteEdit, WM_GETTEXT, FMAX_PATH+1, (LPARAM)Tmp);
-					if(CheckClosedAndReconnect() == FFFTP_SUCCESS)
-					{
-						if(DoCWD(Tmp, YES, NO, YES) < FTP_RETRY)
-							GetRemoteDirForWnd(CACHE_NORMAL, &CancelFlg);
-					}
-				}
-			}
-			else if(wParam == 0x09)		/* TABキーが押された */
-			{
-				if(hWnd == hWndDirLocalEdit)
-				{
-					SetFocus(GetLocalHwnd());
-				}
-				else
-				{
-					SetFocus(GetRemoteHwnd());
-				}
+				SendMessage(hWndDirLocalEdit, WM_GETTEXT, FMAX_PATH + 1, (LPARAM)Tmp);
+				DoLocalCWD(Tmp);
+				GetLocalDirForWnd();
 			}
 			else
-				return(CallWindowProc(HistEditBoxProcPtr, hWnd, message, wParam, lParam));
-			break;
-
-		default :
+			{
+				// 同時接続対応
+				CancelFlg = NO;
+				SendMessage(hWndDirRemoteEdit, WM_GETTEXT, FMAX_PATH + 1, (LPARAM)Tmp);
+				if (CheckClosedAndReconnect() == FFFTP_SUCCESS)
+				{
+					if (DoCWD(Tmp, YES, NO, YES) < FTP_RETRY)
+						GetRemoteDirForWnd(CACHE_NORMAL, &CancelFlg);
+				}
+			}
+		}
+		else if (wParam == 0x09)		/* TABキーが押された */
+		{
+			if (hWnd == hWndDirLocalEdit)
+			{
+				SetFocus(GetLocalHwnd());
+			}
+			else
+			{
+				SetFocus(GetRemoteHwnd());
+			}
+		}
+		else
 			return(CallWindowProc(HistEditBoxProcPtr, hWnd, message, wParam, lParam));
+		break;
+
+	default:
+		return(CallWindowProc(HistEditBoxProcPtr, hWnd, message, wParam, lParam));
 	}
 	return(0L);
 }
@@ -549,18 +549,18 @@ static LRESULT CALLBACK HistEditBoxWndProc(HWND hWnd, UINT message, WPARAM wPara
 
 void DeleteToolBarWindow(void)
 {
-//	if(DlgFont != NULL)
-//		DeleteObject(DlgFont);
+	//	if(DlgFont != NULL)
+	//		DeleteObject(DlgFont);
 
-	if(hWndTbarMain != NULL)
+	if (hWndTbarMain != NULL)
 		DestroyWindow(hWndTbarMain);
-	if(hWndTbarLocal != NULL)
+	if (hWndTbarLocal != NULL)
 		DestroyWindow(hWndTbarLocal);
-	if(hWndTbarRemote != NULL)
+	if (hWndTbarRemote != NULL)
 		DestroyWindow(hWndTbarRemote);
-	if(hWndDirLocal != NULL)
+	if (hWndDirLocal != NULL)
 		DestroyWindow(hWndDirLocal);
-	if(hWndDirRemote != NULL)
+	if (hWndDirRemote != NULL)
 		DestroyWindow(hWndDirRemote);
 	return;
 }
@@ -706,17 +706,17 @@ void MakeButtonsFocus(void)
 
 	// デッドロック対策
 //	if(HideUI == NO)
-	if(HideUI == 0)
+	if (HideUI == 0)
 	{
 		hWndMain = GetMainHwnd();
 		hWndFocus = GetFocus();
 		Win = WIN_LOCAL;
-		if(hWndFocus == GetRemoteHwnd())
+		if (hWndFocus == GetRemoteHwnd())
 			Win = WIN_REMOTE;
 
 		Count = GetSelectedCount(Win);
 
-		if(AskConnecting() == YES)
+		if (AskConnecting() == YES)
 		{
 			EnableMenuItem(GetMenu(hWndMain), MENU_BMARK_ADD, MF_ENABLED);
 			EnableMenuItem(GetMenu(hWndMain), MENU_BMARK_ADD_LOCAL, MF_ENABLED);
@@ -741,9 +741,9 @@ void MakeButtonsFocus(void)
 			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_MIRROR_UPLOAD, MAKELONG(FALSE, 0));
 		}
 
-		if(hWndFocus == GetLocalHwnd())
+		if (hWndFocus == GetLocalHwnd())
 		{
-			if((AskConnecting() == YES) && (Count > 0))
+			if ((AskConnecting() == YES) && (Count > 0))
 			{
 				SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_UPLOAD, MAKELONG(TRUE, 0));
 				EnableMenuItem(GetMenu(hWndMain), MENU_UPLOAD, MF_ENABLED);
@@ -762,9 +762,9 @@ void MakeButtonsFocus(void)
 			EnableMenuItem(GetMenu(hWndMain), MENU_DOWNLOAD_AS_FILE, MF_GRAYED);
 		}
 
-		if(hWndFocus == GetRemoteHwnd())
+		if (hWndFocus == GetRemoteHwnd())
 		{
-			if(AskConnecting() == YES)
+			if (AskConnecting() == YES)
 			{
 				EnableMenuItem(GetMenu(hWndMain), MENU_SOMECMD, MF_ENABLED);
 			}
@@ -773,7 +773,7 @@ void MakeButtonsFocus(void)
 				EnableMenuItem(GetMenu(hWndMain), MENU_SOMECMD, MF_GRAYED);
 			}
 
-			if((AskConnecting() == YES) && (Count > 0))
+			if ((AskConnecting() == YES) && (Count > 0))
 			{
 				SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_DOWNLOAD, MAKELONG(TRUE, 0));
 				EnableMenuItem(GetMenu(hWndMain), MENU_DOWNLOAD, MF_ENABLED);
@@ -792,9 +792,9 @@ void MakeButtonsFocus(void)
 			EnableMenuItem(GetMenu(hWndMain), MENU_UPLOAD_AS, MF_GRAYED);
 		}
 
-		if((hWndFocus == GetLocalHwnd()) || (hWndFocus == GetRemoteHwnd()))
+		if ((hWndFocus == GetLocalHwnd()) || (hWndFocus == GetRemoteHwnd()))
 		{
-			if(Count > 0)
+			if (Count > 0)
 			{
 				SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_DELETE, MAKELONG(TRUE, 0));
 				EnableMenuItem(GetMenu(hWndMain), MENU_DELETE, MF_ENABLED);
@@ -814,7 +814,7 @@ void MakeButtonsFocus(void)
 				EnableMenuItem(GetMenu(hWndMain), MENU_CHMOD, MF_GRAYED);
 			}
 
-			if((hWndFocus == GetLocalHwnd()) || (AskConnecting() == YES))
+			if ((hWndFocus == GetLocalHwnd()) || (AskConnecting() == YES))
 			{
 				SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_MKDIR, MAKELONG(TRUE, 0));
 				EnableMenuItem(GetMenu(hWndMain), MENU_MKDIR, MF_ENABLED);
@@ -868,7 +868,7 @@ void DisableUserOpe(void)
 //	HideUI = YES;
 	HideUI++;
 
-	for(i = 0; i < sizeof(HideMenus) / sizeof(int); i++)
+	for (i = 0; i < sizeof(HideMenus) / sizeof(int); i++)
 	{
 		EnableMenuItem(GetMenu(GetMainHwnd()), HideMenus[i], MF_GRAYED);
 		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, HideMenus[i], MAKELONG(FALSE, 0));
@@ -898,11 +898,11 @@ void EnableUserOpe(void)
 
 	// デッドロック対策
 //	if(HideUI == YES)
-	if(HideUI > 0)
+	if (HideUI > 0)
 		HideUI--;
-	if(HideUI == 0)
+	if (HideUI == 0)
 	{
-		for(i = 0; i < sizeof(HideMenus) / sizeof(int); i++)
+		for (i = 0; i < sizeof(HideMenus) / sizeof(int); i++)
 		{
 			EnableMenuItem(GetMenu(GetMainHwnd()), HideMenus[i], MF_ENABLED);
 			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, HideMenus[i], MAKELONG(TRUE, 0));
@@ -980,19 +980,19 @@ void SetTransferTypeImm(int Mode)
 
 void SetTransferType(int Type)
 {
-	switch(Type)
+	switch (Type)
 	{
-		case MENU_TEXT :
-			TmpTransMode = TYPE_A;
-			break;
+	case MENU_TEXT:
+		TmpTransMode = TYPE_A;
+		break;
 
-		case MENU_BINARY :
-			TmpTransMode = TYPE_I;
-			break;
+	case MENU_BINARY:
+		TmpTransMode = TYPE_I;
+		break;
 
-		default :
-			TmpTransMode = TYPE_X;
-			break;
+	default:
+		TmpTransMode = TYPE_X;
+		break;
 	}
 	HideHostKanjiButton();
 	HideLocalKanjiButton();
@@ -1011,19 +1011,19 @@ void SetTransferType(int Type)
 
 void DispTransferType(void)
 {
-	switch(TmpTransMode)
+	switch (TmpTransMode)
 	{
-		case TYPE_A :
-			SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_TEXT, MAKELONG(TRUE, 0));
-			break;
+	case TYPE_A:
+		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_TEXT, MAKELONG(TRUE, 0));
+		break;
 
-		case TYPE_I :
-			SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_BINARY, MAKELONG(TRUE, 0));
-			break;
+	case TYPE_I:
+		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_BINARY, MAKELONG(TRUE, 0));
+		break;
 
-		default :
-			SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_AUTO, MAKELONG(TRUE, 0));
-			break;
+	default:
+		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_AUTO, MAKELONG(TRUE, 0));
+		break;
 	}
 	return;
 }
@@ -1054,23 +1054,23 @@ int AskTransferType(void)
 *		int 転送モード (TYPE_xx)
 *----------------------------------------------------------------------------*/
 
-int AskTransferTypeAssoc(char *Fname, int Type)
+int AskTransferTypeAssoc(char* Fname, int Type)
 {
 	int Ret;
-	char *Pos;
-	char *Name;
+	char* Pos;
+	char* Name;
 
 	Ret = Type;
-	if(Ret == TYPE_X)
+	if (Ret == TYPE_X)
 	{
 		Ret = TYPE_I;
-		if(StrMultiLen(AsciiExt) > 0)
+		if (StrMultiLen(AsciiExt) > 0)
 		{
 			Name = GetFileName(Fname);
 			Pos = AsciiExt;
-			while(*Pos != NUL)
+			while (*Pos != NUL)
 			{
-				if(CheckFname(Name, Pos) == FFFTP_SUCCESS)
+				if (CheckFname(Name, Pos) == FFFTP_SUCCESS)
 				{
 					Ret = TYPE_A;
 					break;
@@ -1135,32 +1135,32 @@ void SetHostKanjiCodeImm(int Mode)
 
 void SetHostKanjiCode(int Type)
 {
-	switch(Type)
+	switch (Type)
 	{
 		// UTF-8対応
-		case MENU_KNJ_SJIS :
-			TmpHostKanjiCode = KANJI_SJIS;
-			break;
+	case MENU_KNJ_SJIS:
+		TmpHostKanjiCode = KANJI_SJIS;
+		break;
 
-		case MENU_KNJ_EUC :
-			TmpHostKanjiCode = KANJI_EUC;
-			break;
+	case MENU_KNJ_EUC:
+		TmpHostKanjiCode = KANJI_EUC;
+		break;
 
-		case MENU_KNJ_JIS :
-			TmpHostKanjiCode = KANJI_JIS;
-			break;
+	case MENU_KNJ_JIS:
+		TmpHostKanjiCode = KANJI_JIS;
+		break;
 
-		case MENU_KNJ_UTF8N :
-			TmpHostKanjiCode = KANJI_UTF8N;
-			break;
+	case MENU_KNJ_UTF8N:
+		TmpHostKanjiCode = KANJI_UTF8N;
+		break;
 
-		case MENU_KNJ_UTF8BOM :
-			TmpHostKanjiCode = KANJI_UTF8BOM;
-			break;
+	case MENU_KNJ_UTF8BOM:
+		TmpHostKanjiCode = KANJI_UTF8BOM;
+		break;
 
-		default :
-			TmpHostKanjiCode = KANJI_NOCNV;
-			break;
+	default:
+		TmpHostKanjiCode = KANJI_NOCNV;
+		break;
 	}
 	DispHostKanjiCode();
 	HideHostKanjiButton();
@@ -1179,32 +1179,32 @@ void SetHostKanjiCode(int Type)
 
 void DispHostKanjiCode(void)
 {
-	switch(TmpHostKanjiCode)
+	switch (TmpHostKanjiCode)
 	{
 		// UTF-8対応
-		case KANJI_SJIS :
-			SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_KNJ_SJIS, MAKELONG(TRUE, 0));
-			break;
+	case KANJI_SJIS:
+		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_KNJ_SJIS, MAKELONG(TRUE, 0));
+		break;
 
-		case KANJI_EUC :
-			SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_KNJ_EUC, MAKELONG(TRUE, 0));
-			break;
+	case KANJI_EUC:
+		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_KNJ_EUC, MAKELONG(TRUE, 0));
+		break;
 
-		case KANJI_JIS :
-			SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_KNJ_JIS, MAKELONG(TRUE, 0));
-			break;
+	case KANJI_JIS:
+		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_KNJ_JIS, MAKELONG(TRUE, 0));
+		break;
 
-		case KANJI_UTF8N :
-			SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_KNJ_UTF8N, MAKELONG(TRUE, 0));
-			break;
+	case KANJI_UTF8N:
+		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_KNJ_UTF8N, MAKELONG(TRUE, 0));
+		break;
 
-		case KANJI_UTF8BOM :
-			SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_KNJ_UTF8BOM, MAKELONG(TRUE, 0));
-			break;
+	case KANJI_UTF8BOM:
+		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_KNJ_UTF8BOM, MAKELONG(TRUE, 0));
+		break;
 
-		default :
-			SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_KNJ_NONE, MAKELONG(TRUE, 0));
-			break;
+	default:
+		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_KNJ_NONE, MAKELONG(TRUE, 0));
+		break;
 	}
 	return;
 }
@@ -1236,48 +1236,48 @@ int AskHostKanjiCode(void)
 
 void HideHostKanjiButton(void)
 {
-	switch(TmpTransMode)
+	switch (TmpTransMode)
 	{
 		// UTF-8対応
-		case TYPE_I : 
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_SJIS, MAKELONG(FALSE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_EUC, MAKELONG(FALSE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_JIS, MAKELONG(FALSE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_UTF8N, MAKELONG(FALSE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_UTF8BOM, MAKELONG(FALSE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_NONE, MAKELONG(FALSE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KANACNV, MAKELONG(FALSE, 0));
-			break;
+	case TYPE_I:
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_SJIS, MAKELONG(FALSE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_EUC, MAKELONG(FALSE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_JIS, MAKELONG(FALSE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_UTF8N, MAKELONG(FALSE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_UTF8BOM, MAKELONG(FALSE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_NONE, MAKELONG(FALSE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KANACNV, MAKELONG(FALSE, 0));
+		break;
 
-		default :
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_SJIS, MAKELONG(TRUE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_EUC, MAKELONG(TRUE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_JIS, MAKELONG(TRUE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_UTF8N, MAKELONG(TRUE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_UTF8BOM, MAKELONG(TRUE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_NONE, MAKELONG(TRUE, 0));
-//			if(TmpHostKanjiCode != KANJI_NOCNV)
-//				SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KANACNV, MAKELONG(TRUE, 0));
-//			else
-//				SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KANACNV, MAKELONG(FALSE, 0));
-//			break;
-			// 現在カナ変換はShift_JIS、JIS、EUC間でのみ機能する
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KANACNV, MAKELONG(FALSE, 0));
-			switch(TmpHostKanjiCode)
+	default:
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_SJIS, MAKELONG(TRUE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_EUC, MAKELONG(TRUE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_JIS, MAKELONG(TRUE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_UTF8N, MAKELONG(TRUE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_UTF8BOM, MAKELONG(TRUE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KNJ_NONE, MAKELONG(TRUE, 0));
+		//			if(TmpHostKanjiCode != KANJI_NOCNV)
+		//				SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KANACNV, MAKELONG(TRUE, 0));
+		//			else
+		//				SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KANACNV, MAKELONG(FALSE, 0));
+		//			break;
+					// 現在カナ変換はShift_JIS、JIS、EUC間でのみ機能する
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KANACNV, MAKELONG(FALSE, 0));
+		switch (TmpHostKanjiCode)
+		{
+		case KANJI_SJIS:
+		case KANJI_JIS:
+		case KANJI_EUC:
+			switch (TmpLocalKanjiCode)
 			{
 			case KANJI_SJIS:
 			case KANJI_JIS:
 			case KANJI_EUC:
-				switch(TmpLocalKanjiCode)
-				{
-				case KANJI_SJIS:
-				case KANJI_JIS:
-				case KANJI_EUC:
-					SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KANACNV, MAKELONG(TRUE, 0));
-					break;
-				}
+				SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KANACNV, MAKELONG(TRUE, 0));
 				break;
 			}
+			break;
+		}
 	}
 	return;
 }
@@ -1297,28 +1297,28 @@ void SetLocalKanjiCodeImm(int Mode)
 
 void SetLocalKanjiCode(int Type)
 {
-	switch(Type)
+	switch (Type)
 	{
 		// UTF-8対応
-		case MENU_L_KNJ_SJIS :
-			TmpLocalKanjiCode = KANJI_SJIS;
-			break;
+	case MENU_L_KNJ_SJIS:
+		TmpLocalKanjiCode = KANJI_SJIS;
+		break;
 
-		case MENU_L_KNJ_EUC :
-			TmpLocalKanjiCode = KANJI_EUC;
-			break;
+	case MENU_L_KNJ_EUC:
+		TmpLocalKanjiCode = KANJI_EUC;
+		break;
 
-		case MENU_L_KNJ_JIS :
-			TmpLocalKanjiCode = KANJI_JIS;
-			break;
+	case MENU_L_KNJ_JIS:
+		TmpLocalKanjiCode = KANJI_JIS;
+		break;
 
-		case MENU_L_KNJ_UTF8N :
-			TmpLocalKanjiCode = KANJI_UTF8N;
-			break;
+	case MENU_L_KNJ_UTF8N:
+		TmpLocalKanjiCode = KANJI_UTF8N;
+		break;
 
-		case MENU_L_KNJ_UTF8BOM :
-			TmpLocalKanjiCode = KANJI_UTF8BOM;
-			break;
+	case MENU_L_KNJ_UTF8BOM:
+		TmpLocalKanjiCode = KANJI_UTF8BOM;
+		break;
 	}
 	DispLocalKanjiCode();
 	HideLocalKanjiButton();
@@ -1327,28 +1327,28 @@ void SetLocalKanjiCode(int Type)
 
 void DispLocalKanjiCode(void)
 {
-	switch(TmpLocalKanjiCode)
+	switch (TmpLocalKanjiCode)
 	{
 		// UTF-8対応
-		case KANJI_SJIS :
-			SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_L_KNJ_SJIS, MAKELONG(TRUE, 0));
-			break;
+	case KANJI_SJIS:
+		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_L_KNJ_SJIS, MAKELONG(TRUE, 0));
+		break;
 
-		case KANJI_EUC :
-			SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_L_KNJ_EUC, MAKELONG(TRUE, 0));
-			break;
+	case KANJI_EUC:
+		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_L_KNJ_EUC, MAKELONG(TRUE, 0));
+		break;
 
-		case KANJI_JIS :
-			SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_L_KNJ_JIS, MAKELONG(TRUE, 0));
-			break;
+	case KANJI_JIS:
+		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_L_KNJ_JIS, MAKELONG(TRUE, 0));
+		break;
 
-		case KANJI_UTF8N :
-			SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_L_KNJ_UTF8N, MAKELONG(TRUE, 0));
-			break;
+	case KANJI_UTF8N:
+		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_L_KNJ_UTF8N, MAKELONG(TRUE, 0));
+		break;
 
-		case KANJI_UTF8BOM :
-			SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_L_KNJ_UTF8BOM, MAKELONG(TRUE, 0));
-			break;
+	case KANJI_UTF8BOM:
+		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_L_KNJ_UTF8BOM, MAKELONG(TRUE, 0));
+		break;
 	}
 	return;
 }
@@ -1360,41 +1360,41 @@ int AskLocalKanjiCode(void)
 
 void HideLocalKanjiButton(void)
 {
-	switch(TmpTransMode)
+	switch (TmpTransMode)
 	{
 		// UTF-8対応
-		case TYPE_I : 
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_SJIS, MAKELONG(FALSE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_EUC, MAKELONG(FALSE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_JIS, MAKELONG(FALSE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_UTF8N, MAKELONG(FALSE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_UTF8BOM, MAKELONG(FALSE, 0));
-			break;
+	case TYPE_I:
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_SJIS, MAKELONG(FALSE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_EUC, MAKELONG(FALSE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_JIS, MAKELONG(FALSE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_UTF8N, MAKELONG(FALSE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_UTF8BOM, MAKELONG(FALSE, 0));
+		break;
 
-		default :
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_SJIS, MAKELONG(TRUE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_EUC, MAKELONG(TRUE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_JIS, MAKELONG(TRUE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_UTF8N, MAKELONG(TRUE, 0));
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_UTF8BOM, MAKELONG(TRUE, 0));
-			// 現在カナ変換はShift_JIS、JIS、EUC間でのみ機能する
-			SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KANACNV, MAKELONG(FALSE, 0));
-			switch(TmpHostKanjiCode)
+	default:
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_SJIS, MAKELONG(TRUE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_EUC, MAKELONG(TRUE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_JIS, MAKELONG(TRUE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_UTF8N, MAKELONG(TRUE, 0));
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_L_KNJ_UTF8BOM, MAKELONG(TRUE, 0));
+		// 現在カナ変換はShift_JIS、JIS、EUC間でのみ機能する
+		SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KANACNV, MAKELONG(FALSE, 0));
+		switch (TmpHostKanjiCode)
+		{
+		case KANJI_SJIS:
+		case KANJI_JIS:
+		case KANJI_EUC:
+			switch (TmpLocalKanjiCode)
 			{
 			case KANJI_SJIS:
 			case KANJI_JIS:
 			case KANJI_EUC:
-				switch(TmpLocalKanjiCode)
-				{
-				case KANJI_SJIS:
-				case KANJI_JIS:
-				case KANJI_EUC:
-					SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KANACNV, MAKELONG(TRUE, 0));
-					break;
-				}
+				SendMessage(hWndTbarMain, TB_ENABLEBUTTON, MENU_KANACNV, MAKELONG(TRUE, 0));
 				break;
 			}
 			break;
+		}
+		break;
 	}
 	return;
 }
@@ -1455,7 +1455,7 @@ void SetHostKanaCnv(void)
 
 void DispHostKanaCnv(void)
 {
-	if(TmpHostKanaCnv != 0)
+	if (TmpHostKanaCnv != 0)
 		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_KANACNV, MAKELONG(TRUE, 0));
 	else
 		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_KANACNV, MAKELONG(FALSE, 0));
@@ -1516,28 +1516,28 @@ void SetSortTypeImm(int LFsort, int LDsort, int RFsort, int RDsort)
 
 void SetSortTypeByColumn(int Win, int Tab)
 {
-	if(Win == WIN_LOCAL)
+	if (Win == WIN_LOCAL)
 	{
-		if((TmpLocalFileSort & SORT_MASK_ORD) == Tab)
+		if ((TmpLocalFileSort & SORT_MASK_ORD) == Tab)
 			TmpLocalFileSort ^= SORT_GET_ORD;
 		else
 			TmpLocalFileSort = Tab;
 
-		if((Tab == SORT_NAME) || (Tab == SORT_DATE))
+		if ((Tab == SORT_NAME) || (Tab == SORT_DATE))
 			TmpLocalDirSort = TmpLocalFileSort;
 		else
 			TmpLocalDirSort = SORT_NAME;
 	}
 	else
 	{
-		if(Tab != 4)
+		if (Tab != 4)
 		{
-			if((TmpRemoteFileSort & SORT_MASK_ORD) == Tab)
+			if ((TmpRemoteFileSort & SORT_MASK_ORD) == Tab)
 				TmpRemoteFileSort ^= SORT_GET_ORD;
 			else
 				TmpRemoteFileSort = Tab;
 
-			if((Tab == SORT_NAME) || (Tab == SORT_DATE))
+			if ((Tab == SORT_NAME) || (Tab == SORT_DATE))
 				TmpRemoteDirSort = TmpRemoteFileSort;
 			else
 				TmpRemoteDirSort = SORT_NAME;
@@ -1560,23 +1560,23 @@ int AskSortType(int Name)
 {
 	int Ret;
 
-	switch(Name)
+	switch (Name)
 	{
-		case ITEM_LFILE :
-			Ret = TmpLocalFileSort;
-			break;
+	case ITEM_LFILE:
+		Ret = TmpLocalFileSort;
+		break;
 
-		case ITEM_LDIR :
-			Ret = TmpLocalDirSort;
-			break;
+	case ITEM_LDIR:
+		Ret = TmpLocalDirSort;
+		break;
 
-		case ITEM_RFILE :
-			Ret = TmpRemoteFileSort;
-			break;
+	case ITEM_RFILE:
+		Ret = TmpRemoteFileSort;
+		break;
 
-		case ITEM_RDIR :
-			Ret = TmpRemoteDirSort;
-			break;
+	case ITEM_RDIR:
+		Ret = TmpRemoteDirSort;
+		break;
 	}
 	return(Ret);
 }
@@ -1632,19 +1632,19 @@ void DispListType(void)
 	HWND hWndMain;
 
 	hWndMain = GetMainHwnd();
-	switch(ListType)
+	switch (ListType)
 	{
-		case LVS_LIST :
-			SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_LIST, MAKELONG(TRUE, 0));
-			CheckMenuItem(GetMenu(hWndMain), MENU_LIST, MF_CHECKED);
-			CheckMenuItem(GetMenu(hWndMain), MENU_REPORT, MF_UNCHECKED);
-			break;
+	case LVS_LIST:
+		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_LIST, MAKELONG(TRUE, 0));
+		CheckMenuItem(GetMenu(hWndMain), MENU_LIST, MF_CHECKED);
+		CheckMenuItem(GetMenu(hWndMain), MENU_REPORT, MF_UNCHECKED);
+		break;
 
-		default :
-			SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_REPORT, MAKELONG(TRUE, 0));
-			CheckMenuItem(GetMenu(hWndMain), MENU_REPORT, MF_CHECKED);
-			CheckMenuItem(GetMenu(hWndMain), MENU_LIST, MF_UNCHECKED);
-			break;
+	default:
+		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_REPORT, MAKELONG(TRUE, 0));
+		CheckMenuItem(GetMenu(hWndMain), MENU_REPORT, MF_CHECKED);
+		CheckMenuItem(GetMenu(hWndMain), MENU_LIST, MF_UNCHECKED);
+		break;
 	}
 	return;
 }
@@ -1699,7 +1699,7 @@ void ToggleSyncMoveMode(void)
 
 void DispSyncMoveMode(void)
 {
-	if(SyncMove != 0)
+	if (SyncMove != 0)
 	{
 		SendMessage(hWndTbarMain, TB_CHECKBUTTON, MENU_SYNC, MAKELONG(TRUE, 0));
 		CheckMenuItem(GetMenu(GetMainHwnd()), MENU_SYNC, MF_CHECKED);
@@ -1741,16 +1741,16 @@ int AskSyncMoveMode(void)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void SetRemoteDirHist(char *Path)
+void SetRemoteDirHist(char* Path)
 {
 	int i;
 
-	if((i = SendMessage(hWndDirRemote, CB_FINDSTRINGEXACT, 0, (LPARAM)Path)) != CB_ERR)
+	if ((i = SendMessage(hWndDirRemote, CB_FINDSTRINGEXACT, 0, (LPARAM)Path)) != CB_ERR)
 		SendMessage(hWndDirRemote, CB_DELETESTRING, i, 0);
 
 	SendMessage(hWndDirRemote, CB_ADDSTRING, 0, (LPARAM)Path);
 	i = SendMessage(hWndDirRemote, CB_GETCOUNT, 0, 0);
-	SendMessage(hWndDirRemote, CB_SETCURSEL, i-1, 0);
+	SendMessage(hWndDirRemote, CB_SETCURSEL, i - 1, 0);
 
 	strcpy(RemoteCurDir, Path);
 	return;
@@ -1766,11 +1766,11 @@ void SetRemoteDirHist(char *Path)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void SetLocalDirHist(char *Path)
+void SetLocalDirHist(char* Path)
 {
 	int i;
 
-	if((i = SendMessage(hWndDirLocal, CB_FINDSTRINGEXACT, 0, (LPARAM)Path)) == CB_ERR)
+	if ((i = SendMessage(hWndDirLocal, CB_FINDSTRINGEXACT, 0, (LPARAM)Path)) == CB_ERR)
 		SendMessage(hWndDirLocal, CB_ADDSTRING, 0, (LPARAM)Path);
 	i = SendMessage(hWndDirLocal, CB_FINDSTRINGEXACT, 0, (LPARAM)Path);
 	SendMessage(hWndDirLocal, CB_SETCURSEL, i, 0);
@@ -1790,10 +1790,10 @@ void SetLocalDirHist(char *Path)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void AskLocalCurDir(char *Buf, int Max)
+void AskLocalCurDir(char* Buf, int Max)
 {
 	memset(Buf, 0, Max);
-	strncpy(Buf, LocalCurDir, Max-1);
+	strncpy(Buf, LocalCurDir, Max - 1);
 	return;
 }
 
@@ -1808,10 +1808,10 @@ void AskLocalCurDir(char *Buf, int Max)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void AskRemoteCurDir(char *Buf, int Max)
+void AskRemoteCurDir(char* Buf, int Max)
 {
 	memset(Buf, 0, Max);
-	strncpy(Buf, RemoteCurDir, Max-1);
+	strncpy(Buf, RemoteCurDir, Max - 1);
 	return;
 }
 
@@ -1848,7 +1848,7 @@ void SetCurrentDirAsDirHist(void)
 void DispDotFileMode(void)
 {
 	CheckMenuItem(GetMenu(GetMainHwnd()), MENU_DOTFILE, MF_UNCHECKED);
-	if(DotFile == YES)
+	if (DotFile == YES)
 		CheckMenuItem(GetMenu(GetMainHwnd()), MENU_DOTFILE, MF_CHECKED);
 	return;
 }
@@ -1877,19 +1877,19 @@ void LocalRbuttonMenu(int Pos)
 
 	// デッドロック対策
 //	if(HideUI == NO)
-	if(HideUI == 0)
+	if (HideUI == 0)
 	{
 		Flg1 = 0;
-		if(AskConnecting() == NO)
+		if (AskConnecting() == NO)
 			Flg1 = MF_GRAYED;
 
 		Count = GetSelectedCount(WIN_LOCAL);
 		Flg2 = 0;
-		if(Count == 0)
+		if (Count == 0)
 			Flg2 = MF_GRAYED;
 
 		Flg3 = 0;
-		if(Count != 1)
+		if (Count != 1)
 			Flg3 = MF_GRAYED;
 
 		hMenu = CreatePopupMenu();
@@ -1899,13 +1899,13 @@ void LocalRbuttonMenu(int Pos)
 		AppendMenu(hMenu, MF_STRING | Flg1, MENU_UPLOAD_ALL, MSGJPN257);
 		AppendMenu(hMenu, MF_STRING | Flg2, MENU_DELETE, MSGJPN258);
 		AppendMenu(hMenu, MF_STRING | Flg2, MENU_RENAME, MSGJPN259);
-		AppendMenu(hMenu, MF_STRING , MENU_MKDIR, MSGJPN260);
+		AppendMenu(hMenu, MF_STRING, MENU_MKDIR, MSGJPN260);
 		AppendMenu(hMenu, MF_SEPARATOR, 0, NULL);
-		AppendMenu(hMenu, MF_STRING , MENU_FILESIZE, MSGJPN261);
+		AppendMenu(hMenu, MF_STRING, MENU_FILESIZE, MSGJPN261);
 		AppendMenu(hMenu, MF_SEPARATOR, 0, NULL);
 		AppendMenu(hMenu, MF_STRING, REFRESH_LOCAL, MSGJPN262);
 
-		if(Pos == 0)
+		if (Pos == 0)
 			GetCursorPos(&point);
 		else
 		{
@@ -1944,19 +1944,19 @@ void RemoteRbuttonMenu(int Pos)
 
 	// デッドロック対策
 //	if(HideUI == NO)
-	if(HideUI == 0)
+	if (HideUI == 0)
 	{
 		Flg1 = 0;
-		if(AskConnecting() == NO)
+		if (AskConnecting() == NO)
 			Flg1 = MF_GRAYED;
 
 		Count = GetSelectedCount(WIN_REMOTE);
 		Flg2 = 0;
-		if(Count == 0)
+		if (Count == 0)
 			Flg2 = MF_GRAYED;
 
 		Flg3 = 0;
-		if(Count != 1)
+		if (Count != 1)
 			Flg3 = MF_GRAYED;
 
 		hMenu = CreatePopupMenu();
@@ -1971,7 +1971,7 @@ void RemoteRbuttonMenu(int Pos)
 		/* HP NonStop Server では CHMOD の仕様が異なるため使用不可 */
 		if (AskRealHostType() != HTYPE_TANDEM)
 #endif
-		AppendMenu(hMenu, MF_STRING | Flg1 | Flg2, MENU_CHMOD, MSGJPN269);
+			AppendMenu(hMenu, MF_STRING | Flg1 | Flg2, MENU_CHMOD, MSGJPN269);
 		AppendMenu(hMenu, MF_STRING | Flg1, MENU_MKDIR, MSGJPN270);
 		AppendMenu(hMenu, MF_STRING | Flg1 | Flg2, MENU_URL_COPY, MSGJPN271);
 #if defined(HAVE_TANDEM)
@@ -1986,7 +1986,7 @@ void RemoteRbuttonMenu(int Pos)
 		AppendMenu(hMenu, MF_SEPARATOR, 0, NULL);
 		AppendMenu(hMenu, MF_STRING | Flg1, REFRESH_REMOTE, MSGJPN273);
 
-		if(Pos == 0)
+		if (Pos == 0)
 			GetCursorPos(&point);
 		else
 		{
@@ -1994,7 +1994,7 @@ void RemoteRbuttonMenu(int Pos)
 			point.x = Rect.left + 20;
 			point.y = Rect.top + 20;
 		}
-		if(TrackPopupMenu(hMenu, TPM_LEFTBUTTON | TPM_RIGHTBUTTON, point.x, point.y, 0, GetMainHwnd(), NULL) == 0)
+		if (TrackPopupMenu(hMenu, TPM_LEFTBUTTON | TPM_RIGHTBUTTON, point.x, point.y, 0, GetMainHwnd(), NULL) == 0)
 			Count = GetLastError();
 
 		DestroyMenu(hMenu);
@@ -2016,17 +2016,17 @@ void RemoteRbuttonMenu(int Pos)
 static void AddOpenMenu(HMENU hMenu, UINT Flg)
 {
 	static const UINT MenuID[VIEWERS] = { MENU_OPEN1, MENU_OPEN2, MENU_OPEN3 };
-	char Tmp[FMAX_PATH+1];
+	char Tmp[FMAX_PATH + 1];
 	int i;
 
 	// ローカルフォルダを開く
 //	AppendMenu(hMenu, MF_STRING | Flg, MENU_DCLICK, MSGJPN274);
 	AppendMenu(hMenu, MF_STRING | Flg, MENU_OPEN, MSGJPN274);
-	for(i = 0; i < VIEWERS; i++)
+	for (i = 0; i < VIEWERS; i++)
 	{
-		if(strlen(ViewerName[i]) != 0)
+		if (strlen(ViewerName[i]) != 0)
 		{
-			sprintf(Tmp, MSGJPN275, GetToolName(ViewerName[i]), i+1);
+			sprintf(Tmp, MSGJPN275, GetToolName(ViewerName[i]), i + 1);
 			AppendMenu(hMenu, MF_STRING | Flg, MenuID[i], Tmp);
 		}
 	}
@@ -2039,17 +2039,17 @@ static void AddOpenMenu(HMENU hMenu, UINT Flg)
 /*----- CreateToolbarEx のマウスクリック関連を無視する(TbarMain用) -----------
 *       (サブクラス化を行うためのウインドウプロシージャ)
 *----------------------------------------------------------------------------*/
-static LRESULT CALLBACK CountermeasureTbarMainProc(HWND hWnd,UINT uMessage,WPARAM wParam,LPARAM lParam)
+static LRESULT CALLBACK CountermeasureTbarMainProc(HWND hWnd, UINT uMessage, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMessage) {
-	case WM_DESTROY :
+	case WM_DESTROY:
 		// 64ビット対応
 //		SetWindowLong(hWnd,GWL_WNDPROC,(DWORD)pOldTbarMainProc);
-		SetWindowLongPtr(hWnd,GWLP_WNDPROC,(LONG_PTR)pOldTbarMainProc);
+		SetWindowLongPtr(hWnd, GWLP_WNDPROC, (LONG_PTR)pOldTbarMainProc);
 		break;
-	case WM_RBUTTONDBLCLK :
-	case WM_RBUTTONDOWN :
-	case WM_RBUTTONUP :
+	case WM_RBUTTONDBLCLK:
+	case WM_RBUTTONDOWN:
+	case WM_RBUTTONUP:
 		return TRUE;
 	}
 	return CallWindowProc(pOldTbarMainProc, hWnd, uMessage, wParam, lParam);
@@ -2058,17 +2058,17 @@ static LRESULT CALLBACK CountermeasureTbarMainProc(HWND hWnd,UINT uMessage,WPARA
 /*----- CreateToolbarEx のマウスクリック関連を無視する(TbarLocal用) ----------
 *       (サブクラス化を行うためのウインドウプロシージャ)
 *----------------------------------------------------------------------------*/
-static LRESULT CALLBACK CountermeasureTbarLocalProc(HWND hWnd,UINT uMessage,WPARAM wParam,LPARAM lParam)
+static LRESULT CALLBACK CountermeasureTbarLocalProc(HWND hWnd, UINT uMessage, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMessage) {
-	case WM_DESTROY :
+	case WM_DESTROY:
 		// 64ビット対応
 //		SetWindowLong(hWnd,GWL_WNDPROC,(DWORD)pOldTbarLocalProc);
-		SetWindowLongPtr(hWnd,GWLP_WNDPROC,(LONG_PTR)pOldTbarLocalProc);
+		SetWindowLongPtr(hWnd, GWLP_WNDPROC, (LONG_PTR)pOldTbarLocalProc);
 		break;
-	case WM_RBUTTONDBLCLK :
-	case WM_RBUTTONDOWN :
-	case WM_RBUTTONUP :
+	case WM_RBUTTONDBLCLK:
+	case WM_RBUTTONDOWN:
+	case WM_RBUTTONUP:
 		return TRUE;
 	}
 	return CallWindowProc(pOldTbarLocalProc, hWnd, uMessage, wParam, lParam);
@@ -2077,17 +2077,17 @@ static LRESULT CALLBACK CountermeasureTbarLocalProc(HWND hWnd,UINT uMessage,WPAR
 /*----- CreateToolbarEx のマウスクリック関連を無視する(TbarRemote用) ---------
 *       (サブクラス化を行うためのウインドウプロシージャ)
 *----------------------------------------------------------------------------*/
-static LRESULT CALLBACK CountermeasureTbarRemoteProc(HWND hWnd,UINT uMessage,WPARAM wParam,LPARAM lParam)
+static LRESULT CALLBACK CountermeasureTbarRemoteProc(HWND hWnd, UINT uMessage, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMessage) {
-	case WM_DESTROY :
+	case WM_DESTROY:
 		// 64ビット対応
 //		SetWindowLong(hWnd,GWL_WNDPROC,(DWORD)pOldTbarRemoteProc);
-		SetWindowLongPtr(hWnd,GWLP_WNDPROC,(LONG_PTR)pOldTbarRemoteProc);
+		SetWindowLongPtr(hWnd, GWLP_WNDPROC, (LONG_PTR)pOldTbarRemoteProc);
 		break;
-	case WM_RBUTTONDBLCLK :
-	case WM_RBUTTONDOWN :
-	case WM_RBUTTONUP :
+	case WM_RBUTTONDBLCLK:
+	case WM_RBUTTONDOWN:
+	case WM_RBUTTONUP:
 		return TRUE;
 	}
 	return CallWindowProc(pOldTbarRemoteProc, hWnd, uMessage, wParam, lParam);

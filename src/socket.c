@@ -5,25 +5,25 @@
 ===============================================================================
 / Copyright (C) 1997-2007 Sota. All rights reserved.
 /
-/ Redistribution and use in source and binary forms, with or without 
-/ modification, are permitted provided that the following conditions 
+/ Redistribution and use in source and binary forms, with or without
+/ modification, are permitted provided that the following conditions
 / are met:
 /
-/  1. Redistributions of source code must retain the above copyright 
+/  1. Redistributions of source code must retain the above copyright
 /     notice, this list of conditions and the following disclaimer.
-/  2. Redistributions in binary form must reproduce the above copyright 
-/     notice, this list of conditions and the following disclaimer in the 
+/  2. Redistributions in binary form must reproduce the above copyright
+/     notice, this list of conditions and the following disclaimer in the
 /     documentation and/or other materials provided with the distribution.
 /
-/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR 
-/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
-/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, 
-/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF 
-/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON 
-/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
+/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 / THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /============================================================================*/
 
@@ -97,8 +97,8 @@ typedef struct {
 /*===== プロトタイプ =====*/
 
 static LRESULT CALLBACK SocketWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-static int AskAsyncDone(SOCKET s, int *Error, int Mask);
-static int AskAsyncDoneDbase(HANDLE Async, int *Error);
+static int AskAsyncDone(SOCKET s, int* Error, int Mask);
+static int AskAsyncDoneDbase(HANDLE Async, int* Error);
 static int RegisterAsyncTable(SOCKET s);
 static int RegisterAsyncTableDbase(HANDLE Async);
 static int UnregisterAsyncTable(SOCKET s);
@@ -129,7 +129,7 @@ IStaticPortMappingCollection* pUPnPMap;
 
 
 
-/*----- 
+/*-----
 *
 *	Parameter
 *
@@ -144,40 +144,40 @@ int MakeSocketWin(HWND hWnd, HINSTANCE hInst)
 	int Sts;
 	WNDCLASSEX wClass;
 
-	wClass.cbSize        = sizeof(WNDCLASSEX);
-	wClass.style         = 0;
-	wClass.lpfnWndProc   = SocketWndProc;
-	wClass.cbClsExtra    = 0;
-	wClass.cbWndExtra    = 0;
-	wClass.hInstance     = hInst;
-	wClass.hIcon         = NULL;
-	wClass.hCursor       = NULL;
+	wClass.cbSize = sizeof(WNDCLASSEX);
+	wClass.style = 0;
+	wClass.lpfnWndProc = SocketWndProc;
+	wClass.cbClsExtra = 0;
+	wClass.cbWndExtra = 0;
+	wClass.hInstance = hInst;
+	wClass.hIcon = NULL;
+	wClass.hCursor = NULL;
 	wClass.hbrBackground = (HBRUSH)CreateSolidBrush(GetSysColor(COLOR_INFOBK));
-	wClass.lpszMenuName  = NULL;
+	wClass.lpszMenuName = NULL;
 	wClass.lpszClassName = SocketWndClass;
-	wClass.hIconSm       = NULL;
+	wClass.hIconSm = NULL;
 	RegisterClassEx(&wClass);
 
 	Sts = FFFTP_FAIL;
 	hWndSocket = CreateWindowEx(0, SocketWndClass, NULL,
-			WS_BORDER | WS_POPUP,
-			0, 0, 0, 0,
-			hWnd, NULL, hInst, NULL);
+		WS_BORDER | WS_POPUP,
+		0, 0, 0, 0,
+		hWnd, NULL, hInst, NULL);
 
-	if(hWndSocket != NULL)
+	if (hWndSocket != NULL)
 	{
-//		hAsyncTblAccMutex = CreateMutex(NULL, FALSE, NULL);
+		//		hAsyncTblAccMutex = CreateMutex(NULL, FALSE, NULL);
 
-		// スレッド衝突のバグ修正
-//		for(i = 0; i < MAX_SIGNAL_ENTRY; i++)
-//			Signal[i].Socket = INVALID_SOCKET;
-//		for(i = 0; i < MAX_SIGNAL_ENTRY_DBASE; i++)
-//			SignalDbase[i].Async = 0;
-		if(hAsyncTblAccMutex = CreateMutex(NULL, FALSE, NULL))
+				// スレッド衝突のバグ修正
+		//		for(i = 0; i < MAX_SIGNAL_ENTRY; i++)
+		//			Signal[i].Socket = INVALID_SOCKET;
+		//		for(i = 0; i < MAX_SIGNAL_ENTRY_DBASE; i++)
+		//			SignalDbase[i].Async = 0;
+		if (hAsyncTblAccMutex = CreateMutex(NULL, FALSE, NULL))
 		{
-			for(i = 0; i < MAX_SIGNAL_ENTRY; i++)
+			for (i = 0; i < MAX_SIGNAL_ENTRY; i++)
 				Signal[i].Socket = INVALID_SOCKET;
-			for(i = 0; i < MAX_SIGNAL_ENTRY_DBASE; i++)
+			for (i = 0; i < MAX_SIGNAL_ENTRY_DBASE; i++)
 				SignalDbase[i].Async = 0;
 		}
 		Sts = FFFTP_SUCCESS;
@@ -186,7 +186,7 @@ int MakeSocketWin(HWND hWnd, HINSTANCE hInst)
 }
 
 
-/*----- 
+/*-----
 *
 *	Parameter
 *		なし
@@ -197,18 +197,18 @@ int MakeSocketWin(HWND hWnd, HINSTANCE hInst)
 
 void DeleteSocketWin(void)
 {
-//	CloseHandle(hAsyncTblAccMutex);
-	// スレッド衝突のバグ修正
+	//	CloseHandle(hAsyncTblAccMutex);
+		// スレッド衝突のバグ修正
 	CloseHandle(hAsyncTblAccMutex);
 	hAsyncTblAccMutex = NULL;
 
-	if(hWndSocket != NULL)
+	if (hWndSocket != NULL)
 		DestroyWindow(hWndSocket);
 	return;
 }
 
 
-/*----- 
+/*-----
 *
 *	Parameter
 *		HWND hWnd : ウインドウハンドル
@@ -224,95 +224,95 @@ static LRESULT CALLBACK SocketWndProc(HWND hWnd, UINT message, WPARAM wParam, LP
 {
 	int Pos;
 
-	switch(message)
+	switch (message)
 	{
-		case WM_ASYNC_SOCKET :
-			// スレッド衝突のバグ修正
-			WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
-			for(Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
+	case WM_ASYNC_SOCKET:
+		// スレッド衝突のバグ修正
+		WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
+		for (Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
+		{
+			if (Signal[Pos].Socket == (SOCKET)wParam)
 			{
-				if(Signal[Pos].Socket == (SOCKET)wParam)
+				Signal[Pos].Error = WSAGETSELECTERROR(lParam);
+#if DBG_MSG
+				if (WSAGETSELECTERROR(lParam) != 0)
+					DoPrintf("####### Signal: error (%d)", WSAGETSELECTERROR(lParam));
+#endif
+
+				switch (WSAGETSELECTEVENT(lParam))
 				{
-					Signal[Pos].Error = WSAGETSELECTERROR(lParam);
+				case FD_CONNECT:
+					Signal[Pos].FdConnect = 1;
 #if DBG_MSG
-					if(WSAGETSELECTERROR(lParam) != 0)
-						DoPrintf("####### Signal: error (%d)", WSAGETSELECTERROR(lParam));
+					DoPrintf("####### Signal: connect (S=%x)", Signal[Pos].Socket);
 #endif
-
-					switch(WSAGETSELECTEVENT(lParam))
-					{
-						case FD_CONNECT :
-							Signal[Pos].FdConnect = 1;
-#if DBG_MSG
-							DoPrintf("####### Signal: connect (S=%x)", Signal[Pos].Socket);
-#endif
-							break;
-
-						case FD_CLOSE :
-							Signal[Pos].FdClose = 1;
-#if DBG_MSG
-							DoPrintf("####### Signal: close (S=%x)", Signal[Pos].Socket);
-#endif
-//SetTaskMsg("####### Signal: close (%d) (S=%x)", Pos, Signal[Pos].Socket);
-							break;
-
-						case FD_ACCEPT :
-							Signal[Pos].FdAccept = 1;
-#if DBG_MSG
-							DoPrintf("####### Signal: accept (S=%x)", Signal[Pos].Socket);
-#endif
-							break;
-
-						case FD_READ :
-							Signal[Pos].FdRead = 1;
-#if DBG_MSG
-							DoPrintf("####### Signal: read (S=%x)", Signal[Pos].Socket);
-#endif
-							break;
-
-						case FD_WRITE :
-							Signal[Pos].FdWrite = 1;
-#if DBG_MSG
-							DoPrintf("####### Signal: write (S=%x)", Signal[Pos].Socket);
-#endif
-							break;
-					}
 					break;
-				}
-			}
-			// スレッド衝突のバグ修正
-			ReleaseMutex(hAsyncTblAccMutex);
-			break;
 
-		case WM_ASYNC_DBASE :
-			// APIの仕様上ハンドルが登録される前にウィンドウメッセージが呼び出される可能性あり
-			RegisterAsyncTableDbase((HANDLE)wParam);
-			// スレッド衝突のバグ修正
-			WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
-			for(Pos = 0; Pos < MAX_SIGNAL_ENTRY_DBASE; Pos++)
-			{
-				if(SignalDbase[Pos].Async == (HANDLE)wParam)
-				{
-					if(HIWORD(lParam) != 0)
-					{
-						SignalDbase[Pos].ErrorDb = 1;
+				case FD_CLOSE:
+					Signal[Pos].FdClose = 1;
 #if DBG_MSG
-						DoPrintf("##### SignalDatabase: error");
+					DoPrintf("####### Signal: close (S=%x)", Signal[Pos].Socket);
 #endif
-					}
-					SignalDbase[Pos].Done = 1;
+					//SetTaskMsg("####### Signal: close (%d) (S=%x)", Pos, Signal[Pos].Socket);
+					break;
+
+				case FD_ACCEPT:
+					Signal[Pos].FdAccept = 1;
 #if DBG_MSG
-					DoPrintf("##### SignalDatabase: Done");
+					DoPrintf("####### Signal: accept (S=%x)", Signal[Pos].Socket);
+#endif
+					break;
+
+				case FD_READ:
+					Signal[Pos].FdRead = 1;
+#if DBG_MSG
+					DoPrintf("####### Signal: read (S=%x)", Signal[Pos].Socket);
+#endif
+					break;
+
+				case FD_WRITE:
+					Signal[Pos].FdWrite = 1;
+#if DBG_MSG
+					DoPrintf("####### Signal: write (S=%x)", Signal[Pos].Socket);
 #endif
 					break;
 				}
+				break;
 			}
-			// スレッド衝突のバグ修正
-			ReleaseMutex(hAsyncTblAccMutex);
-			break;
+		}
+		// スレッド衝突のバグ修正
+		ReleaseMutex(hAsyncTblAccMutex);
+		break;
 
-		default :
-			return(DefWindowProc(hWnd, message, wParam, lParam));
+	case WM_ASYNC_DBASE:
+		// APIの仕様上ハンドルが登録される前にウィンドウメッセージが呼び出される可能性あり
+		RegisterAsyncTableDbase((HANDLE)wParam);
+		// スレッド衝突のバグ修正
+		WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
+		for (Pos = 0; Pos < MAX_SIGNAL_ENTRY_DBASE; Pos++)
+		{
+			if (SignalDbase[Pos].Async == (HANDLE)wParam)
+			{
+				if (HIWORD(lParam) != 0)
+				{
+					SignalDbase[Pos].ErrorDb = 1;
+#if DBG_MSG
+					DoPrintf("##### SignalDatabase: error");
+#endif
+				}
+				SignalDbase[Pos].Done = 1;
+#if DBG_MSG
+				DoPrintf("##### SignalDatabase: Done");
+#endif
+				break;
+			}
+		}
+		// スレッド衝突のバグ修正
+		ReleaseMutex(hAsyncTblAccMutex);
+		break;
+
+	default:
+		return(DefWindowProc(hWnd, message, wParam, lParam));
 	}
 	return(0);
 }
@@ -320,16 +320,16 @@ static LRESULT CALLBACK SocketWndProc(HWND hWnd, UINT message, WPARAM wParam, LP
 
 
 
-/*----- 
+/*-----
 *
 *	Parameter
-*		
+*
 *
 *	Return Value
-*		
+*
 *----------------------------------------------------------------------------*/
 
-static int AskAsyncDone(SOCKET s, int *Error, int Mask)
+static int AskAsyncDone(SOCKET s, int* Error, int Mask)
 {
 	int Sts;
 	int Pos;
@@ -338,29 +338,29 @@ static int AskAsyncDone(SOCKET s, int *Error, int Mask)
 	WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
 	Sts = NO;
 	*Error = 0;
-	for(Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
+	for (Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
 	{
-		if(Signal[Pos].Socket == s)
+		if (Signal[Pos].Socket == s)
 		{
 			*Error = Signal[Pos].Error;
-			if(Signal[Pos].Error != 0)
+			if (Signal[Pos].Error != 0)
 				Sts = YES;
-			if((Mask & FD_CONNECT) && (Signal[Pos].FdConnect != 0))
+			if ((Mask & FD_CONNECT) && (Signal[Pos].FdConnect != 0))
 			{
 				Sts = YES;
 #if DBG_MSG
 				DoPrintf("### Ask: connect (Sts=%d, Error=%d)", Sts, *Error);
 #endif
 			}
-			if((Mask & FD_CLOSE) && (Signal[Pos].FdClose != 0))
-//			if(Mask & FD_CLOSE)
+			if ((Mask & FD_CLOSE) && (Signal[Pos].FdClose != 0))
+				//			if(Mask & FD_CLOSE)
 			{
 				Sts = YES;
 #if DBG_MSG
 				DoPrintf("### Ask: close (Sts=%d, Error=%d)", Sts, *Error);
 #endif
 			}
-			if((Mask & FD_ACCEPT) && (Signal[Pos].FdAccept != 0))
+			if ((Mask & FD_ACCEPT) && (Signal[Pos].FdAccept != 0))
 			{
 				Signal[Pos].FdAccept = 0;
 				Sts = YES;
@@ -368,7 +368,7 @@ static int AskAsyncDone(SOCKET s, int *Error, int Mask)
 				DoPrintf("### Ask: accept (Sts=%d, Error=%d)", Sts, *Error);
 #endif
 			}
-			if((Mask & FD_READ) && (Signal[Pos].FdRead != 0))
+			if ((Mask & FD_READ) && (Signal[Pos].FdRead != 0))
 			{
 				Signal[Pos].FdRead = 0;
 				Sts = YES;
@@ -376,7 +376,7 @@ static int AskAsyncDone(SOCKET s, int *Error, int Mask)
 				DoPrintf("### Ask: read (Sts=%d, Error=%d)", Sts, *Error);
 #endif
 			}
-			if((Mask & FD_WRITE) && (Signal[Pos].FdWrite != 0))
+			if ((Mask & FD_WRITE) && (Signal[Pos].FdWrite != 0))
 			{
 				Signal[Pos].FdWrite = 0;
 				Sts = YES;
@@ -390,11 +390,11 @@ static int AskAsyncDone(SOCKET s, int *Error, int Mask)
 	// スレッド衝突のバグ修正
 	ReleaseMutex(hAsyncTblAccMutex);
 
-	if(Pos == MAX_SIGNAL_ENTRY)
+	if (Pos == MAX_SIGNAL_ENTRY)
 	{
-		if(Mask & FD_CLOSE)
+		if (Mask & FD_CLOSE)
 		{
-				Sts = YES;
+			Sts = YES;
 		}
 		else
 		{
@@ -406,16 +406,16 @@ static int AskAsyncDone(SOCKET s, int *Error, int Mask)
 }
 
 
-/*----- 
+/*-----
 *
 *	Parameter
-*		
+*
 *
 *	Return Value
-*		
+*
 *----------------------------------------------------------------------------*/
 
-static int AskAsyncDoneDbase(HANDLE Async, int *Error)
+static int AskAsyncDoneDbase(HANDLE Async, int* Error)
 {
 	int Sts;
 	int Pos;
@@ -424,11 +424,11 @@ static int AskAsyncDoneDbase(HANDLE Async, int *Error)
 	WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
 	Sts = NO;
 	*Error = 0;
-	for(Pos = 0; Pos < MAX_SIGNAL_ENTRY_DBASE; Pos++)
+	for (Pos = 0; Pos < MAX_SIGNAL_ENTRY_DBASE; Pos++)
 	{
-		if(SignalDbase[Pos].Async == Async)
+		if (SignalDbase[Pos].Async == Async)
 		{
-			if(SignalDbase[Pos].Done != 0)
+			if (SignalDbase[Pos].Done != 0)
 			{
 				*Error = SignalDbase[Pos].ErrorDb;
 				Sts = YES;
@@ -442,7 +442,7 @@ static int AskAsyncDoneDbase(HANDLE Async, int *Error)
 	// スレッド衝突のバグ修正
 	ReleaseMutex(hAsyncTblAccMutex);
 
-	if(Pos == MAX_SIGNAL_ENTRY_DBASE)
+	if (Pos == MAX_SIGNAL_ENTRY_DBASE)
 	{
 		MessageBox(GetMainHwnd(), "AskAsyncDoneDbase called with unregisterd handle.", "FFFTP inner error", MB_OK);
 		exit(1);
@@ -452,13 +452,13 @@ static int AskAsyncDoneDbase(HANDLE Async, int *Error)
 
 
 
-/*----- 
+/*-----
 *
 *	Parameter
-*		
+*
 *
 *	Return Value
-*		
+*
 *----------------------------------------------------------------------------*/
 
 static int RegisterAsyncTable(SOCKET s)
@@ -469,9 +469,9 @@ static int RegisterAsyncTable(SOCKET s)
 	// スレッド衝突のバグ修正
 	WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
 	Sts = NO;
-	for(Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
+	for (Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
 	{
-		if(Signal[Pos].Socket == s)
+		if (Signal[Pos].Socket == s)
 		{
 			// 強制的に閉じられたソケットがあると重複する可能性あり
 //			MessageBox(GetMainHwnd(), "Async socket already registerd.", "FFFTP inner error", MB_OK);
@@ -482,16 +482,16 @@ static int RegisterAsyncTable(SOCKET s)
 	// スレッド衝突のバグ修正
 	ReleaseMutex(hAsyncTblAccMutex);
 
-	if(Pos == MAX_SIGNAL_ENTRY)
+	if (Pos == MAX_SIGNAL_ENTRY)
 	{
 		// スレッド衝突のバグ修正
 		WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
-		for(Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
+		for (Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
 		{
-			if(Signal[Pos].Socket == INVALID_SOCKET)
+			if (Signal[Pos].Socket == INVALID_SOCKET)
 			{
 
-//SetTaskMsg("############### Regist socket (%d)", Pos);
+				//SetTaskMsg("############### Regist socket (%d)", Pos);
 
 				Signal[Pos].Socket = s;
 				Signal[Pos].Error = 0;
@@ -513,7 +513,7 @@ static int RegisterAsyncTable(SOCKET s)
 		// スレッド衝突のバグ修正
 		ReleaseMutex(hAsyncTblAccMutex);
 
-		if(Pos == MAX_SIGNAL_ENTRY)
+		if (Pos == MAX_SIGNAL_ENTRY)
 		{
 			MessageBox(GetMainHwnd(), "No more async regist space.", "FFFTP inner error", MB_OK);
 			exit(1);
@@ -524,13 +524,13 @@ static int RegisterAsyncTable(SOCKET s)
 }
 
 
-/*----- 
+/*-----
 *
 *	Parameter
-*		
+*
 *
 *	Return Value
-*		
+*
 *----------------------------------------------------------------------------*/
 
 static int RegisterAsyncTableDbase(HANDLE Async)
@@ -541,9 +541,9 @@ static int RegisterAsyncTableDbase(HANDLE Async)
 	// スレッド衝突のバグ修正
 	WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
 	Sts = NO;
-	for(Pos = 0; Pos < MAX_SIGNAL_ENTRY_DBASE; Pos++)
+	for (Pos = 0; Pos < MAX_SIGNAL_ENTRY_DBASE; Pos++)
 	{
-		if(SignalDbase[Pos].Async == Async)
+		if (SignalDbase[Pos].Async == Async)
 		{
 			// 強制的に閉じられたハンドルがあると重複する可能性あり
 //			MessageBox(GetMainHwnd(), "Async handle already registerd.", "FFFTP inner error", MB_OK);
@@ -554,16 +554,16 @@ static int RegisterAsyncTableDbase(HANDLE Async)
 	// スレッド衝突のバグ修正
 	ReleaseMutex(hAsyncTblAccMutex);
 
-	if(Pos == MAX_SIGNAL_ENTRY_DBASE)
+	if (Pos == MAX_SIGNAL_ENTRY_DBASE)
 	{
 		// スレッド衝突のバグ修正
 		WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
-		for(Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
+		for (Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
 		{
-			if(SignalDbase[Pos].Async == 0)
+			if (SignalDbase[Pos].Async == 0)
 			{
 
-//SetTaskMsg("############### Regist dbase (%d)", Pos);
+				//SetTaskMsg("############### Regist dbase (%d)", Pos);
 
 				SignalDbase[Pos].Async = Async;
 				SignalDbase[Pos].Done = 0;
@@ -575,7 +575,7 @@ static int RegisterAsyncTableDbase(HANDLE Async)
 		// スレッド衝突のバグ修正
 		ReleaseMutex(hAsyncTblAccMutex);
 
-		if(Pos == MAX_SIGNAL_ENTRY_DBASE)
+		if (Pos == MAX_SIGNAL_ENTRY_DBASE)
 		{
 			MessageBox(GetMainHwnd(), "No more async dbase regist space.", "FFFTP inner error", MB_OK);
 			exit(1);
@@ -586,13 +586,13 @@ static int RegisterAsyncTableDbase(HANDLE Async)
 }
 
 
-/*----- 
+/*-----
 *
 *	Parameter
-*		
+*
 *
 *	Return Value
-*		
+*
 *----------------------------------------------------------------------------*/
 
 static int UnregisterAsyncTable(SOCKET s)
@@ -603,12 +603,12 @@ static int UnregisterAsyncTable(SOCKET s)
 	// スレッド衝突のバグ修正
 	WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
 	Sts = NO;
-	for(Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
+	for (Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
 	{
-		if(Signal[Pos].Socket == s)
+		if (Signal[Pos].Socket == s)
 		{
 
-//SetTaskMsg("############### UnRegist socket (%d)", Pos);
+			//SetTaskMsg("############### UnRegist socket (%d)", Pos);
 
 			Signal[Pos].Socket = INVALID_SOCKET;
 			Sts = YES;
@@ -621,13 +621,13 @@ static int UnregisterAsyncTable(SOCKET s)
 }
 
 
-/*----- 
+/*-----
 *
 *	Parameter
-*		
+*
 *
 *	Return Value
-*		
+*
 *----------------------------------------------------------------------------*/
 
 static int UnregisterAsyncTableDbase(HANDLE Async)
@@ -638,12 +638,12 @@ static int UnregisterAsyncTableDbase(HANDLE Async)
 	// スレッド衝突のバグ修正
 	WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
 	Sts = NO;
-	for(Pos = 0; Pos < MAX_SIGNAL_ENTRY_DBASE; Pos++)
+	for (Pos = 0; Pos < MAX_SIGNAL_ENTRY_DBASE; Pos++)
 	{
-		if(SignalDbase[Pos].Async == Async)
+		if (SignalDbase[Pos].Async == Async)
 		{
 
-//SetTaskMsg("############### UnRegist dbase (%d)", Pos);
+			//SetTaskMsg("############### UnRegist dbase (%d)", Pos);
 
 			SignalDbase[Pos].Async = 0;
 			Sts = YES;
@@ -665,13 +665,13 @@ int SetAsyncTableDataIPv4(SOCKET s, struct sockaddr_in* Host, struct sockaddr_in
 
 	WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
 	Sts = NO;
-	for(Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
+	for (Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
 	{
-		if(Signal[Pos].Socket == s)
+		if (Signal[Pos].Socket == s)
 		{
-			if(Host != NULL)
+			if (Host != NULL)
 				memcpy(&Signal[Pos].HostAddrIPv4, Host, sizeof(struct sockaddr_in));
-			if(Socks != NULL)
+			if (Socks != NULL)
 				memcpy(&Signal[Pos].SocksAddrIPv4, Socks, sizeof(struct sockaddr_in));
 			Sts = YES;
 			break;
@@ -689,13 +689,13 @@ int SetAsyncTableDataIPv6(SOCKET s, struct sockaddr_in6* Host, struct sockaddr_i
 
 	WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
 	Sts = NO;
-	for(Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
+	for (Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
 	{
-		if(Signal[Pos].Socket == s)
+		if (Signal[Pos].Socket == s)
 		{
-			if(Host != NULL)
+			if (Host != NULL)
 				memcpy(&Signal[Pos].HostAddrIPv6, Host, sizeof(struct sockaddr_in6));
-			if(Socks != NULL)
+			if (Socks != NULL)
 				memcpy(&Signal[Pos].SocksAddrIPv6, Socks, sizeof(struct sockaddr_in6));
 			Sts = YES;
 			break;
@@ -713,9 +713,9 @@ int SetAsyncTableDataMapPort(SOCKET s, int Port)
 
 	WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
 	Sts = NO;
-	for(Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
+	for (Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
 	{
-		if(Signal[Pos].Socket == s)
+		if (Signal[Pos].Socket == s)
 		{
 			Signal[Pos].MapPort = Port;
 			Sts = YES;
@@ -734,13 +734,13 @@ int GetAsyncTableDataIPv4(SOCKET s, struct sockaddr_in* Host, struct sockaddr_in
 
 	WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
 	Sts = NO;
-	for(Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
+	for (Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
 	{
-		if(Signal[Pos].Socket == s)
+		if (Signal[Pos].Socket == s)
 		{
-			if(Host != NULL)
+			if (Host != NULL)
 				memcpy(Host, &Signal[Pos].HostAddrIPv4, sizeof(struct sockaddr_in));
-			if(Socks != NULL)
+			if (Socks != NULL)
 				memcpy(Socks, &Signal[Pos].SocksAddrIPv4, sizeof(struct sockaddr_in));
 			Sts = YES;
 			break;
@@ -758,13 +758,13 @@ int GetAsyncTableDataIPv6(SOCKET s, struct sockaddr_in6* Host, struct sockaddr_i
 
 	WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
 	Sts = NO;
-	for(Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
+	for (Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
 	{
-		if(Signal[Pos].Socket == s)
+		if (Signal[Pos].Socket == s)
 		{
-			if(Host != NULL)
+			if (Host != NULL)
 				memcpy(Host, &Signal[Pos].HostAddrIPv6, sizeof(struct sockaddr_in6));
-			if(Socks != NULL)
+			if (Socks != NULL)
 				memcpy(Socks, &Signal[Pos].SocksAddrIPv6, sizeof(struct sockaddr_in6));
 			Sts = YES;
 			break;
@@ -782,9 +782,9 @@ int GetAsyncTableDataMapPort(SOCKET s, int* Port)
 
 	WaitForSingleObject(hAsyncTblAccMutex, INFINITE);
 	Sts = NO;
-	for(Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
+	for (Pos = 0; Pos < MAX_SIGNAL_ENTRY; Pos++)
 	{
-		if(Signal[Pos].Socket == s)
+		if (Signal[Pos].Socket == s)
 		{
 			*Port = Signal[Pos].MapPort;
 			Sts = YES;
@@ -804,10 +804,10 @@ int GetAsyncTableDataMapPort(SOCKET s, int* Port)
 
 // IPv6対応
 //struct hostent *do_gethostbyname(const char *Name, char *Buf, int Len, int *CancelCheckWork)
-struct hostent *do_gethostbynameIPv4(const char *Name, char *Buf, int Len, int *CancelCheckWork)
+struct hostent* do_gethostbynameIPv4(const char* Name, char* Buf, int Len, int* CancelCheckWork)
 {
 #if USE_THIS
-	struct hostent *Ret;
+	struct hostent* Ret;
 	HANDLE hAsync;
 	int Error;
 
@@ -821,23 +821,23 @@ struct hostent *do_gethostbynameIPv4(const char *Name, char *Buf, int Len, int *
 	// UTF-8対応
 //	hAsync = WSAAsyncGetHostByName(hWndSocket, WM_ASYNC_DBASE, Name, Buf, Len);
 	hAsync = WSAAsyncGetHostByNameM(hWndSocket, WM_ASYNC_DBASE, Name, Buf, Len);
-	if(hAsync != NULL)
+	if (hAsync != NULL)
 	{
 		RegisterAsyncTableDbase(hAsync);
-		while((*CancelCheckWork == NO) && (AskAsyncDoneDbase(hAsync, &Error) != YES))
+		while ((*CancelCheckWork == NO) && (AskAsyncDoneDbase(hAsync, &Error) != YES))
 		{
 			Sleep(1);
-			if(BackgrndMessageProc() == YES)
+			if (BackgrndMessageProc() == YES)
 				*CancelCheckWork = YES;
 		}
 
-		if(*CancelCheckWork == YES)
+		if (*CancelCheckWork == YES)
 		{
 			WSACancelAsyncRequest(hAsync);
 		}
-		else if(Error == 0)
+		else if (Error == 0)
 		{
-			Ret = (struct hostent *)Buf;
+			Ret = (struct hostent*)Buf;
 		}
 		UnregisterAsyncTableDbase(hAsync);
 	}
@@ -848,10 +848,10 @@ struct hostent *do_gethostbynameIPv4(const char *Name, char *Buf, int Len, int *
 }
 
 
-struct hostent *do_gethostbynameIPv6(const char *Name, char *Buf, int Len, int *CancelCheckWork)
+struct hostent* do_gethostbynameIPv6(const char* Name, char* Buf, int Len, int* CancelCheckWork)
 {
 #if USE_THIS
-	struct hostent *Ret;
+	struct hostent* Ret;
 	HANDLE hAsync;
 	int Error;
 
@@ -865,23 +865,23 @@ struct hostent *do_gethostbynameIPv6(const char *Name, char *Buf, int Len, int *
 	// UTF-8対応
 //	hAsync = WSAAsyncGetHostByName(hWndSocket, WM_ASYNC_DBASE, Name, Buf, Len);
 	hAsync = WSAAsyncGetHostByNameIPv6M(hWndSocket, WM_ASYNC_DBASE, Name, Buf, Len, AF_INET6);
-	if(hAsync != NULL)
+	if (hAsync != NULL)
 	{
 		RegisterAsyncTableDbase(hAsync);
-		while((*CancelCheckWork == NO) && (AskAsyncDoneDbase(hAsync, &Error) != YES))
+		while ((*CancelCheckWork == NO) && (AskAsyncDoneDbase(hAsync, &Error) != YES))
 		{
 			Sleep(1);
-			if(BackgrndMessageProc() == YES)
+			if (BackgrndMessageProc() == YES)
 				*CancelCheckWork = YES;
 		}
 
-		if(*CancelCheckWork == YES)
+		if (*CancelCheckWork == YES)
 		{
 			WSACancelAsyncRequestIPv6(hAsync);
 		}
-		else if(Error == 0)
+		else if (Error == 0)
 		{
-			Ret = (struct hostent *)Buf;
+			Ret = (struct hostent*)Buf;
 		}
 		UnregisterAsyncTableDbase(hAsync);
 	}
@@ -900,7 +900,7 @@ SOCKET do_socket(int af, int type, int protocol)
 	SOCKET Ret;
 
 	Ret = socket(af, type, protocol);
-	if(Ret != INVALID_SOCKET)
+	if (Ret != INVALID_SOCKET)
 	{
 		RegisterAsyncTable(Ret);
 	}
@@ -930,23 +930,23 @@ int do_closesocket(SOCKET s)
 	// FTPS対応
 //	Ret = closesocket(s);
 	Ret = FTPS_closesocket(s);
-	if(Ret == SOCKET_ERROR)
+	if (Ret == SOCKET_ERROR)
 	{
 		Error = 0;
-		while((CancelCheckWork == NO) && (AskAsyncDone(s, &Error, FD_CLOSE) != YES))
+		while ((CancelCheckWork == NO) && (AskAsyncDone(s, &Error, FD_CLOSE) != YES))
 		{
 			Sleep(1);
-			if(BackgrndMessageProc() == YES)
+			if (BackgrndMessageProc() == YES)
 				CancelCheckWork = YES;
 		}
 
-		if((CancelCheckWork == NO) && (Error == 0))
+		if ((CancelCheckWork == NO) && (Error == 0))
 			Ret = 0;
 	}
 
 	// スレッド衝突のバグ修正
 //	WSAAsyncSelect(s, hWndSocket, WM_ASYNC_SOCKET, 0);
-	if(BackgrndMessageProc() == YES)
+	if (BackgrndMessageProc() == YES)
 		CancelCheckWork = YES;
 	// スレッド衝突のバグ修正
 //	UnregisterAsyncTable(s);
@@ -965,7 +965,7 @@ int do_closesocket(SOCKET s)
 
 
 
-int do_connect(SOCKET s, const struct sockaddr *name, int namelen, int *CancelCheckWork)
+int do_connect(SOCKET s, const struct sockaddr* name, int namelen, int* CancelCheckWork)
 {
 #if USE_THIS
 	int Ret;
@@ -983,32 +983,31 @@ int do_connect(SOCKET s, const struct sockaddr *name, int namelen, int *CancelCh
 	// 高速化のためFD_READとFD_WRITEを使用しない
 //	Ret = WSAAsyncSelect(s, hWndSocket, WM_ASYNC_SOCKET, FD_CONNECT | FD_CLOSE | FD_ACCEPT | FD_READ | FD_WRITE);
 	Ret = WSAAsyncSelect(s, hWndSocket, WM_ASYNC_SOCKET, FD_CONNECT | FD_CLOSE | FD_ACCEPT);
-	if(Ret != SOCKET_ERROR)
+	if (Ret != SOCKET_ERROR)
 	{
 		Ret = connect(s, name, namelen);
-		if(Ret == SOCKET_ERROR)
+		if (Ret == SOCKET_ERROR)
 		{
 			do
 			{
 				Error = 0;
-				while((*CancelCheckWork == NO) && (AskAsyncDone(s, &Error, FD_CONNECT) != YES))
+				while ((*CancelCheckWork == NO) && (AskAsyncDone(s, &Error, FD_CONNECT) != YES))
 				{
 					Sleep(1);
-					if(BackgrndMessageProc() == YES)
+					if (BackgrndMessageProc() == YES)
 						*CancelCheckWork = YES;
 				}
 
-				if(*CancelCheckWork == YES)
+				if (*CancelCheckWork == YES)
 					break;
-				if(Error == 0)
+				if (Error == 0)
 					Ret = 0;
 				else
 				{
-//					Error = WSAGetLastError();
+					//					Error = WSAGetLastError();
 					DoPrintf("#### Connect: Error=%d", Error);
 				}
-			}
-			while((Ret != 0) && (Error == WSAEWOULDBLOCK));
+			} while ((Ret != 0) && (Error == WSAEWOULDBLOCK));
 		}
 	}
 	else
@@ -1027,7 +1026,7 @@ int do_connect(SOCKET s, const struct sockaddr *name, int namelen, int *CancelCh
 
 
 
-int do_listen(SOCKET s,	int backlog)
+int do_listen(SOCKET s, int backlog)
 {
 	int Ret;
 
@@ -1038,7 +1037,7 @@ int do_listen(SOCKET s,	int backlog)
 #endif
 
 	Ret = WSAAsyncSelect(s, hWndSocket, WM_ASYNC_SOCKET, FD_CLOSE | FD_ACCEPT);
-	if(Ret != SOCKET_ERROR)
+	if (Ret != SOCKET_ERROR)
 		Ret = listen(s, backlog);
 
 #if DBG_MSG
@@ -1049,7 +1048,7 @@ int do_listen(SOCKET s,	int backlog)
 
 
 
-SOCKET do_accept(SOCKET s, struct sockaddr *addr, int *addrlen)
+SOCKET do_accept(SOCKET s, struct sockaddr* addr, int* addrlen)
 {
 #if USE_THIS
 	SOCKET Ret2;
@@ -1063,24 +1062,24 @@ SOCKET do_accept(SOCKET s, struct sockaddr *addr, int *addrlen)
 	Ret2 = INVALID_SOCKET;
 	Error = 0;
 
-	while((CancelCheckWork == NO) && (AskAsyncDone(s, &Error, FD_ACCEPT) != YES))
+	while ((CancelCheckWork == NO) && (AskAsyncDone(s, &Error, FD_ACCEPT) != YES))
 	{
-		if(AskAsyncDone(s, &Error, FD_CLOSE) == YES)
+		if (AskAsyncDone(s, &Error, FD_CLOSE) == YES)
 		{
 			Error = 1;
 			break;
 		}
 		Sleep(1);
-		if(BackgrndMessageProc() == YES)
+		if (BackgrndMessageProc() == YES)
 			CancelCheckWork = YES;
 	}
 
-	if((CancelCheckWork == NO) && (Error == 0))
+	if ((CancelCheckWork == NO) && (Error == 0))
 	{
 		do
 		{
 			Ret2 = accept(s, addr, addrlen);
-			if(Ret2 != INVALID_SOCKET)
+			if (Ret2 != INVALID_SOCKET)
 			{
 #if DBG_MSG
 				DoPrintf("## do_sccept (S=%x)", Ret2);
@@ -1089,7 +1088,7 @@ SOCKET do_accept(SOCKET s, struct sockaddr *addr, int *addrlen)
 				RegisterAsyncTable(Ret2);
 				// 高速化のためFD_READとFD_WRITEを使用しない
 //				if(WSAAsyncSelect(Ret2, hWndSocket, WM_ASYNC_SOCKET, FD_CONNECT | FD_CLOSE | FD_ACCEPT | FD_READ | FD_WRITE) == SOCKET_ERROR)
-				if(WSAAsyncSelect(Ret2, hWndSocket, WM_ASYNC_SOCKET, FD_CONNECT | FD_CLOSE | FD_ACCEPT) == SOCKET_ERROR)
+				if (WSAAsyncSelect(Ret2, hWndSocket, WM_ASYNC_SOCKET, FD_CONNECT | FD_CLOSE | FD_ACCEPT) == SOCKET_ERROR)
 				{
 					do_closesocket(Ret2);
 					Ret2 = INVALID_SOCKET;
@@ -1098,10 +1097,9 @@ SOCKET do_accept(SOCKET s, struct sockaddr *addr, int *addrlen)
 			}
 			Error = WSAGetLastError();
 			Sleep(1);
-			if(BackgrndMessageProc() == YES)
+			if (BackgrndMessageProc() == YES)
 				break;
-		}
-		while(Error == WSAEWOULDBLOCK);
+		} while (Error == WSAEWOULDBLOCK);
 	}
 
 #if DBG_MSG
@@ -1131,7 +1129,7 @@ SOCKET do_accept(SOCKET s, struct sockaddr *addr, int *addrlen)
 *	Note
 *		タイムアウトの時は TimeOut=YES、Ret=SOCKET_ERROR になる
 *----------------------------------------------------------------------------*/
-int do_recv(SOCKET s, char *buf, int len, int flags, int *TimeOutErr, int *CancelCheckWork)
+int do_recv(SOCKET s, char* buf, int len, int flags, int* TimeOutErr, int* CancelCheckWork)
 {
 #if USE_THIS
 	int Ret;
@@ -1142,13 +1140,13 @@ int do_recv(SOCKET s, char *buf, int len, int flags, int *TimeOutErr, int *Cance
 #if DBG_MSG
 	DoPrintf("# Start recv (S=%x)", s);
 #endif
-	*TimeOutErr = NO;
+	* TimeOutErr = NO;
 	// 同時接続対応
 //	*CancelCheckWork = NO;
 	Ret = SOCKET_ERROR;
 	Error = 0;
 
-	if(TimeOut != 0)
+	if (TimeOut != 0)
 		time(&StartTime);
 
 	// FTPS対応
@@ -1178,7 +1176,7 @@ int do_recv(SOCKET s, char *buf, int len, int flags, int *TimeOutErr, int *Cance
 //		}
 //	}
 
-	if(/*(Ret != 0) && */(Error == 0) && (*CancelCheckWork == NO) && (*TimeOutErr == NO))
+	if (/*(Ret != 0) && */(Error == 0) && (*CancelCheckWork == NO) && (*TimeOutErr == NO))
 	{
 		do
 		{
@@ -1189,34 +1187,33 @@ int do_recv(SOCKET s, char *buf, int len, int flags, int *TimeOutErr, int *Cance
 			// FTPS対応
 //			Ret = recv(s, buf, len, flags);
 			Ret = FTPS_recv(s, buf, len, flags);
-			if(Ret != SOCKET_ERROR)
+			if (Ret != SOCKET_ERROR)
 				break;
 			Error = WSAGetLastError();
 			Sleep(1);
-			if(BackgrndMessageProc() == YES)
+			if (BackgrndMessageProc() == YES)
 				break;
 			// FTPS対応
 			// 受信確認をバイパスしたためここでタイムアウトの確認
-			if(BackgrndMessageProc() == YES)
+			if (BackgrndMessageProc() == YES)
 				*CancelCheckWork = YES;
-			else if(TimeOut != 0)
+			else if (TimeOut != 0)
 			{
 				time(&ElapseTime);
 				ElapseTime -= StartTime;
-				if(ElapseTime >= TimeOut)
+				if (ElapseTime >= TimeOut)
 				{
 					DoPrintf("do_recv timed out");
 					*TimeOutErr = YES;
 					*CancelCheckWork = YES;
 				}
 			}
-			if(*CancelCheckWork == YES)
+			if (*CancelCheckWork == YES)
 				break;
-		}
-		while(Error == WSAEWOULDBLOCK);
+		} while (Error == WSAEWOULDBLOCK);
 	}
 
-	if(BackgrndMessageProc() == YES)
+	if (BackgrndMessageProc() == YES)
 		Ret = SOCKET_ERROR;
 
 #if DBG_MSG
@@ -1230,7 +1227,7 @@ int do_recv(SOCKET s, char *buf, int len, int flags, int *TimeOutErr, int *Cance
 
 
 
-int do_send(SOCKET s, const char *buf, int len, int flags, int *TimeOutErr, int *CancelCheckWork)
+int do_send(SOCKET s, const char* buf, int len, int flags, int* TimeOutErr, int* CancelCheckWork)
 {
 #if USE_THIS
 	int Ret;
@@ -1241,13 +1238,13 @@ int do_send(SOCKET s, const char *buf, int len, int flags, int *TimeOutErr, int 
 #if DBG_MSG
 	DoPrintf("# Start send (S=%x)", s);
 #endif
-	*TimeOutErr = NO;
+	* TimeOutErr = NO;
 	// 同時接続対応
 //	*CancelCheckWork = NO;
 	Ret = SOCKET_ERROR;
 	Error = 0;
 
-	if(TimeOut != 0)
+	if (TimeOut != 0)
 		time(&StartTime);
 
 #if DBG_MSG
@@ -1257,7 +1254,7 @@ int do_send(SOCKET s, const char *buf, int len, int flags, int *TimeOutErr, int 
 	// 毎回通知されたのはNT 4.0までのバグであり仕様ではない
 	// XP以降は互換性のためか毎回通知される
 //	WSAAsyncSelect(s, hWndSocket, WM_ASYNC_SOCKET, FD_CONNECT | FD_CLOSE | FD_ACCEPT | FD_READ | FD_WRITE);
-	if(BackgrndMessageProc() == YES)
+	if (BackgrndMessageProc() == YES)
 		*CancelCheckWork = YES;
 
 	// FTPS対応
@@ -1288,7 +1285,7 @@ int do_send(SOCKET s, const char *buf, int len, int flags, int *TimeOutErr, int 
 //		}
 //	}
 
-	if((Error == 0) && (*CancelCheckWork == NO) && (*TimeOutErr == NO))
+	if ((Error == 0) && (*CancelCheckWork == NO) && (*TimeOutErr == NO))
 	{
 		do
 		{
@@ -1299,7 +1296,7 @@ int do_send(SOCKET s, const char *buf, int len, int flags, int *TimeOutErr, int 
 			// FTPS対応
 //			Ret = send(s, buf, len, flags);
 			Ret = FTPS_send(s, buf, len, flags);
-			if(Ret != SOCKET_ERROR)
+			if (Ret != SOCKET_ERROR)
 			{
 #if DBG_MSG
 				DoPrintf("## send() OK");
@@ -1308,30 +1305,29 @@ int do_send(SOCKET s, const char *buf, int len, int flags, int *TimeOutErr, int 
 			}
 			Error = WSAGetLastError();
 			Sleep(1);
-			if(BackgrndMessageProc() == YES)
+			if (BackgrndMessageProc() == YES)
 				break;
 			// FTPS対応
 			// 送信バッファ確認をバイパスしたためここでタイムアウトの確認
-			if(BackgrndMessageProc() == YES)
+			if (BackgrndMessageProc() == YES)
 				*CancelCheckWork = YES;
-			else if(TimeOut != 0)
+			else if (TimeOut != 0)
 			{
 				time(&ElapseTime);
 				ElapseTime -= StartTime;
-				if(ElapseTime >= TimeOut)
+				if (ElapseTime >= TimeOut)
 				{
 					DoPrintf("do_recv timed out");
 					*TimeOutErr = YES;
 					*CancelCheckWork = YES;
 				}
 			}
-			if(*CancelCheckWork == YES)
+			if (*CancelCheckWork == YES)
 				break;
-		}
-		while(Error == WSAEWOULDBLOCK);
+		} while (Error == WSAEWOULDBLOCK);
 	}
 
-	if(BackgrndMessageProc() == YES)
+	if (BackgrndMessageProc() == YES)
 		Ret = SOCKET_ERROR;
 
 #if DBG_MSG
@@ -1349,10 +1345,10 @@ void RemoveReceivedData(SOCKET s)
 {
 	char buf[1024];
 	int len;
-//	int Error;
-	while((len = FTPS_recv(s, buf, sizeof(buf), MSG_PEEK)) > 0)
+	//	int Error;
+	while ((len = FTPS_recv(s, buf, sizeof(buf), MSG_PEEK)) > 0)
 	{
-//		AskAsyncDone(s, &Error, FD_READ);
+		//		AskAsyncDone(s, &Error, FD_READ);
 		FTPS_recv(s, buf, len, 0);
 	}
 }
@@ -1362,11 +1358,11 @@ int LoadUPnP()
 {
 	int Sts;
 	Sts = FFFTP_FAIL;
-	if(IsMainThread())
+	if (IsMainThread())
 	{
-		if(CoCreateInstance(&CLSID_UPnPNAT, NULL, CLSCTX_ALL, &IID_IUPnPNAT, (void**)&pUPnPNAT) == S_OK)
+		if (CoCreateInstance(&CLSID_UPnPNAT, NULL, CLSCTX_ALL, &IID_IUPnPNAT, (void**)&pUPnPNAT) == S_OK)
 		{
-			if(pUPnPNAT->lpVtbl->get_StaticPortMappingCollection(pUPnPNAT, &pUPnPMap) == S_OK)
+			if (pUPnPNAT->lpVtbl->get_StaticPortMappingCollection(pUPnPNAT, &pUPnPMap) == S_OK)
 				Sts = FFFTP_SUCCESS;
 		}
 	}
@@ -1375,12 +1371,12 @@ int LoadUPnP()
 
 void FreeUPnP()
 {
-	if(IsMainThread())
+	if (IsMainThread())
 	{
-		if(pUPnPMap != NULL)
+		if (pUPnPMap != NULL)
 			pUPnPMap->lpVtbl->Release(pUPnPMap);
 		pUPnPMap = NULL;
-		if(pUPnPNAT != NULL)
+		if (pUPnPNAT != NULL)
 			pUPnPNAT->lpVtbl->Release(pUPnPNAT);
 		pUPnPNAT = NULL;
 	}
@@ -1390,7 +1386,7 @@ int IsUPnPLoaded()
 {
 	int Sts;
 	Sts = NO;
-	if(pUPnPNAT != NULL && pUPnPMap != NULL)
+	if (pUPnPNAT != NULL && pUPnPMap != NULL)
 		Sts = YES;
 	return Sts;
 }
@@ -1406,18 +1402,18 @@ int AddPortMapping(char* Adrs, int Port, char* ExtAdrs)
 	BSTR Tmp5;
 	ADDPORTMAPPINGDATA Data;
 	Sts = FFFTP_FAIL;
-	if(IsMainThread())
+	if (IsMainThread())
 	{
 		MtoW(Tmp1, 40, Adrs, -1);
-		if((Tmp2 = SysAllocString(Tmp1)) != NULL)
+		if ((Tmp2 = SysAllocString(Tmp1)) != NULL)
 		{
-			if((Tmp3 = SysAllocString(L"TCP")) != NULL)
+			if ((Tmp3 = SysAllocString(L"TCP")) != NULL)
 			{
-				if((Tmp4 = SysAllocString(L"FFFTP")) != NULL)
+				if ((Tmp4 = SysAllocString(L"FFFTP")) != NULL)
 				{
-					if(pUPnPMap->lpVtbl->Add(pUPnPMap, Port, Tmp3, Port, Tmp2, VARIANT_TRUE, Tmp4, &pPortMap) == S_OK)
+					if (pUPnPMap->lpVtbl->Add(pUPnPMap, Port, Tmp3, Port, Tmp2, VARIANT_TRUE, Tmp4, &pPortMap) == S_OK)
 					{
-						if(pPortMap->lpVtbl->get_ExternalIPAddress(pPortMap, &Tmp5) == S_OK)
+						if (pPortMap->lpVtbl->get_ExternalIPAddress(pPortMap, &Tmp5) == S_OK)
 						{
 							WtoM(ExtAdrs, 40, Tmp5, -1);
 							Sts = FFFTP_SUCCESS;
@@ -1434,14 +1430,14 @@ int AddPortMapping(char* Adrs, int Port, char* ExtAdrs)
 	}
 	else
 	{
-		if(Data.h = CreateEvent(NULL, TRUE, FALSE, NULL))
+		if (Data.h = CreateEvent(NULL, TRUE, FALSE, NULL))
 		{
 			Data.Adrs = Adrs;
 			Data.Port = Port;
 			Data.ExtAdrs = ExtAdrs;
-			if(PostMessage(GetMainHwnd(), WM_ADDPORTMAPPING, 0, (LPARAM)&Data))
+			if (PostMessage(GetMainHwnd(), WM_ADDPORTMAPPING, 0, (LPARAM)&Data))
 			{
-				if(WaitForSingleObject(Data.h, INFINITE) == WAIT_OBJECT_0)
+				if (WaitForSingleObject(Data.h, INFINITE) == WAIT_OBJECT_0)
 					Sts = Data.r;
 			}
 			CloseHandle(Data.h);
@@ -1456,23 +1452,23 @@ int RemovePortMapping(int Port)
 	BSTR Tmp;
 	REMOVEPORTMAPPINGDATA Data;
 	Sts = FFFTP_FAIL;
-	if(IsMainThread())
+	if (IsMainThread())
 	{
-		if((Tmp = SysAllocString(L"TCP")) != NULL)
+		if ((Tmp = SysAllocString(L"TCP")) != NULL)
 		{
-			if(pUPnPMap->lpVtbl->Remove(pUPnPMap, Port, Tmp) == S_OK)
+			if (pUPnPMap->lpVtbl->Remove(pUPnPMap, Port, Tmp) == S_OK)
 				Sts = FFFTP_SUCCESS;
 			SysFreeString(Tmp);
 		}
 	}
 	else
 	{
-		if(Data.h = CreateEvent(NULL, TRUE, FALSE, NULL))
+		if (Data.h = CreateEvent(NULL, TRUE, FALSE, NULL))
 		{
 			Data.Port = Port;
-			if(PostMessage(GetMainHwnd(), WM_REMOVEPORTMAPPING, 0, (LPARAM)&Data))
+			if (PostMessage(GetMainHwnd(), WM_REMOVEPORTMAPPING, 0, (LPARAM)&Data))
 			{
-				if(WaitForSingleObject(Data.h, INFINITE) == WAIT_OBJECT_0)
+				if (WaitForSingleObject(Data.h, INFINITE) == WAIT_OBJECT_0)
 					Sts = Data.r;
 			}
 			CloseHandle(Data.h);
@@ -1482,7 +1478,7 @@ int RemovePortMapping(int Port)
 }
 
 
-/*----- 
+/*-----
 *
 *	Parameter
 *
@@ -1496,10 +1492,10 @@ int CheckClosedAndReconnect(void)
 	int Error;
 	int Sts;
 
-//SetTaskMsg("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	//SetTaskMsg("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
 	Sts = FFFTP_SUCCESS;
-	if(AskAsyncDone(AskCmdCtrlSkt(), &Error, FD_CLOSE) == YES)
+	if (AskAsyncDone(AskCmdCtrlSkt(), &Error, FD_CLOSE) == YES)
 	{
 		Sts = ReConnectCmdSkt();
 	}
@@ -1509,15 +1505,15 @@ int CheckClosedAndReconnect(void)
 
 
 // 同時接続対応
-int CheckClosedAndReconnectTrnSkt(SOCKET *Skt, int *CancelCheckWork)
+int CheckClosedAndReconnectTrnSkt(SOCKET* Skt, int* CancelCheckWork)
 {
 	int Error;
 	int Sts;
 
-//SetTaskMsg("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+	//SetTaskMsg("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
 	Sts = FFFTP_SUCCESS;
-	if(AskAsyncDone(*Skt, &Error, FD_CLOSE) == YES)
+	if (AskAsyncDone(*Skt, &Error, FD_CLOSE) == YES)
 	{
 		Sts = ReConnectTrnSkt(Skt, CancelCheckWork);
 	}

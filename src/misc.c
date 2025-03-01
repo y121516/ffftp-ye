@@ -5,25 +5,25 @@
 ===============================================================================
 / Copyright (C) 1997-2007 Sota. All rights reserved.
 /
-/ Redistribution and use in source and binary forms, with or without 
-/ modification, are permitted provided that the following conditions 
+/ Redistribution and use in source and binary forms, with or without
+/ modification, are permitted provided that the following conditions
 / are met:
 /
-/  1. Redistributions of source code must retain the above copyright 
+/  1. Redistributions of source code must retain the above copyright
 /     notice, this list of conditions and the following disclaimer.
-/  2. Redistributions in binary form must reproduce the above copyright 
-/     notice, this list of conditions and the following disclaimer in the 
+/  2. Redistributions in binary form must reproduce the above copyright
+/     notice, this list of conditions and the following disclaimer in the
 /     documentation and/or other materials provided with the distribution.
 /
-/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR 
-/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
-/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, 
-/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF 
-/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON 
-/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
+/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 / THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /============================================================================*/
 
@@ -57,7 +57,7 @@
 
 typedef struct {
 	char Title[80];			/* ダイアログのタイトル */
-	char Str[FMAX_PATH+1];	/* デフォルト文字列／入力された文字列(Output) */
+	char Str[FMAX_PATH + 1];	/* デフォルト文字列／入力された文字列(Output) */
 	int MaxLen;				/* 文字列の最長 */
 	int Anonymous;			/* Anonymousフラグ(Output) */
 } DIALOGDATA;
@@ -74,7 +74,7 @@ extern HWND hHelpWin;
 
 /*===== ローカルなワーク =====*/
 
-static DIALOGDATA *DialogData;		/* 入力ダイアログデータ */
+static DIALOGDATA* DialogData;		/* 入力ダイアログデータ */
 static int HelpPage;
 // 高DPI対応
 static int DisplayDPIX;
@@ -100,16 +100,16 @@ static int DisplayDPIY;
 *		ダイアログは１個のEditBoxと１個のButtonを持つものを使う
 *----------------------------------------------------------------------------*/
 
-int InputDialogBox(int Res, HWND hWnd, char *Title, char *Buf, int Max, int *Flg, int Help)
+int InputDialogBox(int Res, HWND hWnd, char* Title, char* Buf, int Max, int* Flg, int Help)
 {
 	int Ret;
 	DIALOGDATA dData;
 
 	dData.MaxLen = Max;
-	memset(dData.Str, NUL, FMAX_PATH+1);
+	memset(dData.Str, NUL, FMAX_PATH + 1);
 	strncpy(dData.Str, Buf, FMAX_PATH);
 	strcpy(dData.Title, "");
-	if(Title != NULL)
+	if (Title != NULL)
 		strcpy(dData.Title, Title);
 	dData.Anonymous = *Flg;
 	DialogData = &dData;
@@ -117,10 +117,10 @@ int InputDialogBox(int Res, HWND hWnd, char *Title, char *Buf, int Max, int *Flg
 
 	Ret = DialogBox(GetFtpInst(), MAKEINTRESOURCE(Res), hWnd, InputDialogCallBack);
 
-	if(Ret == YES)
+	if (Ret == YES)
 	{
 		memset(Buf, NUL, Max);
-		strncpy(Buf, dData.Str, Max-1);
+		strncpy(Buf, dData.Str, Max - 1);
 		*Flg = dData.Anonymous;
 	}
 	return(Ret);
@@ -143,43 +143,43 @@ int InputDialogBox(int Res, HWND hWnd, char *Title, char *Buf, int Max, int *Flg
 //static BOOL CALLBACK InputDialogCallBack(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lParam)
 static INT_PTR CALLBACK InputDialogCallBack(HWND hDlg, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
-	char Tmp[FMAX_PATH+1];
+	char Tmp[FMAX_PATH + 1];
 
 	switch (iMessage)
 	{
-		case WM_INITDIALOG :
-			// プロセス保護
-			ProtectAllEditControls(hDlg);
-			if(strlen(DialogData->Title) != 0)
-				SendMessage(hDlg, WM_SETTEXT, 0, (LPARAM)DialogData->Title);
-			SendDlgItemMessage(hDlg, INP_INPSTR, EM_LIMITTEXT, DialogData->MaxLen-1, 0);
-			SendDlgItemMessage(hDlg, INP_INPSTR, WM_SETTEXT, 0, (LPARAM)DialogData->Str);
-			SendDlgItemMessage(hDlg, INP_ANONYMOUS, BM_SETCHECK, DialogData->Anonymous, 0);
-			return(TRUE);
+	case WM_INITDIALOG:
+		// プロセス保護
+		ProtectAllEditControls(hDlg);
+		if (strlen(DialogData->Title) != 0)
+			SendMessage(hDlg, WM_SETTEXT, 0, (LPARAM)DialogData->Title);
+		SendDlgItemMessage(hDlg, INP_INPSTR, EM_LIMITTEXT, DialogData->MaxLen - 1, 0);
+		SendDlgItemMessage(hDlg, INP_INPSTR, WM_SETTEXT, 0, (LPARAM)DialogData->Str);
+		SendDlgItemMessage(hDlg, INP_ANONYMOUS, BM_SETCHECK, DialogData->Anonymous, 0);
+		return(TRUE);
 
-		case WM_COMMAND :
-			switch(GET_WM_COMMAND_ID(wParam, lParam))
-			{
-				case IDOK :
-					SendDlgItemMessage(hDlg, INP_INPSTR, WM_GETTEXT, DialogData->MaxLen, (LPARAM)DialogData->Str);
-					DialogData->Anonymous = SendDlgItemMessage(hDlg, INP_ANONYMOUS, BM_GETCHECK, 0, 0);
-					EndDialog(hDlg, YES);
-					break;
+	case WM_COMMAND:
+		switch (GET_WM_COMMAND_ID(wParam, lParam))
+		{
+		case IDOK:
+			SendDlgItemMessage(hDlg, INP_INPSTR, WM_GETTEXT, DialogData->MaxLen, (LPARAM)DialogData->Str);
+			DialogData->Anonymous = SendDlgItemMessage(hDlg, INP_ANONYMOUS, BM_GETCHECK, 0, 0);
+			EndDialog(hDlg, YES);
+			break;
 
-				case IDCANCEL :
-					EndDialog(hDlg, NO);
-					break;
+		case IDCANCEL:
+			EndDialog(hDlg, NO);
+			break;
 
-				case IDHELP :
-					hHelpWin = HtmlHelp(NULL, AskHelpFilePath(), HH_HELP_CONTEXT, HelpPage);
-					break;
+		case IDHELP:
+			hHelpWin = HtmlHelp(NULL, AskHelpFilePath(), HH_HELP_CONTEXT, HelpPage);
+			break;
 
-				case INP_BROWSE :
-					if(SelectDir(hDlg, Tmp, FMAX_PATH) == TRUE)
-						SendDlgItemMessage(hDlg, INP_INPSTR, WM_SETTEXT, 0, (LPARAM)Tmp);
-					break;
-			}
-			return(TRUE);
+		case INP_BROWSE:
+			if (SelectDir(hDlg, Tmp, FMAX_PATH) == TRUE)
+				SendDlgItemMessage(hDlg, INP_INPSTR, WM_SETTEXT, 0, (LPARAM)Tmp);
+			break;
+		}
+		return(TRUE);
 	}
 	return(FALSE);
 }
@@ -203,21 +203,21 @@ INT_PTR CALLBACK ExeEscDialogProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM
 {
 	switch (message)
 	{
-		case WM_INITDIALOG :
-			return(TRUE);
+	case WM_INITDIALOG:
+		return(TRUE);
 
-		case WM_COMMAND :
-			switch(GET_WM_COMMAND_ID(wParam, lParam))
-			{
-				case IDOK :
-					EndDialog(hDlg, YES);
-					break;
+	case WM_COMMAND:
+		switch (GET_WM_COMMAND_ID(wParam, lParam))
+		{
+		case IDOK:
+			EndDialog(hDlg, YES);
+			break;
 
-				case IDCANCEL :
-					EndDialog(hDlg, NO);
-					break;
-			}
-			return(TRUE);
+		case IDCANCEL:
+			EndDialog(hDlg, NO);
+			break;
+		}
+		return(TRUE);
 	}
 	return(FALSE);
 }
@@ -242,26 +242,26 @@ INT_PTR CALLBACK ExeEscTextDialogProc(HWND hDlg, UINT message, WPARAM wParam, LP
 	switch (message)
 	{
 		// 暗号化通信対応
-		case WM_SHOWWINDOW :
-			SendDlgItemMessage(hDlg, COMMON_TEXT, EM_SETSEL, 0, 0);
-			return(TRUE);
+	case WM_SHOWWINDOW:
+		SendDlgItemMessage(hDlg, COMMON_TEXT, EM_SETSEL, 0, 0);
+		return(TRUE);
 
-		case WM_INITDIALOG :
-			SendDlgItemMessage(hDlg, COMMON_TEXT, WM_SETTEXT, 0, lParam);
-			return(TRUE);
+	case WM_INITDIALOG:
+		SendDlgItemMessage(hDlg, COMMON_TEXT, WM_SETTEXT, 0, lParam);
+		return(TRUE);
 
-		case WM_COMMAND :
-			switch(GET_WM_COMMAND_ID(wParam, lParam))
-			{
-				case IDOK :
-					EndDialog(hDlg, YES);
-					break;
+	case WM_COMMAND:
+		switch (GET_WM_COMMAND_ID(wParam, lParam))
+		{
+		case IDOK:
+			EndDialog(hDlg, YES);
+			break;
 
-				case IDCANCEL :
-					EndDialog(hDlg, NO);
-					break;
-			}
-			return(TRUE);
+		case IDCANCEL:
+			EndDialog(hDlg, NO);
+			break;
+		}
+		return(TRUE);
 	}
 	return(FALSE);
 }
@@ -273,17 +273,17 @@ INT_PTR CALLBACK AnyButtonDialogProc(HWND hDlg, UINT message, WPARAM wParam, LPA
 {
 	switch (message)
 	{
-		case WM_INITDIALOG :
-			return(TRUE);
+	case WM_INITDIALOG:
+		return(TRUE);
 
-		case WM_COMMAND :
-			switch(GET_WM_COMMAND_CMD(wParam, lParam))
-			{
-				case BN_CLICKED :
-					EndDialog(hDlg, GET_WM_COMMAND_ID(wParam, lParam));
-					break;
-			}
-			return(TRUE);
+	case WM_COMMAND:
+		switch (GET_WM_COMMAND_CMD(wParam, lParam))
+		{
+		case BN_CLICKED:
+			EndDialog(hDlg, GET_WM_COMMAND_ID(wParam, lParam));
+			break;
+		}
+		return(TRUE);
 	}
 	return(FALSE);
 }
@@ -300,9 +300,9 @@ INT_PTR CALLBACK AnyButtonDialogProc(HWND hDlg, UINT message, WPARAM wParam, LPA
 *		オリジナルの文字列 char *Str が変更されます。
 *----------------------------------------------------------------------------*/
 
-void SetYenTail(char *Str)
+void SetYenTail(char* Str)
 {
-	if(_mbscmp(_mbsninc(Str, _mbslen(Str) - 1), "\\") != 0)
+	if (_mbscmp(_mbsninc(Str, _mbslen(Str) - 1), "\\") != 0)
 		strcat(Str, "\\");
 
 	return;;
@@ -321,14 +321,14 @@ void SetYenTail(char *Str)
 *		オリジナルの文字列 char *Str が変更されます。
 *----------------------------------------------------------------------------*/
 
-void RemoveYenTail(char *Str)
+void RemoveYenTail(char* Str)
 {
-	char *Pos;
+	char* Pos;
 
-	if(strlen(Str) > 0)
+	if (strlen(Str) > 0)
 	{
 		Pos = _mbsninc(Str, _mbslen(Str) - 1);
-		if(_mbscmp(Pos, "\\") == 0)
+		if (_mbscmp(Pos, "\\") == 0)
 			*Pos = NUL;
 	}
 	return;;
@@ -347,17 +347,18 @@ void RemoveYenTail(char *Str)
 *		オリジナルの文字列 char *Str が変更されます。
 *----------------------------------------------------------------------------*/
 
-void SetSlashTail(char *Str)
+void SetSlashTail(char* Str)
 {
 #if defined(HAVE_TANDEM)
 	/* Tandem では / の代わりに . を追加 */
-	if(AskHostType() == HTYPE_TANDEM) {
-		if(_mbscmp(_mbsninc(Str, _mbslen(Str) - 1), ".") != 0)
+	if (AskHostType() == HTYPE_TANDEM) {
+		if (_mbscmp(_mbsninc(Str, _mbslen(Str) - 1), ".") != 0)
 			strcat(Str, ".");
-	} else
+	}
+	else
 #endif
-	if(_mbscmp(_mbsninc(Str, _mbslen(Str) - 1), "/") != 0)
-		strcat(Str, "/");
+		if (_mbscmp(_mbsninc(Str, _mbslen(Str) - 1), "/") != 0)
+			strcat(Str, "/");
 
 	return;
 }
@@ -375,13 +376,13 @@ void SetSlashTail(char *Str)
 *		オリジナルの文字列 char *Str が変更されます。
 *----------------------------------------------------------------------------*/
 
-void RemoveReturnCode(char *Str)
+void RemoveReturnCode(char* Str)
 {
-	char *Pos;
+	char* Pos;
 
-	if((Pos = strchr(Str, 0x0D)) != NULL)
+	if ((Pos = strchr(Str, 0x0D)) != NULL)
 		*Pos = NUL;
-	if((Pos = strchr(Str, 0x0A)) != NULL)
+	if ((Pos = strchr(Str, 0x0A)) != NULL)
 		*Pos = NUL;
 	return;
 }
@@ -398,17 +399,17 @@ void RemoveReturnCode(char *Str)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void ReplaceAll(char *Str, char Src, char Dst)
+void ReplaceAll(char* Str, char Src, char Dst)
 {
-	char *Pos;
+	char* Pos;
 
-/* Tandem ではノード名の変換を行わない */
-/* 最初の1文字が \ でもそのままにする */
+	/* Tandem ではノード名の変換を行わない */
+	/* 最初の1文字が \ でもそのままにする */
 #if defined(HAVE_TANDEM)
 	if (AskRealHostType() == HTYPE_TANDEM && strlen(Str) > 0)
 		Str++;
 #endif
-	while((Pos = _mbschr(Str, Src)) != NULL)
+	while ((Pos = _mbschr(Str, Src)) != NULL)
 		*Pos = Dst;
 	return;
 }
@@ -429,9 +430,9 @@ int IsDigitSym(int Ch, int Sym)
 {
 	int Ret;
 
-	if((Ret = IsDigit(Ch)) == 0)
+	if ((Ret = IsDigit(Ch)) == 0)
 	{
-		if((Sym != NUL) && (Sym == Ch))
+		if ((Sym != NUL) && (Sym == Ch))
 			Ret = 1;
 	}
 	return(Ret);
@@ -449,14 +450,14 @@ int IsDigitSym(int Ch, int Sym)
 *			YES/NO
 *----------------------------------------------------------------------------*/
 
-int StrAllSameChar(char *Str, char Ch)
+int StrAllSameChar(char* Str, char Ch)
 {
 	int Ret;
 
 	Ret = YES;
-	while(*Str != NUL)
+	while (*Str != NUL)
 	{
-		if(*Str != Ch)
+		if (*Str != Ch)
 		{
 			Ret = NO;
 			break;
@@ -476,14 +477,14 @@ int StrAllSameChar(char *Str, char Ch)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void RemoveTailingSpaces(char *Str)
+void RemoveTailingSpaces(char* Str)
 {
-	char *Pos;
+	char* Pos;
 
 	Pos = Str + strlen(Str);
-	while(--Pos > Str)
+	while (--Pos > Str)
 	{
-		if(*Pos != ' ')
+		if (*Pos != ' ')
 			break;
 		*Pos = NUL;
 	}
@@ -502,15 +503,15 @@ void RemoveTailingSpaces(char *Str)
 *			NULL=見つからなかった
 *----------------------------------------------------------------------------*/
 
-char *stristr(char *s1, char *s2)
+char* stristr(char* s1, char* s2)
 {
-	char *Ret;
+	char* Ret;
 
 	Ret = NULL;
-	while(*s1 != NUL)
+	while (*s1 != NUL)
 	{
-		if((tolower(*s1) == tolower(*s2)) &&
-		   (_strnicmp(s1, s2, strlen(s2)) == 0))
+		if ((tolower(*s1) == tolower(*s2)) &&
+			(_strnicmp(s1, s2, strlen(s2)) == 0))
 		{
 			Ret = s1;
 			break;
@@ -531,13 +532,13 @@ char *stristr(char *s1, char *s2)
 *			NULL=見つからなかった
 *----------------------------------------------------------------------------*/
 
-char *GetNextField(char *Str)
+char* GetNextField(char* Str)
 {
-	if((Str = strchr(Str, ' ')) != NULL)
+	if ((Str = strchr(Str, ' ')) != NULL)
 	{
-		while(*Str == ' ')
+		while (*Str == ' ')
 		{
-			if(*Str == NUL)
+			if (*Str == NUL)
 			{
 				Str = NULL;
 				break;
@@ -561,15 +562,15 @@ char *GetNextField(char *Str)
 *			FFFTP_SUCCESS/FFFTP_FAIL=長さが長すぎる
 *----------------------------------------------------------------------------*/
 
-int GetOneField(char *Str, char *Buf, int Max)
+int GetOneField(char* Str, char* Buf, int Max)
 {
 	int Sts;
-	char *Pos;
+	char* Pos;
 
 	Sts = FFFTP_FAIL;
-	if((Pos = strchr(Str, ' ')) == NULL)
+	if ((Pos = strchr(Str, ' ')) == NULL)
 	{
-		if((int)strlen(Str) <= Max)
+		if ((int)strlen(Str) <= Max)
 		{
 			strcpy(Buf, Str);
 			Sts = FFFTP_SUCCESS;
@@ -577,7 +578,7 @@ int GetOneField(char *Str, char *Buf, int Max)
 	}
 	else
 	{
-		if(Pos - Str <= Max)
+		if (Pos - Str <= Max)
 		{
 			strncpy(Buf, Str, Pos - Str);
 			*(Buf + (Pos - Str)) = NUL;
@@ -597,14 +598,14 @@ int GetOneField(char *Str, char *Buf, int Max)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void RemoveComma(char *Str)
+void RemoveComma(char* Str)
 {
-	char *Put;
+	char* Put;
 
 	Put = Str;
-	while(*Str != NUL)
+	while (*Str != NUL)
 	{
-		if(*Str != ',')
+		if (*Str != ',')
 		{
 			*Put = *Str;
 			Put++;
@@ -628,22 +629,22 @@ void RemoveComma(char *Str)
 *		ディレクトリの区切り記号は "\" と "/" の両方が有効
 *----------------------------------------------------------------------------*/
 
-char *GetFileName(char *Path)
+char* GetFileName(char* Path)
 {
-	char *Pos;
+	char* Pos;
 
-	if((Pos = _mbschr(Path, ':')) != NULL)
+	if ((Pos = _mbschr(Path, ':')) != NULL)
 		Path = Pos + 1;
 
-	if((Pos = _mbsrchr(Path, '\\')) != NULL)
+	if ((Pos = _mbsrchr(Path, '\\')) != NULL)
 		Path = Pos + 1;
 
-	if((Pos = _mbsrchr(Path, '/')) != NULL)
+	if ((Pos = _mbsrchr(Path, '/')) != NULL)
 		Path = Pos + 1;
 
 #if defined(HAVE_TANDEM)
 	/* Tandem は . がデリミッタとなる */
-	if((AskHostType() == HTYPE_TANDEM) && ((Pos = _mbsrchr(Path, '.')) != NULL))
+	if ((AskHostType() == HTYPE_TANDEM) && ((Pos = _mbsrchr(Path, '.')) != NULL))
 		Path = Pos + 1;
 #endif
 	return(Path);
@@ -659,14 +660,14 @@ char *GetFileName(char *Path)
 *		char * : 表示名
 *----------------------------------------------------------------------------*/
 
-char *GetToolName(char *Path)
+char* GetToolName(char* Path)
 {
-	char *Pos;
+	char* Pos;
 
-	if((Pos = _mbschr(Path, ':')) != NULL)
+	if ((Pos = _mbschr(Path, ':')) != NULL)
 		Path = Pos + 1;
 
-	if((Pos = _mbsrchr(Path, '\\')) != NULL)
+	if ((Pos = _mbsrchr(Path, '\\')) != NULL)
 		Path = Pos + 1;
 
 	return(Path);
@@ -682,15 +683,15 @@ char *GetToolName(char *Path)
 *		char *拡張子の先頭
 *----------------------------------------------------------------------------*/
 
-char *GetFileExt(char *Path)
+char* GetFileExt(char* Path)
 {
-	char *Ret;
+	char* Ret;
 
 	Ret = _mbschr(Path, NUL);
-	if((_mbscmp(Path, ".") != 0) &&
-	   (_mbscmp(Path, "..") != 0))
+	if ((_mbscmp(Path, ".") != 0) &&
+		(_mbscmp(Path, "..") != 0))
 	{
-		while((Path = _mbschr(Path, '.')) != NULL)
+		while ((Path = _mbschr(Path, '.')) != NULL)
 		{
 			Path++;
 			Ret = Path;
@@ -713,18 +714,18 @@ char *GetFileExt(char *Path)
 *		ディレクトリの区切り記号は "\" と "/" の両方が有効
 *----------------------------------------------------------------------------*/
 
-void RemoveFileName(char *Path, char *Buf)
+void RemoveFileName(char* Path, char* Buf)
 {
-	char *Pos;
+	char* Pos;
 
 	strcpy(Buf, Path);
 
-	if((Pos = _mbsrchr(Buf, '/')) != NULL)
+	if ((Pos = _mbsrchr(Buf, '/')) != NULL)
 		*Pos = NUL;
-	else if((Pos = _mbsrchr(Buf, '\\')) != NULL)
+	else if ((Pos = _mbsrchr(Buf, '\\')) != NULL)
 	{
-		if((Pos == Buf) || 
-		   ((Pos != Buf) && (*(Pos - 1) != ':')))
+		if ((Pos == Buf) ||
+			((Pos != Buf) && (*(Pos - 1) != ':')))
 			*Pos = NUL;
 	}
 	return;
@@ -746,17 +747,17 @@ void RemoveFileName(char *Path, char *Buf)
 *			例） "C:\DOS" --> "C:\"
 *----------------------------------------------------------------------------*/
 
-void GetUpperDir(char *Path)
+void GetUpperDir(char* Path)
 {
-	char *Top;
-	char *Pos;
+	char* Top;
+	char* Pos;
 
-	if(((Top = _mbschr(Path, '/')) != NULL) ||
-	   ((Top = _mbschr(Path, '\\')) != NULL))
+	if (((Top = _mbschr(Path, '/')) != NULL) ||
+		((Top = _mbschr(Path, '\\')) != NULL))
 	{
 		Top++;
-		if(((Pos = _mbsrchr(Top, '/')) != NULL) ||
-		   ((Pos = _mbsrchr(Top, '\\')) != NULL))
+		if (((Pos = _mbsrchr(Top, '/')) != NULL) ||
+			((Pos = _mbsrchr(Top, '\\')) != NULL))
 			*Pos = NUL;
 		else
 			*Top = NUL;
@@ -780,12 +781,12 @@ void GetUpperDir(char *Path)
 *			例） "C:\DOS" --> "C:"
 *----------------------------------------------------------------------------*/
 
-void GetUpperDirEraseTopSlash(char *Path)
+void GetUpperDirEraseTopSlash(char* Path)
 {
-	char *Pos;
+	char* Pos;
 
-	if(((Pos = _mbsrchr(Path, '/')) != NULL) ||
-	   ((Pos = _mbsrchr(Path, '\\')) != NULL))
+	if (((Pos = _mbsrchr(Path, '/')) != NULL) ||
+		((Pos = _mbsrchr(Path, '\\')) != NULL))
 		*Pos = NUL;
 	else
 		*Path = NUL;
@@ -806,14 +807,14 @@ void GetUpperDirEraseTopSlash(char *Path)
 *		単に '\' と '/'の数を返すだけ
 *----------------------------------------------------------------------------*/
 
-int AskDirLevel(char *Path)
+int AskDirLevel(char* Path)
 {
-	char *Pos;
+	char* Pos;
 	int Level;
 
 	Level = 0;
-	while(((Pos = _mbschr(Path, '/')) != NULL) ||
-		  ((Pos = _mbschr(Path, '\\')) != NULL))
+	while (((Pos = _mbschr(Path, '/')) != NULL) ||
+		((Pos = _mbschr(Path, '\\')) != NULL))
 	{
 		Path = Pos + 1;
 		Level++;
@@ -832,7 +833,7 @@ int AskDirLevel(char *Path)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void MakeSizeString(double Size, char *Buf)
+void MakeSizeString(double Size, char* Buf)
 {
 	// 修正
 //	if(Size >= (1024*1024))
@@ -847,16 +848,16 @@ void MakeSizeString(double Size, char *Buf)
 //	}
 //	else
 //		sprintf(Buf, "%.0f Bytes", Size);
-	if(Size >= 1024.0)
+	if (Size >= 1024.0)
 	{
 		Size /= 1024.0;
-		if(Size >= 1024.0)
+		if (Size >= 1024.0)
 		{
 			Size /= 1024.0;
-			if(Size >= 1024.0)
+			if (Size >= 1024.0)
 			{
 				Size /= 1024.0;
-				if(Size >= 1024.0)
+				if (Size >= 1024.0)
 				{
 					Size /= 1024.0;
 					sprintf(Buf, "%.2lfT Bytes", Size);
@@ -887,11 +888,11 @@ void MakeSizeString(double Size, char *Buf)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void DispStaticText(HWND hWnd, char *Str)
+void DispStaticText(HWND hWnd, char* Str)
 {
-	char Buf[FMAX_PATH+1];
-	char *Pos;
-	char *Tmp;
+	char Buf[FMAX_PATH + 1];
+	char* Pos;
+	char* Tmp;
 	RECT Rect;
 	SIZE fSize;
 	HDC hDC;
@@ -904,22 +905,22 @@ void DispStaticText(HWND hWnd, char *Str)
 	strcpy(Buf, Str);
 	Pos = Buf;
 	Force = NO;
-	while(Force == NO)
+	while (Force == NO)
 	{
 		GetTextExtentPoint32(hDC, Pos, strlen(Pos), &fSize);
 
-		if(fSize.cx <= Rect.right)
+		if (fSize.cx <= Rect.right)
 			break;
 
-		if(_mbslen(Pos) <= 4)
+		if (_mbslen(Pos) <= 4)
 			Force = YES;
 		else
 		{
 			Pos = _mbsninc(Pos, 4);
-			if((Tmp = _mbschr(Pos, '\\')) == NULL)
+			if ((Tmp = _mbschr(Pos, '\\')) == NULL)
 				Tmp = _mbschr(Pos, '/');
 
-			if(Tmp == NULL)
+			if (Tmp == NULL)
 				Tmp = _mbsninc(Pos, 4);
 
 			Pos = Tmp - 3;
@@ -948,13 +949,13 @@ void DispStaticText(HWND hWnd, char *Str)
 *			StrMultiLen("abc") = 終端が２つのNULでないので求められない
 *----------------------------------------------------------------------------*/
 
-int StrMultiLen(char *Str)
+int StrMultiLen(char* Str)
 {
 	int Len;
 	int Tmp;
 
 	Len = 0;
-	while(*Str != NUL)
+	while (*Str != NUL)
 	{
 		Tmp = strlen(Str) + 1;
 		Str += Tmp;
@@ -974,7 +975,7 @@ int StrMultiLen(char *Str)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void RectClientToScreen(HWND hWnd, RECT *Rect)
+void RectClientToScreen(HWND hWnd, RECT* Rect)
 {
 	POINT Tmp;
 
@@ -1007,11 +1008,11 @@ int hex2bin(char Ch)
 {
 	int Ret;
 
-	if((Ch >= '0') && (Ch <= '9'))
+	if ((Ch >= '0') && (Ch <= '9'))
 		Ret = Ch - '0';
-	else if((Ch >= 'A') && (Ch <= 'F'))
+	else if ((Ch >= 'A') && (Ch <= 'F'))
 		Ret = Ch - 'A' + 10;
-	else if((Ch >= 'a') && (Ch <= 'f'))
+	else if ((Ch >= 'a') && (Ch <= 'f'))
 		Ret = Ch - 'a' + 10;
 
 	return(Ret);
@@ -1036,66 +1037,66 @@ int hex2bin(char Ch)
 *	"\"は全て"/"に置き換える
 *----------------------------------------------------------------------------*/
 
-int SplitUNCpath(char *unc, char *Host, char *Path, char *File, char *User, char *Pass, int *Port)
+int SplitUNCpath(char* unc, char* Host, char* Path, char* File, char* User, char* Pass, int* Port)
 {
 	int Sts;
-	char *Pos1;
-	char *Pos2;
-	char Tmp[FMAX_PATH+1];
+	char* Pos1;
+	char* Pos2;
+	char Tmp[FMAX_PATH + 1];
 
-	memset(Host, NUL, HOST_ADRS_LEN+1);
-	memset(Path, NUL, FMAX_PATH+1);
-	memset(File, NUL, FMAX_PATH+1);
-	memset(User, NUL, USER_NAME_LEN+1);
-	memset(Pass, NUL, PASSWORD_LEN+1);
+	memset(Host, NUL, HOST_ADRS_LEN + 1);
+	memset(Path, NUL, FMAX_PATH + 1);
+	memset(File, NUL, FMAX_PATH + 1);
+	memset(User, NUL, USER_NAME_LEN + 1);
+	memset(Pass, NUL, PASSWORD_LEN + 1);
 	*Port = PORT_NOR;
 
 	ReplaceAll(unc, '\\', '/');
 
-	if((Pos1 = _mbsstr(unc, "//")) != NULL)
+	if ((Pos1 = _mbsstr(unc, "//")) != NULL)
 		Pos1 += 2;
 	else
 		Pos1 = unc;
 
-	if((Pos2 = _mbschr(Pos1, '@')) != NULL)
+	if ((Pos2 = _mbschr(Pos1, '@')) != NULL)
 	{
-		memset(Tmp, NUL, FMAX_PATH+1);
-		memcpy(Tmp, Pos1, Pos2-Pos1);
+		memset(Tmp, NUL, FMAX_PATH + 1);
+		memcpy(Tmp, Pos1, Pos2 - Pos1);
 		Pos1 = Pos2 + 1;
 
-		if((Pos2 = _mbschr(Tmp, ':')) != NULL)
+		if ((Pos2 = _mbschr(Tmp, ':')) != NULL)
 		{
-			memcpy(User, Tmp, min1(Pos2-Tmp, USER_NAME_LEN));
-			strncpy(Pass, Pos2+1, PASSWORD_LEN);
+			memcpy(User, Tmp, min1(Pos2 - Tmp, USER_NAME_LEN));
+			strncpy(Pass, Pos2 + 1, PASSWORD_LEN);
 		}
 		else
 			strncpy(User, Tmp, USER_NAME_LEN);
 	}
 
 	// IPv6対応
-	if((Pos2 = _mbschr(Pos1, '[')) != NULL && Pos2 < _mbschr(Pos1, ':'))
+	if ((Pos2 = _mbschr(Pos1, '[')) != NULL && Pos2 < _mbschr(Pos1, ':'))
 	{
 		Pos1 = Pos2 + 1;
-		if((Pos2 = _mbschr(Pos2, ']')) != NULL)
+		if ((Pos2 = _mbschr(Pos2, ']')) != NULL)
 		{
-			memcpy(Host, Pos1, min1(Pos2-Pos1, HOST_ADRS_LEN));
+			memcpy(Host, Pos1, min1(Pos2 - Pos1, HOST_ADRS_LEN));
 			Pos1 = Pos2 + 1;
 		}
 	}
 
-	if((Pos2 = _mbschr(Pos1, ':')) != NULL)
+	if ((Pos2 = _mbschr(Pos1, ':')) != NULL)
 	{
 		// IPv6対応
 //		memcpy(Host, Pos1, min1(Pos2-Pos1, HOST_ADRS_LEN));
-		if(strlen(Host) == 0)
-			memcpy(Host, Pos1, min1(Pos2-Pos1, HOST_ADRS_LEN));
+		if (strlen(Host) == 0)
+			memcpy(Host, Pos1, min1(Pos2 - Pos1, HOST_ADRS_LEN));
 		Pos2++;
-		if(IsDigit(*Pos2))
+		if (IsDigit(*Pos2))
 		{
 			*Port = atoi(Pos2);
-			while(*Pos2 != NUL)
+			while (*Pos2 != NUL)
 			{
-				if(IsDigit(*Pos2) == 0)
+				if (IsDigit(*Pos2) == 0)
 					break;
 				Pos2++;
 			}
@@ -1103,12 +1104,12 @@ int SplitUNCpath(char *unc, char *Host, char *Path, char *File, char *User, char
 		RemoveFileName(Pos2, Path);
 		strncpy(File, GetFileName(Pos2), FMAX_PATH);
 	}
-	else if((Pos2 = _mbschr(Pos1, '/')) != NULL)
+	else if ((Pos2 = _mbschr(Pos1, '/')) != NULL)
 	{
 		// IPv6対応
 //		memcpy(Host, Pos1, min1(Pos2-Pos1, HOST_ADRS_LEN));
-		if(strlen(Host) == 0)
-			memcpy(Host, Pos1, min1(Pos2-Pos1, HOST_ADRS_LEN));
+		if (strlen(Host) == 0)
+			memcpy(Host, Pos1, min1(Pos2 - Pos1, HOST_ADRS_LEN));
 		RemoveFileName(Pos2, Path);
 		strncpy(File, GetFileName(Pos2), FMAX_PATH);
 	}
@@ -1116,12 +1117,12 @@ int SplitUNCpath(char *unc, char *Host, char *Path, char *File, char *User, char
 	{
 		// IPv6対応
 //		strncpy(Host, Pos1, HOST_ADRS_LEN);
-		if(strlen(Host) == 0)
+		if (strlen(Host) == 0)
 			strncpy(Host, Pos1, HOST_ADRS_LEN);
 	}
 
 	Sts = FFFTP_FAIL;
-	if(strlen(Host) > 0)
+	if (strlen(Host) > 0)
 		Sts = FFFTP_SUCCESS;
 
 	return(Sts);
@@ -1139,7 +1140,7 @@ int SplitUNCpath(char *unc, char *Host, char *Path, char *File, char *User, char
 *			YES/NO=日付情報がなかった
 *----------------------------------------------------------------------------*/
 
-int TimeString2FileTime(char *Time, FILETIME *Buf)
+int TimeString2FileTime(char* Time, FILETIME* Buf)
 {
 	SYSTEMTIME sTime;
 	FILETIME fTime;
@@ -1149,10 +1150,10 @@ int TimeString2FileTime(char *Time, FILETIME *Buf)
 	Buf->dwLowDateTime = 0;
 	Buf->dwHighDateTime = 0;
 
-	if(strlen(Time) >= 16)
+	if (strlen(Time) >= 16)
 	{
-		if(IsDigit(Time[0]) && IsDigit(Time[5]) && IsDigit(Time[8]) && 
-		   IsDigit(Time[12]) && IsDigit(Time[14]))
+		if (IsDigit(Time[0]) && IsDigit(Time[5]) && IsDigit(Time[8]) &&
+			IsDigit(Time[12]) && IsDigit(Time[14]))
 		{
 			Ret = YES;
 		}
@@ -1160,14 +1161,14 @@ int TimeString2FileTime(char *Time, FILETIME *Buf)
 		sTime.wYear = atoi(Time);
 		sTime.wMonth = atoi(Time + 5);
 		sTime.wDay = atoi(Time + 8);
-		if(Time[11] != ' ')
+		if (Time[11] != ' ')
 			sTime.wHour = atoi(Time + 11);
 		else
 			sTime.wHour = atoi(Time + 12);
 		sTime.wMinute = atoi(Time + 14);
 		// タイムスタンプのバグ修正
 //		sTime.wSecond = 0;
-		if(strlen(Time) >= 19)
+		if (strlen(Time) >= 19)
 			sTime.wSecond = atoi(Time + 17);
 		else
 			sTime.wSecond = 0;
@@ -1194,14 +1195,14 @@ int TimeString2FileTime(char *Time, FILETIME *Buf)
 
 // タイムスタンプのバグ修正
 //void FileTime2TimeString(FILETIME *Time, char *Buf, int Mode, int InfoExist)
-void FileTime2TimeString(FILETIME *Time, char *Buf, int Mode, int InfoExist, int ShowSeconds)
+void FileTime2TimeString(FILETIME* Time, char* Buf, int Mode, int InfoExist, int ShowSeconds)
 {
 	SYSTEMTIME sTime;
 	FILETIME fTime;
 
-	if(Mode == DISPFORM_LEGACY)
+	if (Mode == DISPFORM_LEGACY)
 	{
-		if((Time->dwLowDateTime == 0) && (Time->dwHighDateTime == 0))
+		if ((Time->dwLowDateTime == 0) && (Time->dwHighDateTime == 0))
 			InfoExist = 0;
 
 		// タイムスタンプのバグ修正
@@ -1210,7 +1211,7 @@ void FileTime2TimeString(FILETIME *Time, char *Buf, int Mode, int InfoExist, int
 		FileTimeToLocalFileTime(Time, &fTime);
 		// タイムスタンプのバグ修正
 //		FileTimeToSystemTime(&fTime, &sTime);
-		if(!FileTimeToSystemTime(&fTime, &sTime))
+		if (!FileTimeToSystemTime(&fTime, &sTime))
 			InfoExist = 0;
 
 		// タイムスタンプのバグ修正
@@ -1223,25 +1224,25 @@ void FileTime2TimeString(FILETIME *Time, char *Buf, int Mode, int InfoExist, int
 //			sprintf(Buf+11, "%2d:%02d", sTime.wHour, sTime.wMinute);
 //		else
 //			sprintf(Buf+11, "     ");
-		if(InfoExist & (FINFO_DATE | FINFO_TIME))
+		if (InfoExist & (FINFO_DATE | FINFO_TIME))
 		{
-			if(InfoExist & FINFO_DATE)
+			if (InfoExist & FINFO_DATE)
 				sprintf(Buf, "%04d/%02d/%02d ", sTime.wYear, sTime.wMonth, sTime.wDay);
 			else
 				sprintf(Buf, "           ");
-			if(ShowSeconds == YES)
+			if (ShowSeconds == YES)
 			{
-				if(InfoExist & FINFO_TIME)
-					sprintf(Buf+11, "%2d:%02d:%02d", sTime.wHour, sTime.wMinute, sTime.wSecond);
+				if (InfoExist & FINFO_TIME)
+					sprintf(Buf + 11, "%2d:%02d:%02d", sTime.wHour, sTime.wMinute, sTime.wSecond);
 				else
-					sprintf(Buf+11, "        ");
+					sprintf(Buf + 11, "        ");
 			}
 			else
 			{
-				if(InfoExist & FINFO_TIME)
-					sprintf(Buf+11, "%2d:%02d", sTime.wHour, sTime.wMinute);
+				if (InfoExist & FINFO_TIME)
+					sprintf(Buf + 11, "%2d:%02d", sTime.wHour, sTime.wMinute);
 				else
-					sprintf(Buf+11, "     ");
+					sprintf(Buf + 11, "     ");
 			}
 		}
 		else
@@ -1249,8 +1250,8 @@ void FileTime2TimeString(FILETIME *Time, char *Buf, int Mode, int InfoExist, int
 	}
 	else
 	{
-//		if (!strftime((char *)str, 100, "%c",  (const struct tm *)thetime))
-//			SetTaskMsg("strftime が失敗しました!\n");
+		//		if (!strftime((char *)str, 100, "%c",  (const struct tm *)thetime))
+		//			SetTaskMsg("strftime が失敗しました!\n");
 	}
 	return;
 }
@@ -1266,12 +1267,12 @@ void FileTime2TimeString(FILETIME *Time, char *Buf, int Mode, int InfoExist, int
 *		なし
 *----------------------------------------------------------------------------*/
 
-void SpecificLocalFileTime2FileTime(FILETIME *Time, int TimeZone)
+void SpecificLocalFileTime2FileTime(FILETIME* Time, int TimeZone)
 {
 	unsigned __int64 Tmp64;
 
 	Tmp64 = (unsigned __int64)Time->dwLowDateTime +
-			((unsigned __int64)Time->dwHighDateTime << 32);
+		((unsigned __int64)Time->dwHighDateTime << 32);
 
 	Tmp64 -= (__int64)TimeZone * (__int64)36000000000;
 
@@ -1291,7 +1292,7 @@ void SpecificLocalFileTime2FileTime(FILETIME *Time, int TimeZone)
 *		int 値
 *----------------------------------------------------------------------------*/
 
-int AttrString2Value(char *Str)
+int AttrString2Value(char* Str)
 {
 	int Ret;
 	char Tmp[10];
@@ -1321,32 +1322,32 @@ int AttrString2Value(char *Str)
 //		Ret |= 0x2;
 //	if(Tmp[8] != '-')
 //		Ret |= 0x1;
-	if(strlen(Str) >= 9)
+	if (strlen(Str) >= 9)
 	{
 		strncpy(Tmp, Str, 9);
 
-		if(Tmp[0] != '-')
+		if (Tmp[0] != '-')
 			Ret |= 0x400;
-		if(Tmp[1] != '-')
+		if (Tmp[1] != '-')
 			Ret |= 0x200;
-		if(Tmp[2] != '-')
+		if (Tmp[2] != '-')
 			Ret |= 0x100;
 
-		if(Tmp[3] != '-')
+		if (Tmp[3] != '-')
 			Ret |= 0x40;
-		if(Tmp[4] != '-')
+		if (Tmp[4] != '-')
 			Ret |= 0x20;
-		if(Tmp[5] != '-')
+		if (Tmp[5] != '-')
 			Ret |= 0x10;
 
-		if(Tmp[6] != '-')
+		if (Tmp[6] != '-')
 			Ret |= 0x4;
-		if(Tmp[7] != '-')
+		if (Tmp[7] != '-')
 			Ret |= 0x2;
-		if(Tmp[8] != '-')
+		if (Tmp[8] != '-')
 			Ret |= 0x1;
 	}
-	else if(strlen(Str) >= 3)
+	else if (strlen(Str) >= 3)
 	{
 		strncpy(Tmp, Str, 3);
 		Ret = strtol(Tmp, NULL, 16);
@@ -1368,7 +1369,7 @@ int AttrString2Value(char *Str)
 
 // ファイルの属性を数字で表示
 //void AttrValue2String(int Attr, char *Buf)
-void AttrValue2String(int Attr, char *Buf, int ShowNumber)
+void AttrValue2String(int Attr, char* Buf, int ShowNumber)
 {
 	// ファイルの属性を数字で表示
 //	strcpy(Buf, "---------");
@@ -1393,7 +1394,7 @@ void AttrValue2String(int Attr, char *Buf, int ShowNumber)
 //		Buf[7] = 'w';
 //	if(Attr & 0x1)
 //		Buf[8] = 'x';
-	if(ShowNumber == YES)
+	if (ShowNumber == YES)
 	{
 		sprintf(Buf, "%03x", Attr);
 	}
@@ -1401,25 +1402,25 @@ void AttrValue2String(int Attr, char *Buf, int ShowNumber)
 	{
 		strcpy(Buf, "---------");
 
-		if(Attr & 0x400)
+		if (Attr & 0x400)
 			Buf[0] = 'r';
-		if(Attr & 0x200)
+		if (Attr & 0x200)
 			Buf[1] = 'w';
-		if(Attr & 0x100)
+		if (Attr & 0x100)
 			Buf[2] = 'x';
 
-		if(Attr & 0x40)
+		if (Attr & 0x40)
 			Buf[3] = 'r';
-		if(Attr & 0x20)
+		if (Attr & 0x20)
 			Buf[4] = 'w';
-		if(Attr & 0x10)
+		if (Attr & 0x10)
 			Buf[5] = 'x';
 
-		if(Attr & 0x4)
+		if (Attr & 0x4)
 			Buf[6] = 'r';
-		if(Attr & 0x2)
+		if (Attr & 0x2)
 			Buf[7] = 'w';
-		if(Attr & 0x1)
+		if (Attr & 0x1)
 			Buf[8] = 'x';
 	}
 
@@ -1436,22 +1437,22 @@ void AttrValue2String(int Attr, char *Buf, int ShowNumber)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void FormatIniString(char *Str)
+void FormatIniString(char* Str)
 {
-	char *Put;
+	char* Put;
 
 	Put = Str;
-	while(*Str != NUL)
+	while (*Str != NUL)
 	{
-		if((*Str != ' ') && (*Str != '\t') && (*Str != '\n'))
+		if ((*Str != ' ') && (*Str != '\t') && (*Str != '\n'))
 			*Put++ = *Str;
-		if(*Str++ == '=')
+		if (*Str++ == '=')
 			break;
 	}
 
-	while(*Str != NUL)
+	while (*Str != NUL)
 	{
-		if((*Str != '\"') && (*Str != '\n'))
+		if ((*Str != '\"') && (*Str != '\n'))
 			*Put++ = *Str;
 		Str++;
 	}
@@ -1477,11 +1478,11 @@ void FormatIniString(char *Str)
 *			TRUE/FALSE=取消
 *----------------------------------------------------------------------------*/
 
-int SelectFile(HWND hWnd, char *Fname, char *Title, char *Filters, char *Ext, int Flags, int Save)
+int SelectFile(HWND hWnd, char* Fname, char* Title, char* Filters, char* Ext, int Flags, int Save)
 {
 	OPENFILENAME OpenFile;
-	char Tmp[FMAX_PATH+1];
-	char Cur[FMAX_PATH+1];
+	char Tmp[FMAX_PATH + 1];
+	char Cur[FMAX_PATH + 1];
 	int Sts;
 
 	GetCurrentDirectory(FMAX_PATH, Cur);
@@ -1509,15 +1510,15 @@ int SelectFile(HWND hWnd, char *Fname, char *Title, char *Filters, char *Ext, in
 	OpenFile.lpfnHook = NULL;
 	OpenFile.lpTemplateName = NULL;
 
-	if(Save == 0)
+	if (Save == 0)
 	{
-		if((Sts = GetOpenFileName(&OpenFile)) == TRUE)
-			strcpy(Fname,Tmp);
+		if ((Sts = GetOpenFileName(&OpenFile)) == TRUE)
+			strcpy(Fname, Tmp);
 	}
 	else
 	{
-		if((Sts = GetSaveFileName(&OpenFile)) == TRUE)
-			strcpy(Fname,Tmp);
+		if ((Sts = GetSaveFileName(&OpenFile)) == TRUE)
+			strcpy(Fname, Tmp);
 	}
 	SetCurrentDirectory(Cur);
 	return(Sts);
@@ -1536,10 +1537,10 @@ int SelectFile(HWND hWnd, char *Fname, char *Title, char *Filters, char *Ext, in
 *			TRUE/FALSE=取消
 *----------------------------------------------------------------------------*/
 
-int SelectDir(HWND hWnd, char *Buf, int MaxLen)
+int SelectDir(HWND hWnd, char* Buf, int MaxLen)
 {
-	char Tmp[FMAX_PATH+1];
-	char Cur[FMAX_PATH+1];
+	char Tmp[FMAX_PATH + 1];
+	char Cur[FMAX_PATH + 1];
 	BROWSEINFO  Binfo;
 	LPITEMIDLIST lpIdll;
 	int Sts;
@@ -1548,7 +1549,7 @@ int SelectDir(HWND hWnd, char *Buf, int MaxLen)
 	Sts = FALSE;
 	GetCurrentDirectory(FMAX_PATH, Cur);
 
-	if(SHGetMalloc(&lpMalloc) == NOERROR)
+	if (SHGetMalloc(&lpMalloc) == NOERROR)
 	{
 		Binfo.hwndOwner = hWnd;
 		Binfo.pidlRoot = NULL;
@@ -1558,11 +1559,11 @@ int SelectDir(HWND hWnd, char *Buf, int MaxLen)
 		Binfo.lpfn = NULL;
 		Binfo.lParam = 0;
 		Binfo.iImage = 0;
-		if((lpIdll = SHBrowseForFolder(&Binfo)) != NULL)
+		if ((lpIdll = SHBrowseForFolder(&Binfo)) != NULL)
 		{
 			SHGetPathFromIDList(lpIdll, Tmp);
 			memset(Buf, NUL, MaxLen);
-			strncpy(Buf, Tmp, MaxLen-1);
+			strncpy(Buf, Tmp, MaxLen - 1);
 			Sts = TRUE;
 			lpMalloc->lpVtbl->Free(lpMalloc, lpIdll);
 		}
@@ -1589,15 +1590,15 @@ int SelectDir(HWND hWnd, char *Buf, int MaxLen)
 *		ンをチェックする
 *----------------------------------------------------------------------------*/
 
-void SetRadioButtonByValue(HWND hDlg, int Value, const RADIOBUTTON *Buttons, int Num)
+void SetRadioButtonByValue(HWND hDlg, int Value, const RADIOBUTTON* Buttons, int Num)
 {
 	int i;
 	int Def;
 
 	Def = Buttons->ButID;
-	for(i = 0; i < Num; i++)
+	for (i = 0; i < Num; i++)
 	{
-		if(Value == Buttons->Value)
+		if (Value == Buttons->Value)
 		{
 			SendDlgItemMessage(hDlg, Buttons->ButID, BM_SETCHECK, 1, 0);
 			/* ラジオボタンを変更した時に他の項目のハイドなどを行なう事が	*/
@@ -1607,7 +1608,7 @@ void SetRadioButtonByValue(HWND hDlg, int Value, const RADIOBUTTON *Buttons, int
 		}
 		Buttons++;
 	}
-	if(i == Num)
+	if (i == Num)
 	{
 		SendDlgItemMessage(hDlg, Def, BM_SETCHECK, 1, 0);
 		SendMessage(hDlg, WM_COMMAND, MAKEWPARAM(Def, 0), 0);
@@ -1631,15 +1632,15 @@ void SetRadioButtonByValue(HWND hDlg, int Value, const RADIOBUTTON *Buttons, int
 *		タンの値を返す
 *----------------------------------------------------------------------------*/
 
-int AskRadioButtonValue(HWND hDlg, const RADIOBUTTON *Buttons, int Num)
+int AskRadioButtonValue(HWND hDlg, const RADIOBUTTON* Buttons, int Num)
 {
 	int i;
 	int Ret;
 
 	Ret = Buttons->Value;
-	for(i = 0; i < Num; i++)
+	for (i = 0; i < Num; i++)
 	{
-		if(SendDlgItemMessage(hDlg, Buttons->ButID, BM_GETCHECK, 0, 0) == 1)
+		if (SendDlgItemMessage(hDlg, Buttons->ButID, BM_GETCHECK, 0, 0) == 1)
 		{
 			Ret = Buttons->Value;
 			break;
@@ -1659,19 +1660,19 @@ int AskRadioButtonValue(HWND hDlg, const RADIOBUTTON *Buttons, int Num)
 *		int 値
 *----------------------------------------------------------------------------*/
 
-int xtoi(char *Str)
+int xtoi(char* Str)
 {
 	int Ret;
 
 	Ret = 0;
-	while(*Str != NUL)
+	while (*Str != NUL)
 	{
 		Ret *= 0x10;
-		if((*Str >= '0') && (*Str <= '9'))
+		if ((*Str >= '0') && (*Str <= '9'))
 			Ret += *Str - '0';
-		else if((*Str >= 'A') && (*Str <= 'F'))
+		else if ((*Str >= 'A') && (*Str <= 'F'))
 			Ret += *Str - 'A' + 10;
-		else if((*Str >= 'a') && (*Str <= 'f'))
+		else if ((*Str >= 'a') && (*Str <= 'f'))
 			Ret += *Str - 'a' + 10;
 		else
 			break;
@@ -1692,7 +1693,7 @@ int xtoi(char *Str)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-int CheckFileReadable(char *Fname)
+int CheckFileReadable(char* Fname)
 {
 	int Sts;
 	HANDLE iFileHandle;
@@ -1704,8 +1705,8 @@ int CheckFileReadable(char *Fname)
 	Sec.lpSecurityDescriptor = NULL;
 	Sec.bInheritHandle = FALSE;
 
-	if((iFileHandle = CreateFile(Fname, GENERIC_READ,
-		FILE_SHARE_READ|FILE_SHARE_WRITE, &Sec, OPEN_EXISTING, 0, NULL)) != INVALID_HANDLE_VALUE)
+	if ((iFileHandle = CreateFile(Fname, GENERIC_READ,
+		FILE_SHARE_READ | FILE_SHARE_WRITE, &Sec, OPEN_EXISTING, 0, NULL)) != INVALID_HANDLE_VALUE)
 	{
 		Sts = FFFTP_SUCCESS;
 		CloseHandle(iFileHandle);
@@ -1719,7 +1720,7 @@ int CheckFileReadable(char *Fname)
 
 int max1(int n, int m)
 {
-	if(n > m)
+	if (n > m)
 		return(n);
 	else
 		return(m);
@@ -1729,19 +1730,19 @@ int max1(int n, int m)
 
 int min1(int n, int m)
 {
-	if(n < m)
+	if (n < m)
 		return(n);
 	else
 		return(m);
 }
 
 
-void ExcEndianDWORD(DWORD *x)
+void ExcEndianDWORD(DWORD* x)
 {
-	BYTE *Pos;
+	BYTE* Pos;
 	BYTE Tmp;
 
-	Pos = (BYTE *)x;
+	Pos = (BYTE*)x;
 	Tmp = *(Pos + 0);
 	*(Pos + 0) = *(Pos + 3);
 	*(Pos + 3) = Tmp;
@@ -1764,7 +1765,7 @@ void ExcEndianDWORD(DWORD *x)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void SwapInt(int *Num1, int *Num2)
+void SwapInt(int* Num1, int* Num2)
 {
 	int Tmp;
 
@@ -1784,21 +1785,21 @@ void SwapInt(int *Num1, int *Num2)
 *		int ステータス (YES/NO)
 *----------------------------------------------------------------------------*/
 
-int IsFolderExist(char *Path)
+int IsFolderExist(char* Path)
 {
 	int Sts;
-	char Tmp[FMAX_PATH+1];
+	char Tmp[FMAX_PATH + 1];
 	DWORD Attr;
 
 	Sts = YES;
-	if(strlen(Path) > 0)
+	if (strlen(Path) > 0)
 	{
 		strcpy(Tmp, Path);
-		if(_mbscmp(Tmp+1, ":\\") != 0)
+		if (_mbscmp(Tmp + 1, ":\\") != 0)
 			RemoveYenTail(Tmp);
 
 		Attr = GetFileAttributes(Tmp);
-		if((Attr == 0xFFFFFFFF) || ((Attr & FILE_ATTRIBUTE_DIRECTORY) == 0))
+		if ((Attr == 0xFFFFFFFF) || ((Attr & FILE_ATTRIBUTE_DIRECTORY) == 0))
 			Sts = NO;
 	}
 	return(Sts);
@@ -1817,20 +1818,20 @@ int IsFolderExist(char *Path)
 *		int 数値
 *----------------------------------------------------------------------------*/
 
-int ConvertNum(int x, int Dir, const INTCONVTBL *Tbl, int Num)
+int ConvertNum(int x, int Dir, const INTCONVTBL* Tbl, int Num)
 {
 	int i;
 	int Ret;
 
 	Ret = x;
-	for(i = 0; i < Num; i++)
+	for (i = 0; i < Num; i++)
 	{
-		if((Dir == 0) && (Tbl->Num1 == x))
+		if ((Dir == 0) && (Tbl->Num1 == x))
 		{
 			Ret = Tbl->Num2;
 			break;
 		}
-		else if((Dir == 1) && (Tbl->Num2 == x))
+		else if ((Dir == 1) && (Tbl->Num2 == x))
 		{
 			Ret = Tbl->Num1;
 			break;
@@ -1854,12 +1855,12 @@ int ConvertNum(int x, int Dir, const INTCONVTBL *Tbl, int Num)
 *		int ステータス (0=正常終了)
 *----------------------------------------------------------------------------*/
 
-int MoveFileToTrashCan(char *Path)
+int MoveFileToTrashCan(char* Path)
 {
 	SHFILEOPSTRUCT FileOp;
-	char Tmp[FMAX_PATH+2];
+	char Tmp[FMAX_PATH + 2];
 
-	memset(Tmp, 0, FMAX_PATH+2);
+	memset(Tmp, 0, FMAX_PATH + 2);
 	strcpy(Tmp, Path);
 	FileOp.hwnd = NULL;
 	FileOp.wFunc = FO_DELETE;
@@ -1885,10 +1886,10 @@ LONGLONG MakeLongLong(DWORD High, DWORD Low)
 }
 
 
-char *MakeNumString(LONGLONG Num, char *Buf, BOOL Comma)
+char* MakeNumString(LONGLONG Num, char* Buf, BOOL Comma)
 {
 	int i;
-	char *Pos;
+	char* Pos;
 
 	Pos = Buf;
 	*Pos = '\0';
@@ -1898,11 +1899,10 @@ char *MakeNumString(LONGLONG Num, char *Buf, BOOL Comma)
 	{
 		*Pos++ = (char)(Num % 10) + '0';
 		Num /= 10;
-		if((Comma == TRUE) && ((i % 3) == 0) && (Num != 0))
+		if ((Comma == TRUE) && ((i % 3) == 0) && (Num != 0))
 			*Pos++ = ',';
 		i++;
-	}
-	while(Num != 0);
+	} while (Num != 0);
 	*Pos = NUL;
 	_strrev(Buf);
 
@@ -1918,11 +1918,11 @@ char *MakeNumString(LONGLONG Num, char *Buf, BOOL Comma)
 char* MakeDistinguishableFileName(char* Out, char* In)
 {
 	char* Fname;
-	char Tmp[FMAX_PATH+1];
-	char Tmp2[FMAX_PATH+3];
+	char Tmp[FMAX_PATH + 1];
+	char Tmp2[FMAX_PATH + 3];
 	HANDLE hFind;
 	WIN32_FIND_DATA Find;
-	if(strlen(GetFileExt(GetFileName(In))) > 0)
+	if (strlen(GetFileExt(GetFileName(In))) > 0)
 		strcpy(Out, In);
 	else
 	{
@@ -1930,16 +1930,15 @@ char* MakeDistinguishableFileName(char* Out, char* In)
 		strcpy(Tmp, In);
 		strcpy(Tmp2, Tmp);
 		strcat(Tmp2, ".*");
-		while(strlen(Tmp) < FMAX_PATH && (hFind = FindFirstFile(Tmp2, &Find)) != INVALID_HANDLE_VALUE)
+		while (strlen(Tmp) < FMAX_PATH && (hFind = FindFirstFile(Tmp2, &Find)) != INVALID_HANDLE_VALUE)
 		{
 			do
 			{
-				if(strcmp(Find.cFileName, Fname) != 0)
+				if (strcmp(Find.cFileName, Fname) != 0)
 					break;
-			}
-			while(FindNextFile(hFind, &Find));
+			} while (FindNextFile(hFind, &Find));
 			FindClose(hFind);
-			if(strcmp(Find.cFileName, Fname) != 0)
+			if (strcmp(Find.cFileName, Fname) != 0)
 			{
 				strcat(Tmp, " ");
 				strcpy(Tmp2, Tmp);
@@ -1973,20 +1972,21 @@ char* GetAppTempPath(char* Buf)
 *	Return Value
 *		なし
 *----------------------------------------------------------------------------*/
-void CalcExtentSize(TRANSPACKET *Pkt, LONGLONG Size)
+void CalcExtentSize(TRANSPACKET* Pkt, LONGLONG Size)
 {
 	LONGLONG extent;
 
 	/* EXTENTS(4,28) MAXEXTENTS 978 */
-	if(Size < 56025088) {
+	if (Size < 56025088) {
 		Pkt->PriExt = DEF_PRIEXT;
 		Pkt->SecExt = DEF_SECEXT;
 		Pkt->MaxExt = DEF_MAXEXT;
-	} else {
+	}
+	else {
 		/* 増加余地を残すため Used 75% 近辺になるように EXTENT サイズを調整) */
 		extent = (LONGLONG)(Size / ((DEF_MAXEXT * 0.75) * 2048LL));
 		/* 28未満にすると誤差でFile Fullになる可能性がある */
-		if(extent < 28)
+		if (extent < 28)
 			extent = 28;
 
 		Pkt->PriExt = (int)extent;
@@ -2000,9 +2000,9 @@ void CalcExtentSize(TRANSPACKET *Pkt, LONGLONG Size)
 void QueryDisplayDPI()
 {
 	HDC hDC;
-	if(DisplayDPIX == 0)
+	if (DisplayDPIX == 0)
 	{
-		if(hDC = GetDC(NULL))
+		if (hDC = GetDC(NULL))
 		{
 			DisplayDPIX = GetDeviceCaps(hDC, LOGPIXELSX);
 			DisplayDPIY = GetDeviceCaps(hDC, LOGPIXELSY);
@@ -2035,21 +2035,21 @@ HBITMAP ResizeBitmap(HBITMAP hBitmap, int UnitSizeX, int UnitSizeY, int ScaleNum
 	int Width;
 	int Height;
 	hDstBitmap = NULL;
-	if(hDC = GetDC(NULL))
+	if (hDC = GetDC(NULL))
 	{
-		if(hSrcDC = CreateCompatibleDC(hDC))
+		if (hSrcDC = CreateCompatibleDC(hDC))
 		{
-			if(hDstDC = CreateCompatibleDC(hDC))
+			if (hDstDC = CreateCompatibleDC(hDC))
 			{
-				if(GetObject(hBitmap, sizeof(BITMAP), &Bitmap) > 0)
+				if (GetObject(hBitmap, sizeof(BITMAP), &Bitmap) > 0)
 				{
-					if(UnitSizeX == 0)
+					if (UnitSizeX == 0)
 						UnitSizeX = Bitmap.bmWidth;
-					if(UnitSizeY == 0)
+					if (UnitSizeY == 0)
 						UnitSizeY = Bitmap.bmHeight;
 					Width = (Bitmap.bmWidth / UnitSizeX) * CalcPixelX((UnitSizeX * ScaleNumerator) / ScaleDenominator);
 					Height = (Bitmap.bmHeight / UnitSizeY) * CalcPixelY((UnitSizeY * ScaleNumerator) / ScaleDenominator);
-					if(hDstBitmap = CreateCompatibleBitmap(hDC, Width, Height))
+					if (hDstBitmap = CreateCompatibleBitmap(hDC, Width, Height))
 					{
 						hSrcOld = SelectObject(hSrcDC, hBitmap);
 						hDstOld = SelectObject(hDstDC, hDstBitmap);
@@ -2073,7 +2073,7 @@ void DecodeLineFeed(char* Str)
 {
 	char* p;
 	p = Str;
-	while(p = strstr(p, "\\n"))
+	while (p = strstr(p, "\\n"))
 	{
 		strncpy(p, "\r\n", 2);
 	}
@@ -2092,9 +2092,9 @@ int ReplaceAllStrings(char* Out, char* In, char* From, char* To)
 	FromLen = strlen(From);
 	ToLen = strlen(To);
 	Count = 0;
-	if(Out)
+	if (Out)
 	{
-		while(p = strstr(In, From))
+		while (p = strstr(In, From))
 		{
 			Len = p - In;
 			strncpy(Out, In, Len);
@@ -2109,7 +2109,7 @@ int ReplaceAllStrings(char* Out, char* In, char* From, char* To)
 	}
 	else
 	{
-		while(In = strstr(In, From))
+		while (In = strstr(In, From))
 		{
 			In += FromLen;
 			Count++;

@@ -5,25 +5,25 @@
 ===============================================================================
 / Copyright (C) 1997-2007 Sota. All rights reserved.
 /
-/ Redistribution and use in source and binary forms, with or without 
-/ modification, are permitted provided that the following conditions 
+/ Redistribution and use in source and binary forms, with or without
+/ modification, are permitted provided that the following conditions
 / are met:
 /
-/  1. Redistributions of source code must retain the above copyright 
+/  1. Redistributions of source code must retain the above copyright
 /     notice, this list of conditions and the following disclaimer.
-/  2. Redistributions in binary form must reproduce the above copyright 
-/     notice, this list of conditions and the following disclaimer in the 
+/  2. Redistributions in binary form must reproduce the above copyright
+/     notice, this list of conditions and the following disclaimer in the
 /     documentation and/or other materials provided with the distribution.
 /
-/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR 
-/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
-/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, 
-/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF 
-/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON 
-/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
+/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 / THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /============================================================================*/
 
@@ -56,14 +56,14 @@ static BOOL CALLBACK CountPrevFfftpWindowsProc(HWND hWnd, LPARAM lParam);
 
 typedef struct {
 	time_t Time;						/* リストに登録した時間 */
-	char HostAdrs[HOST_ADRS_LEN+1];		/* ホストのアドレス */
-	char UserName[USER_NAME_LEN+1];		/* ユーザ名 */
-	char Path[FMAX_PATH+1];				/* パス名 */
+	char HostAdrs[HOST_ADRS_LEN + 1];		/* ホストのアドレス */
+	char UserName[USER_NAME_LEN + 1];		/* ユーザ名 */
+	char Path[FMAX_PATH + 1];				/* パス名 */
 } CACHELIST;
 
 /*===== ローカルなワーク =====*/
 
-static CACHELIST *RemoteCache = NULL;	/* キャッシュデータ */
+static CACHELIST* RemoteCache = NULL;	/* キャッシュデータ */
 static int TmpCacheEntry = 0;			/* キャッシュされているデータの数 */
 static int LastNum;						/* 現在表示しているデータの番号 */
 static int ProgNum;						/* FFFTPの起動番号 */
@@ -85,13 +85,13 @@ int MakeCacheBuf(int Num)
 	int i;
 
 	Sts = FFFTP_SUCCESS;
-	if(Num > 0)
+	if (Num > 0)
 	{
 		Sts = FFFTP_FAIL;
-		if((RemoteCache = malloc(sizeof(CACHELIST) * Num)) != NULL)
+		if ((RemoteCache = malloc(sizeof(CACHELIST) * Num)) != NULL)
 		{
 			TmpCacheEntry = Num;
-			for(i = 0; i < TmpCacheEntry; i++)
+			for (i = 0; i < TmpCacheEntry; i++)
 				ClearCache(i);
 			Sts = FFFTP_SUCCESS;
 		}
@@ -111,7 +111,7 @@ int MakeCacheBuf(int Num)
 
 void DeleteCacheBuf(void)
 {
-	if(RemoteCache != NULL)
+	if (RemoteCache != NULL)
 		free(RemoteCache);
 	RemoteCache = NULL;
 	TmpCacheEntry = 0;
@@ -129,25 +129,25 @@ void DeleteCacheBuf(void)
 *			-1 = キャッシュされていない
 *----------------------------------------------------------------------------*/
 
-int AskCached(char *Path)
+int AskCached(char* Path)
 {
 	int Ret;
 	int i;
-	CACHELIST *Pos;
+	CACHELIST* Pos;
 
 	Ret = -1;
-	if(TmpCacheEntry > 0)
+	if (TmpCacheEntry > 0)
 	{
 		Pos = RemoteCache;
-		for(i = 0; i < TmpCacheEntry; i++)
+		for (i = 0; i < TmpCacheEntry; i++)
 		{
-			if((_stricmp(AskHostAdrs(), Pos->HostAdrs) == 0) &&
-			   (strcmp(AskHostUserName(), Pos->UserName) == 0) &&
-			   (strcmp(Path, Pos->Path) == 0))
+			if ((_stricmp(AskHostAdrs(), Pos->HostAdrs) == 0) &&
+				(strcmp(AskHostUserName(), Pos->UserName) == 0) &&
+				(strcmp(Path, Pos->Path) == 0))
 			{
 				time(&(Pos->Time));		/* Refresh */
 				Ret = i;
-//				DoPrintf("Filelist cache found. (%d)", Ret);
+				//				DoPrintf("Filelist cache found. (%d)", Ret);
 				break;
 			}
 			Pos++;
@@ -174,24 +174,24 @@ int AskFreeCache(void)
 	int Ret;
 	int i;
 	time_t Oldest;
-	CACHELIST *Pos;
+	CACHELIST* Pos;
 
 	Ret = 0;
-	if(TmpCacheEntry > 0)
+	if (TmpCacheEntry > 0)
 	{
 		Oldest = 0;
 		Ret = -1;
 		Pos = RemoteCache;
-		for(i = 0; i < TmpCacheEntry; i++)
+		for (i = 0; i < TmpCacheEntry; i++)
 		{
-			if(strlen(Pos->Path) == 0)
+			if (strlen(Pos->Path) == 0)
 			{
 				Ret = i;
 				break;
 			}
 			else
 			{
-				if((Ret == -1) || (Pos->Time < Oldest))
+				if ((Ret == -1) || (Pos->Time < Oldest))
 				{
 					Oldest = Pos->Time;
 					Ret = i;
@@ -200,7 +200,7 @@ int AskFreeCache(void)
 			Pos++;
 		}
 	}
-//	DoPrintf("Set filelist cache. (%d)", Ret);
+	//	DoPrintf("Set filelist cache. (%d)", Ret);
 	return(Ret);
 }
 
@@ -218,9 +218,9 @@ int AskFreeCache(void)
 *		現在接続中のホスト名を使用する
 *----------------------------------------------------------------------------*/
 
-void SetCache(int Num, char *Path)
+void SetCache(int Num, char* Path)
 {
-	if(TmpCacheEntry > 0)
+	if (TmpCacheEntry > 0)
 	{
 		strcpy((RemoteCache + Num)->HostAdrs, AskHostAdrs());
 		strcpy((RemoteCache + Num)->UserName, AskHostUserName());
@@ -242,7 +242,7 @@ void SetCache(int Num, char *Path)
 
 void ClearCache(int Num)
 {
-	if(TmpCacheEntry > 0)
+	if (TmpCacheEntry > 0)
 	{
 		strcpy((RemoteCache + Num)->HostAdrs, "");
 		strcpy((RemoteCache + Num)->UserName, "");
@@ -299,24 +299,24 @@ void SetCurrentFileListNum(int Num)
 
 void SaveCache(void)
 {
-	char Buf[FMAX_PATH+1];
-	FILE *fd;
-	CACHELIST *Pos;
+	char Buf[FMAX_PATH + 1];
+	FILE* fd;
+	CACHELIST* Pos;
 	int i;
 
-	if(ProgNum == 0)	/* 最初のインスタンスだけがキャッシュを保存できる */
+	if (ProgNum == 0)	/* 最初のインスタンスだけがキャッシュを保存できる */
 	{
-		if(TmpCacheEntry > 0)
+		if (TmpCacheEntry > 0)
 		{
 			strcpy(Buf, AskTmpFilePath());
 			SetYenTail(Buf);
 			strcat(Buf, "_ffftp.idx");
-			if((fd = fopen(Buf, "wt"))!=NULL)
+			if ((fd = fopen(Buf, "wt")) != NULL)
 			{
 				Pos = RemoteCache;
-				for(i = 0; i < TmpCacheEntry; i++)
+				for (i = 0; i < TmpCacheEntry; i++)
 				{
-					if(strlen(Pos->Path) != 0)
+					if (strlen(Pos->Path) != 0)
 						fprintf(fd, "%s %s %s %ld\n", Pos->HostAdrs, Pos->UserName, Pos->Path, Pos->Time);
 					Pos++;
 				}
@@ -348,28 +348,28 @@ void SaveCache(void)
 
 void LoadCache(void)
 {
-	char Buf[FMAX_PATH+1];
-	FILE *fd;
-	CACHELIST *Pos;
+	char Buf[FMAX_PATH + 1];
+	FILE* fd;
+	CACHELIST* Pos;
 	int Num;
 
-	if(ProgNum == 0)	/* 最初のインスタンスだけがキャッシュを保存できる */
+	if (ProgNum == 0)	/* 最初のインスタンスだけがキャッシュを保存できる */
 	{
-		if(TmpCacheEntry > 0)
+		if (TmpCacheEntry > 0)
 		{
 			strcpy(Buf, AskTmpFilePath());
 			SetYenTail(Buf);
 			strcat(Buf, "_ffftp.idx");
-			if((fd = fopen(Buf, "rt"))!=NULL)
+			if ((fd = fopen(Buf, "rt")) != NULL)
 			{
 				Pos = RemoteCache;
 				Num = 0;
-				while(Num < TmpCacheEntry)
+				while (Num < TmpCacheEntry)
 				{
-					if(fgets(Buf, FMAX_PATH, fd) == NULL)
+					if (fgets(Buf, FMAX_PATH, fd) == NULL)
 						break;
 
-					if(sscanf(Buf, "%s %s %s %ld\n", Pos->HostAdrs, Pos->UserName, Pos->Path, &(Pos->Time)) == 4)
+					if (sscanf(Buf, "%s %s %s %ld\n", Pos->HostAdrs, Pos->UserName, Pos->Path, &(Pos->Time)) == 4)
 					{
 						Pos++;
 						Num++;
@@ -396,10 +396,10 @@ void LoadCache(void)
 
 void DeleteCache(void)
 {
-	char Buf[FMAX_PATH+1];
+	char Buf[FMAX_PATH + 1];
 	int i;
 
-	if(ProgNum == 0)
+	if (ProgNum == 0)
 	{
 		strcpy(Buf, AskTmpFilePath());
 		SetYenTail(Buf);
@@ -407,7 +407,7 @@ void DeleteCache(void)
 		_unlink(Buf);
 	}
 
-	for(i = 0; i <= TmpCacheEntry; i++)
+	for (i = 0; i <= TmpCacheEntry; i++)
 	{
 		MakeCacheFileName(i, Buf);
 		_unlink(Buf);
@@ -433,17 +433,17 @@ void DeleteCache(void)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void MakeCacheFileName(int Num, char *Buf)
+void MakeCacheFileName(int Num, char* Buf)
 {
 	char Prog[10];
-	char *Pos;
+	char* Pos;
 
 	strcpy(Buf, AskTmpFilePath());
 	SetYenTail(Buf);
 	Pos = strchr(Buf, NUL);
 
 	strcpy(Prog, "");
-	if(ProgNum > 0)
+	if (ProgNum > 0)
 		sprintf(Prog, ".%d", ProgNum);
 
 	sprintf(Pos, "_ffftp.%03d%s", Num, Prog);
@@ -483,11 +483,11 @@ void CountPrevFfftpWindows(void)
 
 static BOOL CALLBACK CountPrevFfftpWindowsProc(HWND hWnd, LPARAM lParam)
 {
-	char Buf[FMAX_PATH+1];
+	char Buf[FMAX_PATH + 1];
 
-	if(GetClassName(hWnd, Buf, FMAX_PATH) > 0)
+	if (GetClassName(hWnd, Buf, FMAX_PATH) > 0)
 	{
-		if(strcmp(Buf, "FFFTPWin") == 0)
+		if (strcmp(Buf, "FFFTPWin") == 0)
 			ProgNum++;
 	}
 	return(TRUE);

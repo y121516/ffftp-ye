@@ -62,20 +62,20 @@ typedef struct
 #define HOOK_USE_LOADLIBRARY 0x00000008
 #define HOOK_USE_GETPROCADDRESS 0x00000010
 
-typedef HMODULE (WINAPI* _LoadLibraryA)(LPCSTR);
-typedef HMODULE (WINAPI* _LoadLibraryW)(LPCWSTR);
-typedef HMODULE (WINAPI* _LoadLibraryExA)(LPCSTR, HANDLE, DWORD);
-typedef HMODULE (WINAPI* _LoadLibraryExW)(LPCWSTR, HANDLE, DWORD);
+typedef HMODULE(WINAPI* _LoadLibraryA)(LPCSTR);
+typedef HMODULE(WINAPI* _LoadLibraryW)(LPCWSTR);
+typedef HMODULE(WINAPI* _LoadLibraryExA)(LPCSTR, HANDLE, DWORD);
+typedef HMODULE(WINAPI* _LoadLibraryExW)(LPCWSTR, HANDLE, DWORD);
 
 HOOK_FUNCTION_INFO g_LoadLibraryA;
 HOOK_FUNCTION_INFO g_LoadLibraryW;
 HOOK_FUNCTION_INFO g_LoadLibraryExA;
 HOOK_FUNCTION_INFO g_LoadLibraryExW;
 
-typedef NTSTATUS (NTAPI* _LdrLoadDll)(LPCWSTR, DWORD*, UNICODE_STRING*, HMODULE*);
-typedef NTSTATUS (NTAPI* _LdrGetDllHandle)(LPCWSTR, DWORD*, UNICODE_STRING*, HMODULE*);
-typedef PIMAGE_NT_HEADERS (NTAPI* _RtlImageNtHeader)(PVOID);
-typedef BOOL (WINAPI* _CryptCATAdminCalcHashFromFileHandle)(HANDLE, DWORD*, BYTE*, DWORD);
+typedef NTSTATUS(NTAPI* _LdrLoadDll)(LPCWSTR, DWORD*, UNICODE_STRING*, HMODULE*);
+typedef NTSTATUS(NTAPI* _LdrGetDllHandle)(LPCWSTR, DWORD*, UNICODE_STRING*, HMODULE*);
+typedef PIMAGE_NT_HEADERS(NTAPI* _RtlImageNtHeader)(PVOID);
+typedef BOOL(WINAPI* _CryptCATAdminCalcHashFromFileHandle)(HANDLE, DWORD*, BYTE*, DWORD);
 
 _LdrLoadDll p_LdrLoadDll;
 _LdrGetDllHandle p_LdrGetDllHandle;
@@ -104,9 +104,9 @@ BOOL HookFunctionInCode(void* pProc, void* pHook, void** ppUnhook, HOOK_JUMP_COD
 		CHAR c;
 		LONG l;
 		bResult = FALSE;
-		if(bRestore)
+		if (bRestore)
 		{
-			if(VirtualProtect(pPatch->pCode, pPatch->CodeLength, PAGE_EXECUTE_READWRITE, &Protect))
+			if (VirtualProtect(pPatch->pCode, pPatch->CodeLength, PAGE_EXECUTE_READWRITE, &Protect))
 			{
 				memcpy(pPatch->pCode, &pPatch->BackupCode, pPatch->CodeLength);
 				VirtualProtect(pPatch->pCode, pPatch->CodeLength, Protect, &Protect);
@@ -116,15 +116,15 @@ BOOL HookFunctionInCode(void* pProc, void* pHook, void** ppUnhook, HOOK_JUMP_COD
 		}
 		else
 		{
-			if(!pPatch->pCode)
+			if (!pPatch->pCode)
 			{
 				pCode = (BYTE*)pProc;
-				while(pCode[0] == 0xeb)
+				while (pCode[0] == 0xeb)
 				{
 					memcpy(&c, pCode + 1, 1);
 					pCode = pCode + 2 + c;
 				}
-				if(pCode[0] == 0x8b && pCode[1] == 0xff)
+				if (pCode[0] == 0x8b && pCode[1] == 0xff)
 				{
 					pCode = pCode - 5;
 					pPatch->pCode = pCode;
@@ -137,7 +137,7 @@ BOOL HookFunctionInCode(void* pProc, void* pHook, void** ppUnhook, HOOK_JUMP_COD
 					pPatch->PatchCode[6] = 0xf9;
 					*ppUnhook = pCode + 7;
 				}
-				else if(pCode[0] == 0xe9)
+				else if (pCode[0] == 0xe9)
 				{
 					pPatch->pCode = pCode + 1;
 					pPatch->CodeLength = 4;
@@ -158,7 +158,7 @@ BOOL HookFunctionInCode(void* pProc, void* pHook, void** ppUnhook, HOOK_JUMP_COD
 					*ppUnhook = NULL;
 				}
 			}
-			if(VirtualProtect(pPatch->pCode, pPatch->CodeLength, PAGE_EXECUTE_READWRITE, &Protect))
+			if (VirtualProtect(pPatch->pCode, pPatch->CodeLength, PAGE_EXECUTE_READWRITE, &Protect))
 			{
 				memcpy(pPatch->pCode, &pPatch->PatchCode, pPatch->CodeLength);
 				VirtualProtect(pPatch->pCode, pPatch->CodeLength, Protect, &Protect);
@@ -175,9 +175,9 @@ BOOL HookFunctionInCode(void* pProc, void* pHook, void** ppUnhook, HOOK_JUMP_COD
 		LONG l;
 		LONGLONG ll;
 		bResult = FALSE;
-		if(bRestore)
+		if (bRestore)
 		{
-			if(VirtualProtect(pPatch->pCode, pPatch->CodeLength, PAGE_EXECUTE_READWRITE, &Protect))
+			if (VirtualProtect(pPatch->pCode, pPatch->CodeLength, PAGE_EXECUTE_READWRITE, &Protect))
 			{
 				memcpy(pPatch->pCode, &pPatch->BackupCode, pPatch->CodeLength);
 				VirtualProtect(pPatch->pCode, pPatch->CodeLength, Protect, &Protect);
@@ -187,14 +187,14 @@ BOOL HookFunctionInCode(void* pProc, void* pHook, void** ppUnhook, HOOK_JUMP_COD
 		}
 		else
 		{
-			if(!pPatch->pCode)
+			if (!pPatch->pCode)
 			{
 				pCode = (BYTE*)pProc;
-				if(pCode[0] == 0x48)
+				if (pCode[0] == 0x48)
 					pCode = pCode + 1;
-				while(pCode[0] == 0xeb || pCode[0] == 0xe9)
+				while (pCode[0] == 0xeb || pCode[0] == 0xe9)
 				{
-					if(pCode[0] == 0xeb)
+					if (pCode[0] == 0xeb)
 					{
 						memcpy(&c, pCode + 1, 1);
 						pCode = pCode + 2 + c;
@@ -204,10 +204,10 @@ BOOL HookFunctionInCode(void* pProc, void* pHook, void** ppUnhook, HOOK_JUMP_COD
 						memcpy(&l, pCode + 1, 4);
 						pCode = pCode + 5 + l;
 					}
-					if(pCode[0] == 0x48)
+					if (pCode[0] == 0x48)
 						pCode++;
 				}
-				if(pCode[0] == 0xff && pCode[1] == 0x25)
+				if (pCode[0] == 0xff && pCode[1] == 0x25)
 				{
 					memcpy(&l, pCode + 2, 4);
 					pPatch->pCode = pCode + 6 + l;
@@ -230,7 +230,7 @@ BOOL HookFunctionInCode(void* pProc, void* pHook, void** ppUnhook, HOOK_JUMP_COD
 					*ppUnhook = NULL;
 				}
 			}
-			if(VirtualProtect(pPatch->pCode, pPatch->CodeLength, PAGE_EXECUTE_READWRITE, &Protect))
+			if (VirtualProtect(pPatch->pCode, pPatch->CodeLength, PAGE_EXECUTE_READWRITE, &Protect))
 			{
 				memcpy(pPatch->pCode, &pPatch->PatchCode, pPatch->CodeLength);
 				VirtualProtect(pPatch->pCode, pPatch->CodeLength, Protect, &Protect);
@@ -256,25 +256,25 @@ BOOL HookFunctionInIAT(void* pProc, void* pHook, void** ppUnhook)
 	IMAGE_THUNK_DATA* pitd;
 	DWORD Protect;
 	bResult = FALSE;
-	if((hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, GetCurrentProcessId())) != INVALID_HANDLE_VALUE)
+	if ((hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, GetCurrentProcessId())) != INVALID_HANDLE_VALUE)
 	{
 		me.dwSize = sizeof(MODULEENTRY32);
-		if(Module32First(hSnapshot, &me))
+		if (Module32First(hSnapshot, &me))
 		{
 			bFound = FALSE;
 			do
 			{
-				if(piid = (IMAGE_IMPORT_DESCRIPTOR*)ImageDirectoryEntryToData(me.hModule, TRUE, IMAGE_DIRECTORY_ENTRY_IMPORT, &Size))
+				if (piid = (IMAGE_IMPORT_DESCRIPTOR*)ImageDirectoryEntryToData(me.hModule, TRUE, IMAGE_DIRECTORY_ENTRY_IMPORT, &Size))
 				{
-					while(!bFound && piid->Name != 0)
+					while (!bFound && piid->Name != 0)
 					{
 						pitd = (IMAGE_THUNK_DATA*)((BYTE*)me.hModule + piid->FirstThunk);
-						while(!bFound && pitd->u1.Function != 0)
+						while (!bFound && pitd->u1.Function != 0)
 						{
-							if((void*)pitd->u1.Function == pProc)
+							if ((void*)pitd->u1.Function == pProc)
 							{
 								bFound = TRUE;
-								if(VirtualProtect(&pitd->u1.Function, sizeof(void*), PAGE_EXECUTE_READWRITE, &Protect))
+								if (VirtualProtect(&pitd->u1.Function, sizeof(void*), PAGE_EXECUTE_READWRITE, &Protect))
 								{
 									memcpy(&pitd->u1.Function, &pHook, sizeof(void*));
 									VirtualProtect(&pitd->u1.Function, sizeof(void*), Protect, &Protect);
@@ -287,8 +287,7 @@ BOOL HookFunctionInIAT(void* pProc, void* pHook, void** ppUnhook)
 						piid++;
 					}
 				}
-			}
-			while(!bFound && Module32Next(hSnapshot, &me));
+			} while (!bFound && Module32Next(hSnapshot, &me));
 		}
 		CloseHandle(hSnapshot);
 	}
@@ -300,15 +299,15 @@ BOOL InitializeHookFunction(HOOK_FUNCTION_INFO* pInfo)
 {
 	BOOL bResult;
 	bResult = FALSE;
-	if(!(pInfo->Flags & HOOK_INITIALIZED))
+	if (!(pInfo->Flags & HOOK_INITIALIZED))
 	{
-		if(pInfo->Flags & HOOK_USE_GETMODULEHANDLE)
+		if (pInfo->Flags & HOOK_USE_GETMODULEHANDLE)
 			pInfo->hModule = GetModuleHandle(pInfo->ModuleName);
-		if(pInfo->Flags & HOOK_USE_LOADLIBRARY)
+		if (pInfo->Flags & HOOK_USE_LOADLIBRARY)
 			pInfo->hModule = LoadLibrary(pInfo->ModuleName);
-		if(pInfo->Flags & HOOK_USE_GETPROCADDRESS)
+		if (pInfo->Flags & HOOK_USE_GETPROCADDRESS)
 			pInfo->Proc = GetProcAddress(pInfo->hModule, pInfo->ProcName);
-		if(pInfo->Proc)
+		if (pInfo->Proc)
 		{
 			pInfo->Flags |= HOOK_INITIALIZED;
 			bResult = TRUE;
@@ -319,9 +318,9 @@ BOOL InitializeHookFunction(HOOK_FUNCTION_INFO* pInfo)
 
 void UninitializeHookFunction(HOOK_FUNCTION_INFO* pInfo)
 {
-	if(pInfo->Flags & HOOK_INITIALIZED)
+	if (pInfo->Flags & HOOK_INITIALIZED)
 	{
-		if(pInfo->Flags & HOOK_USE_LOADLIBRARY)
+		if (pInfo->Flags & HOOK_USE_LOADLIBRARY)
 			FreeLibrary(pInfo->hModule);
 		pInfo->Flags &= ~HOOK_INITIALIZED;
 	}
@@ -331,21 +330,21 @@ BOOL EnableHookFunction(HOOK_FUNCTION_INFO* pInfo, BOOL bEnable)
 {
 	BOOL bResult;
 	bResult = FALSE;
-	if(pInfo->Flags & HOOK_INITIALIZED)
+	if (pInfo->Flags & HOOK_INITIALIZED)
 	{
-		if(bEnable)
+		if (bEnable)
 		{
-			if(!(pInfo->Flags & HOOK_ENABLED))
+			if (!(pInfo->Flags & HOOK_ENABLED))
 			{
 #ifdef USE_CODE_HOOK
-				if(HookFunctionInCode(pInfo->Proc, pInfo->Hook, (void**)&pInfo->Unhook, &pInfo->Patch, FALSE))
+				if (HookFunctionInCode(pInfo->Proc, pInfo->Hook, (void**)&pInfo->Unhook, &pInfo->Patch, FALSE))
 				{
 					pInfo->Flags |= HOOK_ENABLED;
 					bResult = TRUE;
 				}
 #endif
 #ifdef USE_IAT_HOOK
-				if(HookFunctionInIAT(pInfo->Proc, pInfo->Hook, (void**)&pInfo->Unhook))
+				if (HookFunctionInIAT(pInfo->Proc, pInfo->Hook, (void**)&pInfo->Unhook))
 				{
 					pInfo->Flags |= HOOK_ENABLED;
 					bResult = TRUE;
@@ -355,17 +354,17 @@ BOOL EnableHookFunction(HOOK_FUNCTION_INFO* pInfo, BOOL bEnable)
 		}
 		else
 		{
-			if(pInfo->Flags & HOOK_ENABLED)
+			if (pInfo->Flags & HOOK_ENABLED)
 			{
 #ifdef USE_CODE_HOOK
-				if(HookFunctionInCode(pInfo->Proc, pInfo->Hook, (void**)&pInfo->Unhook, &pInfo->Patch, TRUE))
+				if (HookFunctionInCode(pInfo->Proc, pInfo->Hook, (void**)&pInfo->Unhook, &pInfo->Patch, TRUE))
 				{
 					pInfo->Flags &= ~HOOK_ENABLED;
 					bResult = TRUE;
 				}
 #endif
 #ifdef USE_IAT_HOOK
-				if(HookFunctionInIAT(pInfo->Hook, pInfo->Proc, (void**)&pInfo->Unhook))
+				if (HookFunctionInIAT(pInfo->Hook, pInfo->Proc, (void**)&pInfo->Unhook))
 				{
 					pInfo->Flags &= ~HOOK_ENABLED;
 					bResult = TRUE;
@@ -385,18 +384,18 @@ BOOL LockThreadLock()
 	bResult = FALSE;
 	ThreadId = GetCurrentThreadId();
 	i = 0;
-	while(i < MAX_LOCKED_THREAD)
+	while (i < MAX_LOCKED_THREAD)
 	{
-		if(g_LockedThread[i] == ThreadId)
+		if (g_LockedThread[i] == ThreadId)
 			break;
 		i++;
 	}
-	if(i >= MAX_LOCKED_THREAD)
+	if (i >= MAX_LOCKED_THREAD)
 	{
 		i = 0;
-		while(i < MAX_LOCKED_THREAD)
+		while (i < MAX_LOCKED_THREAD)
 		{
-			if(g_LockedThread[i] == 0)
+			if (g_LockedThread[i] == 0)
 			{
 				g_LockedThread[i] = ThreadId;
 				bResult = TRUE;
@@ -416,9 +415,9 @@ BOOL UnlockThreadLock()
 	bResult = FALSE;
 	ThreadId = GetCurrentThreadId();
 	i = 0;
-	while(i < MAX_LOCKED_THREAD)
+	while (i < MAX_LOCKED_THREAD)
 	{
-		if(g_LockedThread[i] == ThreadId)
+		if (g_LockedThread[i] == ThreadId)
 		{
 			g_LockedThread[i] = 0;
 			bResult = TRUE;
@@ -434,7 +433,7 @@ HANDLE LockExistingFile(LPCWSTR Filename)
 {
 	HANDLE hResult;
 	hResult = NULL;
-	if((hResult = CreateFileW(Filename, 0, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL)) == INVALID_HANDLE_VALUE)
+	if ((hResult = CreateFileW(Filename, 0, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL)) == INVALID_HANDLE_VALUE)
 		hResult = NULL;
 	return hResult;
 }
@@ -446,9 +445,9 @@ BOOL FindTrustedModuleSHA1Hash(void* pHash)
 	int i;
 	bResult = FALSE;
 	i = 0;
-	while(i < MAX_TRUSTED_SHA1_HASH_TABLE)
+	while (i < MAX_TRUSTED_SHA1_HASH_TABLE)
 	{
-		if(memcmp(&g_TrustedSHA1HashTable[i], pHash, 20) == 0)
+		if (memcmp(&g_TrustedSHA1HashTable[i], pHash, 20) == 0)
 		{
 			bResult = TRUE;
 			break;
@@ -468,26 +467,26 @@ BOOL VerifyFileSignature_Function(LPCWSTR Filename)
 	CERT_CHAIN_POLICY_PARA ccpp;
 	CERT_CHAIN_POLICY_STATUS ccps;
 	bResult = FALSE;
-	if(CryptQueryObject(CERT_QUERY_OBJECT_FILE, Filename, CERT_QUERY_CONTENT_FLAG_ALL, CERT_QUERY_FORMAT_FLAG_ALL, 0, NULL, NULL, NULL, &hStore, NULL, NULL))
+	if (CryptQueryObject(CERT_QUERY_OBJECT_FILE, Filename, CERT_QUERY_CONTENT_FLAG_ALL, CERT_QUERY_FORMAT_FLAG_ALL, 0, NULL, NULL, NULL, &hStore, NULL, NULL))
 	{
 		pcc = NULL;
-		while(!bResult && (pcc = CertEnumCertificatesInStore(hStore, pcc)))
+		while (!bResult && (pcc = CertEnumCertificatesInStore(hStore, pcc)))
 		{
 			ZeroMemory(&ccp, sizeof(CERT_CHAIN_PARA));
 			ccp.cbSize = sizeof(CERT_CHAIN_PARA);
-			if(CertGetCertificateChain(NULL, pcc, NULL, NULL, &ccp, 0, NULL, &pccc))
+			if (CertGetCertificateChain(NULL, pcc, NULL, NULL, &ccp, 0, NULL, &pccc))
 			{
 				ZeroMemory(&ccpp, sizeof(CERT_CHAIN_POLICY_PARA));
 				ccpp.cbSize = sizeof(CERT_CHAIN_POLICY_PARA);
-				if(g_ProcessProtectionLevel & PROCESS_PROTECTION_EXPIRED)
+				if (g_ProcessProtectionLevel & PROCESS_PROTECTION_EXPIRED)
 					ccpp.dwFlags |= CERT_CHAIN_POLICY_IGNORE_NOT_TIME_VALID_FLAG;
-				else if(g_ProcessProtectionLevel & PROCESS_PROTECTION_UNAUTHORIZED)
+				else if (g_ProcessProtectionLevel & PROCESS_PROTECTION_UNAUTHORIZED)
 					ccpp.dwFlags |= CERT_CHAIN_POLICY_ALLOW_UNKNOWN_CA_FLAG;
 				ZeroMemory(&ccps, sizeof(CERT_CHAIN_POLICY_STATUS));
 				ccps.cbSize = sizeof(CERT_CHAIN_POLICY_STATUS);
-				if(CertVerifyCertificateChainPolicy(CERT_CHAIN_POLICY_AUTHENTICODE, pccc, &ccpp, &ccps))
+				if (CertVerifyCertificateChainPolicy(CERT_CHAIN_POLICY_AUTHENTICODE, pccc, &ccpp, &ccps))
 				{
-					if(ccps.dwError == ERROR_SUCCESS)
+					if (ccps.dwError == ERROR_SUCCESS)
 					{
 						bResult = TRUE;
 						break;
@@ -496,7 +495,7 @@ BOOL VerifyFileSignature_Function(LPCWSTR Filename)
 				CertFreeCertificateChain(pccc);
 			}
 		}
-		while(pcc = CertEnumCertificatesInStore(hStore, pcc))
+		while (pcc = CertEnumCertificatesInStore(hStore, pcc))
 		{
 		}
 		CertCloseStore(hStore, 0);
@@ -520,7 +519,7 @@ BOOL VerifyFileSignature(LPCWSTR Filename)
 	wd.dwUIChoice = WTD_UI_NONE;
 	wd.dwUnionChoice = WTD_CHOICE_FILE;
 	wd.pFile = &wfi;
-	if(WinVerifyTrust((HWND)INVALID_HANDLE_VALUE, &g, &wd) == ERROR_SUCCESS)
+	if (WinVerifyTrust((HWND)INVALID_HANDLE_VALUE, &g, &wd) == ERROR_SUCCESS)
 		bResult = TRUE;
 	else
 		bResult = VerifyFileSignature_Function(Filename);
@@ -535,25 +534,25 @@ BOOL VerifyFileSignatureInCatalog(LPCWSTR Catalog, LPCWSTR Filename)
 	WINTRUST_CATALOG_INFO wci;
 	WINTRUST_DATA wd;
 	bResult = FALSE;
-	if(VerifyFileSignature(Catalog))
+	if (VerifyFileSignature(Catalog))
 	{
 		ZeroMemory(&wci, sizeof(WINTRUST_CATALOG_INFO));
 		wci.cbStruct = sizeof(WINTRUST_CATALOG_INFO);
 		wci.pcwszCatalogFilePath = Catalog;
 		wci.pcwszMemberFilePath = Filename;
-		if((wci.hMemberFile = CreateFileW(Filename, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL)) != INVALID_HANDLE_VALUE)
+		if ((wci.hMemberFile = CreateFileW(Filename, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL)) != INVALID_HANDLE_VALUE)
 		{
 			p_CryptCATAdminCalcHashFromFileHandle(wci.hMemberFile, &wci.cbCalculatedFileHash, NULL, 0);
-			if(wci.pbCalculatedFileHash = (BYTE*)malloc(wci.cbCalculatedFileHash))
+			if (wci.pbCalculatedFileHash = (BYTE*)malloc(wci.cbCalculatedFileHash))
 			{
-				if(p_CryptCATAdminCalcHashFromFileHandle(wci.hMemberFile, &wci.cbCalculatedFileHash, wci.pbCalculatedFileHash, 0))
+				if (p_CryptCATAdminCalcHashFromFileHandle(wci.hMemberFile, &wci.cbCalculatedFileHash, wci.pbCalculatedFileHash, 0))
 				{
 					ZeroMemory(&wd, sizeof(WINTRUST_DATA));
 					wd.cbStruct = sizeof(WINTRUST_DATA);
 					wd.dwUIChoice = WTD_UI_NONE;
 					wd.dwUnionChoice = WTD_CHOICE_CATALOG;
 					wd.pCatalog = &wci;
-					if(WinVerifyTrust((HWND)INVALID_HANDLE_VALUE, &g, &wd) == ERROR_SUCCESS)
+					if (WinVerifyTrust((HWND)INVALID_HANDLE_VALUE, &g, &wd) == ERROR_SUCCESS)
 						bResult = TRUE;
 				}
 				free(wci.pbCalculatedFileHash);
@@ -579,16 +578,16 @@ BOOL GetSHA1HashOfModule(LPCWSTR Filename, void* pHash)
 	HANDLE hFile;
 	DWORD dw;
 	bResult = FALSE;
-	if(CryptAcquireContextW(&hProv, NULL, NULL, PROV_RSA_FULL, 0) || CryptAcquireContextW(&hProv, NULL, NULL, PROV_RSA_FULL, CRYPT_NEWKEYSET))
+	if (CryptAcquireContextW(&hProv, NULL, NULL, PROV_RSA_FULL, 0) || CryptAcquireContextW(&hProv, NULL, NULL, PROV_RSA_FULL, CRYPT_NEWKEYSET))
 	{
-		if(CryptCreateHash(hProv, CALG_SHA1, 0, 0, &hHash))
+		if (CryptCreateHash(hProv, CALG_SHA1, 0, 0, &hHash))
 		{
-			if((hFile = CreateFileW(Filename, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)) != INVALID_HANDLE_VALUE)
+			if ((hFile = CreateFileW(Filename, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)) != INVALID_HANDLE_VALUE)
 			{
-				if(ImageGetDigestStream(hFile, CERT_PE_IMAGE_DIGEST_ALL_IMPORT_INFO, GetSHA1HashOfModule_Function, (DIGEST_HANDLE)&hHash))
+				if (ImageGetDigestStream(hFile, CERT_PE_IMAGE_DIGEST_ALL_IMPORT_INFO, GetSHA1HashOfModule_Function, (DIGEST_HANDLE)&hHash))
 				{
 					dw = 20;
-					if(CryptGetHashParam(hHash, HP_HASHVAL, (BYTE*)pHash, &dw, 0))
+					if (CryptGetHashParam(hHash, HP_HASHVAL, (BYTE*)pHash, &dw, 0))
 						bResult = TRUE;
 				}
 				CloseHandle(hFile);
@@ -607,37 +606,37 @@ BOOL IsSxsModuleTrusted_Function(LPCWSTR Catalog, LPCWSTR Manifest, LPCWSTR Modu
 	HANDLE hLock1;
 	BYTE Hash[20];
 	int i;
-	static char HexTable[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+	static char HexTable[16] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 	char HashHex[41];
 	HANDLE hFile;
 	DWORD Size;
 	char* pData;
 	DWORD dw;
 	bResult = FALSE;
-	if(hLock0 = LockExistingFile(Catalog))
+	if (hLock0 = LockExistingFile(Catalog))
 	{
-		if(hLock1 = LockExistingFile(Manifest))
+		if (hLock1 = LockExistingFile(Manifest))
 		{
-			if(VerifyFileSignatureInCatalog(Catalog, Manifest))
+			if (VerifyFileSignatureInCatalog(Catalog, Manifest))
 			{
-				if(GetSHA1HashOfModule(Module, &Hash))
+				if (GetSHA1HashOfModule(Module, &Hash))
 				{
-					for(i = 0; i < 20; i++)
+					for (i = 0; i < 20; i++)
 					{
 						HashHex[i * 2] = HexTable[(Hash[i] >> 4) & 0x0f];
 						HashHex[i * 2 + 1] = HexTable[Hash[i] & 0x0f];
 					}
 					HashHex[i * 2] = '\0';
-					if((hFile = CreateFileW(Manifest, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL)) != INVALID_HANDLE_VALUE)
+					if ((hFile = CreateFileW(Manifest, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL)) != INVALID_HANDLE_VALUE)
 					{
 						Size = GetFileSize(hFile, NULL);
-						if(pData = (char*)VirtualAlloc(NULL, Size + 1, MEM_COMMIT, PAGE_READWRITE))
+						if (pData = (char*)VirtualAlloc(NULL, Size + 1, MEM_COMMIT, PAGE_READWRITE))
 						{
 							VirtualLock(pData, Size + 1);
-							if(ReadFile(hFile, pData, Size, &dw, NULL))
+							if (ReadFile(hFile, pData, Size, &dw, NULL))
 							{
 								pData[dw] = '\0';
-								if(strstr(pData, HashHex))
+								if (strstr(pData, HashHex))
 									bResult = TRUE;
 							}
 							VirtualUnlock(pData, Size + 1);
@@ -675,40 +674,40 @@ BOOL IsSxsModuleTrusted(LPCWSTR Filename)
 	HANDLE hFind;
 	WIN32_FIND_DATAW wfd;
 	bResult = FALSE;
-	if(pw0 = AllocateStringW(wcslen(Filename) + 1))
+	if (pw0 = AllocateStringW(wcslen(Filename) + 1))
 	{
 		wcscpy(pw0, Filename);
-		if(p = wcsrchr(pw0, L'\\'))
+		if (p = wcsrchr(pw0, L'\\'))
 		{
 			wcscpy(p, L"");
-			if(p = wcsrchr(pw0, L'\\'))
+			if (p = wcsrchr(pw0, L'\\'))
 			{
 				p++;
-				if(pw1 = AllocateStringW(wcslen(p) + 1))
+				if (pw1 = AllocateStringW(wcslen(p) + 1))
 				{
 					wcscpy(pw1, p);
 					wcscpy(p, L"");
-					if(pw2 = AllocateStringW(wcslen(pw0) + wcslen(L"manifests\\") + wcslen(pw1) + wcslen(L".cat") + 1))
+					if (pw2 = AllocateStringW(wcslen(pw0) + wcslen(L"manifests\\") + wcslen(pw1) + wcslen(L".cat") + 1))
 					{
 						wcscpy(pw2, pw0);
 						wcscat(pw2, L"manifests\\");
 						wcscat(pw2, pw1);
-						if(pw3 = AllocateStringW(wcslen(pw2) + wcslen(L".manifest") + 1))
+						if (pw3 = AllocateStringW(wcslen(pw2) + wcslen(L".manifest") + 1))
 						{
 							wcscpy(pw3, pw2);
 							wcscat(pw3, L".manifest");
 							wcscat(pw2, L".cat");
-							if(IsSxsModuleTrusted_Function(pw2, pw3, Filename))
+							if (IsSxsModuleTrusted_Function(pw2, pw3, Filename))
 								bResult = TRUE;
 							FreeDuplicatedString(pw3);
 						}
 						FreeDuplicatedString(pw2);
 					}
-					if(!bResult)
+					if (!bResult)
 					{
-						if(pw2 = AllocateStringW(wcslen(pw0) + wcslen(L"catalogs\\") + 1))
+						if (pw2 = AllocateStringW(wcslen(pw0) + wcslen(L"catalogs\\") + 1))
 						{
-							if(pw3 = AllocateStringW(wcslen(pw0) + wcslen(L"manifests\\") + wcslen(pw1) + wcslen(L".manifest") + 1))
+							if (pw3 = AllocateStringW(wcslen(pw0) + wcslen(L"manifests\\") + wcslen(pw1) + wcslen(L".manifest") + 1))
 							{
 								wcscpy(pw2, pw0);
 								wcscat(pw2, L"catalogs\\");
@@ -716,24 +715,23 @@ BOOL IsSxsModuleTrusted(LPCWSTR Filename)
 								wcscat(pw3, L"manifests\\");
 								wcscat(pw3, pw1);
 								wcscat(pw3, L".manifest");
-								if(pw4 = AllocateStringW(wcslen(pw2) + wcslen(L"*.cat") + 1))
+								if (pw4 = AllocateStringW(wcslen(pw2) + wcslen(L"*.cat") + 1))
 								{
 									wcscpy(pw4, pw2);
 									wcscat(pw4, L"*.cat");
-									if((hFind = FindFirstFileW(pw4, &wfd)) != INVALID_HANDLE_VALUE)
+									if ((hFind = FindFirstFileW(pw4, &wfd)) != INVALID_HANDLE_VALUE)
 									{
 										do
 										{
-											if(pw5 = AllocateStringW(wcslen(pw2) + wcslen(wfd.cFileName) + 1))
+											if (pw5 = AllocateStringW(wcslen(pw2) + wcslen(wfd.cFileName) + 1))
 											{
 												wcscpy(pw5, pw2);
 												wcscat(pw5, wfd.cFileName);
-												if(IsSxsModuleTrusted_Function(pw5, pw3, Filename))
+												if (IsSxsModuleTrusted_Function(pw5, pw3, Filename))
 													bResult = TRUE;
 												FreeDuplicatedString(pw5);
 											}
-										}
-										while(!bResult && FindNextFileW(hFind, &wfd));
+										} while (!bResult && FindNextFileW(hFind, &wfd));
 										FindClose(hFind);
 									}
 									FreeDuplicatedString(pw4);
@@ -758,26 +756,26 @@ BOOL IsModuleTrusted(LPCWSTR Filename)
 	BOOL bResult;
 	BYTE Hash[20];
 	bResult = FALSE;
-	if(LockThreadLock())
+	if (LockThreadLock())
 	{
-		if(GetSHA1HashOfFile(Filename, &Hash))
+		if (GetSHA1HashOfFile(Filename, &Hash))
 		{
-			if(FindTrustedModuleSHA1Hash(&Hash))
+			if (FindTrustedModuleSHA1Hash(&Hash))
 				bResult = TRUE;
 		}
-		if(!bResult)
+		if (!bResult)
 		{
-			if((g_ProcessProtectionLevel & PROCESS_PROTECTION_BUILTIN) && VerifyFileSignature(Filename))
+			if ((g_ProcessProtectionLevel & PROCESS_PROTECTION_BUILTIN) && VerifyFileSignature(Filename))
 				bResult = TRUE;
 		}
-		if(!bResult)
+		if (!bResult)
 		{
-			if((g_ProcessProtectionLevel & PROCESS_PROTECTION_SYSTEM_FILE) && SfcIsFileProtected(NULL, Filename))
+			if ((g_ProcessProtectionLevel & PROCESS_PROTECTION_SYSTEM_FILE) && SfcIsFileProtected(NULL, Filename))
 				bResult = TRUE;
 		}
-		if(!bResult)
+		if (!bResult)
 		{
-			if((g_ProcessProtectionLevel & PROCESS_PROTECTION_SIDE_BY_SIDE) && IsSxsModuleTrusted(Filename))
+			if ((g_ProcessProtectionLevel & PROCESS_PROTECTION_SIDE_BY_SIDE) && IsSxsModuleTrusted(Filename))
 				bResult = TRUE;
 		}
 		UnlockThreadLock();
@@ -791,7 +789,7 @@ HMODULE WINAPI h_LoadLibraryA(LPCSTR lpLibFileName)
 {
 	HMODULE r = NULL;
 	wchar_t* pw0 = NULL;
-	if(pw0 = DuplicateAtoW(lpLibFileName, -1))
+	if (pw0 = DuplicateAtoW(lpLibFileName, -1))
 		r = LoadLibraryExW(pw0, NULL, 0);
 	FreeDuplicatedString(pw0);
 	return r;
@@ -808,7 +806,7 @@ HMODULE WINAPI h_LoadLibraryExA(LPCSTR lpLibFileName, HANDLE hFile, DWORD dwFlag
 {
 	HMODULE r = NULL;
 	wchar_t* pw0 = NULL;
-	if(pw0 = DuplicateAtoW(lpLibFileName, -1))
+	if (pw0 = DuplicateAtoW(lpLibFileName, -1))
 		r = LoadLibraryExW(pw0, hFile, dwFlags);
 	FreeDuplicatedString(pw0);
 	return r;
@@ -825,21 +823,21 @@ HMODULE WINAPI h_LoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFla
 	bTrusted = FALSE;
 	pw0 = NULL;
 	hLock = NULL;
-//	if(dwFlags & (DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_IMAGE_RESOURCE | LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE))
-	if(dwFlags & (DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_AS_DATAFILE | 0x00000020 | 0x00000040))
+	//	if(dwFlags & (DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_IMAGE_RESOURCE | LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE))
+	if (dwFlags & (DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_AS_DATAFILE | 0x00000020 | 0x00000040))
 		bTrusted = TRUE;
-	if(!bTrusted)
+	if (!bTrusted)
 	{
-		if(hModule = System_LoadLibrary(lpLibFileName, NULL, DONT_RESOLVE_DLL_REFERENCES))
+		if (hModule = System_LoadLibrary(lpLibFileName, NULL, DONT_RESOLVE_DLL_REFERENCES))
 		{
 			Length = MAX_PATH;
-			if(pw0 = AllocateStringW(Length))
+			if (pw0 = AllocateStringW(Length))
 			{
-				if(GetModuleFileNameW(hModule, pw0, Length) > 0)
+				if (GetModuleFileNameW(hModule, pw0, Length) > 0)
 				{
-					while(pw0)
+					while (pw0)
 					{
-						if(GetModuleFileNameW(hModule, pw0, Length) + 1 <= Length)
+						if (GetModuleFileNameW(hModule, pw0, Length) + 1 <= Length)
 						{
 							lpLibFileName = pw0;
 							break;
@@ -853,21 +851,21 @@ HMODULE WINAPI h_LoadLibraryExW(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFla
 			hLock = LockExistingFile(lpLibFileName);
 			FreeLibrary(hModule);
 		}
-		if((g_ProcessProtectionLevel & PROCESS_PROTECTION_LOADED) && GetModuleHandleW(lpLibFileName))
+		if ((g_ProcessProtectionLevel & PROCESS_PROTECTION_LOADED) && GetModuleHandleW(lpLibFileName))
 			bTrusted = TRUE;
 	}
-	if(!bTrusted)
+	if (!bTrusted)
 	{
-		if(hLock)
+		if (hLock)
 		{
-			if(IsModuleTrusted(lpLibFileName))
+			if (IsModuleTrusted(lpLibFileName))
 				bTrusted = TRUE;
 		}
 	}
-	if(bTrusted)
+	if (bTrusted)
 		r = System_LoadLibrary(lpLibFileName, hFile, dwFlags);
 	FreeDuplicatedString(pw0);
-	if(hLock)
+	if (hLock)
 		CloseHandle(hLock);
 	return r;
 }
@@ -887,30 +885,30 @@ HMODULE System_LoadLibrary(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags)
 	us.Length = sizeof(wchar_t) * (USHORT)wcslen(lpLibFileName);
 	us.MaximumLength = sizeof(wchar_t) * ((USHORT)wcslen(lpLibFileName) + 1);
 	us.Buffer = (PWSTR)lpLibFileName;
-//	if(dwFlags & (LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE))
-	if(dwFlags & (LOAD_LIBRARY_AS_DATAFILE | 0x00000040))
+	//	if(dwFlags & (LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE))
+	if (dwFlags & (LOAD_LIBRARY_AS_DATAFILE | 0x00000040))
 	{
-//		if(p_LdrGetDllHandle(NULL, NULL, &us, &r) == STATUS_SUCCESS)
-		if(p_LdrGetDllHandle(NULL, NULL, &us, &r) == 0)
+		//		if(p_LdrGetDllHandle(NULL, NULL, &us, &r) == STATUS_SUCCESS)
+		if (p_LdrGetDllHandle(NULL, NULL, &us, &r) == 0)
 		{
-//			dwFlags &= ~(LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE);
+			//			dwFlags &= ~(LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE);
 			dwFlags &= ~(LOAD_LIBRARY_AS_DATAFILE | 0x00000040);
 			dwFlags |= DONT_RESOLVE_DLL_REFERENCES;
 		}
 		else
 		{
-//			if(dwFlags & LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE)
-			if(dwFlags & 0x00000040)
+			//			if(dwFlags & LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE)
+			if (dwFlags & 0x00000040)
 				hDataFile = CreateFileW(lpLibFileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
 			else
 				hDataFile = CreateFileW(lpLibFileName, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL, OPEN_EXISTING, 0, NULL);
-			if(hDataFile != INVALID_HANDLE_VALUE)
+			if (hDataFile != INVALID_HANDLE_VALUE)
 			{
-				if(hMapping = CreateFileMappingW(hDataFile, NULL, PAGE_READONLY, 0, 0, NULL))
+				if (hMapping = CreateFileMappingW(hDataFile, NULL, PAGE_READONLY, 0, 0, NULL))
 				{
-					if(r = (HMODULE)MapViewOfFileEx(hMapping, FILE_MAP_READ, 0, 0, 0, NULL))
+					if (r = (HMODULE)MapViewOfFileEx(hMapping, FILE_MAP_READ, 0, 0, 0, NULL))
 					{
-						if(p_RtlImageNtHeader(r))
+						if (p_RtlImageNtHeader(r))
 							r = (HMODULE)((size_t)r | 1);
 						else
 						{
@@ -924,21 +922,21 @@ HMODULE System_LoadLibrary(LPCWSTR lpLibFileName, HANDLE hFile, DWORD dwFlags)
 			}
 			else
 			{
-//				dwFlags &= ~(LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE);
+				//				dwFlags &= ~(LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE);
 				dwFlags &= ~(LOAD_LIBRARY_AS_DATAFILE | 0x00000040);
 				dwFlags |= DONT_RESOLVE_DLL_REFERENCES;
 			}
 		}
 	}
-//	if(!(dwFlags & (LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE)))
-	if(!(dwFlags & (LOAD_LIBRARY_AS_DATAFILE | 0x00000040)))
+	//	if(!(dwFlags & (LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE)))
+	if (!(dwFlags & (LOAD_LIBRARY_AS_DATAFILE | 0x00000040)))
 	{
 		DllFlags = 0;
-//		if(dwFlags & (DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_AS_IMAGE_RESOURCE))
-		if(dwFlags & (DONT_RESOLVE_DLL_REFERENCES | 0x00000020))
+		//		if(dwFlags & (DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_AS_IMAGE_RESOURCE))
+		if (dwFlags & (DONT_RESOLVE_DLL_REFERENCES | 0x00000020))
 			DllFlags |= 0x00000002;
-//		if(p_LdrLoadDll(NULL, &DllFlags, &us, &r) == STATUS_SUCCESS)
-		if(p_LdrLoadDll(NULL, &DllFlags, &us, &r) == 0)
+		//		if(p_LdrLoadDll(NULL, &DllFlags, &us, &r) == STATUS_SUCCESS)
+		if (p_LdrLoadDll(NULL, &DllFlags, &us, &r) == 0)
 		{
 		}
 		else
@@ -960,14 +958,14 @@ BOOL GetSHA1HashOfMemory(const void* pData, DWORD Size, void* pHash)
 	HCRYPTHASH hHash;
 	DWORD dw;
 	bResult = FALSE;
-	if(CryptAcquireContextW(&hProv, NULL, NULL, PROV_RSA_FULL, 0) || CryptAcquireContextW(&hProv, NULL, NULL, PROV_RSA_FULL, CRYPT_NEWKEYSET))
+	if (CryptAcquireContextW(&hProv, NULL, NULL, PROV_RSA_FULL, 0) || CryptAcquireContextW(&hProv, NULL, NULL, PROV_RSA_FULL, CRYPT_NEWKEYSET))
 	{
-		if(CryptCreateHash(hProv, CALG_SHA1, 0, 0, &hHash))
+		if (CryptCreateHash(hProv, CALG_SHA1, 0, 0, &hHash))
 		{
-			if(CryptHashData(hHash, (BYTE*)pData, Size, 0))
+			if (CryptHashData(hHash, (BYTE*)pData, Size, 0))
 			{
 				dw = 20;
-				if(CryptGetHashParam(hHash, HP_HASHVAL, (BYTE*)pHash, &dw, 0))
+				if (CryptGetHashParam(hHash, HP_HASHVAL, (BYTE*)pHash, &dw, 0))
 					bResult = TRUE;
 			}
 			CryptDestroyHash(hHash);
@@ -986,15 +984,15 @@ BOOL GetSHA1HashOfFile(LPCWSTR Filename, void* pHash)
 	void* pData;
 	DWORD dw;
 	bResult = FALSE;
-	if((hFile = CreateFileW(Filename, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)) != INVALID_HANDLE_VALUE)
+	if ((hFile = CreateFileW(Filename, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)) != INVALID_HANDLE_VALUE)
 	{
 		Size = GetFileSize(hFile, NULL);
-		if(pData = VirtualAlloc(NULL, Size, MEM_COMMIT, PAGE_READWRITE))
+		if (pData = VirtualAlloc(NULL, Size, MEM_COMMIT, PAGE_READWRITE))
 		{
 			VirtualLock(pData, Size);
-			if(ReadFile(hFile, pData, Size, &dw, NULL))
+			if (ReadFile(hFile, pData, Size, &dw, NULL))
 			{
-				if(GetSHA1HashOfMemory(pData, Size, pHash))
+				if (GetSHA1HashOfMemory(pData, Size, pHash))
 					bResult = TRUE;
 			}
 			VirtualUnlock(pData, Size);
@@ -1009,17 +1007,17 @@ BOOL GetSHA1HashOfFile(LPCWSTR Filename, void* pHash)
 BOOL RegisterTrustedModuleSHA1Hash(void* pHash)
 {
 	BOOL bResult;
-	BYTE NullHash[20] = {0};
+	BYTE NullHash[20] = { 0 };
 	int i;
 	bResult = FALSE;
-	if(FindTrustedModuleSHA1Hash(pHash))
+	if (FindTrustedModuleSHA1Hash(pHash))
 		bResult = TRUE;
 	else
 	{
 		i = 0;
-		while(i < MAX_TRUSTED_SHA1_HASH_TABLE)
+		while (i < MAX_TRUSTED_SHA1_HASH_TABLE)
 		{
-			if(memcmp(&g_TrustedSHA1HashTable[i], &NullHash, 20) == 0)
+			if (memcmp(&g_TrustedSHA1HashTable[i], &NullHash, 20) == 0)
 			{
 				memcpy(&g_TrustedSHA1HashTable[i], pHash, 20);
 				bResult = TRUE;
@@ -1035,13 +1033,13 @@ BOOL RegisterTrustedModuleSHA1Hash(void* pHash)
 BOOL UnregisterTrustedModuleSHA1Hash(void* pHash)
 {
 	BOOL bResult;
-	BYTE NullHash[20] = {0};
+	BYTE NullHash[20] = { 0 };
 	int i;
 	bResult = FALSE;
 	i = 0;
-	while(i < MAX_TRUSTED_SHA1_HASH_TABLE)
+	while (i < MAX_TRUSTED_SHA1_HASH_TABLE)
 	{
-		if(memcmp(&g_TrustedSHA1HashTable[i], pHash, 20) == 0)
+		if (memcmp(&g_TrustedSHA1HashTable[i], pHash, 20) == 0)
 		{
 			memcpy(&g_TrustedSHA1HashTable[i], &NullHash, 20);
 			bResult = TRUE;
@@ -1062,23 +1060,23 @@ BOOL UnloadUntrustedModule()
 	DWORD Length;
 	bResult = FALSE;
 	pw0 = NULL;
-	if((hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, GetCurrentProcessId())) != INVALID_HANDLE_VALUE)
+	if ((hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE, GetCurrentProcessId())) != INVALID_HANDLE_VALUE)
 	{
 		bResult = TRUE;
 		me.dwSize = sizeof(MODULEENTRY32);
-		if(Module32First(hSnapshot, &me))
+		if (Module32First(hSnapshot, &me))
 		{
 			do
 			{
 				Length = MAX_PATH;
 				FreeDuplicatedString(pw0);
-				if(pw0 = AllocateStringW(Length))
+				if (pw0 = AllocateStringW(Length))
 				{
-					if(GetModuleFileNameW(me.hModule, pw0, Length) > 0)
+					if (GetModuleFileNameW(me.hModule, pw0, Length) > 0)
 					{
-						while(pw0)
+						while (pw0)
 						{
-							if(GetModuleFileNameW(me.hModule, pw0, Length) + 1 <= Length)
+							if (GetModuleFileNameW(me.hModule, pw0, Length) + 1 <= Length)
 								break;
 							Length = Length * 2;
 							FreeDuplicatedString(pw0);
@@ -1086,16 +1084,16 @@ BOOL UnloadUntrustedModule()
 						}
 					}
 				}
-				if(pw0)
+				if (pw0)
 				{
-					if(!IsModuleTrusted(pw0))
+					if (!IsModuleTrusted(pw0))
 					{
-						if(me.hModule != GetModuleHandleW(NULL))
+						if (me.hModule != GetModuleHandleW(NULL))
 						{
-							while(FreeLibrary(me.hModule))
+							while (FreeLibrary(me.hModule))
 							{
 							}
-							if(GetModuleFileNameW(me.hModule, pw0, Length) > 0)
+							if (GetModuleFileNameW(me.hModule, pw0, Length) > 0)
 							{
 								bResult = FALSE;
 								break;
@@ -1108,8 +1106,7 @@ BOOL UnloadUntrustedModule()
 					bResult = FALSE;
 					break;
 				}
-			}
-			while(Module32Next(hSnapshot, &me));
+			} while (Module32Next(hSnapshot, &me));
 		}
 		CloseHandle(hSnapshot);
 	}
@@ -1128,40 +1125,40 @@ BOOL InitializeLoadLibraryHook()
 	g_LoadLibraryA.ModuleName = _T("kernel32.dll");
 	g_LoadLibraryA.ProcName = "LoadLibraryA";
 	g_LoadLibraryA.Hook = (FARPROC)h_LoadLibraryA;
-	if(!InitializeHookFunction(&g_LoadLibraryA))
+	if (!InitializeHookFunction(&g_LoadLibraryA))
 		bResult = FALSE;
 	memset(&g_LoadLibraryW, 0, sizeof(HOOK_FUNCTION_INFO));
 	g_LoadLibraryW.Flags = HOOK_USE_GETMODULEHANDLE | HOOK_USE_GETPROCADDRESS;
 	g_LoadLibraryW.ModuleName = _T("kernel32.dll");
 	g_LoadLibraryW.ProcName = "LoadLibraryW";
 	g_LoadLibraryW.Hook = (FARPROC)h_LoadLibraryW;
-	if(!InitializeHookFunction(&g_LoadLibraryW))
+	if (!InitializeHookFunction(&g_LoadLibraryW))
 		bResult = FALSE;
 	memset(&g_LoadLibraryExA, 0, sizeof(HOOK_FUNCTION_INFO));
 	g_LoadLibraryExA.Flags = HOOK_USE_GETMODULEHANDLE | HOOK_USE_GETPROCADDRESS;
 	g_LoadLibraryExA.ModuleName = _T("kernel32.dll");
 	g_LoadLibraryExA.ProcName = "LoadLibraryExA";
 	g_LoadLibraryExA.Hook = (FARPROC)h_LoadLibraryExA;
-	if(!InitializeHookFunction(&g_LoadLibraryExA))
+	if (!InitializeHookFunction(&g_LoadLibraryExA))
 		bResult = FALSE;
 	memset(&g_LoadLibraryExW, 0, sizeof(HOOK_FUNCTION_INFO));
 	g_LoadLibraryExW.Flags = HOOK_USE_GETMODULEHANDLE | HOOK_USE_GETPROCADDRESS;
 	g_LoadLibraryExW.ModuleName = _T("kernel32.dll");
 	g_LoadLibraryExW.ProcName = "LoadLibraryExW";
 	g_LoadLibraryExW.Hook = (FARPROC)h_LoadLibraryExW;
-	if(!InitializeHookFunction(&g_LoadLibraryExW))
+	if (!InitializeHookFunction(&g_LoadLibraryExW))
 		bResult = FALSE;
-	if(!(hModule = GetModuleHandleW(L"ntdll.dll")))
+	if (!(hModule = GetModuleHandleW(L"ntdll.dll")))
 		bResult = FALSE;
-	if(!(p_LdrLoadDll = (_LdrLoadDll)GetProcAddress(hModule, "LdrLoadDll")))
+	if (!(p_LdrLoadDll = (_LdrLoadDll)GetProcAddress(hModule, "LdrLoadDll")))
 		bResult = FALSE;
-	if(!(p_LdrGetDllHandle = (_LdrGetDllHandle)GetProcAddress(hModule, "LdrGetDllHandle")))
+	if (!(p_LdrGetDllHandle = (_LdrGetDllHandle)GetProcAddress(hModule, "LdrGetDllHandle")))
 		bResult = FALSE;
-	if(!(p_RtlImageNtHeader = (_RtlImageNtHeader)GetProcAddress(hModule, "RtlImageNtHeader")))
+	if (!(p_RtlImageNtHeader = (_RtlImageNtHeader)GetProcAddress(hModule, "RtlImageNtHeader")))
 		bResult = FALSE;
-	if(!(hModule = LoadLibraryW(L"wintrust.dll")))
+	if (!(hModule = LoadLibraryW(L"wintrust.dll")))
 		bResult = FALSE;
-	if(!(p_CryptCATAdminCalcHashFromFileHandle = (_CryptCATAdminCalcHashFromFileHandle)GetProcAddress(hModule, "CryptCATAdminCalcHashFromFileHandle")))
+	if (!(p_CryptCATAdminCalcHashFromFileHandle = (_CryptCATAdminCalcHashFromFileHandle)GetProcAddress(hModule, "CryptCATAdminCalcHashFromFileHandle")))
 		bResult = FALSE;
 	// バグ対策
 	ImageGetDigestStream(NULL, 0, NULL, NULL);
@@ -1174,13 +1171,13 @@ BOOL EnableLoadLibraryHook(BOOL bEnable)
 {
 	BOOL bResult;
 	bResult = TRUE;
-	if(!EnableHookFunction(&g_LoadLibraryA, bEnable))
+	if (!EnableHookFunction(&g_LoadLibraryA, bEnable))
 		bResult = FALSE;
-	if(!EnableHookFunction(&g_LoadLibraryW, bEnable))
+	if (!EnableHookFunction(&g_LoadLibraryW, bEnable))
 		bResult = FALSE;
-	if(!EnableHookFunction(&g_LoadLibraryExA, bEnable))
+	if (!EnableHookFunction(&g_LoadLibraryExA, bEnable))
 		bResult = FALSE;
-	if(!EnableHookFunction(&g_LoadLibraryExW, bEnable))
+	if (!EnableHookFunction(&g_LoadLibraryExW, bEnable))
 		bResult = FALSE;
 	return bResult;
 }
@@ -1199,21 +1196,21 @@ BOOL RestartProtectedProcess(LPCTSTR Keyword)
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
 	bResult = FALSE;
-	if(_tcslen(GetCommandLine()) >= _tcslen(Keyword) && _tcscmp(GetCommandLine() + _tcslen(GetCommandLine()) - _tcslen(Keyword), Keyword) == 0)
+	if (_tcslen(GetCommandLine()) >= _tcslen(Keyword) && _tcscmp(GetCommandLine() + _tcslen(GetCommandLine()) - _tcslen(Keyword), Keyword) == 0)
 		return FALSE;
-	if(pACL = (ACL*)malloc(sizeof(ACL) + 1024))
+	if (pACL = (ACL*)malloc(sizeof(ACL) + 1024))
 	{
-		if(InitializeAcl(pACL, sizeof(ACL) + 1024, ACL_REVISION))
+		if (InitializeAcl(pACL, sizeof(ACL) + 1024, ACL_REVISION))
 		{
-			if(AllocateAndInitializeSid(&sia, 1, SECURITY_WORLD_RID, 0, 0, 0, 0, 0, 0, 0, &pSID))
+			if (AllocateAndInitializeSid(&sia, 1, SECURITY_WORLD_RID, 0, 0, 0, 0, 0, 0, 0, &pSID))
 			{
-				if(AddAccessAllowedAce(pACL, ACL_REVISION, PROCESS_TERMINATE, pSID))
+				if (AddAccessAllowedAce(pACL, ACL_REVISION, PROCESS_TERMINATE, pSID))
 				{
-					if(InitializeSecurityDescriptor(&sd, SECURITY_DESCRIPTOR_REVISION))
+					if (InitializeSecurityDescriptor(&sd, SECURITY_DESCRIPTOR_REVISION))
 					{
-						if(SetSecurityDescriptorDacl(&sd, TRUE, pACL, FALSE))
+						if (SetSecurityDescriptorDacl(&sd, TRUE, pACL, FALSE))
 						{
-							if(CommandLine = (TCHAR*)malloc(sizeof(TCHAR) * (_tcslen(GetCommandLine()) + _tcslen(Keyword) + 1)))
+							if (CommandLine = (TCHAR*)malloc(sizeof(TCHAR) * (_tcslen(GetCommandLine()) + _tcslen(Keyword) + 1)))
 							{
 								_tcscpy(CommandLine, GetCommandLine());
 								_tcscat(CommandLine, Keyword);
@@ -1221,7 +1218,7 @@ BOOL RestartProtectedProcess(LPCTSTR Keyword)
 								sa.lpSecurityDescriptor = &sd;
 								sa.bInheritHandle = FALSE;
 								GetStartupInfo(&si);
-								if(CreateProcess(NULL, CommandLine, &sa, NULL, FALSE, 0, NULL, NULL, &si, &pi))
+								if (CreateProcess(NULL, CommandLine, &sa, NULL, FALSE, 0, NULL, NULL, &si, &pi))
 								{
 									CloseHandle(pi.hThread);
 									CloseHandle(pi.hProcess);
@@ -1242,7 +1239,7 @@ BOOL RestartProtectedProcess(LPCTSTR Keyword)
 
 INT_PTR CALLBACK PasswordEditControlWndProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
-	switch(Msg)
+	switch (Msg)
 	{
 	case EM_GETPASSWORDCHAR:
 		break;
@@ -1260,14 +1257,14 @@ BOOL ProtectPasswordEditControl(HWND hWnd)
 	WCHAR ClassName[MAX_PATH];
 	WNDPROC Proc;
 	bResult = FALSE;
-	if(g_ProcessProtectionLevel & PROCESS_PROTECTION_PASSWORD_EDIT)
+	if (g_ProcessProtectionLevel & PROCESS_PROTECTION_PASSWORD_EDIT)
 	{
-		if(GetClassNameW(hWnd, ClassName, MAX_PATH) > 0)
+		if (GetClassNameW(hWnd, ClassName, MAX_PATH) > 0)
 		{
-			if(_wcsicmp(ClassName, WC_EDITW) == 0)
+			if (_wcsicmp(ClassName, WC_EDITW) == 0)
 			{
 				Proc = (WNDPROC)GetWindowLongPtrW(hWnd, GWLP_WNDPROC);
-				if(Proc != (WNDPROC)PasswordEditControlWndProc)
+				if (Proc != (WNDPROC)PasswordEditControlWndProc)
 				{
 					g_PasswordEditControlProc = Proc;
 					SetWindowLongPtrW(hWnd, GWLP_WNDPROC, (LONG_PTR)PasswordEditControlWndProc);
@@ -1279,7 +1276,7 @@ BOOL ProtectPasswordEditControl(HWND hWnd)
 	return bResult;
 }
 
-BOOL CALLBACK ProtectAllEditControlsEnumChildProc(HWND hwnd , LPARAM lParam)
+BOOL CALLBACK ProtectAllEditControlsEnumChildProc(HWND hwnd, LPARAM lParam)
 {
 	ProtectPasswordEditControl(hwnd);
 	return TRUE;
@@ -1287,7 +1284,7 @@ BOOL CALLBACK ProtectAllEditControlsEnumChildProc(HWND hwnd , LPARAM lParam)
 
 BOOL ProtectAllEditControls(HWND hWnd)
 {
-	if(g_ProcessProtectionLevel & PROCESS_PROTECTION_PASSWORD_EDIT)
+	if (g_ProcessProtectionLevel & PROCESS_PROTECTION_PASSWORD_EDIT)
 		EnumChildWindows(hWnd, ProtectAllEditControlsEnumChildProc, 0);
 	return TRUE;
 }

@@ -8,7 +8,7 @@
 #include <windows.h>
 #include <mmsystem.h>
 typedef SOCKADDR_STORAGE_XP SOCKADDR_STORAGE;
-typedef SOCKADDR_STORAGE *PSOCKADDR_STORAGE, FAR *LPSOCKADDR_STORAGE;
+typedef SOCKADDR_STORAGE* PSOCKADDR_STORAGE, FAR* LPSOCKADDR_STORAGE;
 #include <winhttp.h>
 
 #include "updater.h"
@@ -58,16 +58,16 @@ BOOL ReadFileViaHTTPW(void* pOut, DWORD Length, DWORD* pLength, LPCWSTR UserAgen
 	WINHTTP_PROXY_INFO ProxyInfo;
 	WINHTTP_CURRENT_USER_IE_PROXY_CONFIG ProxyConfig;
 	bResult = FALSE;
-	if(hSession = WinHttpOpen(UserAgent, WINHTTP_ACCESS_TYPE_NO_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0))
+	if (hSession = WinHttpOpen(UserAgent, WINHTTP_ACCESS_TYPE_NO_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, 0))
 	{
 		Buffer = WINHTTP_OPTION_REDIRECT_POLICY_ALWAYS;
-		if(WinHttpSetOption(hSession, WINHTTP_OPTION_REDIRECT_POLICY, &Buffer, sizeof(DWORD)))
+		if (WinHttpSetOption(hSession, WINHTTP_OPTION_REDIRECT_POLICY, &Buffer, sizeof(DWORD)))
 		{
-			if(hConnect = WinHttpConnect(hSession, ServerName, INTERNET_DEFAULT_HTTP_PORT, 0))
+			if (hConnect = WinHttpConnect(hSession, ServerName, INTERNET_DEFAULT_HTTP_PORT, 0))
 			{
-				if(hRequest = WinHttpOpenRequest(hConnect, L"GET", ObjectName, NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, 0))
+				if (hRequest = WinHttpOpenRequest(hConnect, L"GET", ObjectName, NULL, WINHTTP_NO_REFERER, WINHTTP_DEFAULT_ACCEPT_TYPES, 0))
 				{
-					if(Url = (WCHAR*)malloc(sizeof(WCHAR) * (wcslen(L"http://") + wcslen(ServerName) + wcslen(ObjectName) + 1)))
+					if (Url = (WCHAR*)malloc(sizeof(WCHAR) * (wcslen(L"http://") + wcslen(ServerName) + wcslen(ObjectName) + 1)))
 					{
 						wcscpy(Url, L"http://");
 						wcscat(Url, ServerName);
@@ -79,33 +79,33 @@ BOOL ReadFileViaHTTPW(void* pOut, DWORD Length, DWORD* pLength, LPCWSTR UserAgen
 					AutoProxyOptions.fAutoLogonIfChallenged = TRUE;
 					memset(&ProxyInfo, 0, sizeof(WINHTTP_PROXY_INFO));
 					memset(&ProxyConfig, 0, sizeof(WINHTTP_CURRENT_USER_IE_PROXY_CONFIG));
-					if(WinHttpGetProxyForUrl(hSession, Url, &AutoProxyOptions, &ProxyInfo))
+					if (WinHttpGetProxyForUrl(hSession, Url, &AutoProxyOptions, &ProxyInfo))
 					{
 						WinHttpSetOption(hRequest, WINHTTP_OPTION_PROXY, &ProxyInfo, sizeof(WINHTTP_PROXY_INFO));
-						if(ProxyInfo.lpszProxy)
+						if (ProxyInfo.lpszProxy)
 							GlobalFree(ProxyInfo.lpszProxy);
-						if(ProxyInfo.lpszProxyBypass)
+						if (ProxyInfo.lpszProxyBypass)
 							GlobalFree(ProxyInfo.lpszProxyBypass);
 					}
-					else if(WinHttpGetIEProxyConfigForCurrentUser(&ProxyConfig))
+					else if (WinHttpGetIEProxyConfigForCurrentUser(&ProxyConfig))
 					{
-						if(ProxyConfig.lpszAutoConfigUrl)
+						if (ProxyConfig.lpszAutoConfigUrl)
 						{
 							memset(&AutoProxyOptions, 0, sizeof(WINHTTP_AUTOPROXY_OPTIONS));
 							AutoProxyOptions.dwFlags = WINHTTP_AUTOPROXY_CONFIG_URL;
 							AutoProxyOptions.lpszAutoConfigUrl = ProxyConfig.lpszAutoConfigUrl;
 							AutoProxyOptions.fAutoLogonIfChallenged = TRUE;
 							memset(&ProxyInfo, 0, sizeof(WINHTTP_PROXY_INFO));
-							if(WinHttpGetProxyForUrl(hSession, Url, &AutoProxyOptions, &ProxyInfo))
+							if (WinHttpGetProxyForUrl(hSession, Url, &AutoProxyOptions, &ProxyInfo))
 							{
 								WinHttpSetOption(hRequest, WINHTTP_OPTION_PROXY, &ProxyInfo, sizeof(WINHTTP_PROXY_INFO));
-								if(ProxyInfo.lpszProxy)
+								if (ProxyInfo.lpszProxy)
 									GlobalFree(ProxyInfo.lpszProxy);
-								if(ProxyInfo.lpszProxyBypass)
+								if (ProxyInfo.lpszProxyBypass)
 									GlobalFree(ProxyInfo.lpszProxyBypass);
 							}
 						}
-						else if(ProxyConfig.lpszProxy)
+						else if (ProxyConfig.lpszProxy)
 						{
 							memset(&ProxyInfo, 0, sizeof(WINHTTP_PROXY_INFO));
 							ProxyInfo.dwAccessType = WINHTTP_ACCESS_TYPE_NAMED_PROXY;
@@ -113,24 +113,24 @@ BOOL ReadFileViaHTTPW(void* pOut, DWORD Length, DWORD* pLength, LPCWSTR UserAgen
 							ProxyInfo.lpszProxyBypass = ProxyConfig.lpszProxyBypass;
 							WinHttpSetOption(hRequest, WINHTTP_OPTION_PROXY, &ProxyInfo, sizeof(WINHTTP_PROXY_INFO));
 						}
-						if(ProxyConfig.lpszAutoConfigUrl)
+						if (ProxyConfig.lpszAutoConfigUrl)
 							GlobalFree(ProxyConfig.lpszAutoConfigUrl);
-						if(ProxyConfig.lpszProxy)
+						if (ProxyConfig.lpszProxy)
 							GlobalFree(ProxyConfig.lpszProxy);
-						if(ProxyConfig.lpszProxyBypass)
+						if (ProxyConfig.lpszProxyBypass)
 							GlobalFree(ProxyConfig.lpszProxyBypass);
 					}
-					if(Url)
+					if (Url)
 						free(Url);
-					if(WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0))
+					if (WinHttpSendRequest(hRequest, WINHTTP_NO_ADDITIONAL_HEADERS, 0, WINHTTP_NO_REQUEST_DATA, 0, 0, 0))
 					{
-						if(WinHttpReceiveResponse(hRequest, NULL))
+						if (WinHttpReceiveResponse(hRequest, NULL))
 						{
-							if(WinHttpQueryDataAvailable(hRequest, pLength))
+							if (WinHttpQueryDataAvailable(hRequest, pLength))
 							{
-								if(*pLength <= Length)
+								if (*pLength <= Length)
 								{
-									if(WinHttpReadData(hRequest, pOut, Length, pLength))
+									if (WinHttpReadData(hRequest, pOut, Length, pLength))
 										bResult = TRUE;
 								}
 							}
@@ -167,13 +167,13 @@ BOOL SaveMemoryToFileWithTimestamp(LPCTSTR FileName, void* pData, DWORD Size, FI
 	BOOL bResult;
 	HANDLE hFile;
 	bResult = FALSE;
-	if((hFile = CreateFile(FileName, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL)) != INVALID_HANDLE_VALUE)
+	if ((hFile = CreateFile(FileName, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL)) != INVALID_HANDLE_VALUE)
 	{
-		if(WriteFile(hFile, pData, Size, &Size, NULL))
+		if (WriteFile(hFile, pData, Size, &Size, NULL))
 		{
-			if(pTimestamp)
+			if (pTimestamp)
 			{
-				if(SetFileTime(hFile, NULL, NULL, pTimestamp))
+				if (SetFileTime(hFile, NULL, NULL, pTimestamp))
 					bResult = TRUE;
 			}
 			else
@@ -190,19 +190,19 @@ BOOL LoadMemoryFromFileWithTimestamp(LPCTSTR FileName, void* pData, DWORD Size, 
 	HANDLE hFile;
 	LARGE_INTEGER li;
 	bResult = FALSE;
-	if((hFile = CreateFile(FileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)) != INVALID_HANDLE_VALUE)
+	if ((hFile = CreateFile(FileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)) != INVALID_HANDLE_VALUE)
 	{
-		if(GetFileSizeEx(hFile, &li))
+		if (GetFileSizeEx(hFile, &li))
 		{
-			if(li.QuadPart <= (LONGLONG)Size)
+			if (li.QuadPart <= (LONGLONG)Size)
 			{
-				if(ReadFile(hFile, pData, Size, pReadSize, NULL))
+				if (ReadFile(hFile, pData, Size, pReadSize, NULL))
 				{
-					if(*pReadSize == li.LowPart)
+					if (*pReadSize == li.LowPart)
 					{
-						if(pTimestamp)
+						if (pTimestamp)
 						{
-							if(GetFileTime(hFile, NULL, NULL, pTimestamp))
+							if (GetFileTime(hFile, NULL, NULL, pTimestamp))
 								bResult = TRUE;
 						}
 						else
@@ -223,11 +223,11 @@ BOOL CopyAllFilesInDirectory(LPCTSTR From, LPCTSTR To)
 	TCHAR* pTo;
 	SHFILEOPSTRUCT fop;
 	bResult = FALSE;
-	if(pFrom = (TCHAR*)malloc(sizeof(TCHAR) * (_tcslen(From) + _tcslen(_T("\\*")) + 2)))
+	if (pFrom = (TCHAR*)malloc(sizeof(TCHAR) * (_tcslen(From) + _tcslen(_T("\\*")) + 2)))
 	{
 		_tcscpy(pFrom, From);
 		_tcsncpy(pFrom + _tcslen(pFrom), _T("\\*"), _tcslen(_T("\\*")) + 2);
-		if(pTo = (TCHAR*)malloc(sizeof(TCHAR) * (_tcslen(To) + 2)))
+		if (pTo = (TCHAR*)malloc(sizeof(TCHAR) * (_tcslen(To) + 2)))
 		{
 			_tcsncpy(pTo, To, _tcslen(To) + 2);
 			memset(&fop, 0, sizeof(SHFILEOPSTRUCT));
@@ -235,7 +235,7 @@ BOOL CopyAllFilesInDirectory(LPCTSTR From, LPCTSTR To)
 			fop.pFrom = pFrom;
 			fop.pTo = pTo;
 			fop.fFlags = FOF_NO_UI;
-			if(SHFileOperation(&fop) == 0)
+			if (SHFileOperation(&fop) == 0)
 				bResult = TRUE;
 			free(pTo);
 		}
@@ -250,14 +250,14 @@ BOOL DeleteDirectoryAndContents(LPCTSTR Path)
 	TCHAR* pFrom;
 	SHFILEOPSTRUCT fop;
 	bResult = FALSE;
-	if(pFrom = (TCHAR*)malloc(sizeof(TCHAR) * (_tcslen(Path) + 2)))
+	if (pFrom = (TCHAR*)malloc(sizeof(TCHAR) * (_tcslen(Path) + 2)))
 	{
 		_tcsncpy(pFrom, Path, _tcslen(Path) + 2);
 		memset(&fop, 0, sizeof(SHFILEOPSTRUCT));
 		fop.wFunc = FO_DELETE;
 		fop.pFrom = pFrom;
 		fop.fFlags = FOF_NO_UI;
-		if(SHFileOperation(&fop) == 0)
+		if (SHFileOperation(&fop) == 0)
 			bResult = TRUE;
 		free(pFrom);
 	}
@@ -277,37 +277,37 @@ DWORD ListUpdateFile(UPDATE_LIST* pList, DWORD MaxCount, LPCTSTR ServerPath, LPC
 	FILETIME Time;
 	BYTE Hash[64];
 	Result = 0;
-	if(!Path)
+	if (!Path)
 		Path = _T("");
-	if(_tcslen(ReferenceDir) + _tcslen(Path) + _tcslen(_T("\\*")) < MAX_PATH)
+	if (_tcslen(ReferenceDir) + _tcslen(Path) + _tcslen(_T("\\*")) < MAX_PATH)
 	{
 		_tcscpy(Temp1, ReferenceDir);
 		_tcscat(Temp1, Path);
 		_tcscat(Temp1, _T("\\*"));
-		if((hFind = FindFirstFile(Temp1, &Find)) != INVALID_HANDLE_VALUE)
+		if ((hFind = FindFirstFile(Temp1, &Find)) != INVALID_HANDLE_VALUE)
 		{
 			do
 			{
-				if(_tcscmp(Find.cFileName, _T(".")) != 0 && _tcscmp(Find.cFileName, _T("..")) != 0)
+				if (_tcscmp(Find.cFileName, _T(".")) != 0 && _tcscmp(Find.cFileName, _T("..")) != 0)
 				{
-//					if(_tcslen(ServerPath) + _tcslen(_T("/")) + _tcslen(Find.cFileName) < 128 && _tcslen(Path) + _tcslen(_T("\\")) + _tcslen(Find.cFileName) < 128)
-					if(_tcslen(ServerPath) + _tcslen(Find.cFileName) < 128 && _tcslen(Path) + _tcslen(_T("\\")) + _tcslen(Find.cFileName) < 128)
+					//					if(_tcslen(ServerPath) + _tcslen(_T("/")) + _tcslen(Find.cFileName) < 128 && _tcslen(Path) + _tcslen(_T("\\")) + _tcslen(Find.cFileName) < 128)
+					if (_tcslen(ServerPath) + _tcslen(Find.cFileName) < 128 && _tcslen(Path) + _tcslen(_T("\\")) + _tcslen(Find.cFileName) < 128)
 					{
 						_tcscpy(Temp1, ServerPath);
-//						_tcscat(Temp1, _T("/"));
+						//						_tcscat(Temp1, _T("/"));
 						_tcscat(Temp1, Find.cFileName);
 						_tcscpy(Temp2, Path);
 						_tcscat(Temp2, _T("\\"));
 						_tcscat(Temp2, Find.cFileName);
-						if(_tcslen(ReferenceDir) + _tcslen(Temp2) < MAX_PATH)
+						if (_tcslen(ReferenceDir) + _tcslen(Temp2) < MAX_PATH)
 						{
 							_tcscpy(Temp3, ReferenceDir);
 							_tcscat(Temp3, Temp2);
-							if((Find.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+							if ((Find.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 							{
-								if(!(Find.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT))
+								if (!(Find.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT))
 								{
-									if(pList)
+									if (pList)
 									{
 										memset(&pList->File[pList->FileCount], 0, sizeof(UPDATE_LIST_FILE));
 										pList->File[pList->FileCount].Flags = UPDATE_LIST_FILE_FLAG_DIRECTORY;
@@ -315,20 +315,20 @@ DWORD ListUpdateFile(UPDATE_LIST* pList, DWORD MaxCount, LPCTSTR ServerPath, LPC
 										pList->FileCount++;
 									}
 									Result++;
-									if(Result >= MaxCount)
+									if (Result >= MaxCount)
 										break;
 									Result += ListUpdateFile(pList, MaxCount, Temp1, ReferenceDir, Temp2);
 								}
 							}
 							else
 							{
-								if(pList)
+								if (pList)
 								{
-									if(pBuf = malloc(UPDATE_MAX_FILE_SIZE))
+									if (pBuf = malloc(UPDATE_MAX_FILE_SIZE))
 									{
-										if(LoadMemoryFromFileWithTimestamp(Temp3, pBuf, UPDATE_MAX_FILE_SIZE, &Length, &Time))
+										if (LoadMemoryFromFileWithTimestamp(Temp3, pBuf, UPDATE_MAX_FILE_SIZE, &Length, &Time))
 										{
-											if(GetHashSHA512(pBuf, Length, &Hash))
+											if (GetHashSHA512(pBuf, Length, &Hash))
 											{
 												memset(&pList->File[pList->FileCount], 0, sizeof(UPDATE_LIST_FILE));
 												_tcscpy(pList->File[pList->FileCount].SrcPath, Temp1);
@@ -342,14 +342,13 @@ DWORD ListUpdateFile(UPDATE_LIST* pList, DWORD MaxCount, LPCTSTR ServerPath, LPC
 									}
 								}
 								Result++;
-								if(Result >= MaxCount)
+								if (Result >= MaxCount)
 									break;
 							}
 						}
 					}
 				}
-			}
-			while(FindNextFile(hFind, &Find));
+			} while (FindNextFile(hFind, &Find));
 			FindClose(hFind);
 		}
 	}
@@ -369,13 +368,13 @@ BOOL BuildUpdates(LPCTSTR PrivateKeyFile, LPCTSTR Password, LPCTSTR ServerPath, 
 	BYTE Buf[1024];
 	bResult = FALSE;
 	memset(PrivateKey, 0, sizeof(PrivateKey));
-	if(LoadMemoryFromFileWithTimestamp(PrivateKeyFile, &PrivateKey, sizeof(PrivateKey) - sizeof(char), &Length, NULL))
+	if (LoadMemoryFromFileWithTimestamp(PrivateKeyFile, &PrivateKey, sizeof(PrivateKey) - sizeof(char), &Length, NULL))
 	{
-		if(GetModuleFileName(NULL, Name, MAX_PATH) > 0)
+		if (GetModuleFileName(NULL, Name, MAX_PATH) > 0)
 		{
-			if(p = _tcsrchr(Name, _T('\\')))
+			if (p = _tcsrchr(Name, _T('\\')))
 				*p = _T('\0');
-			if(pList = (UPDATE_LIST*)malloc(UPDATE_MAX_LIST_SIZE))
+			if (pList = (UPDATE_LIST*)malloc(UPDATE_MAX_LIST_SIZE))
 			{
 				memset(pList, 0, UPDATE_MAX_LIST_SIZE);
 				pList->Version = Version;
@@ -383,14 +382,14 @@ BOOL BuildUpdates(LPCTSTR PrivateKeyFile, LPCTSTR Password, LPCTSTR ServerPath, 
 				_tcscpy(pList->Description, Description);
 				ListUpdateFile(pList, (UPDATE_MAX_LIST_SIZE - sizeof(UPDATE_LIST)) / sizeof(UPDATE_LIST_FILE) + 1, ServerPath, Name, NULL);
 				Length = (pList->FileCount - 1) * sizeof(UPDATE_LIST_FILE) + sizeof(UPDATE_LIST);
-				if(SaveMemoryToFileWithTimestamp(ListFile, pList, Length, NULL))
+				if (SaveMemoryToFileWithTimestamp(ListFile, pList, Length, NULL))
 				{
 					memcpy(&Hash.Signature, UPDATE_SIGNATURE, 64);
-					if(GetHashSHA512(pList, Length, &Hash.ListHash))
+					if (GetHashSHA512(pList, Length, &Hash.ListHash))
 					{
-						if(EncryptSignature(PrivateKey, Password, &Hash, sizeof(UPDATE_HASH), &Buf, sizeof(Buf), &Length))
+						if (EncryptSignature(PrivateKey, Password, &Hash, sizeof(UPDATE_HASH), &Buf, sizeof(Buf), &Length))
 						{
-							if(SaveMemoryToFileWithTimestamp(HashFile, &Buf, Length, NULL))
+							if (SaveMemoryToFileWithTimestamp(HashFile, &Buf, Length, NULL))
 								bResult = TRUE;
 						}
 					}
@@ -414,34 +413,34 @@ BOOL CheckForUpdates(BOOL bDownload, LPCTSTR DownloadDir, DWORD* pVersion, LPTST
 	BYTE Hash[64];
 	UPDATE_LIST* pUpdateList;
 	bResult = FALSE;
-	if(ReadFileViaHTTP(&Buf1, sizeof(Buf1), &Length, HTTP_USER_AGENT, UPDATE_SERVER, UPDATE_HASH_PATH))
+	if (ReadFileViaHTTP(&Buf1, sizeof(Buf1), &Length, HTTP_USER_AGENT, UPDATE_SERVER, UPDATE_HASH_PATH))
 	{
-		if(DecryptSignature(UPDATE_RSA_PUBLIC_KEY, NULL, &Buf1, Length, &Buf2, sizeof(Buf2), &Length))
+		if (DecryptSignature(UPDATE_RSA_PUBLIC_KEY, NULL, &Buf1, Length, &Buf2, sizeof(Buf2), &Length))
 		{
-			if(Length == sizeof(UPDATE_HASH))
+			if (Length == sizeof(UPDATE_HASH))
 			{
 				memcpy(&UpdateHash, &Buf2, sizeof(UPDATE_HASH));
-				if(memcmp(&UpdateHash.Signature, UPDATE_SIGNATURE, 64) == 0)
+				if (memcmp(&UpdateHash.Signature, UPDATE_SIGNATURE, 64) == 0)
 				{
-					if(pBuf = malloc(UPDATE_MAX_LIST_SIZE))
+					if (pBuf = malloc(UPDATE_MAX_LIST_SIZE))
 					{
-						if(ReadFileViaHTTP(pBuf, UPDATE_MAX_LIST_SIZE, &Length, HTTP_USER_AGENT, UPDATE_SERVER, UPDATE_LIST_PATH))
+						if (ReadFileViaHTTP(pBuf, UPDATE_MAX_LIST_SIZE, &Length, HTTP_USER_AGENT, UPDATE_SERVER, UPDATE_LIST_PATH))
 						{
-							if(GetHashSHA512(pBuf, Length, &Hash))
+							if (GetHashSHA512(pBuf, Length, &Hash))
 							{
-								if(memcmp(&Hash, &UpdateHash.ListHash, 64) == 0)
+								if (memcmp(&Hash, &UpdateHash.ListHash, 64) == 0)
 								{
-									if(Length >= sizeof(UPDATE_LIST))
+									if (Length >= sizeof(UPDATE_LIST))
 									{
 										bResult = TRUE;
 										pUpdateList = (UPDATE_LIST*)pBuf;
-										if(pUpdateList->Version > *pVersion)
+										if (pUpdateList->Version > *pVersion)
 										{
 											*pVersion = pUpdateList->Version;
 											_tcscpy(pVersionString, pUpdateList->VersionString);
 											_tcscpy(pDescription, pUpdateList->Description);
 										}
-										if(bDownload)
+										if (bDownload)
 											bResult = PrepareUpdates(pBuf, Length, DownloadDir);
 									}
 								}
@@ -470,63 +469,63 @@ BOOL PrepareUpdates(void* pList, DWORD ListLength, LPCTSTR DownloadDir)
 	DWORD Length;
 	BYTE Hash[64];
 	bResult = FALSE;
-	if(ListLength >= sizeof(UPDATE_LIST))
+	if (ListLength >= sizeof(UPDATE_LIST))
 	{
 		pUpdateList = (UPDATE_LIST*)pList;
-		if((pUpdateList->FileCount - 1) * sizeof(UPDATE_LIST_FILE) + sizeof(UPDATE_LIST) >= ListLength)
+		if ((pUpdateList->FileCount - 1) * sizeof(UPDATE_LIST_FILE) + sizeof(UPDATE_LIST) >= ListLength)
 		{
 			bResult = TRUE;
 			DeleteDirectoryAndContents(DownloadDir);
 			CreateDirectory(DownloadDir, NULL);
-			if(pBuf = malloc(UPDATE_MAX_FILE_SIZE))
+			if (pBuf = malloc(UPDATE_MAX_FILE_SIZE))
 			{
-				if(GetModuleFileName(NULL, LocalDir, MAX_PATH) > 0)
+				if (GetModuleFileName(NULL, LocalDir, MAX_PATH) > 0)
 				{
-					if(p = _tcsrchr(LocalDir, _T('\\')))
+					if (p = _tcsrchr(LocalDir, _T('\\')))
 						*p = _T('\0');
 				}
 				else
 					_tcscpy(LocalDir, _T("."));
-				for(i = 0; i < pUpdateList->FileCount; i++)
+				for (i = 0; i < pUpdateList->FileCount; i++)
 				{
 					b = FALSE;
-					if(pUpdateList->File[i].Flags & UPDATE_LIST_FILE_FLAG_DIRECTORY)
+					if (pUpdateList->File[i].Flags & UPDATE_LIST_FILE_FLAG_DIRECTORY)
 					{
 						_tcscpy(Path, DownloadDir);
 						_tcscat(Path, pUpdateList->File[i].DstPath);
-						if(CreateDirectory(Path, NULL))
+						if (CreateDirectory(Path, NULL))
 							b = TRUE;
 					}
-					if(strlen(pUpdateList->File[i].SrcPath) > 0)
+					if (strlen(pUpdateList->File[i].SrcPath) > 0)
 					{
 						_tcscpy(Path, LocalDir);
 						_tcscat(Path, pUpdateList->File[i].DstPath);
-						if(LoadMemoryFromFileWithTimestamp(Path, pBuf, UPDATE_MAX_FILE_SIZE, &Length, NULL))
+						if (LoadMemoryFromFileWithTimestamp(Path, pBuf, UPDATE_MAX_FILE_SIZE, &Length, NULL))
 						{
-							if(GetHashSHA512(pBuf, Length, &Hash))
+							if (GetHashSHA512(pBuf, Length, &Hash))
 							{
-								if(memcmp(&Hash, &pUpdateList->File[i].SrcHash, 64) == 0)
+								if (memcmp(&Hash, &pUpdateList->File[i].SrcHash, 64) == 0)
 									b = TRUE;
 							}
 						}
-						if(!b)
+						if (!b)
 						{
-							if(ReadFileViaHTTP(pBuf, UPDATE_MAX_FILE_SIZE, &Length, HTTP_USER_AGENT, UPDATE_SERVER, pUpdateList->File[i].SrcPath))
+							if (ReadFileViaHTTP(pBuf, UPDATE_MAX_FILE_SIZE, &Length, HTTP_USER_AGENT, UPDATE_SERVER, pUpdateList->File[i].SrcPath))
 							{
-								if(GetHashSHA512(pBuf, Length, &Hash))
+								if (GetHashSHA512(pBuf, Length, &Hash))
 								{
-									if(memcmp(&Hash, &pUpdateList->File[i].SrcHash, 64) == 0)
+									if (memcmp(&Hash, &pUpdateList->File[i].SrcHash, 64) == 0)
 									{
 										_tcscpy(Path, DownloadDir);
 										_tcscat(Path, pUpdateList->File[i].DstPath);
-										if(SaveMemoryToFileWithTimestamp(Path, pBuf, Length, &pUpdateList->File[i].Timestamp))
+										if (SaveMemoryToFileWithTimestamp(Path, pBuf, Length, &pUpdateList->File[i].Timestamp))
 											b = TRUE;
 									}
 								}
 							}
 						}
 					}
-					if(!b)
+					if (!b)
 					{
 						bResult = FALSE;
 						break;
@@ -548,22 +547,22 @@ BOOL ApplyUpdates(LPCTSTR DestinationDir, LPCTSTR BackupDirName)
 	TCHAR DestinationBackup[MAX_PATH];
 	TCHAR* p;
 	bResult = FALSE;
-	if(GetModuleFileName(NULL, Source, MAX_PATH) > 0)
+	if (GetModuleFileName(NULL, Source, MAX_PATH) > 0)
 	{
-		if(p = _tcsrchr(Source, _T('\\')))
+		if (p = _tcsrchr(Source, _T('\\')))
 			*p = _T('\0');
 		_tcscpy(Backup, Source);
 		_tcscat(Backup, _T("\\"));
 		_tcscat(Backup, BackupDirName);
 		DeleteDirectoryAndContents(Backup);
-		if(CreateDirectory(Backup, NULL))
+		if (CreateDirectory(Backup, NULL))
 		{
-			if(CopyAllFilesInDirectory(DestinationDir, Backup))
+			if (CopyAllFilesInDirectory(DestinationDir, Backup))
 			{
 				_tcscpy(DestinationBackup, DestinationDir);
 				_tcscat(DestinationBackup, _T("\\"));
 				_tcscat(DestinationBackup, BackupDirName);
-				if(CopyAllFilesInDirectory(Source, DestinationDir))
+				if (CopyAllFilesInDirectory(Source, DestinationDir))
 				{
 					DeleteDirectoryAndContents(DestinationBackup);
 					bResult = TRUE;
@@ -584,7 +583,7 @@ BOOL CleanupUpdates(LPCTSTR DownloadDir)
 {
 	BOOL bResult;
 	bResult = FALSE;
-	if(DeleteDirectoryAndContents(DownloadDir))
+	if (DeleteDirectoryAndContents(DownloadDir))
 		bResult = TRUE;
 	return bResult;
 }
@@ -597,16 +596,16 @@ BOOL StartUpdateProcess(LPCTSTR DownloadDir, LPCTSTR CommandLine)
 	TCHAR* p;
 	TCHAR Path[MAX_PATH];
 	bResult = FALSE;
-	if(GetModuleFileName(NULL, Name, MAX_PATH) > 0)
+	if (GetModuleFileName(NULL, Name, MAX_PATH) > 0)
 	{
-		if(p = _tcsrchr(Name, _T('\\')))
+		if (p = _tcsrchr(Name, _T('\\')))
 			p++;
 		else
 			p = Name;
 		_tcscpy(Path, DownloadDir);
 		_tcscat(Path, _T("\\"));
 		_tcscat(Path, p);
-		if(ShellExecute(NULL, _T("open"), Path, CommandLine, NULL, SW_SHOW) > (HINSTANCE)32)
+		if (ShellExecute(NULL, _T("open"), Path, CommandLine, NULL, SW_SHOW) > (HINSTANCE)32)
 			bResult = TRUE;
 	}
 	return bResult;
@@ -621,25 +620,25 @@ BOOL RestartUpdateProcessAsAdministrator(LPCTSTR CommandLine, LPCTSTR Keyword)
 	TCHAR Path[MAX_PATH];
 	SHELLEXECUTEINFO Info;
 	bResult = FALSE;
-	if(_tcslen(CommandLine) < _tcslen(Keyword) || _tcscmp(CommandLine + _tcslen(CommandLine) - _tcslen(Keyword), Keyword) != 0)
+	if (_tcslen(CommandLine) < _tcslen(Keyword) || _tcscmp(CommandLine + _tcslen(CommandLine) - _tcslen(Keyword), Keyword) != 0)
 	{
-		if(NewCommandLine = (TCHAR*)malloc(sizeof(TCHAR) * (_tcslen(CommandLine) + _tcslen(Keyword) + 1)))
+		if (NewCommandLine = (TCHAR*)malloc(sizeof(TCHAR) * (_tcslen(CommandLine) + _tcslen(Keyword) + 1)))
 		{
 			_tcscpy(NewCommandLine, CommandLine);
 			_tcscat(NewCommandLine, Keyword);
-			if(GetModuleFileName(NULL, Path, MAX_PATH) > 0)
+			if (GetModuleFileName(NULL, Path, MAX_PATH) > 0)
 			{
 				memset(&Info, 0, sizeof(SHELLEXECUTEINFO));
 				Info.cbSize = sizeof(SHELLEXECUTEINFO);
 				Info.fMask = SEE_MASK_NOCLOSEPROCESS;
-				if(IsUserAnAdmin())
+				if (IsUserAnAdmin())
 					Info.lpVerb = _T("open");
 				else
 					Info.lpVerb = _T("runas");
 				Info.lpFile = Path;
 				Info.lpParameters = NewCommandLine;
 				Info.nShow = SW_SHOW;
-				if(ShellExecuteEx(&Info))
+				if (ShellExecuteEx(&Info))
 				{
 					WaitForSingleObject(Info.hProcess, INFINITE);
 					CloseHandle(Info.hProcess);

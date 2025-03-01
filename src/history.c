@@ -5,25 +5,25 @@
 ===============================================================================
 / Copyright (C) 1997-2007 Sota. All rights reserved.
 /
-/ Redistribution and use in source and binary forms, with or without 
-/ modification, are permitted provided that the following conditions 
+/ Redistribution and use in source and binary forms, with or without
+/ modification, are permitted provided that the following conditions
 / are met:
 /
-/  1. Redistributions of source code must retain the above copyright 
+/  1. Redistributions of source code must retain the above copyright
 /     notice, this list of conditions and the following disclaimer.
-/  2. Redistributions in binary form must reproduce the above copyright 
-/     notice, this list of conditions and the following disclaimer in the 
+/  2. Redistributions in binary form must reproduce the above copyright
+/     notice, this list of conditions and the following disclaimer in the
 /     documentation and/or other materials provided with the distribution.
 /
-/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR 
-/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
-/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, 
-/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF 
-/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON 
-/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
+/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 / THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /============================================================================*/
 
@@ -48,8 +48,8 @@
 
 /*===== プロトタイプ =====*/
 
-static void CopyHostToHistory(HOSTDATA *Host, HISTORYDATA *New);
-static void AddOneFnameToMenu(char *Host, char *User, char *Remote, int Num);
+static void CopyHostToHistory(HOSTDATA* Host, HISTORYDATA* New);
+static void AddOneFnameToMenu(char* Host, char* User, char* Remote, int Num);
 static void RemoveAllHistoryFromMenu(void);
 
 /*===== 外部参照 =====*/
@@ -60,7 +60,7 @@ extern int PassToHist;
 
 /*===== ローカルなワーク =====*/
 
-static HISTORYDATA *HistoryBase = NULL;
+static HISTORYDATA* HistoryBase = NULL;
 static int HistoryNum = 0;
 
 /* ヒストリのメニュー項目のID */
@@ -83,7 +83,7 @@ static int MenuHistId[HISTORY_MAX] = {
 *		なし
 *----------------------------------------------------------------------------*/
 
-void AddHostToHistory(HOSTDATA *Host, int TrMode)
+void AddHostToHistory(HOSTDATA* Host, int TrMode)
 {
 	HISTORYDATA New;
 
@@ -103,15 +103,15 @@ void AddHostToHistory(HOSTDATA *Host, int TrMode)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void AddHistoryToHistory(HISTORYDATA *Hist)
+void AddHistoryToHistory(HISTORYDATA* Hist)
 {
-	HISTORYDATA *New;
+	HISTORYDATA* New;
 
 	CheckHistoryNum(1);
-	if(FileHist > HistoryNum)
+	if (FileHist > HistoryNum)
 	{
 		New = malloc(sizeof(HISTORYDATA));
-		if(New != NULL)
+		if (New != NULL)
 		{
 			memcpy(New, Hist, sizeof(HISTORYDATA));
 			New->Next = HistoryBase;
@@ -150,28 +150,28 @@ int AskHistoryNum(void)
 void CheckHistoryNum(int Space)
 {
 	int i;
-	HISTORYDATA *Prev;
-	HISTORYDATA *Pos;
-	HISTORYDATA *Next;
+	HISTORYDATA* Prev;
+	HISTORYDATA* Pos;
+	HISTORYDATA* Next;
 
-	if(HistoryNum > FileHist-Space)
+	if (HistoryNum > FileHist - Space)
 	{
 		/* 残すべきヒストリを探す */
 		Pos = HistoryBase;
 		Prev = NULL;
-		for(i = 0; i < FileHist-Space; i++)
+		for (i = 0; i < FileHist - Space; i++)
 		{
 			Prev = Pos;
 			Pos = Pos->Next;
 		}
 
 		/* いらないヒストリを消す */
-		if(Prev == NULL)
+		if (Prev == NULL)
 			HistoryBase = NULL;
 		else
 			Prev->Next = NULL;
 
-		while(Pos != NULL)
+		while (Pos != NULL)
 		{
 			Next = Pos->Next;
 			free(Pos);
@@ -193,11 +193,11 @@ void CheckHistoryNum(int Space)
 *		なし
 *----------------------------------------------------------------------------*/
 
-static void CopyHostToHistory(HOSTDATA *Host, HISTORYDATA *New)
+static void CopyHostToHistory(HOSTDATA* Host, HISTORYDATA* New)
 {
 	strcpy(New->HostAdrs, Host->HostAdrs);
 	strcpy(New->UserName, Host->UserName);
-	if(PassToHist == YES)
+	if (PassToHist == YES)
 		strcpy(New->PassWord, Host->PassWord);
 	else
 		strcpy(New->PassWord, "");
@@ -263,13 +263,13 @@ static void CopyHostToHistory(HOSTDATA *Host, HISTORYDATA *New)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void CopyHistoryToHost(HISTORYDATA *Hist, HOSTDATA *Host)
+void CopyHistoryToHost(HISTORYDATA* Hist, HOSTDATA* Host)
 {
 	CopyDefaultHost(Host);
 
 	strcpy(Host->HostAdrs, Hist->HostAdrs);
 	strcpy(Host->UserName, Hist->UserName);
-	if(PassToHist == YES)
+	if (PassToHist == YES)
 		strcpy(Host->PassWord, Hist->PassWord);
 	else
 		strcpy(Host->PassWord, "");
@@ -334,7 +334,7 @@ void CopyHistoryToHost(HISTORYDATA *Hist, HOSTDATA *Host)
 *		なし
 *----------------------------------------------------------------------------*/
 
-void CopyDefaultHistory(HISTORYDATA *Set)
+void CopyDefaultHistory(HISTORYDATA* Set)
 {
 	HOSTDATA Host;
 
@@ -358,12 +358,12 @@ void CopyDefaultHistory(HISTORYDATA *Set)
 void SetAllHistoryToMenu(void)
 {
 	int i;
-	HISTORYDATA *Pos;
+	HISTORYDATA* Pos;
 
 	RemoveAllHistoryFromMenu();
 
 	Pos = HistoryBase;
-	for(i = 0; i < HistoryNum; i++)
+	for (i = 0; i < HistoryNum; i++)
 	{
 		AddOneFnameToMenu(Pos->HostAdrs, Pos->UserName, Pos->RemoteInitDir, i);
 		Pos = Pos->Next;
@@ -384,19 +384,19 @@ void SetAllHistoryToMenu(void)
 *		なし
 *----------------------------------------------------------------------------*/
 
-static void AddOneFnameToMenu(char *Host, char *User, char *Remote, int Num)
+static void AddOneFnameToMenu(char* Host, char* User, char* Remote, int Num)
 {
 	HMENU hMenu;
-	char Tmp[HOST_ADRS_LEN+USER_NAME_LEN+INIT_DIR_LEN+7+1];
+	char Tmp[HOST_ADRS_LEN + USER_NAME_LEN + INIT_DIR_LEN + 7 + 1];
 
 	hMenu = GetSubMenu(GetMenu(GetMainHwnd()), 0);
 
-	if(Num == 0)
+	if (Num == 0)
 		AppendMenu(hMenu, MF_SEPARATOR, 0, NULL);
 
-	if(Num < 9)
-		sprintf(Tmp, "&%d %s (%s) %s", Num+1, Host, User, Remote);
-	else if(Num == 9)
+	if (Num < 9)
+		sprintf(Tmp, "&%d %s (%s) %s", Num + 1, Host, User, Remote);
+	else if (Num == 9)
 		sprintf(Tmp, "&0 %s (%s) %s", Host, User, Remote);
 	else
 		sprintf(Tmp, "&* %s (%s) %s", Host, User, Remote);
@@ -424,7 +424,7 @@ static void RemoveAllHistoryFromMenu(void)
 
 	hMenu = GetSubMenu(GetMenu(GetMainHwnd()), 0);
 	Cnt = GetMenuItemCount(hMenu);
-	for(i = DEF_FMENU_ITEMS; i < Cnt; i++)
+	for (i = DEF_FMENU_ITEMS; i < Cnt; i++)
 	{
 		DeleteMenu(hMenu, DEF_FMENU_ITEMS, MF_BYPOSITION);
 	}
@@ -443,17 +443,17 @@ static void RemoveAllHistoryFromMenu(void)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-int GetHistoryByCmd(int MenuCmd, HISTORYDATA *Buf)
+int GetHistoryByCmd(int MenuCmd, HISTORYDATA* Buf)
 {
 	int Sts;
 	int i;
-	HISTORYDATA *Pos;
+	HISTORYDATA* Pos;
 
 	Sts = FFFTP_FAIL;
 	Pos = HistoryBase;
-	for(i = 0; i < HistoryNum; i++)
+	for (i = 0; i < HistoryNum; i++)
 	{
-		if(MenuHistId[i] == MenuCmd)
+		if (MenuHistId[i] == MenuCmd)
 		{
 			memcpy(Buf, Pos, sizeof(HISTORYDATA));
 			Sts = FFFTP_SUCCESS;
@@ -475,7 +475,7 @@ int GetHistoryByCmd(int MenuCmd, HISTORYDATA *Buf)
 *			FFFTP_SUCCESS/FFFTP_FAIL
 *----------------------------------------------------------------------------*/
 
-int GetHistoryByNum(int Num, HISTORYDATA *Buf)
+int GetHistoryByNum(int Num, HISTORYDATA* Buf)
 {
 	return(GetHistoryByCmd(MenuHistId[Num], Buf));
 }
