@@ -2067,8 +2067,13 @@ int CheckClosedAndReconnect(void);
 int CheckClosedAndReconnectTrnSkt(SOCKET* Skt, int* CancelCheckWork);
 
 /*===== updatebell.c =====*/
-
+#if defined(__cplusplus)
+extern "C" {
+#endif
 void SaveUpdateBellInfo(void);
+#if defined(__cplusplus)
+}
+#endif
 
 
 #endif   // __COMMON_H__

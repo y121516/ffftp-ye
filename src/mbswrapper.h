@@ -6,7 +6,9 @@
 #define __MBSWRAPPER_H__
 
 #include <windows.h>
-
+#if defined(__cplusplus)
+extern "C" {
+#endif
 int MtoW(LPWSTR pDst, int size, LPCSTR pSrc, int count);
 int WtoM(LPSTR pDst, int size, LPCWSTR pSrc, int count);
 int AtoW(LPWSTR pDst, int size, LPCSTR pSrc, int count);
@@ -31,5 +33,8 @@ void FreeDuplicatedString(void* p);
 // UTF-8 UTF-16 LE間の変換処理でWindows XPのエミュレーションを行う
 int MultiByteToWideCharAlternative(UINT CodePage, DWORD dwFlags, LPCSTR lpMultiByteStr, int cbMultiByte, LPWSTR lpWideCharStr, int cchWideChar);
 int WideCharToMultiByteAlternative(UINT CodePage, DWORD dwFlags, LPCWSTR lpWideCharStr, int cchWideChar, LPSTR lpMultiByteStr, int cbMultiByte, LPCSTR lpDefaultChar, LPBOOL lpUsedDefaultChar);
+#if defined(__cplusplus)
+}
+#endif
 
 #endif
