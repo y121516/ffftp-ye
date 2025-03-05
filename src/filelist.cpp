@@ -247,26 +247,26 @@ int MakeListWin(HWND hWnd, HINSTANCE hInst)
 
 		LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 		LvCol.cx = LocalTabWidth[0];
-		LvCol.pszText = MSGJPN038;
+		LvCol.pszText = const_cast<LPTSTR>MSGJPN038;
 		LvCol.iSubItem = 0;
 		SendMessage(hWndListLocal, LVM_INSERTCOLUMN, 0, (LPARAM)&LvCol);
 
 		LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 		LvCol.cx = LocalTabWidth[1];
-		LvCol.pszText = MSGJPN039;
+		LvCol.pszText = const_cast<LPTSTR>(MSGJPN039);
 		LvCol.iSubItem = 1;
 		SendMessage(hWndListLocal, LVM_INSERTCOLUMN, 1, (LPARAM)&LvCol);
 
 		LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM | LVCF_FMT;
 		LvCol.fmt = LVCFMT_RIGHT;
 		LvCol.cx = LocalTabWidth[2];
-		LvCol.pszText = MSGJPN040;
+		LvCol.pszText = const_cast<LPTSTR>(MSGJPN040);
 		LvCol.iSubItem = 2;
 		SendMessage(hWndListLocal, LVM_INSERTCOLUMN, 2, (LPARAM)&LvCol);
 
 		LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 		LvCol.cx = LocalTabWidth[3];
-		LvCol.pszText = MSGJPN041;
+		LvCol.pszText = const_cast<LPTSTR>(MSGJPN041);
 		LvCol.iSubItem = 3;
 		SendMessage(hWndListLocal, LVM_INSERTCOLUMN, 3, (LPARAM)&LvCol);
 	}
@@ -303,38 +303,38 @@ int MakeListWin(HWND hWnd, HINSTANCE hInst)
 
 		LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 		LvCol.cx = RemoteTabWidth[0];
-		LvCol.pszText = MSGJPN042;
+		LvCol.pszText = const_cast<LPTSTR>(MSGJPN042);
 		LvCol.iSubItem = 0;
 		SendMessage(hWndListRemote, LVM_INSERTCOLUMN, 0, (LPARAM)&LvCol);
 
 		LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 		LvCol.cx = RemoteTabWidth[1];
-		LvCol.pszText = MSGJPN043;
+		LvCol.pszText = const_cast<LPTSTR>(MSGJPN043);
 		LvCol.iSubItem = 1;
 		SendMessage(hWndListRemote, LVM_INSERTCOLUMN, 1, (LPARAM)&LvCol);
 
 		LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM | LVCF_FMT;
 		LvCol.fmt = LVCFMT_RIGHT;
 		LvCol.cx = RemoteTabWidth[2];
-		LvCol.pszText = MSGJPN044;
+		LvCol.pszText = const_cast<LPTSTR>(MSGJPN044);
 		LvCol.iSubItem = 2;
 		SendMessage(hWndListRemote, LVM_INSERTCOLUMN, 2, (LPARAM)&LvCol);
 
 		LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 		LvCol.cx = RemoteTabWidth[3];
-		LvCol.pszText = MSGJPN045;
+		LvCol.pszText = const_cast<LPTSTR>(MSGJPN045);
 		LvCol.iSubItem = 3;
 		SendMessage(hWndListRemote, LVM_INSERTCOLUMN, 3, (LPARAM)&LvCol);
 
 		LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 		LvCol.cx = RemoteTabWidth[4];
-		LvCol.pszText = MSGJPN046;
+		LvCol.pszText = const_cast<LPTSTR>(MSGJPN046);
 		LvCol.iSubItem = 4;
 		SendMessage(hWndListRemote, LVM_INSERTCOLUMN, 4, (LPARAM)&LvCol);
 
 		LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 		LvCol.cx = RemoteTabWidth[5];
-		LvCol.pszText = MSGJPN047;
+		LvCol.pszText = const_cast<LPTSTR>(MSGJPN047);
 		LvCol.iSubItem = 5;
 		SendMessage(hWndListRemote, LVM_INSERTCOLUMN, 5, (LPARAM)&LvCol);
 	}

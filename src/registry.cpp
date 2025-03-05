@@ -560,7 +560,8 @@ void SaveRegistry(void)
 //				EncodePassword(FwallPass, Str);
 				if (FwallNoSaveUser == YES)
 				{
-					WriteStringToReg(hKey4, "FwallUser", "");
+					char str[] = "";
+					WriteStringToReg(hKey4, "FwallUser", str);
 					EncodePassword("", Str);
 				}
 				else

@@ -729,13 +729,13 @@ static INT_PTR CALLBACK Trmode3SettingProc(HWND hDlg, UINT message, WPARAM wPara
 
 		LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 		LvCol.cx = (Rect.right / 3) * 2;
-		LvCol.pszText = MSGJPN200;
+		LvCol.pszText = const_cast<LPTSTR>(MSGJPN200);
 		LvCol.iSubItem = 0;
 		SendDlgItemMessage(hDlg, TRMODE3_LIST, LVM_INSERTCOLUMN, 0, (LPARAM)&LvCol);
 
 		LvCol.mask = LVCF_TEXT | LVCF_WIDTH | LVCF_SUBITEM;
 		LvCol.cx = Rect.right - LvCol.cx;
-		LvCol.pszText = MSGJPN201;
+		LvCol.pszText = const_cast<LPTSTR>(MSGJPN201);
 		LvCol.iSubItem = 1;
 		SendDlgItemMessage(hDlg, TRMODE3_LIST, LVM_INSERTCOLUMN, 1, (LPARAM)&LvCol);
 

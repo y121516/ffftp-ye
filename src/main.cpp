@@ -1300,7 +1300,7 @@ static LRESULT CALLBACK FtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
 				break;
 			SuppressRefresh = 1;
 			SetCurrentDirAsDirHist();
-			ChangeDir(WIN_REMOTE, "..");
+			{ char path[] = ".."; ChangeDir(WIN_REMOTE, path); }
 			SuppressRefresh = 0;
 			break;
 
@@ -1309,7 +1309,7 @@ static LRESULT CALLBACK FtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
 			if (AskUserOpeDisabled() == YES)
 				break;
 			SetCurrentDirAsDirHist();
-			ChangeDir(WIN_LOCAL, "..");
+			{ char path[] = ".."; ChangeDir(WIN_LOCAL, path); }
 			break;
 
 		case MENU_REMOTE_CHDIR:
@@ -1824,137 +1824,137 @@ static LRESULT CALLBACK FtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
 			switch (lpttt->hdr.idFrom)
 			{
 			case MENU_CONNECT:
-				lpttt->lpszText = MSGJPN154;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN154);
 				break;
 
 			case MENU_QUICK:
-				lpttt->lpszText = MSGJPN155;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN155);
 				break;
 
 			case MENU_DISCONNECT:
-				lpttt->lpszText = MSGJPN156;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN156);
 				break;
 
 			case MENU_DOWNLOAD:
-				lpttt->lpszText = MSGJPN157;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN157);
 				break;
 #if defined(HAVE_TANDEM)
 			case MENU_DOWNLOAD_AS:
-				lpttt->lpszText = MSGJPN065;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN065);
 				break;
 
 			case MENU_UPLOAD_AS:
-				lpttt->lpszText = MSGJPN064;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN064);
 				break;
 #endif
 			case MENU_UPLOAD:
-				lpttt->lpszText = MSGJPN158;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN158);
 				break;
 
 			case MENU_MIRROR_UPLOAD:
-				lpttt->lpszText = MSGJPN159;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN159);
 				break;
 
 			case MENU_DELETE:
-				lpttt->lpszText = MSGJPN160;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN160);
 				break;
 
 			case MENU_RENAME:
-				lpttt->lpszText = MSGJPN161;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN161);
 				break;
 
 			case MENU_MKDIR:
-				lpttt->lpszText = MSGJPN162;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN162);
 				break;
 
 			case MENU_LOCAL_UPDIR:
 			case MENU_REMOTE_UPDIR:
-				lpttt->lpszText = MSGJPN163;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN163);
 				break;
 
 			case MENU_LOCAL_CHDIR:
 			case MENU_REMOTE_CHDIR:
-				lpttt->lpszText = MSGJPN164;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN164);
 				break;
 
 			case MENU_TEXT:
-				lpttt->lpszText = MSGJPN165;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN165);
 				break;
 
 			case MENU_BINARY:
-				lpttt->lpszText = MSGJPN166;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN166);
 				break;
 
 			case MENU_AUTO:
-				lpttt->lpszText = MSGJPN167;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN167);
 				break;
 
 			case MENU_REFRESH:
-				lpttt->lpszText = MSGJPN168;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN168);
 				break;
 
 			case MENU_LIST:
-				lpttt->lpszText = MSGJPN169;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN169);
 				break;
 
 			case MENU_REPORT:
-				lpttt->lpszText = MSGJPN170;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN170);
 				break;
 
 			case MENU_KNJ_SJIS:
-				lpttt->lpszText = MSGJPN307;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN307);
 				break;
 
 			case MENU_KNJ_EUC:
-				lpttt->lpszText = MSGJPN171;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN171);
 				break;
 
 			case MENU_KNJ_JIS:
-				lpttt->lpszText = MSGJPN172;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN172);
 				break;
 
 			case MENU_KNJ_UTF8N:
-				lpttt->lpszText = MSGJPN308;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN308);
 				break;
 
 			case MENU_KNJ_UTF8BOM:
-				lpttt->lpszText = MSGJPN330;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN330);
 				break;
 
 			case MENU_KNJ_NONE:
-				lpttt->lpszText = MSGJPN173;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN173);
 				break;
 
 			case MENU_L_KNJ_SJIS:
-				lpttt->lpszText = MSGJPN309;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN309);
 				break;
 
 			case MENU_L_KNJ_EUC:
-				lpttt->lpszText = MSGJPN310;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN310);
 				break;
 
 			case MENU_L_KNJ_JIS:
-				lpttt->lpszText = MSGJPN311;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN311);
 				break;
 
 			case MENU_L_KNJ_UTF8N:
-				lpttt->lpszText = MSGJPN312;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN312);
 				break;
 
 			case MENU_L_KNJ_UTF8BOM:
-				lpttt->lpszText = MSGJPN331;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN331);
 				break;
 
 			case MENU_KANACNV:
-				lpttt->lpszText = MSGJPN174;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN174);
 				break;
 
 			case MENU_SYNC:
-				lpttt->lpszText = MSGJPN175;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN175);
 				break;
 
 			case MENU_ABORT:
-				lpttt->lpszText = MSGJPN176;
+				lpttt->lpszText = const_cast<LPTSTR>(MSGJPN176);
 				break;
 			}
 			// UTF-8対応
