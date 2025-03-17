@@ -49,7 +49,7 @@
 *	Return Value
 *		なし
 *----------------------------------------------------------------------------*/
-
+#if 1
 int CopyStrToClipBoard(char* Str)
 {
 	int Sts;
@@ -77,5 +77,10 @@ int CopyStrToClipBoard(char* Str)
 	}
 	return(Sts);
 }
-
-
+#else
+#include "../clipboard.hpp"
+int CopyStrToClipBoard(char* Str)
+{
+	return copy_string_to_clipboard(Str, GetMainHwnd()) ? FFFTP_SUCCESS : FFFTP_FAIL;
+}
+#endif

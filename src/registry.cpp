@@ -1604,7 +1604,12 @@ DWORD LoadHideDriveListRegistry(void)
 *	Return Value
 *		なし
 *----------------------------------------------------------------------------*/
-
+#include "../Registry.hpp"
+void ClearRegistry2(void)
+{
+	auto ret = registry_key_create(HKEY_CURRENT_USER, LR"(Software\Sota)", REG_OPTION_NON_VOLATILE, KEY_CREATE_SUB_KEY);
+	auto re2 = registry_key_delete((*ret).get(), L"Host0");
+}
 void ClearRegistry(void)
 {
 	HKEY hKey2;

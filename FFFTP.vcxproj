@@ -305,6 +305,8 @@
     <ResourceCompile Include="Resource\ffftp.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="clipboard.hpp" />
+    <ClInclude Include="Registry.hpp" />
     <ClInclude Include="Resource\resource.h" />
     <ClInclude Include="src\aes.h" />
     <ClInclude Include="src\aesopt.h" />
