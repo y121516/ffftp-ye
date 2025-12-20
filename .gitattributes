@@ -1,0 +1,19 @@
+.gitattributes text eol=lf
+.gitignore text eol=lf
+
+# Windows batch files: keep CRLF
+*.bat text eol=crlf
+
+# Binary files
+*.bmp binary
+*.cur binary
+*.dll binary
+*.exe binary
+*.ico binary
+*.png binary
+*.CHM binary
+
+# K's HTML Help Man project files
+*.KHP binary
+# K's HTML Help Man project backup files
+*.$HP binary
