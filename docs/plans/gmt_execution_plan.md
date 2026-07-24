@@ -44,8 +44,8 @@
     *   **操作**: 接続、アップロード、ダウンロード、ミラーリングなど。
     *   **期待される結果**: 成功/失敗、特定のプロトコルコマンドの送受信、ファイル内容の一致など。
 2.  **INIファイル生成スクリプトの作成**: 各テストシナリオに対応する `ffftp.ini` ファイルを動的に生成するスクリプト（例: Pythonスクリプト）を作成します。このスクリプトは、以下の設定をINIファイルに含めます。
-    *   `[FFFTP\Options]` セクション: `Log=1` (ログ出力有効化)、`Debug=1` (デバッグコンソール有効化)、`SaveWinPos=0` (ウィンドウ位置保存無効化)。
-    *   `[FFFTP\HostX]` セクション: 接続先情報 (`HostName`, `HostAdrs`, `UserName`, `Password`, `Port`)、文字コード設定 (`Kanji`, `NameKanji`)、転送モード (`TransMode`)、PASVモード (`Pasv`)、暗号化プロトコル (`UseFTPES`, `UseFTPIS`, `UseSFTP`) など、シナリオに必要な設定。
+    *   `[FFFTP\Options]` セクション: `Debug=1` (デバッグコンソール有効化)、`WinPos=0` (ウィンドウ位置保存無効化)。
+    *   `[FFFTP\Options\HostN]` セクション: 接続先情報 (`HostName`, `HostAdrs`, `UserName`, `Password`, `Port`)、文字コード設定 (`Kanji`, `NameKanji`)、転送モード (`TrType`)、PASVモード (`Pasv`)、暗号化プロトコル (`FTPES`, `FTPIS`, `SFTP`)、エラーモード (`ErrMode`)、ウィンドウ位置 (`WinPos`) など、シナリオに必要な設定。
 
 ### 4.3. ステップ3: ゴールデンマスターログの取得（FFFTP 2.0）
 

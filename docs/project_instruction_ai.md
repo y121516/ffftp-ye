@@ -77,8 +77,8 @@ Conventional Commitsのタイプを適切に選択し、簡潔かつ分かりや
 
 以下のドキュメントをSSOTとして扱います。これらのドキュメントの内容が、他の情報源と矛盾する場合は、これらのドキュメントが優先されます。
 
-*   `/home/ubuntu/projects/ffftp-8a17a395/ffftp_spec_doc.md`
-*   `/home/ubuntu/projects/ffftp-8a17a395/gmt_execution_plan.md`
+*   `docs/design/ffftp_spec_doc.md`
+*   `docs/plans/gmt_execution_plan.md`
 
 ## 6. 依存関係の原則
 
